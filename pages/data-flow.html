@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
   <div class="app-container">
@@ -99,41 +98,45 @@
         <div class="section">
           <h2 class="subsection-title">Complete Data Flow Overview</h2>
           <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
-flowchart TB
-    subgraph Sources["Source Systems"]
-        A[Akamai WAF]
-        B[CyberArk Identity]
-        C[Microsoft Entra ID]
-    end
-    
-    subgraph Integration["Integration Layer"]
-        D[Akamai SIEM API]
-        E[CyberArk SIEM Integration]
-        F[Azure Event Hub]
-    end
-    
-    subgraph Splunk["Splunk Cloud"]
-        G[HEC / IDM Input]
-        H[Indexers]
-        I[Search Heads]
-    end
-    
-    A -->|"Push via API"| D
-    B -->|"Push via API"| E
-    C -->|"Diagnostic Settings"| F
-    
-    D -->|"HTTPS/HEC"| G
-    E -->|"HTTPS/HEC"| G
-    F -->|"Splunk Add-on"| G
-    
-    G --> H
-    H --> I
-    
-    style A fill:#ff9900,stroke:#ff6600
-    style B fill:#00a3e0,stroke:#0077b3
-    style C fill:#0078d4,stroke:#005a9e
-    style F fill:#0089d6,stroke:#006bb3
+            <!-- Three-tier data flow diagram using pure HTML/CSS -->
+            <div style="display:grid;grid-template-columns:1fr;gap:24px;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">
+              <!-- Source Systems Row -->
+              <div style="text-align:center;">
+                <div style="font-weight:600;color:var(--gray-600);margin-bottom:12px;font-size:0.75rem;">SOURCE SYSTEMS</div>
+                <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;">
+                  <div style="padding:16px 24px;background:#ff9900;color:white;border-radius:8px;min-width:140px;">Akamai WAF</div>
+                  <div style="padding:16px 24px;background:#00a3e0;color:white;border-radius:8px;min-width:140px;">CyberArk Identity</div>
+                  <div style="padding:16px 24px;background:#0078d4;color:white;border-radius:8px;min-width:140px;">Microsoft Entra ID</div>
+                </div>
+              </div>
+              
+              <!-- Arrows Down -->
+              <div style="text-align:center;color:var(--gray-400);font-size:1.5rem;">↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓</div>
+              
+              <!-- Integration Layer Row -->
+              <div style="text-align:center;">
+                <div style="font-weight:600;color:var(--gray-600);margin-bottom:12px;font-size:0.75rem;">INTEGRATION LAYER</div>
+                <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;">
+                  <div style="padding:16px 24px;background:#ff6600;color:white;border-radius:8px;min-width:140px;">Akamai SIEM API<br><span style="font-size:0.7rem;opacity:0.8;">Push via API</span></div>
+                  <div style="padding:16px 24px;background:#0077b3;color:white;border-radius:8px;min-width:140px;">CyberArk SIEM<br><span style="font-size:0.7rem;opacity:0.8;">Push via Webhook</span></div>
+                  <div style="padding:16px 24px;background:#0089d6;color:white;border-radius:8px;min-width:140px;">Azure Event Hub<br><span style="font-size:0.7rem;opacity:0.8;">Diagnostic Settings</span></div>
+                </div>
+              </div>
+              
+              <!-- Arrows Down -->
+              <div style="text-align:center;color:var(--gray-400);font-size:1.5rem;">↘ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↙</div>
+              
+              <!-- Splunk Cloud Row -->
+              <div style="text-align:center;">
+                <div style="font-weight:600;color:var(--gray-600);margin-bottom:12px;font-size:0.75rem;">SPLUNK CLOUD</div>
+                <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
+                  <div style="padding:16px 24px;background:#65a30d;color:white;border-radius:8px;">HEC / IDM Input</div>
+                  <div style="color:var(--gray-400);align-self:center;">→</div>
+                  <div style="padding:16px 24px;background:var(--primary-600);color:white;border-radius:8px;">Indexers</div>
+                  <div style="color:var(--gray-400);align-self:center;">→</div>
+                  <div style="padding:16px 24px;background:var(--primary-700);color:white;border-radius:8px;">Search Heads / ES</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -142,11 +145,14 @@ flowchart TB
         <div class="section">
           <h2 class="subsection-title">1. Akamai WAF Data Flow</h2>
           <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:16px;">
-            <div class="mermaid">
-flowchart LR
-    A[Akamai Edge<br/>Servers] -->|"Security Events"| B[Akamai SIEM<br/>Integration API]
-    B -->|"HTTPS POST<br/>JSON Events"| C[Splunk HEC<br/>Token]
-    C --> D[index=akamai<br/>sourcetype=akamai:siem]
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+              <div style="padding:12px 16px;background:#ff9900;color:white;border-radius:6px;text-align:center;">Akamai Edge<br>Servers</div>
+              <div style="color:var(--gray-500);">→ Security Events →</div>
+              <div style="padding:12px 16px;background:#ff6600;color:white;border-radius:6px;text-align:center;">SIEM Integration<br>API</div>
+              <div style="color:var(--gray-500);">→ HTTPS POST JSON →</div>
+              <div style="padding:12px 16px;background:#65a30d;color:white;border-radius:6px;text-align:center;">Splunk HEC<br>Token</div>
+              <div style="color:var(--gray-500);">→</div>
+              <div style="padding:12px 16px;background:var(--primary-600);color:white;border-radius:6px;text-align:center;">index=akamai<br>sourcetype=akamai:siem</div>
             </div>
           </div>
           
@@ -175,11 +181,14 @@ flowchart LR
         <div class="section">
           <h2 class="subsection-title">2. CyberArk Identity Data Flow</h2>
           <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:16px;">
-            <div class="mermaid">
-flowchart LR
-    A[CyberArk Identity<br/>Cloud] -->|"Audit Events"| B[SIEM Integration<br/>Webhook]
-    B -->|"HTTPS POST<br/>JSON Events"| C[Splunk HEC<br/>Token]
-    C --> D[index=cyberark<br/>sourcetype=cyberark:identity:audit]
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+              <div style="padding:12px 16px;background:#00a3e0;color:white;border-radius:6px;text-align:center;">CyberArk Identity<br>Cloud</div>
+              <div style="color:var(--gray-500);">→ Audit Events →</div>
+              <div style="padding:12px 16px;background:#0077b3;color:white;border-radius:6px;text-align:center;">SIEM Integration<br>Webhook</div>
+              <div style="color:var(--gray-500);">→ HTTPS POST JSON →</div>
+              <div style="padding:12px 16px;background:#65a30d;color:white;border-radius:6px;text-align:center;">Splunk HEC<br>Token</div>
+              <div style="color:var(--gray-500);">→</div>
+              <div style="padding:12px 16px;background:var(--primary-600);color:white;border-radius:6px;text-align:center;">index=cyberark<br>sourcetype=cyberark:identity:audit</div>
             </div>
           </div>
           
@@ -216,13 +225,14 @@ flowchart LR
           </div>
 
           <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:16px;">
-            <div class="mermaid">
-flowchart LR
-    A[Microsoft<br/>Entra ID] -->|"Diagnostic<br/>Settings"| B[Azure Event<br/>Hub]
-    B -->|"Splunk Add-on<br/>for Azure polls"| C[Splunk IDM /<br/>HEC Input]
-    C --> D[index=azure<br/>sourcetype=azure:aad:signin]
-    
-    style B fill:#0089d6,stroke:#006bb3
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+              <div style="padding:12px 16px;background:#0078d4;color:white;border-radius:6px;text-align:center;">Microsoft<br>Entra ID</div>
+              <div style="color:var(--gray-500);">→ Diagnostic Settings →</div>
+              <div style="padding:12px 16px;background:#0089d6;color:white;border-radius:6px;text-align:center;">Azure Event<br>Hub</div>
+              <div style="color:var(--gray-500);">→ Splunk Add-on Polls →</div>
+              <div style="padding:12px 16px;background:#65a30d;color:white;border-radius:6px;text-align:center;">Splunk IDM /<br>HEC Input</div>
+              <div style="color:var(--gray-500);">→</div>
+              <div style="padding:12px 16px;background:var(--primary-600);color:white;border-radius:6px;text-align:center;">index=azure<br>sourcetype=azure:aad:signin</div>
             </div>
           </div>
 
@@ -430,6 +440,5 @@ index=azure sourcetype=azure:aad:* earliest=-1h | stats count latest(_time) as l
     </main>
   </div>
   <script src="../js/app.js"></script>
-  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
 </body>
 </html>
