@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Excellence | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+                <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+          <a href="professional-excellence.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Fundamentals</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk Basics (Start Here)</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security (ES)</span></a>
+          <a href="event-hub.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Event Hub & Data Flow</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">WAF/DDoS Project</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Professional Excellence</span>
+          </div>
+        </div>
+        <span class="badge success">Prove Your Worth</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Professional Excellence Guide</h1>
+          <p class="section-subtitle">How to demonstrate expertise, build credibility, and let your work speak for itself</p>
+        </div>
+
+        <!-- Mindset -->
+        <div class="section">
+          <div class="callout critical">
+            <div class="callout-content">
+              <div class="callout-title">Your Situation — Own It</div>
+              <div class="callout-body">
+                The interview is in the past. What matters now is <strong>consistent, high-quality delivery</strong>. Every interaction is a chance to demonstrate expertise. Your work will speak louder than any interview. Focus on being the person they can't imagine the project without.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="section">
+          <h2 class="subsection-title">Quick Navigation</h2>
+          <div class="grid grid-4">
+            <a href="#daily-habits" class="card clickable" style="text-align:center;padding:16px;"><span style="font-size:1.5rem;">📅</span><h4 style="font-size:0.85rem;margin-top:8px;">Daily Habits</h4></a>
+            <a href="#speak-like-expert" class="card clickable" style="text-align:center;padding:16px;"><span style="font-size:1.5rem;">🎯</span><h4 style="font-size:0.85rem;margin-top:8px;">Speak Like an Expert</h4></a>
+            <a href="#deep-knowledge" class="card clickable" style="text-align:center;padding:16px;"><span style="font-size:1.5rem;">🧠</span><h4 style="font-size:0.85rem;margin-top:8px;">Deep Knowledge</h4></a>
+            <a href="#recovery" class="card clickable" style="text-align:center;padding:16px;"><span style="font-size:1.5rem;">🔄</span><h4 style="font-size:0.85rem;margin-top:8px;">Mistake Recovery</h4></a>
+          </div>
+        </div>
+
+        <!-- Daily Habits -->
+        <div class="section" id="daily-habits">
+          <h2 class="subsection-title">Daily Habits That Build Credibility</h2>
+          
+          <div class="grid grid-2">
+            <div class="card bordered-left success" style="padding:20px;">
+              <h3 style="font-size:1rem;color:var(--success-600);margin-bottom:12px;">✅ Do This Every Day</h3>
+              <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:16px;line-height:1.8;">
+                <li><strong>Start early</strong> — Be online before them, show initiative</li>
+                <li><strong>Send daily summary</strong> — What you did, what's next, any blockers</li>
+                <li><strong>Prepare before meetings</strong> — Never wing it, always have notes</li>
+                <li><strong>Ask smart questions</strong> — Shows you're thinking ahead</li>
+                <li><strong>Document everything</strong> — Creates paper trail of your value</li>
+                <li><strong>Deliver early when possible</strong> — Under-promise, over-deliver</li>
+                <li><strong>Follow up on actions</strong> — Never let things fall through cracks</li>
+                <li><strong>Share knowledge proactively</strong> — "I noticed X, thought you should know"</li>
+              </ul>
+            </div>
+            <div class="card bordered-left error" style="padding:20px;">
+              <h3 style="font-size:1rem;color:var(--error-600);margin-bottom:12px;">❌ Never Do This</h3>
+              <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:16px;line-height:1.8;">
+                <li><strong>Say "I don't know"</strong> — Say "Let me research and get back to you"</li>
+                <li><strong>Miss deadlines without warning</strong> — Flag risks early</li>
+                <li><strong>Go silent</strong> — No updates = they assume you're stuck</li>
+                <li><strong>Blame others</strong> — Own issues, propose solutions</li>
+                <li><strong>Ask questions you could Google</strong> — Research first</li>
+                <li><strong>Show uncertainty</strong> — Be confident, even when learning</li>
+                <li><strong>Complain about challenges</strong> — Present problems with solutions</li>
+                <li><strong>Wait to be told what to do</strong> — Take initiative</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speak Like an Expert -->
+        <div class="section" id="speak-like-expert">
+          <h2 class="subsection-title">Speak Like an Expert</h2>
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">The difference between sounding junior vs senior is how you frame your statements.</p>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th style="width:40%;">❌ Junior (Don't Say)</th><th style="width:40%;">✅ Senior (Say This)</th><th>Why It's Better</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>"I think this might work..."</td>
+                  <td>"Based on my analysis, this approach is optimal because..."</td>
+                  <td>Shows confidence and reasoning</td>
+                </tr>
+                <tr>
+                  <td>"I don't know"</td>
+                  <td>"That's a good question. Let me research and follow up by [time]"</td>
+                  <td>Shows ownership and commitment</td>
+                </tr>
+                <tr>
+                  <td>"Sorry, I made a mistake"</td>
+                  <td>"I identified an issue. Here's the root cause and my remediation plan"</td>
+                  <td>Shows problem-solving focus</td>
+                </tr>
+                <tr>
+                  <td>"Can you explain how this works?"</td>
+                  <td>"I've reviewed the documentation. Can you clarify this specific aspect?"</td>
+                  <td>Shows you did homework first</td>
+                </tr>
+                <tr>
+                  <td>"This is hard/complicated"</td>
+                  <td>"This requires careful consideration. Here are the factors..."</td>
+                  <td>Shows analytical thinking</td>
+                </tr>
+                <tr>
+                  <td>"I'm working on it"</td>
+                  <td>"I'm 60% complete, on track for Thursday. Here's my progress..."</td>
+                  <td>Shows visibility and control</td>
+                </tr>
+                <tr>
+                  <td>"I need help"</td>
+                  <td>"I need [specific thing] from [specific person] to proceed"</td>
+                  <td>Shows you know what you need</td>
+                </tr>
+                <tr>
+                  <td>"The threshold is 100"</td>
+                  <td>"The threshold is 100, calculated as mean + 2σ from 14-day baseline"</td>
+                  <td>Shows methodology, not guessing</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Power Phrases to Memorize</h3>
+          <div class="grid grid-2">
+            <div class="card" style="padding:16px;">
+              <h4 style="font-size:0.875rem;color:var(--gray-500);margin-bottom:8px;">When Presenting Work</h4>
+              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;">
+                <li>"Based on my analysis of your environment..."</li>
+                <li>"Industry best practice recommends..."</li>
+                <li>"According to MITRE ATT&CK framework..."</li>
+                <li>"The data supports this approach because..."</li>
+                <li>"I've validated this against historical incidents..."</li>
+              </ul>
+            </div>
+            <div class="card" style="padding:16px;">
+              <h4 style="font-size:0.875rem;color:var(--gray-500);margin-bottom:8px;">When Discussing Issues</h4>
+              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;">
+                <li>"I've identified a risk and here's my mitigation plan..."</li>
+                <li>"The root cause is X, remediation is Y..."</li>
+                <li>"I have three options to propose..."</li>
+                <li>"My recommendation is A because..."</li>
+                <li>"I've considered alternatives and..."</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deep Knowledge -->
+        <div class="section" id="deep-knowledge">
+          <h2 class="subsection-title">Deep Knowledge: Understand the WHY</h2>
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">Don't just know WHAT to do — understand WHY so you can explain and adapt.</p>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Detection Engineering Fundamentals</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Concept</th><th>What It Is</th><th>Why It Matters</th><th>If Asked, Explain It Like This</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">False Positive (FP)</td>
+                  <td>Alert fires but it's not actually malicious</td>
+                  <td>Too many FPs = SOC ignores alerts = real attacks missed</td>
+                  <td>"A false positive is when the detection alerts but it's legitimate activity. High FP rates cause alert fatigue — the SOC starts ignoring alerts, which is worse than having no detection at all."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">False Negative (FN)</td>
+                  <td>Attack happens but detection doesn't fire</td>
+                  <td>Missed attacks = breaches</td>
+                  <td>"A false negative is a missed attack — the malicious activity happened but we didn't detect it. This is the worst outcome because we think we're protected but we're not."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Threshold</td>
+                  <td>The boundary that triggers an alert</td>
+                  <td>Too low = FPs, too high = FNs</td>
+                  <td>"The threshold is where we draw the line between normal and suspicious. I calculate it using statistical methods — typically mean plus 2 standard deviations — so it's based on YOUR data, not arbitrary guessing."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Baseline</td>
+                  <td>Normal behavior patterns in your environment</td>
+                  <td>Can't detect anomalies without knowing normal</td>
+                  <td>"A baseline is what 'normal' looks like in your environment. Without a baseline, we're just guessing. I collect 14 days minimum to capture weekday/weekend patterns before setting thresholds."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Silent Mode</td>
+                  <td>Detection runs but doesn't alert</td>
+                  <td>Test FP rate before bothering SOC</td>
+                  <td>"Silent mode means the detection is running and logging results, but not sending alerts to the SOC. This lets me measure the false positive rate in production conditions before we commit to live alerting."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">CIM (Common Information Model)</td>
+                  <td>Splunk's standardized field naming</td>
+                  <td>Write once, run on any data source</td>
+                  <td>"CIM is Splunk's standardized field naming convention. If I write a detection using CIM fields like 'src_ip' instead of vendor-specific fields, the same detection works across multiple data sources without modification."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">MITRE ATT&CK</td>
+                  <td>Industry framework of attack techniques</td>
+                  <td>Proves detection coverage, audit-friendly</td>
+                  <td>"MITRE ATT&CK is the industry-standard framework for categorizing attacker techniques. Mapping our detections to ATT&CK shows exactly what threats we cover and identifies gaps — it's what auditors expect to see."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Why We Do Things This Way</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Practice</th><th>Why We Do It</th><th>What Happens If We Don't</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">14-day baseline before thresholds</td>
+                  <td>Captures weekday vs weekend, beginning vs end of month patterns</td>
+                  <td>Thresholds based on partial data = FPs on days we didn't measure</td>
+                </tr>
+                <tr>
+                  <td class="highlight">7-day silent mode before production</td>
+                  <td>Tests real-world FP rate before bothering SOC</td>
+                  <td>Deploy noisy detection = SOC loses trust = they ignore future alerts</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Document every exclusion with justification</td>
+                  <td>Future tuner understands why; auditor sees it's intentional</td>
+                  <td>Undocumented exclusions look like coverage gaps or mistakes</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Runbook for every detection</td>
+                  <td>SOC knows exactly what to do; consistent response</td>
+                  <td>Different analysts handle same alert differently = inconsistent security</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Use statistical thresholds (mean + 2σ)</td>
+                  <td>Based on data, not opinion; defensible to auditors</td>
+                  <td>"Why 100?" "Because I thought so" — not professional</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Test against historical attacks</td>
+                  <td>Proves detection actually catches what it's supposed to</td>
+                  <td>Detection might look good but miss real attacks</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Hard Questions -->
+        <div class="section">
+          <h2 class="subsection-title">Hard Questions & How to Answer</h2>
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">Be prepared for these — especially from a skeptical manager.</p>
+
+          <div class="table-container">
+            <table>
+              <thead><tr><th style="width:30%;">Hard Question</th><th style="width:70%;">Expert Answer</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">"How do you know this detection actually works?"</td>
+                  <td>"I validate detections three ways: (1) Test against known attack patterns in historical data, (2) Run in silent mode for 7 days to measure real-world FP rate, (3) Have SOC review sample alerts to confirm they're actionable. The current FP rate is X%, which is within acceptable range."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Why is this taking so long?"</td>
+                  <td>"Detection engineering has required phases: data validation (ensuring quality foundation), baseline collection (14 days to capture patterns), development, testing, and tuning. Skipping phases leads to unreliable detections that burden the SOC. I'm currently in [phase], on track for [date]."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Can't we just use the vendor's built-in rules?"</td>
+                  <td>"Vendor rules are generic starting points. They don't know your environment — your IP ranges, your service accounts, your business hours. I customize detections using your baseline data to reduce false positives and increase relevance. Generic rules typically have 30%+ FP rates; my target is under 10%."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"What if an attack happens and your detection misses it?"</td>
+                  <td>"No detection is 100%. My approach is defense in depth — multiple detections covering different attack stages. I also document exactly what each detection covers using MITRE ATT&CK mapping, so we know our coverage and gaps. If something is missed, I do root cause analysis to determine if it's a gap we should address."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"How did you come up with that threshold?"</td>
+                  <td>"I calculated it from your 14-day baseline. The mean is X, standard deviation is Y, so threshold is mean + 2σ = Z. This means we alert on the top 5% of outliers statistically. I can show you the analysis if you'd like."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Why should we trust your approach?"</td>
+                  <td>"My approach follows industry standards: MITRE ATT&CK for threat coverage, statistical methods for thresholds, Splunk best practices for implementation. Everything is documented and defensible. I'm happy to walk you through any aspect in detail."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Mistake Recovery -->
+        <div class="section" id="recovery">
+          <h2 class="subsection-title">When Things Go Wrong: Recovery Strategies</h2>
+          
+          <div class="callout warning" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Everyone Makes Mistakes — Recovery Separates Professionals</div>
+              <div class="callout-body">How you handle mistakes matters more than the mistake itself. Own it, fix it, learn from it, move on.</div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Situation</th><th>Wrong Response</th><th>Professional Response</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Detection has high FPs</td>
+                  <td>"It worked in testing, something changed"</td>
+                  <td>"I've identified the FP pattern. Root cause is [X]. I'm implementing [fix] and will have updated detection by [time]. New FP rate projected to be [Y]%."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Missed a deadline</td>
+                  <td>"Sorry, I ran into issues"</td>
+                  <td>"I need to revise the timeline due to [specific reason]. New target is [date]. I've adjusted my approach to [prevent recurrence]. Here's the updated plan."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Detection missed an attack</td>
+                  <td>"That wasn't in scope"</td>
+                  <td>"I've analyzed the incident. The attack used [technique] which our detection for [X] doesn't cover. Options: (A) Expand existing detection, (B) Create new detection. My recommendation is [X] because [reason]."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Made wrong technical decision</td>
+                  <td>"I thought it would work"</td>
+                  <td>"I've identified a better approach. Initial approach had [limitation]. Revised approach addresses this by [explanation]. Impact is [X days] to implement. Proceeding with your approval."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Don't know answer in meeting</td>
+                  <td>"I'm not sure" + silence</td>
+                  <td>"That's an important consideration. I want to give you accurate information rather than speculate. I'll research this and follow up by [specific time] today."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Client complains about your work</td>
+                  <td>Get defensive</td>
+                  <td>"I appreciate the feedback. Can you help me understand specifically what's not meeting expectations? I want to make sure I address this properly."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Impress the Manager -->
+        <div class="section">
+          <h2 class="subsection-title">Actions That Impress</h2>
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">Go beyond expectations to demonstrate value.</p>
+
+          <div class="grid grid-2">
+            <div class="card" style="padding:20px;">
+              <h3 style="font-size:1rem;margin-bottom:12px;">🎯 Quick Wins (First 2 Weeks)</h3>
+              <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:16px;line-height:1.8;">
+                <li>Create a data health dashboard showing all feeds are flowing</li>
+                <li>Document gaps you find (shows thoroughness)</li>
+                <li>Deliver first simple detection ahead of schedule</li>
+                <li>Send unprompted status update with clear metrics</li>
+                <li>Identify a risk/issue before they ask about it</li>
+                <li>Create documentation that doesn't exist yet</li>
+              </ul>
+            </div>
+            <div class="card" style="padding:20px;">
+              <h3 style="font-size:1rem;margin-bottom:12px;">🚀 Ongoing Excellence</h3>
+              <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:16px;line-height:1.8;">
+                <li>Proactively suggest improvements beyond scope</li>
+                <li>Share relevant threat intelligence ("Saw this attack targeting retail...")</li>
+                <li>Create training materials for SOC unprompted</li>
+                <li>Build relationships with SOC analysts (they'll advocate for you)</li>
+                <li>Volunteer to present at team meetings</li>
+                <li>Document knowledge transfer materials early</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout success" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">The Ultimate Goal</div>
+              <div class="callout-body">
+                Make them think: <strong>"How did we do this before without them?"</strong><br><br>
+                When the project ends, they should be asking for an extension or recommending you for future work. That's how you know you've proven yourself.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Checklist -->
+        <div class="section">
+          <h2 class="subsection-title">Daily Excellence Checklist</h2>
+          <div class="card bordered-left info" style="padding:20px;">
+            <div class="checklist" style="columns:2;column-gap:24px;">
+              <label class="checklist-item"><input type="checkbox"><span>Sent daily status update (even if brief)</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Prepared for all meetings (notes, data, answers)</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Followed up on all pending items</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Documented work done today</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Identified tomorrow's priorities</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>No open questions left unaddressed</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Communicated any risks or blockers</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Added value beyond just tasks</span></label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</body>
+</html>

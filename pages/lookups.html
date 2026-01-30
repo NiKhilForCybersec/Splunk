@@ -12,7 +12,7 @@
 </head>
 <body>
   <div class="app-container">
-                        <aside class="sidebar">
+                                    <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
           <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
@@ -32,6 +32,13 @@
           <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
           <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
           <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Fundamentals</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk Basics (Start Here)</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security (ES)</span></a>
+          <a href="event-hub.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Event Hub & Data Flow</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Data Sources</div>
@@ -274,13 +281,13 @@ curl -k -u admin:password \
               <div class="code-header"><span class="code-title">Schema & Sample Data</span></div>
               <div class="code-body">
                 <pre><code>userPrincipalName,is_privileged,role,department,risk_level,manager
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="076d686f692966636a6e69476a7e616e7574737775682964686a">[email&#160;protected]</a>,true,Domain Admin,IT,critical,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4329222d266d202a302c032e3a252a31303733312c6d202c2e">[email&#160;protected]</a>
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1cbc0cfc48fc5c3c0e1ccd8c7c8d3d2d5d1d3ce8fc2cecc">[email&#160;protected]</a>,true,Database Administrator,IT,high,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="04666b662a6d70606d7644697d626d76777074766b2a676b69">[email&#160;protected]</a>
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="64060b064a171d170500090d0a24091d020d16171014160b4a070b09">[email&#160;protected]</a>,true,System Administrator,IT,high,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="12707d703c7b66767b60527f6b747b60616662607d3c717d7f">[email&#160;protected]</a>
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f49795869b98da87919781869d808db4998d929d86878084869bda979b99">[email&#160;protected]</a>,true,Security Analyst,Security,high,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="462c27282368252f3529062b3f202f3435323634296825292b">[email&#160;protected]</a>
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6e0a0f180b40000b1a0f0a0307002e031708071c1d1a1e1c01400d0103">[email&#160;protected]</a>,true,Network Administrator,IT,high,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="42202d206c2b36262b30022f3b242b30313632302d6c212d2f">[email&#160;protected]</a>
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94f1e2f1baf7f8fbe1f0f5f0f9fdfad4f9edf2fde6e7e0e4e6fbbaf7fbf9">[email&#160;protected]</a>,true,Cloud Administrator,IT,critical,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d1b3beb3ffb8a5b5b8a391bca8b7b8a3a2a5a1a3beffb2bebc">[email&#160;protected]</a>
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f19783909f9adf81909cb19c88979883828581839edf929e9c">[email&#160;protected]</a>,true,PAM Administrator,Security,critical,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8be1eae5eea5e8e2f8e4cbe6f2ede2f9f8fffbf9e4a5e8e4e6">[email&#160;protected]</a></code></pre>
+john.admin@myfirstpro.com,true,Domain Admin,IT,critical,jane.ciso@myfirstpro.com
+jane.dba@myfirstpro.com,true,Database Administrator,IT,high,bob.itdir@myfirstpro.com
+bob.sysadmin@myfirstpro.com,true,System Administrator,IT,high,bob.itdir@myfirstpro.com
+carol.security@myfirstpro.com,true,Security Analyst,Security,high,jane.ciso@myfirstpro.com
+dave.netadmin@myfirstpro.com,true,Network Administrator,IT,high,bob.itdir@myfirstpro.com
+eve.cloudadmin@myfirstpro.com,true,Cloud Administrator,IT,critical,bob.itdir@myfirstpro.com
+frank.pam@myfirstpro.com,true,PAM Administrator,Security,critical,jane.ciso@myfirstpro.com</code></pre>
               </div>
             </div>
 
@@ -367,13 +374,13 @@ default_match = unknown</code></pre>
               <div class="code-header"><span class="code-title">Schema & Sample Data</span></div>
               <div class="code-body">
                 <pre><code>hostname,asset_type,criticality,business_unit,data_classification,owner,pci_scope
-checkout.myfirstpro.com,web_app,critical,eCommerce,confidential,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e184828e8ccc9584808ca18c98878893929591938ecf828e8c">[email&#160;protected]</a>,true
-api.myfirstpro.com,api,critical,eCommerce,confidential,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0a6f696567277e6f6b674a67736c6378797e7a786524696567">[email&#160;protected]</a>,true
-admin.myfirstpro.com,admin_portal,critical,IT,restricted,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="167f623b796665567b6f707f6465626664793875797b">[email&#160;protected]</a>,false
-loyalty.myfirstpro.com,web_app,high,Marketing,confidential,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e08c8f99818c9499cd9485818da08d99868992939490928fce838f8d">[email&#160;protected]</a>,true
-careers.myfirstpro.com,web_app,low,HR,public,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="79110b540d1c18143914001f100b0a0d090b16571a1614">[email&#160;protected]</a>,false
-intranet.myfirstpro.com,internal,medium,IT,internal,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2d445900425d5e6d40544b445f5e595d5f42034e4240">[email&#160;protected]</a>,false
-*.myfirstpro.com,wildcard,medium,All,varies,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3a0b6b0a6a1baa7aa93beaab5baa1a0a7a3a1bcfdb0bcbe">[email&#160;protected]</a>,false</code></pre>
+checkout.myfirstpro.com,web_app,critical,eCommerce,confidential,ecom-team@myfirstpro.com,true
+api.myfirstpro.com,api,critical,eCommerce,confidential,ecom-team@myfirstpro.com,true
+admin.myfirstpro.com,admin_portal,critical,IT,restricted,it-ops@myfirstpro.com,false
+loyalty.myfirstpro.com,web_app,high,Marketing,confidential,loyalty-team@myfirstpro.com,true
+careers.myfirstpro.com,web_app,low,HR,public,hr-team@myfirstpro.com,false
+intranet.myfirstpro.com,internal,medium,IT,internal,it-ops@myfirstpro.com,false
+*.myfirstpro.com,wildcard,medium,All,varies,security@myfirstpro.com,false</code></pre>
               </div>
             </div>
 
@@ -483,8 +490,8 @@ default_match = clean</code></pre>
               <div class="code-header"><span class="code-title">Schema (Auto-generated)</span></div>
               <div class="code-body">
                 <pre><code>userPrincipalName,typical_countries,typical_cities,typical_hours,typical_devices,last_updated
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aec4c1c6c080cfcac3c7c0eec3d7c8c7dcdddadedcc180cdc1c3">[email&#160;protected]</a>,"CA,US","Toronto,New York","8,9,10,11,12,13,14,15,16,17","device123,device456",2024-06-20
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2b414a454e054f494a6b46524d4259585f5b594405484446">[email&#160;protected]</a>,"CA","Montreal","7,8,9,10,11,12,13,14,15,16","device789",2024-06-20</code></pre>
+john.admin@myfirstpro.com,"CA,US","Toronto,New York","8,9,10,11,12,13,14,15,16,17","device123,device456",2024-06-20
+jane.dba@myfirstpro.com,"CA","Montreal","7,8,9,10,11,12,13,14,15,16","device789",2024-06-20</code></pre>
               </div>
             </div>
 
@@ -647,7 +654,7 @@ max_matches = 1</code></pre>
 
 ``` Test specific match
 | makeresults 
-| eval user = "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="167c797e783877727b7f78567b6f707f6465626664793875797b">[email&#160;protected]</a>"
+| eval user = "john.admin@myfirstpro.com"
 | lookup privileged_users userPrincipalName AS user OUTPUT is_privileged role
 | table user is_privileged role
 
@@ -656,4 +663,85 @@ index=cyberark sourcetype=cyberark:identity:audit earliest=-1h
 | head 10
 | eval user = ActorId
 | lookup privileged_users userPrincipalName AS user OUTPUT is_privileged
-| tab
+| table user is_privileged
+| where isnull(is_privileged)
+``` If is_privileged is null, the lookup didn't match
+
+``` Check for field value differences
+| inputlookup privileged_users.csv
+| eval user_lower = lower(userPrincipalName)
+| table userPrincipalName user_lower</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- KV Store Section -->
+        <div class="section">
+          <h2 class="subsection-title">KV Store Lookups (Advanced)</h2>
+          
+          <div class="callout info">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="callout-content">
+              <div class="callout-title">When to Use KV Store</div>
+              <div class="callout-body">Use KV Store when: data updates frequently (daily), data is > 100MB, you need CRUD operations via REST API, or you need atomic updates.</div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">collections.conf - Define KV Store Collection</span></div>
+            <div class="code-body">
+              <pre><code>[threat_intel_kv]
+enforceTypes = true
+field.ip_address = string
+field.threat_type = string
+field.confidence = string
+field.source = string
+field.first_seen = time
+field.last_seen = time
+accelerated_fields.ip = {"ip_address": 1}</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">transforms.conf - KV Store Lookup Definition</span></div>
+            <div class="code-body">
+              <pre><code>[threat_intel_kv_lookup]
+external_type = kvstore
+collection = threat_intel_kv
+fields_list = ip_address, threat_type, confidence, source, first_seen, last_seen
+case_sensitive_match = false</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">KV Store CRUD Operations</span></div>
+            <div class="code-body">
+              <pre><code>``` Read all records
+| inputlookup threat_intel_kv_lookup
+
+``` Add/Update records via SPL
+| makeresults 
+| eval ip_address="192.0.2.100", threat_type="botnet", confidence="high"
+| outputlookup threat_intel_kv_lookup append=true
+
+``` Delete specific record (requires _key)
+| inputlookup threat_intel_kv_lookup
+| where ip_address="192.0.2.100"
+| delete threat_intel_kv_lookup
+
+``` REST API - Add record
+curl -k -u admin:password \
+  -H "Content-Type: application/json" \
+  -d '{"ip_address":"192.0.2.100","threat_type":"botnet"}' \
+  https://splunk:8089/servicesNS/nobody/search/storage/collections/data/threat_intel_kv</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</body>
+</html>

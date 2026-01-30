@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Splunk Enterprise Security | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+        <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Fundamentals</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk Basics (Start Here)</span></a>
+          <a href="splunk-es.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security (ES)</span></a>
+          <a href="event-hub.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Event Hub & Data Flow</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">WAF/DDoS Project</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Enterprise Security (ES)</span>
+          </div>
+        </div>
+        <span class="badge critical">CRITICAL KNOWLEDGE</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Splunk Enterprise Security (ES)</h1>
+          <p class="section-subtitle">Notables, Correlation Searches, Risk-Based Alerting, and everything about ES</p>
+        </div>
+
+        <div class="callout critical">
+          <div class="callout-content">
+            <div class="callout-title">Day 1 Question: "Does Sobeys have ES?"</div>
+            <div class="callout-body">
+              Ask immediately: "Are you using Splunk Enterprise Security (ES) or just core Splunk?" This determines how you build detections. ES is a <strong>separate licensed product</strong> — not all Splunk customers have it.
+            </div>
+          </div>
+        </div>
+
+        <!-- WHAT IS ES -->
+        <div class="section">
+          <h2 class="subsection-title">What is Splunk Enterprise Security?</h2>
+          
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:12px;">Simple Explanation</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.7;">
+              <strong>Splunk ES (Enterprise Security)</strong> is Splunk's SIEM app. It's installed ON TOP of regular Splunk and provides security-specific features: Notable Events, Correlation Searches, Risk-Based Alerting, Incident Review workflow, and pre-built security dashboards.
+            </p>
+          </div>
+
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:12px;">How to Explain ES</h3>
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-body">
+                <pre><code>"Splunk Enterprise Security is the SIEM layer that sits on top of 
+core Splunk. It provides security-specific workflows — correlation 
+searches detect threats and create notable events, which analysts 
+triage in the Incident Review dashboard. It also includes risk-based 
+alerting, which aggregates low-confidence indicators until they 
+cross a threshold, reducing alert fatigue."</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">ES vs Core Splunk</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Feature</th><th>Core Splunk</th><th>With ES</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">Detection output</td><td>Alert action (email, webhook)</td><td>Notable Event (tracked in IR)</td></tr>
+                <tr><td class="highlight">SOC workflow</td><td>External ticketing only</td><td>Incident Review dashboard</td></tr>
+                <tr><td class="highlight">Risk aggregation</td><td>Must build custom</td><td>Built-in RBA framework</td></tr>
+                <tr><td class="highlight">Data normalization</td><td>CIM add-ons only</td><td>Pre-built accelerated data models</td></tr>
+                <tr><td class="highlight">Asset/Identity</td><td>Must build</td><td>Asset & Identity Framework</td></tr>
+                <tr><td class="highlight">Threat Intelligence</td><td>Must build</td><td>Built-in TI framework</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- NOTABLE EVENTS -->
+        <div class="section">
+          <h2 class="subsection-title">Notable Events (CRITICAL CONCEPT)</h2>
+          
+          <div class="callout warning" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">If Someone Says "Notable" — They Mean This</div>
+              <div class="callout-body">A Notable Event is ES's security alert format. When a correlation search fires, it creates a Notable that appears in Incident Review for the SOC to investigate.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:12px;">What is a Notable Event?</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.7;">
+              A <strong>Notable Event</strong> is a structured security alert created when a correlation search triggers. It includes all context needed for investigation — source, destination, user, severity, description — and has workflow status tracking (New → In Progress → Resolved → Closed).
+            </p>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Notable Event Key Fields</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Field</th><th>What It Is</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">rule_name</td><td>Name of the correlation search</td><td>"WAF - SQL Injection Campaign Detected"</td></tr>
+                <tr><td class="highlight">rule_title</td><td>Display title for the notable</td><td>"SQL Injection from 192.168.1.100"</td></tr>
+                <tr><td class="highlight">security_domain</td><td>Category (threat, access, endpoint, network, identity)</td><td>"threat"</td></tr>
+                <tr><td class="highlight">severity / urgency</td><td>Priority level</td><td>"critical", "high", "medium", "low", "informational"</td></tr>
+                <tr><td class="highlight">status</td><td>Workflow state</td><td>"new", "in progress", "pending", "resolved", "closed"</td></tr>
+                <tr><td class="highlight">owner</td><td>Assigned analyst</td><td>"jsmith"</td></tr>
+                <tr><td class="highlight">src</td><td>Source (attacker)</td><td>"192.168.1.100"</td></tr>
+                <tr><td class="highlight">dest</td><td>Destination (target)</td><td>"web-server-01"</td></tr>
+                <tr><td class="highlight">user</td><td>User involved</td><td>"admin"</td></tr>
+                <tr><td class="highlight">description</td><td>Detailed explanation</td><td>"50 SQL injection attempts from single IP"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Notable Event Lifecycle</h3>
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart LR
+    A[Correlation<br/>Search Runs] --> B{Condition<br/>Met?}
+    B -->|No| C[No Action]
+    B -->|Yes| D[Create<br/>Notable Event]
+    D --> E[Appears in<br/>Incident Review]
+    E --> F[Analyst<br/>Assigns]
+    F --> G[Investigation]
+    G --> H{True<br/>Positive?}
+    H -->|Yes| I[Escalate /<br/>Remediate]
+    H -->|No| J[Close as FP]
+    I --> K[Close as<br/>Resolved]
+    
+    style D fill:#f8d7da,stroke:#dc3545
+    style I fill:#d4edda,stroke:#28a745
+            </div>
+          </div>
+        </div>
+
+        <!-- CORRELATION SEARCHES -->
+        <div class="section">
+          <h2 class="subsection-title">Correlation Searches</h2>
+          
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:12px;">What is a Correlation Search?</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.7;">
+              A <strong>Correlation Search</strong> is a scheduled search in ES that detects security events and creates Notable Events when conditions are met. It's the core of ES detection — your detections will BE correlation searches.
+            </p>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Correlation Search Settings</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Setting</th><th>What It Does</th><th>Typical Value</th><th>Why It Matters</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Schedule (Cron)</td>
+                  <td>How often it runs</td>
+                  <td><code>*/5 * * * *</code> (every 5 min)</td>
+                  <td>Balance detection speed vs resource usage</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Time Range</td>
+                  <td>How far back to search</td>
+                  <td><code>-10m</code> (last 10 min)</td>
+                  <td>Overlap with schedule to avoid gaps</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Alert Condition</td>
+                  <td>When to fire</td>
+                  <td>Number of results > 0</td>
+                  <td>Defines what triggers a notable</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Throttling</td>
+                  <td>Prevent duplicate alerts</td>
+                  <td>1 per src per hour</td>
+                  <td>Avoids alert fatigue from same source</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Alert Actions</td>
+                  <td>What happens when triggered</td>
+                  <td>Create Notable Event</td>
+                  <td>Can also email, create ticket, webhook</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Example Correlation Search SPL</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">WAF SQL Injection Detection</span></div>
+            <div class="code-body">
+              <pre><code>``` Search for SQLi attempts
+index=akamai rule_tag="SQLI*" action=deny earliest=-10m
+
+``` Aggregate by source IP
+| stats count as sqli_count, 
+        values(rule_tag) as rules_triggered,
+        values(uri_path) as targeted_paths,
+        dc(uri_path) as unique_paths
+  by src_ip
+
+``` Only alert if significant volume
+| where sqli_count >= 10
+
+``` Format fields for Notable Event
+| eval rule_name = "WAF - SQL Injection Campaign"
+| eval severity = if(sqli_count > 100, "critical", "high")
+| eval description = "Source IP ".src_ip." generated ".sqli_count." SQLi attempts targeting ".unique_paths." unique paths"
+
+``` These fields populate the Notable Event
+| rename src_ip as src</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- RISK-BASED ALERTING -->
+        <div class="section">
+          <h2 class="subsection-title">Risk-Based Alerting (RBA)</h2>
+          
+          <div class="callout success" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">RBA is the Modern Approach</div>
+              <div class="callout-body">Instead of alerting on every suspicious event, RBA accumulates risk scores. When a user/system exceeds a threshold, THEN you create a Notable. This dramatically reduces alert volume while catching real attack chains.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:16px;">
+            <div class="mermaid">
+flowchart LR
+    subgraph Signals["Low-Confidence Signals"]
+        A[Failed Login<br/>+10 risk]
+        B[Unusual Geo<br/>+20 risk]
+        C[After Hours<br/>+10 risk]
+        D[MFA Denied<br/>+25 risk]
+    end
+    
+    E[Risk Index]
+    
+    A --> E
+    B --> E
+    C --> E
+    D --> E
+    
+    E --> F{User Risk<br/>> 100?}
+    F -->|No| G[Continue<br/>Monitoring]
+    F -->|Yes| H[Create<br/>Notable]
+    
+    style H fill:#f8d7da,stroke:#dc3545
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">RBA Key Concepts</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Concept</th><th>What It Is</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Risk Score</td>
+                  <td>Points assigned to an event</td>
+                  <td>Failed login = 10, MFA bypass attempt = 50</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Risk Object</td>
+                  <td>Entity the risk is attributed to</td>
+                  <td>User: "jsmith", System: "web-server-01"</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Risk Object Type</td>
+                  <td>Category of risk object</td>
+                  <td>"user", "system", "other"</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Risk Index</td>
+                  <td>Where risk events are stored</td>
+                  <td><code>index=risk</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight">Risk Message</td>
+                  <td>Description of the risk event</td>
+                  <td>"5 failed MFA attempts from unusual location"</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Risk Threshold</td>
+                  <td>Score that triggers Notable</td>
+                  <td>100 points in 24 hours</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Risk Rule vs Notable Rule</h3>
+          <div class="grid grid-2">
+            <div class="card" style="padding:20px;">
+              <h4 style="font-size:0.9375rem;color:var(--success-600);margin-bottom:12px;">Risk Rule (Contributes Score)</h4>
+              <div class="code-block">
+                <div class="code-body" style="font-size:0.75rem;">
+                  <pre><code>index=cyberark action=deny
+| stats count by user, src_ip
+| where count >= 3
+| eval risk_score = count * 10
+| eval risk_object = user
+| eval risk_object_type = "user"
+| eval risk_message = count." MFA denials"
+| collect index=risk</code></pre>
+                </div>
+              </div>
+              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">Uses <code>| collect index=risk</code></p>
+            </div>
+            <div class="card" style="padding:20px;">
+              <h4 style="font-size:0.9375rem;color:var(--error-600);margin-bottom:12px;">Notable Rule (Creates Alert)</h4>
+              <div class="code-block">
+                <div class="code-body" style="font-size:0.75rem;">
+                  <pre><code>index=cyberark action=deny
+| stats count by user, src_ip
+| where count >= 10
+| eval rule_name = "MFA Fatigue"
+| eval severity = "high"
+| eval description = count." denials"
+``` Action: Create Notable Event</code></pre>
+                </div>
+              </div>
+              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">Alert action creates Notable</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- INCIDENT REVIEW -->
+        <div class="section">
+          <h2 class="subsection-title">Incident Review (Where SOC Works)</h2>
+          
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.7;">
+              <strong>Incident Review</strong> is the ES dashboard where SOC analysts work. All Notable Events appear here. Analysts can filter, sort, assign, investigate, and close Notables.
+            </p>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Incident Review Workflow</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Status</th><th>Meaning</th><th>Who Sets It</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">New</td><td>Just created, not reviewed</td><td>System (automatic)</td></tr>
+                <tr><td class="highlight">In Progress</td><td>Analyst is actively investigating</td><td>Analyst</td></tr>
+                <tr><td class="highlight">Pending</td><td>Waiting for information/action</td><td>Analyst</td></tr>
+                <tr><td class="highlight">Resolved</td><td>Investigation complete, action taken</td><td>Analyst</td></tr>
+                <tr><td class="highlight">Closed</td><td>Fully closed, no further action</td><td>Analyst</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- IF THEY DON'T HAVE ES -->
+        <div class="section">
+          <h2 class="subsection-title">What If Sobeys Doesn't Have ES?</h2>
+          
+          <div class="callout info">
+            <div class="callout-content">
+              <div class="callout-title">Building Detections Without ES</div>
+              <div class="callout-body">
+                If no ES, you'll use <strong>standard Splunk alerts</strong> with:
+                <ul style="margin-top:8px;margin-left:16px;">
+                  <li>Alert actions: Email, webhook to ServiceNow/Jira</li>
+                  <li>External ticketing for workflow</li>
+                  <li>Custom dashboards for monitoring</li>
+                  <li>No built-in RBA (can build custom with summary indexes)</li>
+                </ul>
+                <p style="margin-top:8px;">The SPL logic is the same — only the output mechanism differs. Ask about their ticketing integration.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IF THEY ASK -->
+        <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
+          <h2 class="subsection-title" style="color:var(--warning-600);">⚠️ If They Ask ES Questions</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th style="width:35%;">Question</th><th>Expert Answer</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">"What's a Notable Event?"</td>
+                  <td>"A Notable Event is ES's structured security alert. When a correlation search detects suspicious activity, it creates a Notable with all context — source, destination, user, severity, description. SOC analysts triage Notables in the Incident Review dashboard, tracking them through investigation to resolution."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Should we use RBA or traditional alerting?"</td>
+                  <td>"RBA is best for reducing alert fatigue on low-confidence indicators. Instead of alerting on every failed login, we accumulate risk. When a user's score exceeds threshold — say, 100 points in 24 hours — we create a Notable with full context. Traditional alerting is still appropriate for high-confidence, high-severity events like confirmed malware or data exfiltration."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"What's the difference between correlation search and alert?"</td>
+                  <td>"Both are scheduled searches that trigger on conditions. The difference is output: a correlation search creates Notable Events in ES with full context and workflow tracking. A basic alert triggers actions like email or webhook but doesn't have ES's triage workflow. For security detections in ES, we use correlation searches."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"How do you tune correlation searches?"</td>
+                  <td>"I tune based on false positive rate. First, I run in 'silent mode' — enabled but not alerting — to measure FP rate. If high, I adjust thresholds, add exclusions (whitelisted IPs, service accounts), or add context filters. I document every exclusion with justification. Target is <10% FP rate before production."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"What's a Risk Notable?"</td>
+                  <td>"A Risk Notable is created when an entity's aggregated risk score exceeds a threshold. Instead of alerting on each low-confidence indicator, we accumulate risk points. The Risk Notable shows all contributing events, giving the analyst full attack chain context. It's the output of RBA."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</body>
+</html>

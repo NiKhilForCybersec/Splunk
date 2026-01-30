@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 1 — Getting Started | myfirstpro Detection Engineering</title>
+  <title>Day 1 Checklist | myfirstpro Detection Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 </head>
 <body>
   <div class="app-container">
-                        <aside class="sidebar">
+                <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
           <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
@@ -32,6 +32,13 @@
           <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
           <a href="day1.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
           <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Fundamentals</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk Basics (Start Here)</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security (ES)</span></a>
+          <a href="event-hub.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Event Hub & Data Flow</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Data Sources</div>
@@ -70,312 +77,326 @@
     <main class="main-content">
       <header class="header">
         <div class="header-left">
-          <button class="menu-toggle" aria-label="Toggle menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-item current">Day 1</span>
+            <span class="breadcrumb-item current">Day 1 Checklist</span>
           </div>
         </div>
-        <span class="badge success">Critical First Steps</span>
+        <span class="badge success">Start Here</span>
       </header>
 
       <div class="page-content">
         <div class="section">
-          <h1 class="section-title">Day 1 — Getting Started</h1>
-          <p class="section-subtitle">Essential checklist, questions to ask, and access requirements for your first day</p>
+          <h1 class="section-title">Day 1 Kickoff Checklist</h1>
+          <p class="section-subtitle">Everything you need to do and ask on your first day at a new detection engineering engagement</p>
         </div>
 
-
-        <!-- Kickoff Workflow -->
+        <!-- Day 1 Flow -->
         <div class="section">
           <h2 class="subsection-title">Day 1 Workflow</h2>
           <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
             <div class="mermaid">
 flowchart LR
-    A[Introductions] --> B[Access Setup]
-    B --> C[Data Validation]
-    C --> D[Architecture Review]
-    D --> E[Timeline Agreement]
-    E --> F[First Detection]
-    
+    A[Kickoff<br/>Meeting] --> B[Get<br/>Access]
+    B --> C[Validate<br/>Data]
+    C --> D[Understand<br/>Environment]
+    D --> E[Identify<br/>Stakeholders]
+    E --> F[Set<br/>Expectations]
     style A fill:#cce5ff,stroke:#007bff
     style F fill:#d4edda,stroke:#28a745
             </div>
           </div>
         </div>
 
-
-        <!-- Critical Alert -->
-        <div class="callout critical">
-          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-          <div class="callout-content">
-            <div class="callout-title">First Priority: Confirm Technology Stack</div>
-            <div class="callout-body">Before any technical work, confirm: <strong>Akamai</strong> for WAF, <strong>CyberArk</strong> for privileged MFA, <strong>Entra ID</strong> for corporate SSO. Get access to all three platforms.</div>
-          </div>
-        </div>
-
-        <!-- Access Checklist -->
+        <!-- CRITICAL FIRST HOUR -->
         <div class="section">
-          <h2 class="subsection-title">Access Requirements Checklist</h2>
-          <div class="card">
-            <ul class="checklist" data-checklist-id="day1-access">
-              <li class="checklist-item"><input type="checkbox" id="a1"><label for="a1">Splunk Cloud access (Search + Admin permissions)</label></li>
-              <li class="checklist-item"><input type="checkbox" id="a2"><label for="a2">Akamai Luna/Control Center access (read-only minimum)</label></li>
-              <li class="checklist-item"><input type="checkbox" id="a3"><label for="a3">CyberArk Identity admin portal access</label></li>
-              <li class="checklist-item"><input type="checkbox" id="a4"><label for="a4">Azure Portal / Entra ID access</label></li>
-              <li class="checklist-item"><input type="checkbox" id="a5"><label for="a5">ServiceNow (for change requests)</label></li>
-              <li class="checklist-item"><input type="checkbox" id="a6"><label for="a6">Confluence/SharePoint (documentation)</label></li>
-              <li class="checklist-item"><input type="checkbox" id="a7"><label for="a7">Teams/Slack channel access</label></li>
-            </ul>
-            <div class="progress-bar" style="margin-top:16px;"><div class="progress-fill" style="width:0%"></div></div>
-            <p class="progress-text" style="font-size:0.75rem;color:var(--gray-500);margin-top:8px;">0/7 (0%)</p>
-          </div>
-        </div>
-
-        <!-- Questions to Ask -->
-        <div class="section">
-          <h2 class="subsection-title">Critical Questions for Client (Day 1)</h2>
-          
-          <div class="accordion">
-            <div class="accordion-item open">
-              <button class="accordion-header">
-                <span>🔴 Priority 1: Technology Confirmation</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <div class="table-container">
-                  <table>
-                    <thead><tr><th>#</th><th>Question</th><th>Why It Matters</th><th>Your Answer</th></tr></thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td class="highlight">Is Akamai Kona Site Defender the WAF in use?</td>
-                        <td>Confirms all SPL queries and field mappings</td>
-                        <td><input type="text" style="width:100%;padding:4px;border:1px solid #ddd;border-radius:4px;" placeholder="Yes/No"></td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td class="highlight">Are Akamai SIEM logs already in Splunk?</td>
-                        <td>Determines if onboarding needed</td>
-                        <td><input type="text" style="width:100%;padding:4px;border:1px solid #ddd;border-radius:4px;" placeholder="Yes - index name / No"></td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td class="highlight">Which CyberArk product is deployed? (Identity, PAM, both?)</td>
-                        <td>Determines log structure and MFA detection approach</td>
-                        <td><input type="text" style="width:100%;padding:4px;border:1px solid #ddd;border-radius:4px;" placeholder="e.g., CyberArk Identity"></td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td class="highlight">Is CyberArk the PRIMARY MFA for privileged users?</td>
-                        <td>Critical for MFA fatigue detection priority</td>
-                        <td><input type="text" style="width:100%;padding:4px;border:1px solid #ddd;border-radius:4px;" placeholder="Yes/No"></td>
-                      </tr>
-                      <tr>
-                        <td>5</td>
-                        <td class="highlight">Is CyberArk federated with Entra ID?</td>
-                        <td>Affects correlation between sources</td>
-                        <td><input type="text" style="width:100%;padding:4px;border:1px solid #ddd;border-radius:4px;" placeholder="Yes/No"></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header">
-                <span>🟠 Priority 2: Existing Data & Detections</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <div class="table-container">
-                  <table>
-                    <thead><tr><th>#</th><th>Question</th><th>Why It Matters</th></tr></thead>
-                    <tbody>
-                      <tr><td>6</td><td>Are there existing WAF or MFA detections in Splunk?</td><td>Don't duplicate work</td></tr>
-                      <tr><td>7</td><td>What index/sourcetype are Akamai logs stored in?</td><td>Required for all queries</td></tr>
-                      <tr><td>8</td><td>What index/sourcetype are CyberArk logs stored in?</td><td>Required for MFA queries</td></tr>
-                      <tr><td>9</td><td>Is Splunk Enterprise Security (ES) deployed?</td><td>Determines Notable Event usage</td></tr>
-                      <tr><td>10</td><td>Does a privileged user list exist?</td><td>Required for MFA targeting</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header">
-                <span>🟡 Priority 3: Operational Context</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <div class="table-container">
-                  <table>
-                    <thead><tr><th>#</th><th>Question</th><th>Why It Matters</th></tr></thead>
-                    <tbody>
-                      <tr><td>11</td><td>What are your critical web endpoints? (/login, /checkout, etc.)</td><td>Prioritizes detection coverage</td></tr>
-                      <tr><td>12</td><td>Do you run regular vulnerability scans? (Qualys, Tenable?)</td><td>FP exclusions needed</td></tr>
-                      <tr><td>13</td><td>What are the scanner IP ranges to exclude?</td><td>Reduces false positives</td></tr>
-                      <tr><td>14</td><td>Who should receive detection alerts?</td><td>Alert action configuration</td></tr>
-                      <tr><td>15</td><td>Are there scheduled maintenance windows?</td><td>Avoid FPs during known events</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+          <h2 class="subsection-title">🚨 Critical: First Hour Tasks</h2>
+          <div class="card bordered-left critical" style="padding:20px;">
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;"><strong>Do these FIRST before anything else:</strong></p>
+            <div class="checklist">
+              <label class="checklist-item"><input type="checkbox"><span><strong>Confirm Splunk access works</strong> — Can you log in? Search? See expected indexes?</span></label>
+              <label class="checklist-item"><input type="checkbox"><span><strong>Verify data is flowing</strong> — Run: <code>index=akamai earliest=-1h | stats count</code></span></label>
+              <label class="checklist-item"><input type="checkbox"><span><strong>Get emergency contacts</strong> — Who do you call if Splunk is down? If you're locked out?</span></label>
+              <label class="checklist-item"><input type="checkbox"><span><strong>Understand change control</strong> — Can you save searches? Deploy apps? Or need approvals?</span></label>
+              <label class="checklist-item"><input type="checkbox"><span><strong>Get meeting invites</strong> — Weekly status, SOC standups, any regular syncs</span></label>
             </div>
           </div>
         </div>
 
-        <!-- First Validation Queries -->
+        <!-- ACCESS CHECKLIST -->
         <div class="section">
-          <h2 class="subsection-title">First Validation Queries (Run Immediately)</h2>
-          
-          <div class="tabs">
-            <div class="tab-list">
-              <button class="tab-button active">Akamai WAF</button>
-              <button class="tab-button">CyberArk</button>
-              <button class="tab-button">Entra ID</button>
-            </div>
-
-            <div class="tab-panel active">
-              <div class="code-block">
-                <div class="code-header">
-                  <span class="code-title">Check if Akamai data exists</span>
-                  <span class="code-lang">SPL</span>
-                </div>
-                <div class="code-body">
-                  <pre><code>| tstats count WHERE index=* sourcetype=*akamai* BY index sourcetype
-| sort - count
-
-| If found, check data freshness:
-index=akamai sourcetype=akamai:siem earliest=-1h
-| stats count as events 
-        latest(_time) as last_event 
-        dc(attackData.clientIP) as unique_ips
-| eval last_event_time = strftime(last_event, "%Y-%m-%d %H:%M:%S")
-| eval status = if(events > 0, "✅ Data flowing", "❌ No data")</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-panel">
-              <div class="code-block">
-                <div class="code-header">
-                  <span class="code-title">Check if CyberArk data exists</span>
-                  <span class="code-lang">SPL</span>
-                </div>
-                <div class="code-body">
-                  <pre><code>| tstats count WHERE index=* sourcetype=*cyberark* BY index sourcetype
-| sort - count
-
-| If found, check data freshness:
-index=cyberark sourcetype=cyberark:identity:audit earliest=-1h
-| stats count as events 
-        latest(_time) as last_event 
-        dc(ActorId) as unique_users
-| eval last_event_time = strftime(last_event, "%Y-%m-%d %H:%M:%S")
-| eval status = if(events > 0, "✅ Data flowing", "❌ No data")</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-panel">
-              <div class="code-block">
-                <div class="code-header">
-                  <span class="code-title">Check if Entra ID data exists</span>
-                  <span class="code-lang">SPL</span>
-                </div>
-                <div class="code-body">
-                  <pre><code>| tstats count WHERE index=* sourcetype=*azure*aad* BY index sourcetype
-| sort - count
-
-| If found, check data freshness:
-index=azure sourcetype=azure:aad:signin earliest=-1h
-| stats count as events 
-        latest(_time) as last_event 
-        dc(properties.userPrincipalName) as unique_users
-| eval last_event_time = strftime(last_event, "%Y-%m-%d %H:%M:%S")
-| eval status = if(events > 0, "✅ Data flowing", "❌ No data")</code></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Red Flags -->
-        <div class="section">
-          <h2 class="subsection-title">Red Flags to Watch For</h2>
+          <h2 class="subsection-title">Access & Tools Checklist</h2>
           <div class="grid grid-2">
-            <div class="card bordered-left error">
-              <h4>🚨 Blockers</h4>
-              <ul style="font-size:0.875rem;margin-left:16px;color:var(--gray-600);">
-                <li>No Splunk admin access</li>
-                <li>WAF logs not in Splunk at all</li>
-                <li>CyberArk not deployed or different product</li>
-                <li>No privileged user list available</li>
-                <li>Client wants >13 use cases in scope</li>
-              </ul>
+            <div class="card" style="padding:20px;">
+              <h3 style="font-size:1rem;margin-bottom:12px;">🔐 System Access</h3>
+              <div class="checklist">
+                <label class="checklist-item"><input type="checkbox"><span>Splunk Cloud login (search & analytics)</span></label>
+                <label class="checklist-item"><input type="checkbox"><span>Splunk Cloud admin access (if needed)</span></label>
+                <label class="checklist-item"><input type="checkbox"><span>VPN access (if required)</span></label>
+                <label class="checklist-item"><input type="checkbox"><span>Email/Teams/Slack for communication</span></label>
+                <label class="checklist-item"><input type="checkbox"><span>Ticketing system (ServiceNow/Jira)</span></label>
+                <label class="checklist-item"><input type="checkbox"><span>Documentation repo (Confluence/SharePoint)</span></label>
+              </div>
             </div>
-            <div class="card bordered-left warning">
-              <h4>⚠️ Risks to Escalate</h4>
-              <ul style="font-size:0.875rem;margin-left:16px;color:var(--gray-600);">
-                <li>Data latency >30 minutes</li>
-                <li>Missing critical fields in logs</li>
-                <li>No Splunk ES (affects alerting)</li>
-                <li>SOC team capacity concerns</li>
-                <li>Unclear success criteria</li>
-              </ul>
+            <div class="card" style="padding:20px;">
+              <h3 style="font-size:1rem;margin-bottom:12px;">📊 Splunk Permissions</h3>
+              <div class="checklist">
+                <label class="checklist-item"><input type="checkbox"><span>Can search all required indexes</span></label>
+                <label class="checklist-item"><input type="checkbox"><span>Can create/save searches</span></label>
+                <label class="checklist-item"><input type="checkbox"><span>Can create alerts</span></label>
+                <label class="checklist-item"><input type="checkbox"><span>Can create/edit lookups</span></label>
+                <label class="checklist-item"><input type="checkbox"><span>Can install/manage apps (or know who can)</span></label>
+                <label class="checklist-item"><input type="checkbox"><span>Can access _internal index (for troubleshooting)</span></label>
+              </div>
             </div>
           </div>
         </div>
 
-      
-        <!-- EDGE CASES & COMMON BLOCKERS -->
+        <!-- CRITICAL QUESTIONS -->
+        <div class="section">
+          <h2 class="subsection-title">Critical Questions to Ask Day 1</h2>
+          
+          <div class="callout warning" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Don't Leave Without Answers</div>
+              <div class="callout-body">These questions determine project success. If you can't get answers Day 1, schedule follow-ups and document as risks.</div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Category</th><th>Question</th><th>Why It Matters</th><th>Ask Who</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td rowspan="3" class="highlight">Scope</td>
+                  <td>What are the specific use cases / detections expected?</td>
+                  <td>Defines your deliverables</td>
+                  <td>Project Sponsor / PM</td>
+                </tr>
+                <tr>
+                  <td>What does "done" look like for each use case?</td>
+                  <td>Clear acceptance criteria</td>
+                  <td>Security Manager</td>
+                </tr>
+                <tr>
+                  <td>Are there existing detections I should know about?</td>
+                  <td>Avoid duplicates, understand baseline</td>
+                  <td>SOC Lead / Splunk Admin</td>
+                </tr>
+                <tr>
+                  <td rowspan="3" class="highlight">Data</td>
+                  <td>Which indexes contain WAF/MFA data?</td>
+                  <td>Know where to search</td>
+                  <td>Splunk Admin</td>
+                </tr>
+                <tr>
+                  <td>Is all expected data flowing? Any known gaps?</td>
+                  <td>Don't build on broken foundation</td>
+                  <td>Splunk Admin</td>
+                </tr>
+                <tr>
+                  <td>How much historical data is available?</td>
+                  <td>Determines baseline capability</td>
+                  <td>Splunk Admin</td>
+                </tr>
+                <tr>
+                  <td rowspan="3" class="highlight">Process</td>
+                  <td>What's the change control process?</td>
+                  <td>Know approval requirements</td>
+                  <td>Splunk Admin / IT</td>
+                </tr>
+                <tr>
+                  <td>Who approves detections for production?</td>
+                  <td>Know your sign-off chain</td>
+                  <td>Security Manager</td>
+                </tr>
+                <tr>
+                  <td>How do I submit apps for vetting (Splunk Cloud)?</td>
+                  <td>Custom apps need approval</td>
+                  <td>Splunk Admin</td>
+                </tr>
+                <tr>
+                  <td rowspan="3" class="highlight">Operations</td>
+                  <td>Who responds to alerts? What's their workflow?</td>
+                  <td>Design runbooks for their process</td>
+                  <td>SOC Lead</td>
+                </tr>
+                <tr>
+                  <td>What's acceptable false positive rate?</td>
+                  <td>Sets your tuning target</td>
+                  <td>SOC Lead / Security Manager</td>
+                </tr>
+                <tr>
+                  <td>Who owns detections after I leave?</td>
+                  <td>Critical for handoff planning</td>
+                  <td>Project Sponsor</td>
+                </tr>
+                <tr>
+                  <td rowspan="2" class="highlight">Timeline</td>
+                  <td>What's the expected completion date?</td>
+                  <td>Plan your work backward</td>
+                  <td>Project Sponsor / PM</td>
+                </tr>
+                <tr>
+                  <td>Are there hard deadlines (audits, compliance)?</td>
+                  <td>Identify immovable constraints</td>
+                  <td>Compliance / PM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- KEY CONTACTS -->
+        <div class="section">
+          <h2 class="subsection-title">Key Contacts to Identify</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Role</th><th>Name</th><th>Email</th><th>When to Contact</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">Project Sponsor</td><td>_______________</td><td>_______________</td><td>Escalations, scope decisions, blockers</td></tr>
+                <tr><td class="highlight">Security Manager</td><td>_______________</td><td>_______________</td><td>Detection requirements, priorities</td></tr>
+                <tr><td class="highlight">SOC Lead</td><td>_______________</td><td>_______________</td><td>Runbooks, alert routing, SOC workflow</td></tr>
+                <tr><td class="highlight">Splunk Admin</td><td>_______________</td><td>_______________</td><td>Access issues, app vetting, performance</td></tr>
+                <tr><td class="highlight">IAM Team Contact</td><td>_______________</td><td>_______________</td><td>Privileged user list, identity data</td></tr>
+                <tr><td class="highlight">Network Team Contact</td><td>_______________</td><td>_______________</td><td>Firewall rules, network topology</td></tr>
+                <tr><td class="highlight">Akamai Admin</td><td>_______________</td><td>_______________</td><td>WAF config questions, API access</td></tr>
+                <tr><td class="highlight">CyberArk Admin</td><td>_______________</td><td>_______________</td><td>MFA config, log availability</td></tr>
+                <tr><td class="highlight">Accenture PM</td><td>_______________</td><td>_______________</td><td>Internal escalations, status reporting</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- DATA VALIDATION -->
+        <div class="section">
+          <h2 class="subsection-title">Day 1 Data Validation</h2>
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">Run these queries immediately to validate your data foundation:</p>
+          
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Data Validation Queries</span></div>
+            <div class="code-body">
+              <pre><code>``` 1. Check Akamai data exists and is recent
+index=akamai earliest=-24h | stats count by sourcetype
+| append [| makeresults | eval sourcetype="NO DATA" | where count=0]
+
+``` 2. Check CyberArk data exists and is recent
+index=cyberark earliest=-24h | stats count by sourcetype
+
+``` 3. Check Entra ID data exists and is recent
+index=azure sourcetype=azure:aad:* earliest=-24h | stats count by sourcetype
+
+``` 4. Find all available indexes (understand the environment)
+| eventcount summarize=false index=* | dedup index | table index
+
+``` 5. Check data freshness (is data arriving on time?)
+index=akamai earliest=-1h
+| stats max(_time) as latest_event
+| eval lag_minutes = round((now() - latest_event) / 60, 1)
+| eval status = if(lag_minutes > 30, "⚠️ DELAYED", "✅ OK")
+
+``` 6. Check field extraction is working
+index=akamai earliest=-1h | head 1
+| table src_ip, dest_ip, action, http_uri, http_method
+``` All fields should have values, not null</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- DOCUMENT STRUCTURE -->
+        <div class="section">
+          <h2 class="subsection-title">Documentation to Request</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Document</th><th>Why You Need It</th><th>Who Has It</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">Statement of Work (SOW)</td><td>Defines your scope and deliverables</td><td>Accenture PM</td><td>☐</td></tr>
+                <tr><td class="highlight">Network Diagram</td><td>Understand data flow and architecture</td><td>Network Team</td><td>☐</td></tr>
+                <tr><td class="highlight">Splunk Architecture Doc</td><td>Know indexes, apps, configurations</td><td>Splunk Admin</td><td>☐</td></tr>
+                <tr><td class="highlight">WAF Policy Documentation</td><td>Understand what Akamai is configured to do</td><td>Akamai Admin</td><td>☐</td></tr>
+                <tr><td class="highlight">Privileged User List</td><td>Critical for MFA detections</td><td>IAM Team</td><td>☐</td></tr>
+                <tr><td class="highlight">Previous Incident Reports</td><td>Understand what attacks they've seen</td><td>SOC / IR Team</td><td>☐</td></tr>
+                <tr><td class="highlight">Existing Detection Inventory</td><td>Avoid duplicates</td><td>SOC / Security</td><td>☐</td></tr>
+                <tr><td class="highlight">SOC Procedures / Playbooks</td><td>Align runbooks with their process</td><td>SOC Lead</td><td>☐</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- EDGE CASES & BLOCKERS -->
         <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
-          <h2 class="subsection-title" style="color:var(--warning-600);">⚠️ Common Blockers & How to Unblock</h2>
+          <h2 class="subsection-title" style="color:var(--warning-600);">⚠️ Common Day 1 Blockers & How to Unblock</h2>
           
           <div class="table-container">
             <table>
-              <thead><tr><th>Team</th><th>What You Need</th><th>Common Blocker</th><th>How to Unblock</th></tr></thead>
+              <thead><tr><th>Blocker</th><th>Impact</th><th>How to Unblock</th><th>Escalate To</th></tr></thead>
               <tbody>
-                <tr><td class="highlight">IT / Infrastructure</td><td>Forwarder access, network configs</td><td>Change control, access approval</td><td>Get sponsor to expedite, business justification</td></tr>
-                <tr><td class="highlight">Network Team</td><td>Firewall rules for HEC</td><td>Security review, slow approval</td><td>Provide exact IPs/ports, reference existing rules</td></tr>
-                <tr><td class="highlight">IAM Team</td><td>Privileged user list</td><td>No single source of truth</td><td>Work with them to create export, schedule refresh</td></tr>
-                <tr><td class="highlight">Compliance</td><td>Retention requirements</td><td>Unclear documentation</td><td>Ask for written policy, escalate if unclear</td></tr>
-                <tr><td class="highlight">SOC</td><td>Alert workflow, SLAs</td><td>Different from expected</td><td>Adapt to their process, don't force yours</td></tr>
-                <tr><td class="highlight">Vendor (Akamai/CyberArk)</td><td>API credentials, log config</td><td>Procurement, licensing</td><td>Escalate through client's vendor manager</td></tr>
+                <tr>
+                  <td class="highlight">No Splunk access</td>
+                  <td><span class="badge critical">Critical</span> Can't do anything</td>
+                  <td>Contact Splunk admin directly, get sponsor to push</td>
+                  <td>Project Sponsor</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Data not flowing</td>
+                  <td><span class="badge critical">Critical</span> Can't build detections</td>
+                  <td>Check with Splunk admin, may need source team</td>
+                  <td>Splunk Admin → Security Manager</td>
+                </tr>
+                <tr>
+                  <td class="highlight">No one knows who owns what</td>
+                  <td><span class="badge error">High</span> Can't get answers</td>
+                  <td>Ask sponsor for RACI or org chart</td>
+                  <td>Project Sponsor</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Change control blocks everything</td>
+                  <td><span class="badge warning">Medium</span> Slows all work</td>
+                  <td>Understand process, batch changes, work ahead</td>
+                  <td>Splunk Admin → IT Manager</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Key person on vacation</td>
+                  <td><span class="badge warning">Medium</span> Blocked on answers</td>
+                  <td>Ask for backup contact or document and wait</td>
+                  <td>Their manager</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Scope unclear</td>
+                  <td><span class="badge error">High</span> Risk of rework</td>
+                  <td>Don't start work until scope is documented</td>
+                  <td>Project Sponsor + Accenture PM</td>
+                </tr>
               </tbody>
             </table>
           </div>
 
           <div class="callout critical" style="margin-top:16px;">
             <div class="callout-content">
-              <div class="callout-title">Document All Blockers!</div>
+              <div class="callout-title">Document Everything Day 1</div>
               <div class="callout-body">
-                Keep a running log:<br>
-                • <strong>Date requested</strong><br>
-                • <strong>Who you asked</strong><br>
-                • <strong>Impact on timeline</strong><br>
-                • <strong>Escalation attempts</strong><br><br>
-                This protects you if project is delayed due to client dependencies.
+                Send a summary email after Day 1 kickoff documenting:<br>
+                • What was agreed (scope, timeline, deliverables)<br>
+                • Who is responsible for what<br>
+                • Outstanding questions/blockers<br>
+                • Next steps and dates<br><br>
+                This protects you and creates a reference point.
               </div>
             </div>
           </div>
 
-          <h3 style="font-size:1rem;margin:24px 0 12px;">Critical Questions If Not Answered</h3>
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Critical Questions — If Not Answered</h3>
           <div class="table-container">
             <table>
-              <thead><tr><th>Question</th><th>If Not Answered</th><th>Risk</th></tr></thead>
+              <thead><tr><th>Question</th><th>If Not Answered...</th><th>Risk Level</th></tr></thead>
               <tbody>
-                <tr><td class="highlight">Who owns detections after handoff?</td><td>No maintenance, alerts become stale</td><td><span class="badge critical">HIGH</span></td></tr>
-                <tr><td class="highlight">What's the change control process?</td><td>Delays every deployment</td><td><span class="badge error">HIGH</span></td></tr>
-                <tr><td class="highlight">What's acceptable FP rate?</td><td>Disagreement during tuning</td><td><span class="badge warning">MEDIUM</span></td></tr>
-                <tr><td class="highlight">Who validates alerts as TP/FP?</td><td>Can't tune detections</td><td><span class="badge error">HIGH</span></td></tr>
-                <tr><td class="highlight">What's the SOC's current workload?</td><td>New alerts overwhelm them</td><td><span class="badge warning">MEDIUM</span></td></tr>
+                <tr><td class="highlight">Who owns detections after handoff?</td><td>No maintenance, alerts become stale, you get blamed</td><td><span class="badge critical">Critical</span></td></tr>
+                <tr><td class="highlight">What's the change control process?</td><td>Every deployment is a surprise delay</td><td><span class="badge error">High</span></td></tr>
+                <tr><td class="highlight">What's acceptable FP rate?</td><td>Disagreement during tuning, scope creep</td><td><span class="badge warning">Medium</span></td></tr>
+                <tr><td class="highlight">Who validates alerts as TP/FP?</td><td>Can't tune detections, stuck in testing</td><td><span class="badge error">High</span></td></tr>
+                <tr><td class="highlight">What's the SOC's current alert volume?</td><td>Your alerts overwhelm already-stretched team</td><td><span class="badge warning">Medium</span></td></tr>
               </tbody>
             </table>
           </div>

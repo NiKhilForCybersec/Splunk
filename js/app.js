@@ -414,3 +414,37 @@ function exportToCSV(tableId, filename) {
 function printPage() {
   window.print();
 }
+
+// Tab functionality
+function initTabs() {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabGroup = btn.closest('.tabs-container');
+      const targetId = btn.getAttribute('data-tab');
+      
+      // Remove active from all buttons in this group
+      tabGroup.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      
+      // Remove active from all content in this group
+      tabGroup.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      
+      // Add active to clicked button
+      btn.classList.add('active');
+      
+      // Add active to target content
+      const targetContent = tabGroup.querySelector(`#${targetId}`);
+      if (targetContent) {
+        targetContent.classList.add('active');
+        // Re-render mermaid diagrams in the newly visible tab
+        if (typeof mermaid !== 'undefined') {
+          mermaid.init(undefined, targetContent.querySelectorAll('.mermaid'));
+        }
+      }
+    });
+  });
+}
+
+// Initialize tabs on page load
+document.addEventListener('DOMContentLoaded', initTabs);

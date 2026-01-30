@@ -1075,3 +1075,106 @@ td.highlight {
     padding: 0;
   }
 }
+
+/* ============================================
+   TABS COMPONENT
+   ============================================ */
+.tabs-container {
+  margin: 24px 0;
+}
+
+.tabs-nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--gray-200);
+  margin-bottom: 0;
+}
+
+.tab-btn {
+  padding: 12px 24px;
+  background: var(--gray-50);
+  border: 2px solid var(--gray-200);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  transition: all 0.2s ease;
+  margin-right: -2px;
+  position: relative;
+  top: 2px;
+}
+
+.tab-btn:hover {
+  background: var(--gray-100);
+  color: var(--gray-800);
+}
+
+.tab-btn.active {
+  background: white;
+  color: var(--primary-600);
+  border-color: var(--primary-500);
+  border-bottom: 2px solid white;
+}
+
+.tab-btn.akamai.active {
+  color: #ff6600;
+  border-color: #ff6600;
+}
+
+.tab-btn.cyberark.active {
+  color: #00a3e0;
+  border-color: #00a3e0;
+}
+
+.tab-btn.entra.active {
+  color: #0078d4;
+  border-color: #0078d4;
+}
+
+.tab-content {
+  display: none;
+  padding: 24px;
+  border: 2px solid var(--gray-200);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  background: white;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.tab-content.akamai-content {
+  border-color: #ff6600;
+  border-top: 3px solid #ff6600;
+}
+
+.tab-content.cyberark-content {
+  border-color: #00a3e0;
+  border-top: 3px solid #00a3e0;
+}
+
+.tab-content.entra-content {
+  border-color: #0078d4;
+  border-top: 3px solid #0078d4;
+}
+
+.tab-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.tab-header h3 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.tab-header .badge {
+  font-size: 0.75rem;
+}

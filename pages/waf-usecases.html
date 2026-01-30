@@ -12,7 +12,7 @@
 </head>
 <body>
   <div class="app-container">
-                        <aside class="sidebar">
+                                    <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
           <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
@@ -32,6 +32,13 @@
           <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
           <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
           <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Fundamentals</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk Basics (Start Here)</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security (ES)</span></a>
+          <a href="event-hub.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Event Hub & Data Flow</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Data Sources</div>
@@ -520,6 +527,129 @@ flowchart TD
               <pre><code>ip_address,scanner_name,owner,approved_date,expiry_date,ticket
 10.1.50.100,Qualys,Security,2024-01-15,2025-01-15,CHG001
 192.168.100.0/24,Pentest-Vendor,External,2024-06-01,2024-06-30,CHG002</code></pre>
+            </div>
+          </div>
+        </div>
+
+      
+        <!-- TECHNICAL DEEP DIVE - BE READY TO EXPLAIN EVERYTHING -->
+        <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
+          <h2 class="subsection-title" style="color:var(--primary-600);">📚 Technical Deep Dive: Know Everything</h2>
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">Be ready to explain any of these concepts when asked. Never say "I don't know" — use this reference.</p>
+          
+          <h3 style="font-size:1rem;margin-bottom:12px;">How Thresholds Are Calculated (Explain Like a Pro)</h3>
+          <div class="code-block" style="margin-bottom:16px;">
+            <div class="code-header"><span class="code-title">Statistical Threshold Methodology</span></div>
+            <div class="code-body">
+              <pre><code>``` Step 1: Collect 14 days of baseline data
+index=akamai earliest=-14d latest=-1d
+| bucket _time span=1h
+| stats count as events_per_hour by _time
+| stats avg(events_per_hour) as mean, stdev(events_per_hour) as std_dev
+
+``` Step 2: Calculate threshold using statistical method
+| eval threshold_2sigma = mean + (2 * std_dev)   ``` Catches 95% of outliers
+| eval threshold_3sigma = mean + (3 * std_dev)   ``` Catches 99.7% of outliers
+
+``` Step 3: Validate threshold against historical attacks
+index=akamai earliest=-30d action=deny 
+| bucket _time span=1h | stats count by _time
+| where count > [your_threshold]
+``` Should show known attack periods but not normal traffic
+
+``` Why 2 sigma?
+``` - Normal distribution: 95.4% of values within 2σ of mean
+``` - Balance between catching anomalies and avoiding FPs
+``` - Industry standard for SIEM detection engineering
+``` - Can adjust to 2.5σ or 3σ based on FP rate</code></pre>
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">MITRE ATT&CK Mapping (Know Your Coverage)</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Use Case</th><th>MITRE Technique</th><th>Tactic</th><th>What It Detects</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">WAF-UC1</td><td>T1498 - Network DoS</td><td>Impact</td><td>Volumetric attacks overwhelming infrastructure</td></tr>
+                <tr><td class="highlight">WAF-UC2</td><td>T1499.001 - Endpoint DoS Flood</td><td>Impact</td><td>Single source flooding specific endpoint</td></tr>
+                <tr><td class="highlight">WAF-UC3</td><td>T1110 - Brute Force</td><td>Credential Access</td><td>Authentication endpoint attacks</td></tr>
+                <tr><td class="highlight">WAF-UC4</td><td>T1190 - Exploit Public-Facing</td><td>Initial Access</td><td>SQLi, XSS, RCE attempts</td></tr>
+                <tr><td class="highlight">WAF-UC5</td><td>T1595 - Active Scanning</td><td>Reconnaissance</td><td>Automated vulnerability scanning</td></tr>
+                <tr><td class="highlight">WAF-UC6</td><td>T1071 - Application Layer Protocol</td><td>C2</td><td>Suspicious API/bot behavior</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Why These Detections Work (Explain the Logic)</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Detection</th><th>Signal</th><th>Why It Indicates Attack</th><th>Potential FP Sources</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Block Volume Anomaly</td>
+                  <td>Blocked requests > threshold</td>
+                  <td>Normal traffic rarely triggers WAF rules; spikes indicate malicious activity</td>
+                  <td>New security rule deployment, legitimate scanner, bot traffic</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Single Source Flood</td>
+                  <td>High volume from one IP</td>
+                  <td>Legitimate users don't send 1000+ requests/minute; this is automation</td>
+                  <td>Load balancer IP, corporate proxy, CDN node</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Auth Endpoint Attack</td>
+                  <td>Failed logins > threshold</td>
+                  <td>Credential stuffing/brute force produces predictable failure patterns</td>
+                  <td>Password reset day, new SSO rollout, forgot password feature</td>
+                </tr>
+                <tr>
+                  <td class="highlight">SQLi Campaign</td>
+                  <td>SQLi rule triggers from same source</td>
+                  <td>SQL injection attempts have distinct signatures; multiple from one source = targeted attack</td>
+                  <td>Security scanner (whitelist it), penetration test</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Detection Performance Metrics (Know Your Numbers)</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Calculate and Report These Metrics</span></div>
+            <div class="code-body">
+              <pre><code>``` Overall FP Rate Calculation
+index=notable sourcetype=stash earliest=-7d
+| stats count(eval(status="false_positive")) as FP, 
+        count(eval(status="true_positive")) as TP,
+        count as Total
+| eval FP_Rate = round((FP/Total)*100, 1)."%"
+
+``` Per-Detection FP Rate
+index=notable sourcetype=stash earliest=-7d
+| stats count(eval(status="false_positive")) as FP, count as Total by rule_name
+| eval FP_Rate = round((FP/Total)*100, 1)
+| sort - FP_Rate
+
+``` Mean Time to Detect (MTTD) - for known incidents
+``` Compare incident start time vs first alert time
+
+``` Alert Volume Trend
+index=notable sourcetype=stash
+| timechart span=1d count by severity</code></pre>
+            </div>
+          </div>
+
+          <div class="callout success" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Always Have These Numbers Ready</div>
+              <div class="callout-body">
+                Before any meeting, know:<br>
+                • <strong>Total alerts last 7 days:</strong> ___<br>
+                • <strong>FP rate:</strong> ___% (target <10%)<br>
+                • <strong>TP rate:</strong> ___%<br>
+                • <strong>Top alerting detection:</strong> ___<br>
+                • <strong>Detections in production:</strong> ___ / 13
+              </div>
             </div>
           </div>
         </div>

@@ -8,10 +8,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
   <div class="app-container">
-                        <aside class="sidebar">
+                <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
           <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
@@ -31,6 +32,13 @@
           <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
           <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
           <a href="client-comm.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Fundamentals</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk Basics (Start Here)</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security (ES)</span></a>
+          <a href="event-hub.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Event Hub & Data Flow</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Data Sources</div>
@@ -69,293 +77,371 @@
     <main class="main-content">
       <header class="header">
         <div class="header-left">
-          <button class="menu-toggle" aria-label="Toggle menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
             <span class="breadcrumb-item current">Client Communication</span>
           </div>
         </div>
-        <span class="badge success">Templates Ready</span>
+        <div class="header-right">
+          <span class="badge info">Accenture → Sobeys</span>
+        </div>
       </header>
 
       <div class="page-content">
         <div class="section">
-          <h1 class="section-title">Client Communication Guide</h1>
-          <p class="section-subtitle">Email templates, meeting prep, and professional response patterns</p>
+          <h1 class="section-title">Client Communication Hub</h1>
+          <p class="section-subtitle">Everything you need for Sobeys meetings: prep checklists, status templates, talking points, Q&A, and executive summaries</p>
         </div>
 
-        <!-- Communication Principles -->
+        <!-- Quick Navigation -->
         <div class="section">
-          <h2 class="subsection-title">Communication Principles</h2>
-          <div class="grid grid-3">
-            <div class="card bordered-left success">
-              <h4>Be Specific</h4>
-              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
-                Provide concrete timelines, specific actions, and clear deliverables. Avoid vague language.
-              </p>
-            </div>
-            <div class="card bordered-left primary">
-              <h4>Own the Problem</h4>
-              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
-                Never say "I don't know" without a follow-up plan. Take ownership and provide next steps.
-              </p>
-            </div>
-            <div class="card bordered-left warning">
-              <h4>Set Expectations</h4>
-              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
-                Under-promise and over-deliver. Give realistic timelines with buffer for unknowns.
-              </p>
-            </div>
+          <div class="grid grid-4">
+            <a href="#pre-meeting" class="card clickable" style="text-align:center;padding:16px;"><span style="font-size:1.5rem;">📋</span><h4 style="font-size:0.85rem;margin-top:8px;">Pre-Meeting Prep</h4></a>
+            <a href="#status-templates" class="card clickable" style="text-align:center;padding:16px;"><span style="font-size:1.5rem;">📊</span><h4 style="font-size:0.85rem;margin-top:8px;">Status Templates</h4></a>
+            <a href="#talking-points" class="card clickable" style="text-align:center;padding:16px;"><span style="font-size:1.5rem;">💬</span><h4 style="font-size:0.85rem;margin-top:8px;">Talking Points</h4></a>
+            <a href="#qa-prep" class="card clickable" style="text-align:center;padding:16px;"><span style="font-size:1.5rem;">❓</span><h4 style="font-size:0.85rem;margin-top:8px;">Q&A Preparation</h4></a>
           </div>
         </div>
 
-        <!-- Email Templates -->
-        <div class="section">
-          <h2 class="subsection-title">Email Templates</h2>
+        <!-- 15-MINUTE PRE-MEETING PREP -->
+        <div class="section" id="pre-meeting">
+          <h2 class="subsection-title">15-Minute Pre-Meeting Prep</h2>
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">Review this 15 minutes before each client call. Update your status, prepare talking points, and anticipate questions.</p>
           
-          <div class="accordion">
-            <div class="accordion-item open">
-              <button class="accordion-header">
-                <span>📧 Status Update: Data Not Flowing</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <div class="code-block">
-                  <div class="code-header"><span class="code-title">Template</span></div>
-                  <div class="code-body">
-                    <pre><code>Subject: [myfirstpro Detection] Data Ingestion Issue - Akamai WAF
-
-Hi [Name],
-
-I've identified an issue with Akamai WAF data ingestion into Splunk that requires your team's assistance.
-
-**Current Status:**
-- Last data received: [timestamp]
-- Expected interval: Every 60 seconds
-- Gap detected: [X] hours
-
-**Diagnostic Steps Completed:**
-1. ✅ Verified Splunk HEC token is enabled
-2. ✅ Confirmed index exists and is accepting data
-3. ❓ Unable to verify Akamai SIEM API configuration (no access)
-
-**Required Action:**
-Could someone from your team verify the Akamai SIEM integration status in Akamai Control Center? Specifically:
-- Is the SIEM connector showing "Active"?
-- Are there any error messages in the connector logs?
-
-**Impact:**
-Until resolved, WAF detection development is blocked. I'm using historical data for query development in the meantime.
-
-**Next Steps:**
-I'm available for a call at [times] if it would be easier to troubleshoot together.
-
-Best regards,
-[Your name]</code></pre>
-                  </div>
-                </div>
-              </div>
+          <div class="card bordered-left info" style="padding:20px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Pre-Meeting Checklist</h3>
+            <div class="checklist" style="columns:2;column-gap:24px;">
+              <label class="checklist-item"><input type="checkbox"><span>Updated progress numbers (use cases complete, in progress, blocked)</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Reviewed blockers and have proposed solutions/escalation paths</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Prepared demo or sample data for any completed detections</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Reviewed action items from last meeting</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Prepared questions that require client input</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Anticipated client questions and have answers ready</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Have next week's plan/objectives ready to share</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Tested screen share and have Splunk open with relevant searches</span></label>
             </div>
+          </div>
 
-            <div class="accordion-item">
-              <button class="accordion-header">
-                <span>📧 Detection Ready for Review</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <div class="code-block">
-                  <div class="code-header"><span class="code-title">Template</span></div>
-                  <div class="code-body">
-                    <pre><code>Subject: [myfirstpro Detection] WAF-UC1 Ready for Review
-
-Hi [Name],
-
-I've completed development of WAF-UC1 (Block Volume Anomaly) and it's ready for your review before production deployment.
-
-**Detection Summary:**
-- **Name:** WAF Block Volume Anomaly
-- **Severity:** Medium
-- **Threshold:** 2-sigma above 14-day baseline (currently ~47 blocks/5min)
-- **Alert Frequency:** Every 5 minutes
-- **MITRE ATT&CK:** T1190 (Exploit Public-Facing Application)
-
-**Testing Results:**
-- Historical 14-day backtest: 12 alerts generated
-- Estimated true positive rate: ~85%
-- False positive sources identified: Qualys scans (excluded)
-
-**Attached:**
-1. Use case specification document
-2. SOC runbook
-3. Dashboard screenshot
-
-**Questions for Review:**
-1. Is the threshold appropriate, or should we adjust sensitivity?
-2. Who should receive these alerts? (Current: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bccfd9dfc9ced5c8c5fcd1c5dad5cecfc8ccced392dfd3d1">[email&#160;protected]</a>)
-3. Any additional exclusions needed?
-
-Please let me know if you'd like to schedule a walkthrough of the detection logic.
-
-Best regards,
-[Your name]</code></pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header">
-                <span>📧 Weekly Status Report</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <div class="code-block">
-                  <div class="code-header"><span class="code-title">Template</span></div>
-                  <div class="code-body">
-                    <pre><code>Subject: [myfirstpro Detection] Weekly Status - Week [X]
-
-Hi [Name],
-
-Here's the weekly progress update for the Detection Engineering engagement.
-
-**Overall Progress:** [X/13] use cases complete (XX%)
-
-**Completed This Week:**
-✅ WAF-UC1: Block Volume Anomaly - In production
-✅ WAF-UC2: Single Source Flood - Ready for review
-
-**In Progress:**
-🔄 WAF-UC3: Auth Endpoint Attack - SPL development (70%)
-🔄 WAF-UC4: SQLi/XSS Campaign - Threshold tuning
-
-**Blocked:**
-⚠️ MFA-UC1: Awaiting privileged user list from IAM team
-
-**Next Week Plan:**
-- Complete WAF-UC3 and UC4
-- Begin MFA detection development (pending IAM response)
-- Schedule mid-point review meeting
-
-**Risks:**
-- MFA detections blocked until user list received (requested [date])
-
-**Action Items for myfirstpro:**
-1. [ ] Provide privileged user list (Owner: IAM team)
-2. [ ] Review WAF-UC2 detection (Owner: Security)
-
-Best regards,
-[Your name]</code></pre>
-                  </div>
-                </div>
-              </div>
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Demo Preparation Checklist</h3>
+          <div class="card bordered-left warning" style="padding:20px;">
+            <div class="checklist">
+              <label class="checklist-item"><input type="checkbox"><span>Splunk search pre-loaded and tested (avoid typing live)</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Sample results available (don't rely on live data)</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Prepared 2-minute explanation of detection logic</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Know threshold values and why they were chosen</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Runbook ready to show SOC workflow</span></label>
+              <label class="checklist-item"><input type="checkbox"><span>Backup plan if Splunk is slow (screenshots)</span></label>
             </div>
           </div>
         </div>
 
-        <!-- Anticipated Questions -->
-        <div class="section">
-          <h2 class="subsection-title">Anticipated Client Questions</h2>
+        <!-- WEEKLY STATUS TEMPLATE -->
+        <div class="section" id="status-templates">
+          <h2 class="subsection-title">Weekly Status Update Template</h2>
+          
+          <div class="callout success" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Pro Tip: Lead with Progress</div>
+              <div class="callout-body">Always start with accomplishments before blockers. Clients want to hear progress first, then challenges with proposed solutions.</div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Weekly Status Template (Copy & Paste)</span></div>
+            <div class="code-body">
+              <pre><code>## Sobeys Detection Engineering — Weekly Status [DATE]
+
+### 📊 Overall Progress
+- **WAF/DDoS Project:** X/8 use cases (XX% complete)
+- **MFA Project:** X/5 use cases (XX% complete)
+- **Overall:** X/13 use cases (XX% complete)
+
+### ✅ Completed This Week
+1. [WAF-UC1] - [Name] — Deployed to production
+2. [MFA-UC2] - [Name] — Completed testing, pending approval
+3. [Task] — [Brief description]
+
+### 🔄 In Progress
+1. [WAF-UC3] - [Name] — Status: Development/Testing/Tuning
+   - Expected completion: [Date]
+2. [MFA-UC1] - [Name] — Status: [X]
+   - Expected completion: [Date]
+
+### 🚧 Blockers / Risks
+1. **[Blocker Title]**
+   - Impact: [What's affected]
+   - Proposed Solution: [Your recommendation]
+   - Owner: [Who needs to action]
+   - Days Blocked: [X]
+
+### 📋 Action Items (From Last Meeting)
+| Item | Owner | Status |
+|------|-------|--------|
+| [Action] | [Name] | ✅ Complete / 🔄 In Progress / ⏳ Pending |
+
+### 🎯 Next Week's Focus
+1. [Priority 1]
+2. [Priority 2]
+3. [Priority 3]
+
+### ❓ Questions for Client
+1. [Question requiring client input]
+2. [Decision needed]</code></pre>
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Executive Summary Template</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Executive Summary (For Leadership/Monthly Reports)</span></div>
+            <div class="code-body">
+              <pre><code>═══════════════════════════════════════════════════════════════
+SOBEYS DETECTION ENGINEERING — EXECUTIVE SUMMARY
+Report Date: [DATE]
+═══════════════════════════════════════════════════════════════
+
+PROJECT STATUS: 🟢 ON TRACK / 🟡 AT RISK / 🔴 BLOCKED
+
+OVERALL COMPLETION: ██████████░░░░░░░░░░ 50% (X/13 Use Cases)
+
+┌─────────────────────────────────────────────────────────────┐
+│ WORKSTREAM         │ STATUS    │ COMPLETE │ ON TRACK       │
+├─────────────────────────────────────────────────────────────┤
+│ WAF/DDoS Detection │ 🟢 Green  │ 4/8      │ Yes            │
+│ MFA Detection      │ 🟡 Yellow │ 1/5      │ At Risk        │
+│ Documentation      │ 🟢 Green  │ Complete │ Yes            │
+└─────────────────────────────────────────────────────────────┘
+
+KEY ACCOMPLISHMENTS THIS PERIOD:
+• Deployed X production detections with <5% false positive rate
+• Established baseline metrics for all WAF traffic patterns
+• Completed SOC runbook training for Tier 1 detections
+
+CRITICAL BLOCKERS:
+• [Blocker] — Owner: [Name] — Impact: [Days delayed]
+
+NEXT MILESTONE: [Milestone Name] — Target: [Date]
+═══════════════════════════════════════════════════════════════</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- TALKING POINTS BY PHASE -->
+        <div class="section" id="talking-points">
+          <h2 class="subsection-title">Talking Points by Project Phase</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+            <div class="mermaid">
+flowchart LR
+    A[Phase 1<br/>Discovery] --> B[Phase 2<br/>Development]
+    B --> C[Phase 3<br/>Testing]
+    C --> D[Phase 4<br/>Go-Live]
+    style A fill:#cce5ff,stroke:#007bff
+    style B fill:#fff3cd,stroke:#ffc107
+    style C fill:#d4edda,stroke:#28a745
+    style D fill:#f8d7da,stroke:#dc3545
+            </div>
+          </div>
+
+          <!-- Phase 1: Discovery -->
+          <div class="card bordered-left info" style="padding:20px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:12px;">Phase 1: Discovery — Talking Points</h3>
+            <h4 style="font-size:0.875rem;color:var(--success-600);margin:12px 0 8px;">✅ Key Messages</h4>
+            <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:20px;">
+              <li>"Data validation is critical before building detections — we're ensuring accuracy from day one"</li>
+              <li>"I've confirmed Akamai WAF data is flowing correctly with [X] events per hour"</li>
+              <li>"The Splunk Add-on for Akamai is properly configured and extracting all required fields"</li>
+              <li>"I've identified the privileged user population and we have [X] accounts to monitor"</li>
+            </ul>
+            <h4 style="font-size:0.875rem;color:var(--warning-600);margin:16px 0 8px;">⚠️ Anticipated Questions</h4>
+            <div class="table-container" style="margin-top:8px;">
+              <table style="font-size:0.8125rem;">
+                <tr><td class="highlight">"Why aren't we building detections yet?"</td><td>Discovery prevents costly rework later. Finding issues after deployment is 5x more expensive.</td></tr>
+                <tr><td class="highlight">"How long will discovery take?"</td><td>Typically 1 week for thorough validation. We're on track to complete by [date].</td></tr>
+                <tr><td class="highlight">"What data do you need from us?"</td><td>Privileged user list from IAM team, endpoint inventory, and network topology for correlation.</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Phase 2: Development -->
+          <div class="card bordered-left warning" style="padding:20px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:12px;">Phase 2: Development — Talking Points</h3>
+            <h4 style="font-size:0.875rem;color:var(--success-600);margin:12px 0 8px;">✅ Key Messages</h4>
+            <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:20px;">
+              <li>"I'm building detections using MITRE ATT&CK framework for industry-standard coverage"</li>
+              <li>"Thresholds are calculated from your 14-day baseline using statistical methods"</li>
+              <li>"Each detection includes a runbook for SOC response procedures"</li>
+              <li>"I'm implementing detections in priority order based on threat likelihood and impact"</li>
+            </ul>
+            <h4 style="font-size:0.875rem;color:var(--warning-600);margin:16px 0 8px;">⚠️ Anticipated Questions</h4>
+            <div class="table-container" style="margin-top:8px;">
+              <table style="font-size:0.8125rem;">
+                <tr><td class="highlight">"How do you determine thresholds?"</td><td>Mean plus 2 standard deviations from baseline, then tuned based on FP rate during testing.</td></tr>
+                <tr><td class="highlight">"Can we see the detection logic?"</td><td>Absolutely. Let me walk you through the SPL and explain each component.</td></tr>
+                <tr><td class="highlight">"Why this detection before that one?"</td><td>Prioritized by threat likelihood × impact. SQLi campaigns are more common than [X].</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Phase 3: Testing -->
+          <div class="card bordered-left success" style="padding:20px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:12px;">Phase 3: Testing — Talking Points</h3>
+            <h4 style="font-size:0.875rem;color:var(--success-600);margin:12px 0 8px;">✅ Key Messages</h4>
+            <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:20px;">
+              <li>"Detection is in silent mode — running but not alerting — to measure false positive rate"</li>
+              <li>"Current FP rate is [X]%, target is under 10% before production"</li>
+              <li>"I've validated the detection catches [X] known attack patterns in historical data"</li>
+              <li>"SOC team has reviewed the runbook and is ready for go-live"</li>
+            </ul>
+            <h4 style="font-size:0.875rem;color:var(--warning-600);margin:16px 0 8px;">⚠️ Anticipated Questions</h4>
+            <div class="table-container" style="margin-top:8px;">
+              <table style="font-size:0.8125rem;">
+                <tr><td class="highlight">"How do you know it works?"</td><td>Tested against historical attack data and synthetic test cases. Here are the results...</td></tr>
+                <tr><td class="highlight">"What's the false positive rate?"</td><td>Currently [X]% over 7 days of silent mode. Industry acceptable is under 10%.</td></tr>
+                <tr><td class="highlight">"When can we go live?"</td><td>After 7 days silent mode with FP rate under 10% and SOC sign-off on runbook.</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Phase 4: Go-Live -->
+          <div class="card bordered-left error" style="padding:20px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:12px;">Phase 4: Go-Live — Talking Points</h3>
+            <h4 style="font-size:0.875rem;color:var(--success-600);margin:12px 0 8px;">✅ Key Messages</h4>
+            <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:20px;">
+              <li>"Detection is now in production with [X] alerts generated in the first week"</li>
+              <li>"SOC has triaged [X] alerts with [Y]% confirmed as true positives"</li>
+              <li>"I'm monitoring for tuning opportunities based on SOC feedback"</li>
+              <li>"Documentation and runbooks are complete and handed off"</li>
+            </ul>
+            <h4 style="font-size:0.875rem;color:var(--warning-600);margin:16px 0 8px;">⚠️ Anticipated Questions</h4>
+            <div class="table-container" style="margin-top:8px;">
+              <table style="font-size:0.8125rem;">
+                <tr><td class="highlight">"Why are we getting so many alerts?"</td><td>Let me analyze the patterns. This could be tuning needed or a real increase in attacks.</td></tr>
+                <tr><td class="highlight">"Who maintains this after you leave?"</td><td>I've documented ownership in the RACI. [Name] owns ongoing tuning.</td></tr>
+                <tr><td class="highlight">"Can we add more detections?"</td><td>Yes, I've documented the roadmap. Let's discuss priorities for phase 2.</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ANTICIPATED Q&A -->
+        <div class="section" id="qa-prep">
+          <h2 class="subsection-title">Anticipated Client Questions & Answers</h2>
+          
+          <h3 style="font-size:1rem;margin-bottom:12px;">Technical Questions</h3>
           <div class="table-container">
             <table>
-              <thead>
-                <tr><th>Question</th><th>Senior-Level Answer</th></tr>
-              </thead>
+              <thead><tr><th style="width:35%;">Question</th><th>Senior-Level Answer</th></tr></thead>
               <tbody>
                 <tr>
                   <td class="highlight">"How accurate are these detections?"</td>
-                  <td>"Detection accuracy depends on two factors: true positive rate and false positive rate. I'm targeting &gt;90% TP rate with &lt;10% FP rate. Thresholds are calculated from your 14-day baseline using statistical methods — mean plus two standard deviations — rather than arbitrary values. This approach is industry standard for SIEM detection engineering."</td>
+                  <td>Detection accuracy depends on two factors: true positive rate and false positive rate. I'm targeting >90% TP rate with <10% FP rate. Thresholds are calculated from your 14-day baseline using statistical methods — mean plus two standard deviations — rather than arbitrary values. This approach is industry standard for SIEM detection engineering.</td>
                 </tr>
                 <tr>
-                  <td class="highlight">"Why Akamai specifically?"</td>
-                  <td>"Akamai is your deployed WAF vendor. The Splunk Add-on for Akamai provides native integration with field extractions and CIM mapping. The detections I'm building leverage Akamai-specific fields like rule tags, client reputation scores, and bot classification — capabilities specific to Kona Site Defender."</td>
+                  <td class="highlight">"Why Akamai and not another WAF?"</td>
+                  <td>Akamai is already your deployed WAF vendor. The Splunk Add-on for Akamai provides native integration with field extractions and CIM mapping. The detections I'm building leverage Akamai-specific fields like rule tags, client reputation scores, and bot classification — capabilities specific to Kona Site Defender.</td>
                 </tr>
                 <tr>
                   <td class="highlight">"How do detections handle DDoS vs legitimate traffic spikes?"</td>
-                  <td>"I'm implementing multi-signal correlation: source diversity analysis, geographic distribution, user agent patterns, and request entropy. A legitimate traffic spike from a marketing campaign shows different characteristics than a botnet attack — recognizable user agents, expected geographic distribution, and natural request patterns."</td>
+                  <td>I'm implementing multi-signal correlation: source diversity analysis, geographic distribution, user agent patterns, and request entropy. A legitimate traffic spike from a marketing campaign shows different characteristics than a botnet attack — recognizable user agents, expected geographic distribution, and natural request patterns.</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"What happens if Akamai data stops flowing?"</td>
+                  <td>I'm implementing data availability monitoring as part of the solution. A scheduled search checks data freshness every 15 minutes. If Akamai logs are delayed beyond threshold — typically 30 minutes — an operational alert fires. The runbook includes escalation to the Splunk admin and Akamai support contacts.</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"How do you handle MFA for privileged users specifically?"</td>
+                  <td>The MFA detections use a privileged user lookup table maintained by your IAM team. CyberArk handles primary MFA for privileged access, so I'm prioritizing CyberArk logs for privileged user detections. Entra ID provides secondary coverage for standard users. The detection logic includes privilege-aware thresholds — lower for admins, higher for standard users.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Project & Timeline Questions</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th style="width:35%;">Question</th><th>Answer</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">"Are we on schedule?"</td>
+                  <td>Yes/No. We're currently [X]% complete against a [Y]% target. [If behind]: The delay is due to [specific reason]. I've adjusted the plan and we'll recover by [date] by [specific action].</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Can we accelerate the timeline?"</td>
+                  <td>I can accelerate by [specific approach], but the trade-off is [risk]. My recommendation is to maintain quality standards to avoid rework. If acceleration is critical, I suggest [alternative].</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Why is this taking so long?"</td>
+                  <td>Detection engineering requires: data validation (1 week), baseline collection (2 weeks), development (1 week per complex use case), testing (1 week), and tuning (ongoing). Skipping steps leads to unreliable detections that burden the SOC.</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"What's blocking you?"</td>
+                  <td>Currently blocked on [specific item] from [specific team/person]. I've reached out on [date] and followed up on [date]. The impact is [X days delay]. I recommend escalation to [person] if not resolved by [date].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Value & ROI Questions</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th style="width:35%;">Question</th><th>Answer</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">"What's the value of these detections?"</td>
+                  <td>These detections provide: early warning for attacks (MTTD improvement), reduced breach risk through automated alerting, compliance evidence for auditors, and operational efficiency through automated triage. The MFA fatigue detection alone addresses a technique used in 50%+ of recent breaches.</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"How does this compare to what we had before?"</td>
+                  <td>Previously you had [basic/no] detection for these attack patterns. The new detections provide: [X] coverage improvement, [Y]% reduction in manual review, and MITRE ATT&CK mapping for compliance reporting.</td>
                 </tr>
                 <tr>
                   <td class="highlight">"What happens after you leave?"</td>
-                  <td>"I'm documenting everything for self-sufficiency: runbooks for each detection, threshold tuning procedures, and a troubleshooting guide. Your team will be able to tune thresholds, add exclusions, and create new detections using the patterns I've established. I'll also conduct a knowledge transfer session before wrap-up."</td>
-                </tr>
-                <tr>
-                  <td class="highlight">"Are we on track for the deadline?"</td>
-                  <td>"Based on current velocity, we're [on track / at risk]. I've completed X of 13 use cases. The critical path is [specific item]. If we maintain current pace, we'll complete by [date]. However, [blocker] could impact timeline if not resolved by [date]. I recommend [specific action] to mitigate."</td>
+                  <td>I'm building for sustainability: comprehensive documentation, SOC training, runbooks for every detection, and defined ownership. The detections are designed for your team to tune and maintain independently.</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- Response Patterns -->
+        <!-- PROFESSIONAL LANGUAGE GUIDE -->
         <div class="section">
-          <h2 class="subsection-title">Professional Response Patterns</h2>
+          <h2 class="subsection-title">Professional Language Guide</h2>
           <div class="grid grid-2">
-            <div class="card bordered-left error">
-              <h4>❌ Avoid Saying</h4>
-              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;margin-top:8px;">
-                <li>"I don't know" (without follow-up)</li>
-                <li>"That's not my area"</li>
-                <li>"I think maybe..."</li>
-                <li>"It should work..."</li>
-                <li>"Someone needs to..."</li>
+            <div class="card bordered-left success" style="padding:20px;">
+              <h3 style="font-size:1rem;color:var(--success-600);margin-bottom:12px;">✅ Say This</h3>
+              <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:16px;">
+                <li>"Based on my analysis of your historical data..."</li>
+                <li>"Industry best practice recommends..."</li>
+                <li>"I've implemented this using a statistical approach..."</li>
+                <li>"The detection leverages MITRE ATT&CK technique..."</li>
+                <li>"I recommend a phased approach to minimize risk..."</li>
+                <li>"Let me walk you through the detection logic..."</li>
+                <li>"I've documented this for knowledge transfer..."</li>
+                <li>"This aligns with your compliance requirements..."</li>
+                <li>"Testing confirms that..."</li>
+                <li>"Let me research that and follow up..."</li>
               </ul>
             </div>
-            <div class="card bordered-left success">
-              <h4>✅ Say Instead</h4>
-              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;margin-top:8px;">
-                <li>"Let me research this and get back to you by [time]"</li>
-                <li>"I'll coordinate with [team] to resolve this"</li>
-                <li>"Based on the data, I recommend..."</li>
-                <li>"I've tested this configuration and confirmed..."</li>
-                <li>"I'll take ownership of [task] and update you by [date]"</li>
+            <div class="card bordered-left error" style="padding:20px;">
+              <h3 style="font-size:1rem;color:var(--error-600);margin-bottom:12px;">❌ Avoid This</h3>
+              <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:16px;">
+                <li>"I think..." (instead: "Based on data/analysis...")</li>
+                <li>"It should work..." (instead: "Testing confirms...")</li>
+                <li>"I don't know" (instead: "Let me research that...")</li>
+                <li>"That's not my job" (instead: "I can coordinate with...")</li>
+                <li>"We've always done it this way" (be adaptable)</li>
+                <li>"This is easy/simple" (undermines complexity)</li>
+                <li>"I'm just a contractor" (own your expertise)</li>
+                <li>"Hopefully..." (instead: "The expected outcome...")</li>
+                <li>"I'm not sure but..." (research first, then speak)</li>
+                <li>"That's impossible" (instead: "Here are the constraints...")</li>
               </ul>
             </div>
           </div>
         </div>
 
-        <!-- Meeting Tips -->
-        <div class="section">
-          <h2 class="subsection-title">Meeting Best Practices</h2>
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Before the Meeting</h4>
-                <p class="timeline-body">
-                  Review progress since last meeting. Prepare 2-3 key points to cover. Have SPL queries ready to demo. Anticipate questions.
-                </p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Start of Meeting</h4>
-                <p class="timeline-body">
-                  State the agenda upfront. "Today I'll cover: progress update, demo of UC1, and discuss blockers." Respect their time.
-                </p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">During the Meeting</h4>
-                <p class="timeline-body">
-                  Be concise. Show working demos, not just slides. When asked something you don't know, write it down and commit to following up.
-                </p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">End of Meeting</h4>
-                <p class="timeline-body">
-                  Summarize action items with owners and dates. "To confirm: I'll have UC2 ready by Friday, and [Name] will provide the user list by Wednesday."
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      
         <!-- EDGE CASES & CLIENT CHALLENGES -->
         <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
           <h2 class="subsection-title" style="color:var(--warning-600);">⚠️ Client Challenges & How to Handle</h2>
@@ -364,64 +450,401 @@ Best regards,
             <table>
               <thead><tr><th>Scenario</th><th>Client Says</th><th>Real Issue</th><th>How to Respond</th></tr></thead>
               <tbody>
-                <tr><td class="highlight">Unrealistic expectations</td><td>"Zero false positives"</td><td>Don't understand tradeoffs</td><td>Educate on FP/FN tradeoff with examples</td></tr>
-                <tr><td class="highlight">Scope creep</td><td>"Add 5 more use cases"</td><td>Expanding beyond SOW</td><td>Document as change request, get approval</td></tr>
-                <tr><td class="highlight">Missing data</td><td>"Detect X" but no X logs</td><td>Data source not onboarded</td><td>Document gap, add to roadmap or scope</td></tr>
-                <tr><td class="highlight">Unresponsive</td><td>No reply for days</td><td>Other priorities</td><td>Escalate to sponsor, document delays</td></tr>
-                <tr><td class="highlight">Conflicting requirements</td><td>Security wants X, IT wants Y</td><td>No decision owner</td><td>Identify RACI, escalate for decision</td></tr>
-                <tr><td class="highlight">Don't know what they want</td><td>"Detect bad things"</td><td>No specific requirements</td><td>Propose standard set based on MITRE ATT&CK</td></tr>
-                <tr><td class="highlight">Blame game</td><td>"You missed the attack"</td><td>May be data/scope issue</td><td>Root cause analysis, document objectively</td></tr>
+                <tr><td class="highlight">Unrealistic expectations</td><td>"Zero false positives"</td><td>Don't understand tradeoffs</td><td>Educate on FP/FN tradeoff: "Every detection is a balance. Lower FP means higher FN. Industry standard is <10% FP."</td></tr>
+                <tr><td class="highlight">Scope creep</td><td>"Add 5 more use cases"</td><td>Expanding beyond SOW</td><td>Document change request, assess impact, get written approval before starting</td></tr>
+                <tr><td class="highlight">Missing data</td><td>"Detect X" but no X logs</td><td>Data source not onboarded</td><td>"To build this detection, we need [data]. Options: (A) Onboard it, (B) Build partial detection, (C) Add to roadmap"</td></tr>
+                <tr><td class="highlight">Unresponsive stakeholder</td><td>No reply for 3+ days</td><td>Other priorities</td><td>Document delays, escalate to sponsor, send "assuming approval if no response by [date]"</td></tr>
+                <tr><td class="highlight">Conflicting requirements</td><td>Security wants X, IT wants Y</td><td>No decision owner</td><td>Don't take sides. Document both, present trade-offs, escalate for decision</td></tr>
+                <tr><td class="highlight">Don't know what they want</td><td>"Detect bad things"</td><td>No specific requirements</td><td>Propose standard set based on MITRE ATT&CK: "Here are the top 5 techniques targeting retail..."</td></tr>
+                <tr><td class="highlight">Blame game</td><td>"You missed the attack"</td><td>May be data/scope issue</td><td>Objective root cause analysis: "Let me investigate. The detection covers X; this attack used Y technique."</td></tr>
+                <tr><td class="highlight">Wants to skip testing</td><td>"Just turn it on"</td><td>Pressure to deliver</td><td>"I understand the urgency. Skipping testing risks alert fatigue and SOC burnout. Here's a compressed testing plan..."</td></tr>
               </tbody>
             </table>
           </div>
 
-          <h3 style="font-size:1rem;margin:24px 0 12px;">Response Template: Scope Creep</h3>
-          <div class="code-block">
-            <div class="code-header"><span class="code-title">Email Template</span></div>
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Email Templates for Difficult Situations</h3>
+          
+          <div class="code-block" style="margin-bottom:16px;">
+            <div class="code-header"><span class="code-title">Scope Creep Response</span></div>
             <div class="code-body">
-              <pre><code>Hi [Name],
+              <pre><code>Subject: RE: Additional Use Case Request — Impact Assessment
 
-Thank you for the additional use case request. I'd be happy to help with [X].
+Hi [Name],
 
-This is in addition to the [N] use cases in our statement of work. 
-To proceed, I need to:
-1. Confirm this extends the scope
-2. Discuss timeline impact ([estimate])
-3. Get approval for resource implications
+Thank you for the additional use case request for [X]. I'd be happy to help with this.
 
-Can we schedule a quick call to align?
+To set expectations, this is in addition to the [N] use cases in our current scope. 
+Before proceeding, I need to:
 
-Best regards</code></pre>
+1. Confirm this extends the current scope
+2. Assess timeline impact (preliminary estimate: +[X] days)
+3. Get written approval from [sponsor/PM]
+
+Options:
+A) Add to current engagement (+[X] days, +$[Y] if applicable)
+B) Replace lower-priority use case [UC-X] with this one (timeline neutral)
+C) Add to Phase 2 roadmap
+
+Can we schedule 15 minutes to discuss?
+
+Best regards,
+[Your name]</code></pre>
             </div>
           </div>
 
-          <h3 style="font-size:1rem;margin:24px 0 12px;">Response Template: Missing Data</h3>
-          <div class="code-block">
-            <div class="code-header"><span class="code-title">Email Template</span></div>
+          <div class="code-block" style="margin-bottom:16px;">
+            <div class="code-header"><span class="code-title">Escalation Email (Blocker)</span></div>
             <div class="code-body">
-              <pre><code>Hi [Name],
+              <pre><code>Subject: Escalation: [Blocker] Impacting Detection Engineering Timeline
 
-I've analyzed the requirements for [Use Case X]. To build this detection, 
-we need [specific log/field] which is not currently in Splunk.
+Hi [Sponsor],
 
-Options:
-A) Onboard [data source] - estimated [X] days
-B) Build partial detection - covers [Y%] of scenarios  
-C) Document as gap for future roadmap
+I'm escalating a blocker that is impacting our detection engineering timeline.
 
-My recommendation is Option [N] because [reasoning].
+**Issue:** [Specific blocker]
+**Impact:** [X] use cases delayed by [Y] days
+**Blocked Since:** [Date]
+**Attempts to Resolve:**
+- [Date]: Emailed [person]
+- [Date]: Followed up
+- [Date]: Requested meeting (no response)
 
-What would you like to proceed with?</code></pre>
+**Request:** Can you help expedite this with [team/person]?
+
+**If Not Resolved By [Date]:** Timeline will slip by [X] days, affecting 
+our [milestone] target.
+
+Happy to discuss in our next sync.
+
+Best regards,
+[Your name]</code></pre>
             </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Detection Missed Attack — Root Cause Response</span></div>
+            <div class="code-body">
+              <pre><code>Subject: Root Cause Analysis: [Incident ID] Detection Coverage
+
+Hi [Name],
+
+I've completed my analysis of why [detection name] did not alert on 
+the [date] incident.
+
+**Finding:** The attack used [technique Y]. Our detection covers [technique X].
+This is a coverage gap, not a detection failure.
+
+**Root Cause:** [Specific reason — e.g., "The attacker used API endpoint /v2/auth 
+which was not included in our monitored path list per original scope."]
+
+**Remediation Options:**
+A) Expand detection to cover [Y] — [X] days effort
+B) Create new detection for [Y] — [X] days effort
+C) Accept risk and document gap
+
+**Recommendation:** Option [A/B] because [reasoning].
+
+Let me know how you'd like to proceed.
+
+Best regards,
+[Your name]</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- STAKEHOLDER MANAGEMENT -->
+        <div class="section">
+          <h2 class="subsection-title">Stakeholder Management</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Stakeholder</th><th>What They Care About</th><th>How to Communicate</th><th>Frequency</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Project Sponsor</td>
+                  <td>On time, on budget, risks mitigated</td>
+                  <td>Executive summary, RAG status, escalations</td>
+                  <td>Weekly + as needed</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Security Manager</td>
+                  <td>Threat coverage, detection quality</td>
+                  <td>Technical details, MITRE mapping, FP rates</td>
+                  <td>Weekly</td>
+                </tr>
+                <tr>
+                  <td class="highlight">SOC Lead</td>
+                  <td>Alert volume, runbook clarity, workload</td>
+                  <td>Operational focus, demo workflows, training</td>
+                  <td>Weekly + pre-go-live</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Splunk Admin</td>
+                  <td>Performance, resource usage, stability</td>
+                  <td>Technical specs, search optimization, app vetting</td>
+                  <td>As needed</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Compliance/Audit</td>
+                  <td>Evidence, documentation, coverage</td>
+                  <td>Formal reports, MITRE mapping, retention</td>
+                  <td>Monthly or on request</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Accenture PM</td>
+                  <td>Client satisfaction, timeline, risks</td>
+                  <td>Status reports, early warning on issues</td>
+                  <td>Weekly internal sync</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <div class="callout info" style="margin-top:16px;">
             <div class="callout-content">
-              <div class="callout-title">Pro Tips</div>
+              <div class="callout-title">Solo Consultant Survival Tips</div>
               <div class="callout-body">
-                • <strong>Never take sides</strong> in stakeholder conflicts - present options, let them decide<br>
-                • <strong>Always get decisions in writing</strong> (email follow-up after calls)<br>
-                • <strong>Never just absorb extra work</strong> - document impact first<br>
-                • <strong>CC your manager</strong> on scope change discussions
+                • <strong>Over-communicate:</strong> No one knows what you're doing unless you tell them<br>
+                • <strong>Document everything:</strong> Decisions, approvals, blockers — all in writing<br>
+                • <strong>Escalate early:</strong> Don't wait until you're blocked for a week<br>
+                • <strong>Manage expectations:</strong> Under-promise, over-deliver<br>
+                • <strong>Build relationships:</strong> The SOC analyst who helps you will make or break your project<br>
+                • <strong>Protect yourself:</strong> Scope changes in writing, delays documented with dates
               </div>
-            </d
+            </div>
+          </div>
+        </div>
+
+      
+        <!-- BUILDING CREDIBILITY WITH SKEPTICAL STAKEHOLDERS -->
+        <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
+          <h2 class="subsection-title" style="color:var(--primary-600);">🎯 Building Credibility: Proving Your Worth</h2>
+          
+          <div class="callout critical" style="margin-bottom:24px;">
+            <div class="callout-content">
+              <div class="callout-title">When the Manager Has Doubts About You</div>
+              <div class="callout-body">
+                Your work must speak louder than any first impression. Every interaction is an opportunity to demonstrate competence. Follow this playbook to systematically build trust and change perceptions.
+              </div>
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin-bottom:12px;">The Credibility Formula</h3>
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+            <div class="mermaid">
+flowchart LR
+    A[Preparation] --> B[Execution]
+    B --> C[Communication]
+    C --> D[Consistency]
+    D --> E[TRUST]
+    style A fill:#cce5ff,stroke:#007bff
+    style E fill:#d4edda,stroke:#28a745
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Week-by-Week Trust Building Plan</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Week</th><th>Goal</th><th>Actions</th><th>What Manager Sees</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Week 1</td>
+                  <td>Show you're prepared</td>
+                  <td>Ask smart questions, have data validation done, send detailed status</td>
+                  <td>"They came prepared and know the technology"</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Week 2</td>
+                  <td>Deliver early win</td>
+                  <td>Complete first detection, demo it working, show sample alerts</td>
+                  <td>"They can actually build working detections"</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Week 3</td>
+                  <td>Show depth of knowledge</td>
+                  <td>Explain threshold methodology, reference MITRE, discuss tradeoffs</td>
+                  <td>"They understand this at a deeper level than expected"</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Week 4</td>
+                  <td>Anticipate problems</td>
+                  <td>Identify risk before it's a blocker, propose solutions proactively</td>
+                  <td>"They're thinking ahead, not just reacting"</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Week 5+</td>
+                  <td>Establish as expert</td>
+                  <td>SOC asks you questions, you train others, documentation is thorough</td>
+                  <td>"They're the go-to person for detection questions"</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Behaviors That Build Trust</h3>
+          <div class="grid grid-2">
+            <div class="card bordered-left success" style="padding:20px;">
+              <h4 style="font-size:0.9375rem;color:var(--success-600);margin-bottom:12px;">✅ Do These Things</h4>
+              <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:16px;">
+                <li><strong>Over-prepare for every meeting</strong> — Know more than you'll need</li>
+                <li><strong>Send status updates before asked</strong> — Proactive communication</li>
+                <li><strong>Deliver before deadlines</strong> — Under-promise, over-deliver</li>
+                <li><strong>Admit knowledge gaps honestly</strong> — Then research and follow up same day</li>
+                <li><strong>Document everything meticulously</strong> — Shows professionalism</li>
+                <li><strong>Ask clarifying questions</strong> — Shows you think deeply</li>
+                <li><strong>Bring solutions, not just problems</strong> — "I found X issue, I recommend Y"</li>
+                <li><strong>Reference industry standards</strong> — MITRE, NIST, vendor best practices</li>
+                <li><strong>Know your numbers</strong> — FP rate, event count, threshold values</li>
+                <li><strong>Follow up on everything</strong> — Never let anything drop</li>
+              </ul>
+            </div>
+            <div class="card bordered-left error" style="padding:20px;">
+              <h4 style="font-size:0.9375rem;color:var(--error-600);margin-bottom:12px;">❌ Never Do These</h4>
+              <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:16px;">
+                <li><strong>Say "I don't know" without follow-up</strong> — Always add "I'll research and get back to you by [time]"</li>
+                <li><strong>Miss a deadline without early warning</strong> — Communicate delays 2+ days ahead</li>
+                <li><strong>Get defensive when questioned</strong> — Stay calm, provide data</li>
+                <li><strong>Make excuses</strong> — Own mistakes, focus on solutions</li>
+                <li><strong>Be unprepared in meetings</strong> — This confirms their doubts</li>
+                <li><strong>Overpromise to impress</strong> — Failed promises destroy trust faster</li>
+                <li><strong>Wait to be asked for updates</strong> — Proactive beats reactive</li>
+                <li><strong>Hide problems</strong> — Surface issues early with solutions</li>
+                <li><strong>Use uncertain language</strong> — "I think", "maybe", "hopefully"</li>
+                <li><strong>Show frustration publicly</strong> — Stay professional always</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Handling "I Don't Know" Professionally</h3>
+          <div class="callout info" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">The Professional Response Formula</div>
+              <div class="callout-body">
+                <strong>Never just say "I don't know."</strong> Always follow this pattern:<br><br>
+                <code>"That's a great question. I want to give you an accurate answer, so let me [research/verify/check] and I'll have that for you by [specific time]."</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead><tr><th>They Ask...</th><th>❌ Bad Response</th><th>✅ Professional Response</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">"What's the FP rate?"</td>
+                  <td>"I'm not sure, maybe 15%?"</td>
+                  <td>"Based on the last 7 days, we're at 8.3% — 12 FPs out of 145 alerts. I have the breakdown by rule if you'd like details."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Why did you choose that threshold?"</td>
+                  <td>"It seemed about right"</td>
+                  <td>"I analyzed 14 days of baseline data. The mean is 47 events/hour with a standard deviation of 12. The threshold of 71 is mean plus 2 sigma, which statistically captures 95% of normal variation."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"How does this compare to industry?"</td>
+                  <td>"I don't know"</td>
+                  <td>"I'd need to research specific benchmarks for retail WAF detection. Let me compile that and share by EOD tomorrow. In general, SANS recommends targeting under 10% FP rate for SOC sustainability."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Can you detect [specific attack]?"</td>
+                  <td>"I'm not familiar with that"</td>
+                  <td>"Let me verify the MITRE technique ID and data requirements. I'll analyze whether our current data sources can support that detection and report back by [time]."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Why is this taking so long?"</td>
+                  <td>"It's complicated"</td>
+                  <td>"The current blocker is [X]. I've taken these steps: [1, 2, 3]. Expected resolution is [date]. If we need to accelerate, options are [A, B, C] with trade-offs."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Quick Credibility Wins</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Action</th><th>Effort</th><th>Impact</th><th>When</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Send detailed meeting notes same day</td>
+                  <td>15 min</td>
+                  <td><span class="badge success">High</span></td>
+                  <td>After every meeting</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Share data validation results Day 1</td>
+                  <td>2 hours</td>
+                  <td><span class="badge success">High</span></td>
+                  <td>First day</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Demo working detection Week 2</td>
+                  <td>1 day</td>
+                  <td><span class="badge critical">Very High</span></td>
+                  <td>Week 2</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Create MITRE coverage map</td>
+                  <td>4 hours</td>
+                  <td><span class="badge success">High</span></td>
+                  <td>Week 1</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Identify a risk before it's a problem</td>
+                  <td>Ongoing</td>
+                  <td><span class="badge critical">Very High</span></td>
+                  <td>Continuously</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Reference specific threshold methodology</td>
+                  <td>5 min</td>
+                  <td><span class="badge warning">Medium</span></td>
+                  <td>When discussing detections</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Have backup screenshots for demos</td>
+                  <td>10 min</td>
+                  <td><span class="badge success">High</span></td>
+                  <td>Before demos</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">When Things Go Wrong (Recovery Playbook)</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Situation</th><th>Wrong Response</th><th>Right Response</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">You made a mistake</td>
+                  <td>Hide it, make excuses, blame others</td>
+                  <td>Own it immediately: "I made an error on X. Here's what happened, here's the impact, and here's my fix. It won't happen again because [prevention]."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Detection didn't catch an attack</td>
+                  <td>"The detection is working fine"</td>
+                  <td>"Let me do root cause analysis. [After analysis]: The detection covers technique X; this attack used technique Y. Here are options to expand coverage..."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">You missed a deadline</td>
+                  <td>Miss it and apologize after</td>
+                  <td>Communicate 2+ days early: "I'm tracking behind on X due to [reason]. New ETA is [date]. Options to accelerate: [A, B]. Recommend [option] because [reason]."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Manager questions your approach</td>
+                  <td>Get defensive or capitulate completely</td>
+                  <td>"I chose this approach because [reasoning based on data]. I'm open to alternatives — what concerns do you have? Let me analyze the trade-offs."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</body>
+</html>

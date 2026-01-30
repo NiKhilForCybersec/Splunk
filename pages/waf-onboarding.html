@@ -12,7 +12,7 @@
 </head>
 <body>
   <div class="app-container">
-                        <aside class="sidebar">
+    <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
           <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
@@ -32,6 +32,13 @@
           <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
           <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
           <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Fundamentals</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101 (Start Here)</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
+          <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow & Event Hub</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Data Sources</div>
@@ -70,364 +77,438 @@
     <main class="main-content">
       <header class="header">
         <div class="header-left">
-          <button class="menu-toggle" aria-label="Toggle menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
             <span class="breadcrumb-item current">Log Onboarding</span>
           </div>
         </div>
-        <span class="badge akamai">Akamai SIEM</span>
+        <span class="badge info">3 Data Sources</span>
       </header>
 
       <div class="page-content">
         <div class="section">
-          <h1 class="section-title">Log Onboarding Guide</h1>
-          <p class="section-subtitle">Step-by-step guide for Akamai SIEM integration with Splunk Cloud</p>
+          <h1 class="section-title">Log Onboarding & Validation</h1>
+          <p class="section-subtitle">Step-by-step onboarding process for each data source — select your source below</p>
         </div>
 
-
-        <!-- Onboarding Timeline -->
-        <div class="section">
-          <h2 class="subsection-title">Onboarding Timeline</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
-flowchart LR
-    A[Day 1<br/>Install TA] --> B[Day 1<br/>Create Index]
-    B --> C[Day 2<br/>API Credentials]
-    C --> D[Day 2<br/>Configure Input]
-    D --> E[Day 3<br/>Validate Data]
-    E --> F[Day 3-5<br/>Field Mapping]
-    F --> G[Day 5<br/>Ready for Detection]
-    
-    style A fill:#cce5ff,stroke:#007bff
-    style G fill:#d4edda,stroke:#28a745
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Prerequisites -->
-        <div class="section">
-          <h2 class="subsection-title">Prerequisites Checklist</h2>
-          <div class="card">
-            <ul class="checklist" data-checklist-id="onboarding-prereqs">
-              <li class="checklist-item"><input type="checkbox" id="p1"><label for="p1">Splunk Cloud admin access</label></li>
-              <li class="checklist-item"><input type="checkbox" id="p2"><label for="p2">Akamai Control Center access with API permissions</label></li>
-              <li class="checklist-item"><input type="checkbox" id="p3"><label for="p3">Akamai Security Configuration (SIEM events enabled)</label></li>
-              <li class="checklist-item"><input type="checkbox" id="p4"><label for="p4">Index "akamai" created in Splunk (or permission to create)</label></li>
-              <li class="checklist-item"><input type="checkbox" id="p5"><label for="p5">HEC endpoint URL and port confirmed</label></li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Akamai SIEM Steps -->
-        <div class="section">
-          <h2 class="subsection-title">Akamai SIEM Integration Steps</h2>
-          
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 1: Install Splunk Add-on for Akamai</h4>
-                <p class="timeline-body">
-                  In Splunk: Apps → Find More Apps → Search "Akamai" → Install "Splunk Add-on for Akamai SIEM" (TA-akamai)<br>
-                  <strong>Splunk Cloud:</strong> Submit support ticket with .tgz file if self-install disabled.
-                </p>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 2: Create Akamai API Credentials</h4>
-                <p class="timeline-body">
-                  In Akamai Control Center: Identity & Access → API Users → Create API Client<br>
-                  <strong>Required Scopes:</strong> SIEM, Events
-                </p>
-                <div class="code-block" style="margin-top:12px;">
-                  <div class="code-header"><span class="code-title">Record these values:</span></div>
-                  <div class="code-body">
-                    <pre><code>Client ID: __________________________
-Client Secret: ______________________
-Access Token: _______________________
-API Host: ___________________________ (e.g., akaa-xxxxx.luna.akamaiapis.net)</code></pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 3: Create Index in Splunk</h4>
-                <p class="timeline-body">
-                  Settings → Indexes → New Index<br>
-                  <strong>Name:</strong> akamai<br>
-                  <strong>Max Size:</strong> Based on retention requirements
-                </p>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 4: Configure Add-on Account</h4>
-                <p class="timeline-body">
-                  TA-akamai → Configuration → Add Account<br>
-                  Enter the API credentials from Step 2
-                </p>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 5: Create SIEM Input</h4>
-                <p class="timeline-body">
-                  TA-akamai → Inputs → Create New Input
-                </p>
-                <div class="table-container" style="margin-top:12px;">
-                  <table>
-                    <thead><tr><th>Setting</th><th>Value</th></tr></thead>
-                    <tbody>
-                      <tr><td class="highlight">Name</td><td>akamai_siem_events</td></tr>
-                      <tr><td class="highlight">Account</td><td>(Select account from Step 4)</td></tr>
-                      <tr><td class="highlight">Config IDs</td><td>(Security config IDs - ask Akamai admin)</td></tr>
-                      <tr><td class="highlight">Index</td><td>akamai</td></tr>
-                      <tr><td class="highlight">Interval</td><td>60</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 6: Validate Data Flow</h4>
-                <div class="code-block" style="margin-top:8px;">
-                  <div class="code-header"><span class="code-title">Validation Query</span></div>
-                  <div class="code-body">
-                    <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
-| stats count as events 
-        dc(attackData.clientIP) as unique_ips
-        latest(_time) as last_event
-| eval last_event = strftime(last_event, "%Y-%m-%d %H:%M:%S")
-| eval status = if(events > 0, "✅ Success", "❌ No data")</code></pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CyberArk Onboarding -->
-        <div class="section">
-          <h2 class="subsection-title">CyberArk Identity Onboarding</h2>
-          
-          <div class="callout info">
-            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            <div class="callout-content">
-              <div class="callout-title">CyberArk Integration Method</div>
-              <div class="callout-body">CyberArk Identity typically uses SIEM connector or Syslog forwarding. Verify with CyberArk admin which method is configured.</div>
-            </div>
+        <!-- TABS -->
+        <div class="tabs-container">
+          <div class="tabs-nav">
+            <button class="tab-btn akamai active" data-tab="akamai-tab">🛡️ Akamai WAF</button>
+            <button class="tab-btn cyberark" data-tab="cyberark-tab">🔐 CyberArk Identity</button>
+            <button class="tab-btn entra" data-tab="entra-tab">☁️ Entra ID</button>
           </div>
 
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 1: Install CyberArk Add-on</h4>
-                <p class="timeline-body">Splunkbase: "CyberArk Add-on for Splunk" or use generic syslog input</p>
-              </div>
+          <!-- ==================== AKAMAI TAB ==================== -->
+          <div id="akamai-tab" class="tab-content akamai-content active">
+            <div class="tab-header">
+              <h3>Akamai WAF Log Onboarding</h3>
+              <span class="badge akamai">WAF/DDoS Project</span>
             </div>
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 2: Create Index</h4>
-                <p class="timeline-body">Settings → Indexes → New Index → Name: "cyberark"</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 3: Configure SIEM Connector in CyberArk</h4>
-                <p class="timeline-body">CyberArk Admin Portal → Settings → SIEM Integration → Add Splunk endpoint</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 4: Validate</h4>
-                <div class="code-block" style="margin-top:8px;">
-                  <div class="code-body">
-                    <pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-1h
-| stats count dc(ActorId) as users dc(EventType) as events</code></pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Entra ID Onboarding -->
-        <div class="section">
-          <h2 class="subsection-title">Entra ID Onboarding</h2>
-          
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 1: Azure App Registration</h4>
-                <p class="timeline-body">
-                  Azure Portal → App registrations → New registration<br>
-                  <strong>Name:</strong> Splunk-EntraID-Integration<br>
-                  <strong>Record:</strong> Application (client) ID, Directory (tenant) ID
-                </p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 2: Create Client Secret</h4>
-                <p class="timeline-body">
-                  Certificates & secrets → New client secret<br>
-                  <strong>Expiry:</strong> 24 months (max)<br>
-                  <strong>⚠️ Copy secret immediately</strong> - it won't be shown again
-                </p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 3: Configure API Permissions</h4>
-                <p class="timeline-body">
-                  API permissions → Add a permission → Microsoft Graph → Application permissions<br>
-                  <strong>Add:</strong> AuditLog.Read.All, Directory.Read.All, Policy.Read.All<br>
-                  <strong>Click:</strong> Grant admin consent
-                </p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 4: Install Microsoft Cloud Services Add-on</h4>
-                <p class="timeline-body">Splunk → Apps → Find More Apps → "Microsoft Cloud Services Add-on"</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 5: Configure Add-on</h4>
-                <p class="timeline-body">
-                  Add-on → Configuration → Azure AD Account → Add<br>
-                  Enter: Client ID, Client Secret, Tenant ID
-                </p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-content">
-                <h4 class="timeline-title">Step 6: Create Input</h4>
-                <p class="timeline-body">
-                  Inputs → Azure AD Sign-in Logs<br>
-                  <strong>Index:</strong> azure<br>
-                  <strong>Interval:</strong> 300 seconds
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="callout warning" style="margin-top:16px;">
-            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-            <div class="callout-content">
-              <div class="callout-title">⚠️ Client Secret Expiry Alert</div>
-              <div class="callout-body">Set a calendar reminder 30 days before client secret expiry. Data ingestion will silently stop when it expires!</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Validation Checklist -->
-        <div class="section">
-          <h2 class="subsection-title">Post-Onboarding Validation Checklist</h2>
-          <div class="card">
-            <ul class="checklist" data-checklist-id="post-onboarding">
-              <li class="checklist-item"><input type="checkbox" id="v1"><label for="v1">Data present in index (count > 0)</label></li>
-              <li class="checklist-item"><input type="checkbox" id="v2"><label for="v2">Timestamp parsing correct (_time matches raw)</label></li>
-              <li class="checklist-item"><input type="checkbox" id="v3"><label for="v3">All expected fields extracted</label></li>
-              <li class="checklist-item"><input type="checkbox" id="v4"><label for="v4">Indexing latency < 10 minutes</label></li>
-              <li class="checklist-item"><input type="checkbox" id="v5"><label for="v5">CIM field aliases working (src, dest, action)</label></li>
-              <li class="checklist-item"><input type="checkbox" id="v6"><label for="v6">No parsing errors in _internal</label></li>
-            </ul>
-          </div>
-        </div>
-
-      
-        <!-- EDGE CASES & DECISIONS -->
-        <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
-          <h2 class="subsection-title" style="color:var(--warning-600);">⚠️ Edge Cases & Decisions You'll Face</h2>
-          
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
-            <div class="mermaid">
+            <!-- Akamai Decision Tree -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">Akamai Onboarding Decision Tree</h4>
+            <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+              <div class="mermaid">
 flowchart TD
-    A[New Data Source] --> B{Create new index<br/>or use existing?}
-    B -->|New Index| C[✓ Dedicated retention<br/>✓ Access control<br/>✓ Better performance]
-    B -->|Existing| D[⚠ Mixed retention<br/>⚠ Permission conflicts]
-    style C fill:#d4edda,stroke:#28a745
-    style D fill:#fff3cd,stroke:#ffc107
+    A[Start: Akamai<br/>Onboarding] --> B{Index exists?<br/>index=akamai}
+    B -->|No| C[Request index creation<br/>from Splunk Admin]
+    B -->|Yes| D{Data flowing?<br/>Run validation query}
+    C --> D
+    D -->|No| E{HEC token<br/>configured?}
+    D -->|Yes| F{Correct<br/>sourcetype?}
+    E -->|No| G[Create HEC token<br/>Configure in Akamai]
+    E -->|Yes| H[Check Akamai SIEM<br/>integration status]
+    G --> D
+    H --> I{SIEM API<br/>enabled?}
+    I -->|No| J[Enable Akamai<br/>SIEM Integration]
+    I -->|Yes| K[Check network<br/>connectivity]
+    J --> D
+    K --> D
+    F -->|No| L[Install Splunk<br/>Add-on for Akamai]
+    F -->|Yes| M{Fields<br/>extracting?}
+    L --> M
+    M -->|No| N[Check TA config<br/>props.conf]
+    M -->|Yes| O[✅ Akamai<br/>Ready]
+    N --> M
+    
+    style A fill:#ff9900,stroke:#ff6600
+    style O fill:#d4edda,stroke:#28a745
+              </div>
+            </div>
+
+            <!-- Akamai Checklist -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">Akamai Onboarding Checklist</h4>
+            <div class="card bordered-left akamai" style="padding:20px;margin-bottom:24px;">
+              <div class="checklist">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>akamai</code> exists</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Confirm HEC token created for Akamai</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Verify Akamai SIEM Integration enabled in Luna Control Center</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Splunk Add-on for Akamai installed</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Run data validation query (below)</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Verify field extraction working</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Confirm CIM mapping (Web datamodel)</span></label>
+              </div>
+            </div>
+
+            <!-- Akamai Validation Queries -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">Akamai Validation Queries</h4>
+            <div class="code-block" style="margin-bottom:24px;">
+              <div class="code-header"><span class="code-title">Akamai Data Validation</span></div>
+              <div class="code-body">
+                <pre><code>``` 1. Check if data is flowing
+index=akamai earliest=-1h | stats count
+| eval status = if(count > 0, "✅ Data flowing", "❌ No data")
+
+``` 2. Check sourcetype
+index=akamai earliest=-1h | stats count by sourcetype
+``` Expected: akamai:siem
+
+``` 3. Check data freshness (latency)
+index=akamai earliest=-1h 
+| stats max(_time) as latest 
+| eval lag_min = round((now() - latest) / 60, 1)
+| eval status = if(lag_min < 15, "✅ OK", "⚠️ Delayed")
+
+``` 4. Check field extraction
+index=akamai earliest=-1h | head 10
+| table _time src_ip dest_ip action http_method http_uri rule_id
+``` All fields should have values
+
+``` 5. Check event volume (baseline)
+index=akamai earliest=-24h 
+| timechart span=1h count
+``` Look for consistent pattern, no gaps
+
+``` 6. Check action distribution
+index=akamai earliest=-24h 
+| stats count by action
+``` Expected: alert, deny, allow</code></pre>
+              </div>
+            </div>
+
+            <!-- Akamai Troubleshooting -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">Akamai Troubleshooting</h4>
+            <div class="table-container">
+              <table>
+                <thead><tr><th>Issue</th><th>Possible Cause</th><th>Solution</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">No data at all</td><td>SIEM integration not enabled</td><td>Enable in Akamai Luna Control Center → Security Configuration → SIEM Integration</td></tr>
+                  <tr><td class="highlight">No data at all</td><td>HEC token invalid</td><td>Regenerate HEC token, update in Akamai config</td></tr>
+                  <tr><td class="highlight">Wrong sourcetype</td><td>TA not installed</td><td>Install "Splunk Add-on for Akamai" from Splunkbase</td></tr>
+                  <tr><td class="highlight">Fields not extracting</td><td>props.conf misconfigured</td><td>Check TA is enabled for the index, verify sourcetype</td></tr>
+                  <tr><td class="highlight">Data gaps</td><td>Akamai API rate limiting</td><td>Check Akamai SIEM API status, may need to increase limits</td></tr>
+                  <tr><td class="highlight">High latency</td><td>Large event backlog</td><td>Check Akamai queue, may need to increase pull frequency</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Akamai Key Fields -->
+            <h4 style="font-size:1rem;margin:24px 0 12px;">Akamai Key Fields for Detection</h4>
+            <div class="table-container">
+              <table>
+                <thead><tr><th>Field</th><th>Description</th><th>Example Values</th><th>Used For</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">action</td><td>WAF action taken</td><td>alert, deny, allow</td><td>Detection logic</td></tr>
+                  <tr><td class="highlight">src_ip</td><td>Attacker IP</td><td>192.168.1.100</td><td>Source tracking</td></tr>
+                  <tr><td class="highlight">http_uri</td><td>Requested path</td><td>/api/login</td><td>Endpoint targeting</td></tr>
+                  <tr><td class="highlight">rule_id</td><td>WAF rule triggered</td><td>950001 (SQLi)</td><td>Attack classification</td></tr>
+                  <tr><td class="highlight">http_method</td><td>HTTP verb</td><td>POST, GET</td><td>Request analysis</td></tr>
+                  <tr><td class="highlight">user_agent</td><td>Client identifier</td><td>Mozilla/5.0...</td><td>Bot detection</td></tr>
+                  <tr><td class="highlight">geo_country</td><td>Source country</td><td>US, CN, RU</td><td>Geo analysis</td></tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
-          <h3 style="font-size:1rem;margin-bottom:12px;">Decision: New Index vs Existing?</h3>
-          <div class="table-container">
-            <table>
-              <thead><tr><th>Factor</th><th>Create New Index</th><th>Use Existing</th></tr></thead>
-              <tbody>
-                <tr><td class="highlight">Different retention needed</td><td><span class="badge success">✓ Required</span></td><td><span class="badge error">✗ Not possible</span></td></tr>
-                <tr><td class="highlight">Different access control</td><td><span class="badge success">✓ Recommended</span></td><td>OK if RBAC works</td></tr>
-                <tr><td class="highlight">High volume (&gt;50GB/day)</td><td><span class="badge success">✓ Recommended</span></td><td>May impact performance</td></tr>
-                <tr><td class="highlight">PCI/HIPAA compliance</td><td><span class="badge success">✓ Required</span></td><td><span class="badge error">✗ Risk</span></td></tr>
-              </tbody>
-            </table>
+          <!-- ==================== CYBERARK TAB ==================== -->
+          <div id="cyberark-tab" class="tab-content cyberark-content">
+            <div class="tab-header">
+              <h3>CyberArk Identity Log Onboarding</h3>
+              <span class="badge cyberark">MFA Project - Primary</span>
+            </div>
+
+            <!-- CyberArk Decision Tree -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">CyberArk Onboarding Decision Tree</h4>
+            <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+              <div class="mermaid">
+flowchart TD
+    A[Start: CyberArk<br/>Onboarding] --> B{Index exists?<br/>index=cyberark}
+    B -->|No| C[Request index creation<br/>from Splunk Admin]
+    B -->|Yes| D{Data flowing?<br/>Run validation query}
+    C --> D
+    D -->|No| E{SIEM webhook<br/>configured?}
+    D -->|Yes| F{Correct<br/>sourcetype?}
+    E -->|No| G[Configure SIEM webhook<br/>in CyberArk Admin Portal]
+    E -->|Yes| H{HEC endpoint<br/>reachable?}
+    G --> I[Set HEC URL<br/>and token]
+    I --> D
+    H -->|No| J[Check firewall<br/>rules for HTTPS]
+    H -->|Yes| K[Check CyberArk<br/>audit settings]
+    J --> D
+    K --> D
+    F -->|No| L[Configure sourcetype<br/>in HEC token settings]
+    F -->|Yes| M{MFA events<br/>present?}
+    L --> M
+    M -->|No| N[Enable MFA audit<br/>in CyberArk]
+    M -->|Yes| O{Fields<br/>extracting?}
+    N --> M
+    O -->|No| P[Install/configure<br/>CyberArk TA]
+    O -->|Yes| Q[✅ CyberArk<br/>Ready]
+    P --> O
+    
+    style A fill:#00a3e0,stroke:#0077b3
+    style Q fill:#d4edda,stroke:#28a745
+              </div>
+            </div>
+
+            <!-- CyberArk Checklist -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">CyberArk Onboarding Checklist</h4>
+            <div class="card bordered-left cyberark" style="padding:20px;margin-bottom:24px;">
+              <div class="checklist">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>cyberark</code> exists</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Create HEC token for CyberArk</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Configure SIEM webhook in CyberArk Admin Portal</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Enable all audit event types (especially MFA)</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Run data validation query</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Verify MFA events (approve/deny) present</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Confirm field extraction working</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 8:</strong> Verify privileged user events visible</span></label>
+              </div>
+            </div>
+
+            <!-- CyberArk Validation Queries -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">CyberArk Validation Queries</h4>
+            <div class="code-block" style="margin-bottom:24px;">
+              <div class="code-header"><span class="code-title">CyberArk Data Validation</span></div>
+              <div class="code-body">
+                <pre><code>``` 1. Check if data is flowing
+index=cyberark earliest=-1h | stats count
+| eval status = if(count > 0, "✅ Data flowing", "❌ No data")
+
+``` 2. Check sourcetype
+index=cyberark earliest=-1h | stats count by sourcetype
+``` Expected: cyberark:identity:audit or similar
+
+``` 3. Check MFA events specifically
+index=cyberark earliest=-24h 
+| search "MFA" OR "mfa" OR "authentication" OR "factor"
+| stats count by event_type
+``` Must have MFA approve/deny events
+
+``` 4. Check data freshness
+index=cyberark earliest=-1h 
+| stats max(_time) as latest 
+| eval lag_min = round((now() - latest) / 60, 1)
+
+``` 5. Check event types distribution
+index=cyberark earliest=-24h 
+| stats count by event_type
+``` Should see: LoginSuccess, LoginFailure, MFAApprove, MFADeny
+
+``` 6. Verify user field extraction
+index=cyberark earliest=-24h 
+| stats count by user
+| head 20
+``` Should see actual usernames
+
+``` 7. Check for privileged user events
+index=cyberark earliest=-24h 
+| search user=*admin* OR user=*svc* OR user=*service*
+| stats count by user</code></pre>
+              </div>
+            </div>
+
+            <!-- CyberArk Troubleshooting -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">CyberArk Troubleshooting</h4>
+            <div class="table-container">
+              <table>
+                <thead><tr><th>Issue</th><th>Possible Cause</th><th>Solution</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">No data at all</td><td>SIEM webhook not configured</td><td>CyberArk Admin Portal → Settings → SIEM → Add webhook with HEC URL</td></tr>
+                  <tr><td class="highlight">No data at all</td><td>Firewall blocking</td><td>Open outbound HTTPS (443) to Splunk HEC endpoint</td></tr>
+                  <tr><td class="highlight">No MFA events</td><td>MFA audit not enabled</td><td>Enable MFA audit logging in CyberArk Identity settings</td></tr>
+                  <tr><td class="highlight">Missing users</td><td>User filter in webhook</td><td>Check webhook config for any user/group filters</td></tr>
+                  <tr><td class="highlight">Wrong sourcetype</td><td>HEC token default</td><td>Set explicit sourcetype in HEC token config</td></tr>
+                  <tr><td class="highlight">Fields not parsing</td><td>JSON not parsed</td><td>Verify sourcetype has JSON parsing enabled (KV_MODE=json)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- CyberArk Key Fields -->
+            <h4 style="font-size:1rem;margin:24px 0 12px;">CyberArk Key Fields for MFA Detection</h4>
+            <div class="table-container">
+              <table>
+                <thead><tr><th>Field</th><th>Description</th><th>Example Values</th><th>Used For</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">event_type</td><td>Type of audit event</td><td>MFAApprove, MFADeny, LoginSuccess</td><td>Detection logic</td></tr>
+                  <tr><td class="highlight">user</td><td>Username</td><td>jsmith@sobeys.com</td><td>User tracking</td></tr>
+                  <tr><td class="highlight">src_ip</td><td>Source IP of request</td><td>192.168.1.100</td><td>Impossible travel</td></tr>
+                  <tr><td class="highlight">mfa_method</td><td>MFA type used</td><td>push, sms, totp</td><td>Method analysis</td></tr>
+                  <tr><td class="highlight">result</td><td>Action result</td><td>success, failure, denied</td><td>Detection logic</td></tr>
+                  <tr><td class="highlight">application</td><td>App being accessed</td><td>VPN, Email, SAP</td><td>App targeting</td></tr>
+                  <tr><td class="highlight">device_id</td><td>MFA device identifier</td><td>device_abc123</td><td>Device tracking</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          <h3 style="font-size:1rem;margin:24px 0 12px;">Common Data Issues & How to Fix</h3>
-          <div class="table-container">
-            <table>
-              <thead><tr><th>Issue</th><th>Symptom</th><th>Fix</th></tr></thead>
-              <tbody>
-                <tr><td class="highlight">No data</td><td>0 events</td><td>Check HEC token → firewall → source config</td></tr>
-                <tr><td class="highlight">Wrong timestamps</td><td>Events in future/past</td><td>Fix TIME_FORMAT and TZ in props.conf</td></tr>
-                <tr><td class="highlight">Missing fields</td><td>Only _raw visible</td><td>Install TA, check sourcetype</td></tr>
-                <tr><td class="highlight">Truncated events</td><td>JSON cut off</td><td>Increase TRUNCATE in props.conf</td></tr>
-                <tr><td class="highlight">High latency (&gt;10 min)</td><td>Events arrive late</td><td>Check queues, polling frequency</td></tr>
-                <tr><td class="highlight">Data gaps</td><td>Missing time periods</td><td>API rate limiting - increase interval</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <!-- ==================== ENTRA ID TAB ==================== -->
+          <div id="entra-tab" class="tab-content entra-content">
+            <div class="tab-header">
+              <h3>Entra ID (Azure AD) Log Onboarding</h3>
+              <span class="badge" style="background:#0078d4;color:white;">MFA Project - Secondary</span>
+            </div>
 
-          <div class="callout warning" style="margin-top:16px;">
-            <div class="callout-content">
-              <div class="callout-title">Questions to Ask Client</div>
-              <div class="callout-body">
-                1. What retention do you need? (30d/90d/1yr)<br>
-                2. Who needs access to search this data?<br>
-                3. Is this PCI/HIPAA scope?<br>
-                4. Current license utilization?<br>
-                5. Index naming convention?
+            <!-- Entra Decision Tree -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">Entra ID Onboarding Decision Tree</h4>
+            <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+              <div class="mermaid">
+flowchart TD
+    A[Start: Entra ID<br/>Onboarding] --> B{Index exists?<br/>index=azure}
+    B -->|No| C[Request index creation<br/>from Splunk Admin]
+    B -->|Yes| D{Data flowing?<br/>Run validation query}
+    C --> D
+    D -->|No| E{Event Hub<br/>exists?}
+    D -->|Yes| F{SignIn logs<br/>present?}
+    E -->|No| G[Create Event Hub<br/>Namespace & Hub]
+    E -->|Yes| H{Diagnostic Settings<br/>configured?}
+    G --> I[Create Consumer Group<br/>for Splunk]
+    I --> H
+    H -->|No| J[Configure Entra ID<br/>Diagnostic Settings]
+    H -->|Yes| K{Splunk Add-on<br/>configured?}
+    J --> L[Select SignInLogs,<br/>AuditLogs, etc.]
+    L --> K
+    K -->|No| M[Install & configure<br/>MS Cloud Services Add-on]
+    K -->|Yes| N[Check Event Hub<br/>connection string]
+    M --> N
+    N --> D
+    F -->|No| O[Check Diagnostic Settings<br/>log categories]
+    F -->|Yes| P{MFA fields<br/>present?}
+    O --> D
+    P -->|No| Q[Verify SignInLogs<br/>includes MFA status]
+    P -->|Yes| R[✅ Entra ID<br/>Ready]
+    Q --> P
+    
+    style A fill:#0078d4,stroke:#005a9e
+    style R fill:#d4edda,stroke:#28a745
+              </div>
+            </div>
+
+            <!-- Entra Checklist -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">Entra ID Onboarding Checklist</h4>
+            <div class="card bordered-left info" style="padding:20px;margin-bottom:24px;border-left-color:#0078d4;">
+              <div class="checklist">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>azure</code> exists</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Create Azure Event Hub Namespace</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Create Event Hub within namespace</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Create Consumer Group for Splunk (e.g., "splunk-consumer")</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Create Shared Access Policy with Listen permission</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Configure Entra ID Diagnostic Settings → Event Hub</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Select log categories: SignInLogs, NonInteractiveSignInLogs, AuditLogs</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 8:</strong> Install Splunk Add-on for Microsoft Cloud Services</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 9:</strong> Configure input with Event Hub connection string</span></label>
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 10:</strong> Run data validation queries</span></label>
+              </div>
+            </div>
+
+            <!-- Entra Validation Queries -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">Entra ID Validation Queries</h4>
+            <div class="code-block" style="margin-bottom:24px;">
+              <div class="code-header"><span class="code-title">Entra ID Data Validation</span></div>
+              <div class="code-body">
+                <pre><code>``` 1. Check if data is flowing
+index=azure sourcetype=azure:aad:* earliest=-1h | stats count
+| eval status = if(count > 0, "✅ Data flowing", "❌ No data")
+
+``` 2. Check sourcetypes present
+index=azure earliest=-1h | stats count by sourcetype
+``` Expected: azure:aad:signin, azure:aad:audit
+
+``` 3. Check SignIn logs specifically
+index=azure sourcetype=azure:aad:signin earliest=-24h 
+| stats count
+``` This is your primary MFA data source
+
+``` 4. Check MFA status field
+index=azure sourcetype=azure:aad:signin earliest=-24h 
+| stats count by properties.authenticationRequirement
+``` Should see: multiFactorAuthentication, singleFactorAuthentication
+
+``` 5. Check MFA result in authentication details
+index=azure sourcetype=azure:aad:signin earliest=-24h 
+| spath properties.authenticationDetails{} 
+| stats count by properties.authenticationDetails{}.authenticationMethod
+
+``` 6. Verify user field extraction
+index=azure sourcetype=azure:aad:signin earliest=-24h 
+| stats count by properties.userPrincipalName
+| head 20
+
+``` 7. Check data freshness / latency
+index=azure sourcetype=azure:aad:signin earliest=-1h 
+| stats max(_time) as latest 
+| eval lag_min = round((now() - latest) / 60, 1)
+| eval status = if(lag_min < 30, "✅ OK", "⚠️ Delayed (Event Hub lag)")
+
+``` 8. Check for failed logins
+index=azure sourcetype=azure:aad:signin earliest=-24h 
+| stats count by properties.status.errorCode
+| where 'properties.status.errorCode' != 0</code></pre>
+              </div>
+            </div>
+
+            <!-- Entra Troubleshooting -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">Entra ID Troubleshooting</h4>
+            <div class="table-container">
+              <table>
+                <thead><tr><th>Issue</th><th>Possible Cause</th><th>Solution</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">No data at all</td><td>Diagnostic Settings not configured</td><td>Azure Portal → Entra ID → Diagnostic Settings → Add → Select Event Hub</td></tr>
+                  <tr><td class="highlight">No data at all</td><td>Event Hub connection string wrong</td><td>Verify connection string in Splunk input includes SharedAccessKey</td></tr>
+                  <tr><td class="highlight">No data at all</td><td>Consumer group conflict</td><td>Create dedicated consumer group for Splunk, don't use $Default</td></tr>
+                  <tr><td class="highlight">Missing SignIn logs</td><td>Category not selected</td><td>Edit Diagnostic Settings, ensure SignInLogs checked</td></tr>
+                  <tr><td class="highlight">No MFA data</td><td>MFA not enforced</td><td>SignIn logs only show MFA if MFA is triggered - check Conditional Access</td></tr>
+                  <tr><td class="highlight">High latency (30+ min)</td><td>Event Hub backlog</td><td>Check Event Hub metrics in Azure, increase throughput units if needed</td></tr>
+                  <tr><td class="highlight">Partial data</td><td>Polling interval too long</td><td>Reduce polling interval in Splunk input config (e.g., 60 seconds)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Entra Key Fields -->
+            <h4 style="font-size:1rem;margin:24px 0 12px;">Entra ID Key Fields for MFA Detection</h4>
+            <div class="table-container">
+              <table>
+                <thead><tr><th>Field</th><th>Description</th><th>Example Values</th><th>Used For</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">properties.userPrincipalName</td><td>User email/UPN</td><td>jsmith@sobeys.com</td><td>User tracking</td></tr>
+                  <tr><td class="highlight">properties.ipAddress</td><td>Source IP</td><td>192.168.1.100</td><td>Impossible travel</td></tr>
+                  <tr><td class="highlight">properties.location.city</td><td>Geo location</td><td>Toronto</td><td>Geo analysis</td></tr>
+                  <tr><td class="highlight">properties.status.errorCode</td><td>Login result code</td><td>0 (success), 50074 (MFA required)</td><td>Result analysis</td></tr>
+                  <tr><td class="highlight">properties.authenticationRequirement</td><td>Auth level required</td><td>multiFactorAuthentication</td><td>MFA detection</td></tr>
+                  <tr><td class="highlight">properties.authenticationDetails{}</td><td>Auth method details</td><td>Array of methods used</td><td>MFA method tracking</td></tr>
+                  <tr><td class="highlight">properties.conditionalAccessStatus</td><td>CA policy result</td><td>success, failure, notApplied</td><td>Policy analysis</td></tr>
+                  <tr><td class="highlight">properties.appDisplayName</td><td>Application accessed</td><td>Microsoft Teams, Outlook</td><td>App targeting</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Entra Special Notes -->
+            <div class="callout warning" style="margin-top:24px;">
+              <div class="callout-content">
+                <div class="callout-title">Entra ID Special Considerations</div>
+                <div class="callout-body">
+                  <strong>Nested JSON:</strong> Entra logs use deeply nested JSON. Use <code>spath</code> or configure props.conf for automatic extraction.<br><br>
+                  <strong>Event Hub Latency:</strong> Expect 5-15 minute latency vs. near real-time for HEC sources. This is normal for Event Hub architecture.<br><br>
+                  <strong>Azure AD vs Entra ID:</strong> Same thing - Microsoft rebranded in 2023. Sourcetypes still use <code>azure:aad:*</code> naming.
+                </div>
               </div>
             </div>
           </div>
 
-          <h3 style="font-size:1rem;margin:24px 0 12px;">Data Validation Queries</h3>
-          <div class="code-block">
-            <div class="code-header"><span class="code-title">Run These After Onboarding</span></div>
-            <div class="code-body">
-              <pre><code>``` Check data is flowing
-index=akamai earliest=-1h | stats count by sourcetype
-
-``` Check for timestamp issues
-index=akamai earliest=+0d | stats count
-``` If count > 0, you have future-dated events!
-
-``` Check latency
-index=akamai earliest=-1h
-| eval latency = _indextime - _time
-| stats avg(latency) as avg_sec max(latency) as max_sec
-
-``` Find gaps in data
-index=akamai earliest=-24h | bucket _time span=5m
-| stats count by _time | where count=0</code></pre>
-            </div>
-          </div>
-        </div>
+        </div><!-- End tabs-container -->
 
       </div>
     </main>

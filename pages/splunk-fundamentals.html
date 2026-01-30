@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Splunk Fundamentals | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+        <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Fundamentals</div>
+          <a href="splunk-fundamentals.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk Basics (Start Here)</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security (ES)</span></a>
+          <a href="event-hub.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Event Hub & Data Flow</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">WAF/DDoS Project</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Splunk Fundamentals</span>
+          </div>
+        </div>
+        <span class="badge critical">MUST READ FIRST</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Splunk Fundamentals</h1>
+          <p class="section-subtitle">Everything you need to know about Splunk — from zero to confident</p>
+        </div>
+
+        <div class="callout critical">
+          <div class="callout-content">
+            <div class="callout-title">Read This First</div>
+            <div class="callout-body">If you've never used Splunk, this page is your foundation. Understand these concepts thoroughly before touching anything else. Practice the searches in a test environment first.</div>
+          </div>
+        </div>
+
+        <!-- WHAT IS SPLUNK -->
+        <div class="section">
+          <h2 class="subsection-title">What is Splunk?</h2>
+          
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:12px;">Simple Explanation</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.7;">
+              Splunk is a <strong>log management and SIEM platform</strong>. It collects logs from various sources (servers, firewalls, applications, cloud services), stores them in a searchable format, and lets you search, analyze, visualize, and alert on that data.
+            </p>
+            <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.7;margin-top:12px;">
+              Think of it as <strong>Google for your logs</strong> — but with superpowers. You can search across billions of events, create dashboards, and automatically alert when something suspicious happens.
+            </p>
+          </div>
+
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:12px;">How to Explain It (If Asked)</h3>
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-body">
+                <pre><code>"Splunk is an enterprise SIEM and log analytics platform. It ingests 
+machine data from across the infrastructure, normalizes it using the 
+Common Information Model, and provides real-time search, correlation, 
+and alerting capabilities. For this project, I'm using it to build 
+detection logic against WAF and identity data sources."</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart LR
+    subgraph Sources["Data Sources"]
+        A[Akamai WAF]
+        B[CyberArk]
+        C[Entra ID]
+        D[Servers]
+    end
+    subgraph Splunk["Splunk Platform"]
+        E[Indexers<br/>Store Data]
+        F[Search Head<br/>Run Queries]
+        G[ES App<br/>Security]
+    end
+    subgraph Output["Outputs"]
+        H[Dashboards]
+        I[Alerts]
+        J[Reports]
+    end
+    A --> E
+    B --> E
+    C --> E
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    G --> I
+    G --> J
+            </div>
+          </div>
+        </div>
+
+        <!-- CORE CONCEPTS -->
+        <div class="section">
+          <h2 class="subsection-title">Core Concepts (Memorize These)</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Term</th><th>What It Is</th><th>Real Example</th><th>If Asked, Say...</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Index</td>
+                  <td>A container/bucket where data is stored. Like a database table.</td>
+                  <td><code>index=akamai</code> — all Akamai WAF logs</td>
+                  <td>"An index is Splunk's storage container for a specific data type. We separate indexes by data source for retention management and access control."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Sourcetype</td>
+                  <td>The format/type of data. Tells Splunk how to parse it.</td>
+                  <td><code>sourcetype=akamai:siem</code></td>
+                  <td>"The sourcetype defines the data format so Splunk knows how to extract fields. It's critical for proper parsing."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Source</td>
+                  <td>Where the data came from (file path, input name).</td>
+                  <td><code>source=http:akamai_hec</code></td>
+                  <td>"Source identifies the input path. Useful for troubleshooting data ingestion issues."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Host</td>
+                  <td>The machine that generated the event.</td>
+                  <td><code>host=web-server-01</code></td>
+                  <td>"Host identifies the originating system. Important for correlation and troubleshooting."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Event</td>
+                  <td>A single log entry/record in Splunk.</td>
+                  <td>One line of a log file</td>
+                  <td>"An event is a single record — typically one log line or JSON object."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Field</td>
+                  <td>A key-value pair extracted from an event.</td>
+                  <td><code>src_ip=192.168.1.1</code></td>
+                  <td>"Fields are extracted values from events that we can search and analyze. They can be extracted at index time or search time."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">_time</td>
+                  <td>The timestamp of when the event occurred.</td>
+                  <td>Every event has _time</td>
+                  <td>"_time is the event timestamp. Accurate timestamps are critical — without them, we can't correlate or trend."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">_raw</td>
+                  <td>The original, unparsed event text.</td>
+                  <td>The raw log line</td>
+                  <td>"_raw is the original event before field extraction. Useful when troubleshooting parsing issues."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">_indextime</td>
+                  <td>When Splunk received/indexed the event.</td>
+                  <td>May differ from _time</td>
+                  <td>"_indextime is when Splunk ingested the event, which may differ from event time. Large gaps indicate ingestion delays."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- BASIC SEARCH -->
+        <div class="section">
+          <h2 class="subsection-title">Search Basics (SPL)</h2>
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">SPL = Search Processing Language. This is how you query Splunk.</p>
+
+          <h3 style="font-size:1rem;margin:20px 0 12px;">Search Structure</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Basic Search Pattern</span></div>
+            <div class="code-body">
+              <pre><code>index=<index_name> <filters> | <command1> | <command2> | ...
+
+Example:
+index=akamai action=deny | stats count by src_ip | sort -count | head 10
+
+Breakdown:
+- index=akamai       → WHERE to search (which data)
+- action=deny        → FILTER (only denied requests)
+- |                  → PIPE (sends results to next command)
+- stats count by src_ip → AGGREGATE (count events per IP)
+- sort -count        → SORT descending by count
+- head 10            → LIMIT to top 10</code></pre>
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Essential Commands (You'll Use Daily)</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Command</th><th>What It Does</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight"><code>stats</code></td>
+                  <td>Aggregate data (count, sum, avg, etc.)</td>
+                  <td><code>| stats count by src_ip</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><code>table</code></td>
+                  <td>Display specific fields as table</td>
+                  <td><code>| table _time, src_ip, action</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><code>where</code></td>
+                  <td>Filter results with conditions</td>
+                  <td><code>| where count > 100</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><code>eval</code></td>
+                  <td>Create/modify fields</td>
+                  <td><code>| eval status=if(action="allow","OK","BLOCKED")</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><code>rex</code></td>
+                  <td>Extract fields using regex</td>
+                  <td><code>| rex field=uri "(?<endpoint>/api/[^/]+)"</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><code>lookup</code></td>
+                  <td>Enrich with external data</td>
+                  <td><code>| lookup privileged_users.csv user OUTPUT is_privileged</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><code>timechart</code></td>
+                  <td>Time-based aggregation</td>
+                  <td><code>| timechart span=1h count by action</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><code>dedup</code></td>
+                  <td>Remove duplicates</td>
+                  <td><code>| dedup src_ip, user</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><code>sort</code></td>
+                  <td>Sort results (- for descending)</td>
+                  <td><code>| sort -count</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><code>head/tail</code></td>
+                  <td>First/last N results</td>
+                  <td><code>| head 10</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><code>rename</code></td>
+                  <td>Rename fields</td>
+                  <td><code>| rename src_ip as "Source IP"</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><code>fillnull</code></td>
+                  <td>Replace null values</td>
+                  <td><code>| fillnull value="unknown"</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Time Range Modifiers</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Modifier</th><th>Meaning</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight"><code>earliest=-1h</code></td><td>From 1 hour ago</td><td><code>index=akamai earliest=-1h</code></td></tr>
+                <tr><td class="highlight"><code>earliest=-24h</code></td><td>From 24 hours ago</td><td><code>index=akamai earliest=-24h</code></td></tr>
+                <tr><td class="highlight"><code>earliest=-7d</code></td><td>From 7 days ago</td><td><code>index=akamai earliest=-7d</code></td></tr>
+                <tr><td class="highlight"><code>earliest=@d</code></td><td>From start of today</td><td><code>index=akamai earliest=@d</code></td></tr>
+                <tr><td class="highlight"><code>earliest=-1d@d</code></td><td>From start of yesterday</td><td><code>index=akamai earliest=-1d@d latest=@d</code></td></tr>
+                <tr><td class="highlight"><code>earliest=-1w@w</code></td><td>From start of last week</td><td><code>index=akamai earliest=-1w@w</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SEARCH EXAMPLES -->
+        <div class="section">
+          <h2 class="subsection-title">Real Search Examples (Copy & Modify)</h2>
+
+          <div class="code-block" style="margin-bottom:16px;">
+            <div class="code-header"><span class="code-title">1. Check if Data is Flowing</span></div>
+            <div class="code-body">
+              <pre><code>index=akamai earliest=-1h | stats count
+``` If count > 0, data is flowing. If 0, problem.</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-bottom:16px;">
+            <div class="code-header"><span class="code-title">2. Top 10 Source IPs (Blocked)</span></div>
+            <div class="code-body">
+              <pre><code>index=akamai action=deny earliest=-24h
+| stats count by src_ip
+| sort -count
+| head 10</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-bottom:16px;">
+            <div class="code-header"><span class="code-title">3. Events Over Time (Hourly)</span></div>
+            <div class="code-body">
+              <pre><code>index=akamai earliest=-24h
+| timechart span=1h count by action</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-bottom:16px;">
+            <div class="code-header"><span class="code-title">4. Find Specific Attack Pattern (SQLi)</span></div>
+            <div class="code-body">
+              <pre><code>index=akamai earliest=-24h
+| search rule_tag="SQL*" OR rule_message="*injection*"
+| stats count by src_ip, rule_tag
+| where count > 5</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-bottom:16px;">
+            <div class="code-header"><span class="code-title">5. Check Data Latency</span></div>
+            <div class="code-body">
+              <pre><code>index=akamai earliest=-1h
+| eval latency_sec = _indextime - _time
+| stats avg(latency_sec) as avg_latency, max(latency_sec) as max_latency
+| eval avg_latency = round(avg_latency, 0)
+``` If avg > 300 (5 min), investigate ingestion delays</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-bottom:16px;">
+            <div class="code-header"><span class="code-title">6. Use a Lookup to Enrich Data</span></div>
+            <div class="code-body">
+              <pre><code>index=cyberark earliest=-24h
+| lookup privileged_users.csv user as ActorId OUTPUT is_privileged, role
+| where is_privileged="yes"
+| stats count by ActorId, role, EventType</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ALERTS VS REPORTS -->
+        <div class="section">
+          <h2 class="subsection-title">Alerts vs Reports vs Dashboards</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Type</th><th>What It Is</th><th>When to Use</th><th>How to Explain</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Saved Search</td>
+                  <td>A search you save to run again</td>
+                  <td>Reusable queries</td>
+                  <td>"A saved search is a reusable query. Foundation for reports and alerts."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Report</td>
+                  <td>Saved search that runs on schedule, outputs results</td>
+                  <td>Daily/weekly summaries</td>
+                  <td>"A report is a scheduled search that generates output — CSV, dashboard panel, or email."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Alert</td>
+                  <td>Saved search that triggers action when condition met</td>
+                  <td>Real-time or near-real-time detection</td>
+                  <td>"An alert is a scheduled search that triggers actions when conditions are met — email, ticket, webhook, or notable event in ES."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Dashboard</td>
+                  <td>Visual display of multiple searches/panels</td>
+                  <td>Monitoring, reporting, presentations</td>
+                  <td>"A dashboard is a collection of visualizations for monitoring and reporting. Each panel is powered by a search."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Correlation Search (ES)</td>
+                  <td>Alert that creates Notable Events in ES</td>
+                  <td>Security detections in Enterprise Security</td>
+                  <td>"A correlation search is an ES-specific alert that creates notable events for SOC triage in the Incident Review dashboard."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- COMMON MISTAKES -->
+        <div class="section">
+          <h2 class="subsection-title">Common Mistakes to Avoid</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Mistake</th><th>Why It's Bad</th><th>Correct Approach</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Searching without index=</td>
+                  <td>Searches ALL indexes — very slow, may timeout</td>
+                  <td>Always specify <code>index=xxx</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight">Using * wildcard liberally</td>
+                  <td>Wildcards are expensive, slow searches</td>
+                  <td>Be specific: <code>action=deny</code> not <code>action=*deny*</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight">No time range</td>
+                  <td>Defaults to 24h but may search too much</td>
+                  <td>Always specify <code>earliest=-1h</code> or similar</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Filtering after stats</td>
+                  <td>Processes more data than needed</td>
+                  <td>Filter early: <code>index=x action=deny | stats</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight">Not testing searches before saving</td>
+                  <td>Broken alerts, no results</td>
+                  <td>Run manually first, verify results</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Hardcoding values</td>
+                  <td>Inflexible, breaks when things change</td>
+                  <td>Use lookups for lists, macros for reusable logic</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- IF THEY ASK -->
+        <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
+          <h2 class="subsection-title" style="color:var(--warning-600);">⚠️ If They Ask Technical Splunk Questions</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th style="width:35%;">Question</th><th>Expert Answer</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">"What's the difference between search-time and index-time extraction?"</td>
+                  <td>"Index-time extraction happens when data is ingested — fields are stored in the index. It's faster to search but uses more storage and can't be changed later. Search-time extraction happens when you run a query — more flexible but adds search overhead. For high-volume data, I use index-time for critical fields; for flexibility, search-time."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"How do you optimize a slow search?"</td>
+                  <td>"I follow these principles: (1) Filter early — put restrictive terms first, (2) Specify index and time range explicitly, (3) Avoid wildcards when possible, (4) Use tstats for data model accelerated searches, (5) Use summary indexing for frequently-run expensive searches. I can show you the job inspector for specific optimization."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"What's a data model?"</td>
+                  <td>"A data model is a hierarchical structure that maps raw data to a normalized schema. When accelerated, it pre-computes summaries for fast searching. In ES, the CIM data models — like Authentication, Web, Network Traffic — let me write detections that work across multiple sourcetypes."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"What's tstats?"</td>
+                  <td>"tstats is a high-performance command that searches accelerated data models or tsidx files. It's dramatically faster than regular stats because it uses pre-computed summaries. I use it for high-volume searches against CIM-compliant data."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"How does Splunk Cloud differ from Enterprise?"</td>
+                  <td>"Splunk Cloud is the SaaS version — Splunk manages the infrastructure. Key differences: we can't directly edit system configs (props.conf, transforms.conf) — we need custom apps. App installations require vetting (security review). There are also search concurrency and resource limits. But it's fully managed, so no infrastructure maintenance."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</body>
+</html>

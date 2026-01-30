@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Flow & Event Hub | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+            <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Fundamentals</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk Basics (Start Here)</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security (ES)</span></a>
+          <a href="event-hub.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Event Hub & Data Flow</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">WAF/DDoS Project</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Data Flow & Event Hub</span>
+          </div>
+        </div>
+        <span class="badge warning">Critical Knowledge</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Data Flow & Azure Event Hub</h1>
+          <p class="section-subtitle">How data gets from each source into Splunk — understand this to troubleshoot any data issue</p>
+        </div>
+
+        <!-- OVERVIEW -->
+        <div class="section">
+          <h2 class="subsection-title">Complete Data Flow Overview</h2>
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TB
+    subgraph Sources["Source Systems"]
+        A[Akamai WAF]
+        B[CyberArk Identity]
+        C[Microsoft Entra ID]
+    end
+    
+    subgraph Integration["Integration Layer"]
+        D[Akamai SIEM API]
+        E[CyberArk SIEM Integration]
+        F[Azure Event Hub]
+    end
+    
+    subgraph Splunk["Splunk Cloud"]
+        G[HEC / IDM Input]
+        H[Indexers]
+        I[Search Heads]
+    end
+    
+    A -->|"Push via API"| D
+    B -->|"Push via API"| E
+    C -->|"Diagnostic Settings"| F
+    
+    D -->|"HTTPS/HEC"| G
+    E -->|"HTTPS/HEC"| G
+    F -->|"Splunk Add-on"| G
+    
+    G --> H
+    H --> I
+    
+    style A fill:#ff9900,stroke:#ff6600
+    style B fill:#00a3e0,stroke:#0077b3
+    style C fill:#0078d4,stroke:#005a9e
+    style F fill:#0089d6,stroke:#006bb3
+            </div>
+          </div>
+        </div>
+
+        <!-- AKAMAI DATA FLOW -->
+        <div class="section">
+          <h2 class="subsection-title">1. Akamai WAF Data Flow</h2>
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:16px;">
+            <div class="mermaid">
+flowchart LR
+    A[Akamai Edge<br/>Servers] -->|"Security Events"| B[Akamai SIEM<br/>Integration API]
+    B -->|"HTTPS POST<br/>JSON Events"| C[Splunk HEC<br/>Token]
+    C --> D[index=akamai<br/>sourcetype=akamai:siem]
+            </div>
+          </div>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Component</th><th>What It Does</th><th>Who Manages</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">Akamai SIEM API</td><td>Pushes security events to external SIEM</td><td>Akamai (config by client)</td></tr>
+                <tr><td class="highlight">HEC Token</td><td>Authenticates Akamai to send data</td><td>Splunk Admin</td></tr>
+                <tr><td class="highlight">Splunk Add-on for Akamai</td><td>Parses events, extracts fields</td><td>You install/configure</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout info" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">If They Ask: "How does Akamai data get to Splunk?"</div>
+              <div class="callout-body">
+                "Akamai uses their SIEM Integration API to push security events over HTTPS to Splunk's HTTP Event Collector. The Splunk Add-on for Akamai handles field extraction and CIM mapping. It's a push model — Akamai sends data as events occur."
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CYBERARK DATA FLOW -->
+        <div class="section">
+          <h2 class="subsection-title">2. CyberArk Identity Data Flow</h2>
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:16px;">
+            <div class="mermaid">
+flowchart LR
+    A[CyberArk Identity<br/>Cloud] -->|"Audit Events"| B[SIEM Integration<br/>Webhook]
+    B -->|"HTTPS POST<br/>JSON Events"| C[Splunk HEC<br/>Token]
+    C --> D[index=cyberark<br/>sourcetype=cyberark:identity:audit]
+            </div>
+          </div>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Component</th><th>What It Does</th><th>Configuration Location</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">CyberArk Audit Events</td><td>Logs authentication, MFA, admin activities</td><td>Automatic in CyberArk Identity</td></tr>
+                <tr><td class="highlight">SIEM Webhook</td><td>Sends events to external SIEM</td><td>CyberArk Admin Portal → Settings → SIEM</td></tr>
+                <tr><td class="highlight">HEC Endpoint</td><td>Receives events in Splunk</td><td>Splunk Cloud Data Manager</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout info" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">If They Ask: "How does CyberArk data get to Splunk?"</div>
+              <div class="callout-body">
+                "CyberArk Identity has a built-in SIEM integration that pushes audit events via webhook to Splunk's HEC endpoint. We configure the HEC URL and token in CyberArk's admin portal. Events flow in near real-time as authentication and MFA events occur."
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENTRA ID / EVENT HUB DATA FLOW -->
+        <div class="section">
+          <h2 class="subsection-title">3. Entra ID (Azure AD) via Event Hub</h2>
+          
+          <div class="callout warning" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">This is More Complex — Study It Carefully</div>
+              <div class="callout-body">Azure data flows through Event Hub, which is different from direct HEC. You need to understand this architecture.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:16px;">
+            <div class="mermaid">
+flowchart LR
+    A[Microsoft<br/>Entra ID] -->|"Diagnostic<br/>Settings"| B[Azure Event<br/>Hub]
+    B -->|"Splunk Add-on<br/>for Azure polls"| C[Splunk IDM /<br/>HEC Input]
+    C --> D[index=azure<br/>sourcetype=azure:aad:signin]
+    
+    style B fill:#0089d6,stroke:#006bb3
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin:16px 0 12px;">What is Azure Event Hub?</h3>
+          <div class="card" style="padding:20px;background:var(--gray-50);">
+            <p style="font-size:0.9375rem;line-height:1.7;">
+              <strong>Azure Event Hub</strong> is Microsoft's streaming data platform — like a message queue for logs. Azure services send data TO Event Hub, and consumers (like Splunk) read FROM Event Hub.
+            </p>
+            <p style="font-size:0.9375rem;line-height:1.7;margin-top:12px;">
+              <strong>Why not direct HEC?</strong> Microsoft doesn't support pushing to external HEC endpoints. Instead, they push to Event Hub, and Splunk pulls from there.
+            </p>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Event Hub Architecture</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Component</th><th>What It Is</th><th>Who Creates It</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Event Hub Namespace</td>
+                  <td>Container for Event Hubs (like a server)</td>
+                  <td>Azure Admin</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Event Hub</td>
+                  <td>Individual message queue (like a topic)</td>
+                  <td>Azure Admin</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Consumer Group</td>
+                  <td>Reader of the Event Hub (Splunk needs one)</td>
+                  <td>Azure Admin (for Splunk)</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Shared Access Policy</td>
+                  <td>Credentials to read from Event Hub</td>
+                  <td>Azure Admin</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Diagnostic Settings</td>
+                  <td>Tells Entra ID to send logs to Event Hub</td>
+                  <td>Azure Admin</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Entra ID Log Types</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Log Type</th><th>What It Contains</th><th>Sourcetype</th><th>Use For</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">SignInLogs</td><td>Interactive sign-ins</td><td><code>azure:aad:signin</code></td><td>MFA detection, failed logins</td></tr>
+                <tr><td class="highlight">NonInteractiveUserSignInLogs</td><td>Background/app sign-ins</td><td><code>azure:aad:signin</code></td><td>Service account activity</td></tr>
+                <tr><td class="highlight">ServicePrincipalSignInLogs</td><td>App/service principal auth</td><td><code>azure:aad:signin</code></td><td>Application monitoring</td></tr>
+                <tr><td class="highlight">ManagedIdentitySignInLogs</td><td>Azure managed identity auth</td><td><code>azure:aad:signin</code></td><td>Azure resource access</td></tr>
+                <tr><td class="highlight">AuditLogs</td><td>Admin changes, user management</td><td><code>azure:aad:audit</code></td><td>Admin activity monitoring</td></tr>
+                <tr><td class="highlight">RiskyUsers</td><td>Users flagged as risky</td><td><code>azure:aad:risk</code></td><td>Risk-based detections</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout info" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">If They Ask: "How does Entra ID data get to Splunk?"</div>
+              <div class="callout-body">
+                "Entra ID doesn't push directly to Splunk. Instead, we configure Azure Diagnostic Settings to stream logs to an Azure Event Hub. The Splunk Add-on for Microsoft Cloud Services polls the Event Hub and ingests the data. This is Microsoft's standard pattern for external SIEM integration."
+              </div>
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Azure AD vs Entra ID Naming</h3>
+          <div class="callout warning">
+            <div class="callout-content">
+              <div class="callout-title">Name Change: Azure AD → Entra ID</div>
+              <div class="callout-body">
+                Microsoft rebranded "Azure Active Directory" to "Microsoft Entra ID" in 2023.<br><br>
+                <strong>They mean the same thing.</strong> Older docs say "Azure AD", newer say "Entra ID".<br>
+                Splunk sourcetypes still use <code>azure:aad:*</code> naming.<br>
+                Field names in logs may use either "Azure AD" or "Entra" depending on when the log was generated.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TROUBLESHOOTING DATA FLOW -->
+        <div class="section">
+          <h2 class="subsection-title">Troubleshooting Data Flow Issues</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Symptom</th><th>Possible Cause</th><th>How to Check</th><th>Solution</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">No data at all</td>
+                  <td>HEC token invalid or disabled</td>
+                  <td>Check HEC token status in Splunk Cloud</td>
+                  <td>Regenerate token, update in source</td>
+                </tr>
+                <tr>
+                  <td class="highlight">No data at all</td>
+                  <td>Network/firewall blocking</td>
+                  <td>Check if source can reach Splunk HEC endpoint</td>
+                  <td>Open firewall rules for HTTPS/443</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Data stops suddenly</td>
+                  <td>Credentials expired</td>
+                  <td>Check source system for auth errors</td>
+                  <td>Rotate credentials, update config</td>
+                </tr>
+                <tr>
+                  <td class="highlight">High latency (Event Hub)</td>
+                  <td>Polling interval too long</td>
+                  <td>Check Splunk input configuration</td>
+                  <td>Reduce polling interval (e.g., 60s)</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Partial data (Event Hub)</td>
+                  <td>Consumer group issue</td>
+                  <td>Check if other consumers share the group</td>
+                  <td>Create dedicated consumer group for Splunk</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Missing log types</td>
+                  <td>Diagnostic settings incomplete</td>
+                  <td>Review Azure Diagnostic Settings</td>
+                  <td>Enable all required log categories</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Wrong sourcetype</td>
+                  <td>TA not installed or misconfigured</td>
+                  <td>Check props.conf, sourcetype setting</td>
+                  <td>Install TA, configure correct sourcetype</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Data Validation Queries by Source</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Check All Data Sources Are Flowing</span></div>
+            <div class="code-body">
+              <pre><code>``` Akamai - check last 1 hour
+index=akamai earliest=-1h | stats count latest(_time) as last_event
+| eval status = if(count > 0 AND last_event > relative_time(now(), "-30m"), "✅ OK", "❌ ISSUE")
+
+``` CyberArk - check last 1 hour
+index=cyberark earliest=-1h | stats count latest(_time) as last_event
+| eval status = if(count > 0 AND last_event > relative_time(now(), "-30m"), "✅ OK", "❌ ISSUE")
+
+``` Entra ID - check last 1 hour
+index=azure sourcetype=azure:aad:* earliest=-1h | stats count latest(_time) as last_event
+| eval status = if(count > 0 AND last_event > relative_time(now(), "-30m"), "✅ OK", "❌ ISSUE")
+
+``` Combined health check
+| makeresults 
+| eval sources = "akamai,cyberark,azure"
+| makemv sources delim=","
+| mvexpand sources
+| map search="search index=$sources$ earliest=-1h | stats count latest(_time) as last | eval source=\"$sources$\""
+| table source count last</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- IF THEY ASK -->
+        <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
+          <h2 class="subsection-title" style="color:var(--warning-600);">⚠️ Questions They Might Ask</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th style="width:35%;">Question</th><th>Your Answer</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">"What's the difference between HEC and Event Hub?"</td>
+                  <td><strong>HEC (HTTP Event Collector)</strong> is Splunk's endpoint that RECEIVES data — sources push TO it. <strong>Event Hub</strong> is Azure's streaming platform — Azure pushes to it, Splunk PULLS from it. HEC is push, Event Hub is pull (from Splunk's perspective).</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Why do we need Event Hub for Entra ID?"</td>
+                  <td>Microsoft doesn't support pushing directly to external SIEM endpoints. Their architecture uses Event Hub as the export mechanism. All external SIEM integrations with Azure go through Event Hub or similar Azure services.</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"What's a Consumer Group?"</td>
+                  <td>A Consumer Group is a view/reader of an Event Hub stream. Each consumer group maintains its own position in the stream. Splunk needs its own consumer group so it doesn't compete with other readers. Multiple consumers on the same group would split messages.</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"How do we know if data stopped flowing?"</td>
+                  <td>I implement data availability monitoring — a scheduled search that checks each source's latest event timestamp. If no events in the last 30 minutes, it alerts. This catches source outages before they impact detections.</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"What's the latency from event to Splunk?"</td>
+                  <td>For HEC-based sources (Akamai, CyberArk): near real-time, typically under 1 minute. For Event Hub (Entra ID): depends on polling interval, typically 1-5 minutes. We can check latency by comparing _time to _indextime.</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"What if Event Hub gets backed up?"</td>
+                  <td>Event Hub retains messages for a configurable period (1-7 days). If Splunk falls behind, it catches up by reading from where it left off. We monitor the lag with Event Hub metrics in Azure. Extended outages may require increasing retention.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</body>
+</html>
