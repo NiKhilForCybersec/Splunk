@@ -59,12 +59,12 @@
         <div class="nav-section">
           <div class="nav-section-title">WAF/DDoS Project</div>
           <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-12)</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">MFA Project</div>
           <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Response & Support</div>
@@ -343,21 +343,90 @@ flowchart TB
           <!-- Simple Notable Event Lifecycle -->
           <h3 style="font-size:1rem;margin:24px 0 12px;">Notable Event Lifecycle (Simplified View)</h3>
           <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
-flowchart LR
-    A[Correlation<br/>Search Runs] --> B{Condition<br/>Met?}
-    B -->|No| C[No Action]
-    B -->|Yes| D[Create<br/>Notable Event]
-    D --> E[Appears in<br/>Incident Review]
-    E --> F[Analyst<br/>Assigns]
-    F --> G[Investigation]
-    G --> H{True<br/>Positive?}
-    H -->|Yes| I[Escalate /<br/>Remediate]
-    H -->|No| J[Close as FP]
-    I --> K[Close as<br/>Resolved]
+            <div class="mermaid" style="min-height:400px;">
+flowchart TB
+    subgraph DETECTION ["🔍 DETECTION PHASE"]
+        A[Correlation Search Runs]
+        B{Condition Met?}
+        A --> B
+        B -->|No| C[No Action]
+    end
     
+    subgraph TRIAGE ["📋 TRIAGE PHASE"]
+        D[Notable Event Created]
+        E[Appears in Incident Review]
+        F[Analyst Assigns Ownership]
+    end
+    
+    subgraph INVESTIGATION ["🔎 INVESTIGATION PHASE"]
+        G[Investigate Alert]
+        H{True Positive?}
+    end
+    
+    subgraph RESOLUTION ["✅ RESOLUTION PHASE"]
+        I[Escalate & Remediate]
+        J[Close as False Positive]
+        K[Close as Resolved]
+    end
+    
+    B -->|Yes| D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H -->|Yes| I
+    H -->|No| J
+    I --> K
+    
+    style A fill:#e3f2fd,stroke:#1976d2
     style D fill:#f8d7da,stroke:#dc3545
     style I fill:#d4edda,stroke:#28a745
+    style K fill:#d4edda,stroke:#28a745
+    style J fill:#fff3cd,stroke:#ffc107
+            </div>
+          </div>
+          
+          <!-- Text-based lifecycle for clarity -->
+          <div class="card" style="padding:20px;margin-top:16px;">
+            <h4 style="font-size:0.9rem;margin-bottom:16px;">📊 Lifecycle Stages Explained</h4>
+            <div class="table-container">
+              <table style="font-size:0.8125rem;">
+                <thead>
+                  <tr><th>Stage</th><th>What Happens</th><th>Who Acts</th><th>ES Location</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="badge" style="background:#e3f2fd;color:#1976d2;">1. Detection</span></td>
+                    <td>Correlation search runs on schedule, evaluates conditions</td>
+                    <td>Splunk (automated)</td>
+                    <td>Configure → Content → Correlation Searches</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge" style="background:#f8d7da;color:#dc3545;">2. Notable Created</span></td>
+                    <td>If conditions met, Notable Event is generated</td>
+                    <td>Splunk (automated)</td>
+                    <td>Incident Review queue</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge" style="background:#fff3cd;color:#856404;">3. Triage</span></td>
+                    <td>Analyst reviews, assigns ownership, sets urgency</td>
+                    <td>SOC Analyst</td>
+                    <td>Incident Review → Edit Notable</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge" style="background:#e2e3e5;color:#495057;">4. Investigation</span></td>
+                    <td>Deep dive into alert, gather evidence, determine if real</td>
+                    <td>SOC Analyst</td>
+                    <td>Investigation workbench</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge" style="background:#d4edda;color:#155724;">5. Resolution</span></td>
+                    <td>Close as TP (escalate) or FP (tune detection)</td>
+                    <td>SOC Analyst / IR Team</td>
+                    <td>Incident Review → Close</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

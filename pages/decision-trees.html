@@ -9,10 +9,32 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <style>
+    .tree-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;border-bottom:2px solid var(--gray-200);padding-bottom:16px;}
+    .tree-tab{padding:10px 16px;border-radius:6px 6px 0 0;cursor:pointer;font-size:0.8125rem;font-weight:500;background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);border-bottom:none;transition:all 0.2s;}
+    .tree-tab:hover{background:var(--gray-200);}
+    .tree-tab.active{background:var(--primary-500);color:white;border-color:var(--primary-500);}
+    .tree-tab .icon{margin-right:6px;}
+    .tree-content{display:none;}
+    .tree-content.active{display:block;}
+    .tree-container{background:white;border-radius:12px;padding:32px;min-height:500px;border:1px solid var(--gray-200);overflow-x:auto;}
+    .tree-header{margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--gray-100);}
+    .tree-header h3{font-size:1.25rem;color:var(--gray-900);margin-bottom:8px;}
+    .tree-header p{font-size:0.875rem;color:var(--gray-600);line-height:1.6;}
+    .tree-diagram{min-height:400px;display:flex;justify-content:center;align-items:flex-start;padding:20px 0;}
+    .tree-legend{margin-top:24px;padding:16px;background:var(--gray-50);border-radius:8px;}
+    .tree-legend h4{font-size:0.875rem;color:var(--gray-700);margin-bottom:12px;}
+    .legend-items{display:flex;flex-wrap:wrap;gap:16px;}
+    .legend-item{display:flex;align-items:center;gap:8px;font-size:0.8125rem;}
+    .legend-color{width:16px;height:16px;border-radius:4px;}
+    .quick-ref{margin-top:24px;padding:16px;background:var(--primary-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .quick-ref h4{font-size:0.875rem;color:var(--primary-700);margin-bottom:8px;}
+    .quick-ref ul{font-size:0.8125rem;color:var(--gray-600);margin:0;padding-left:20px;line-height:1.8;}
+  </style>
 </head>
 <body>
   <div class="app-container">
-                                    <aside class="sidebar">
+    <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
           <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
@@ -59,16 +81,16 @@
         <div class="nav-section">
           <div class="nav-section-title">WAF/DDoS Project</div>
           <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-12)</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">MFA Project</div>
           <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Response & Support</div>
-          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="decision-trees.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
           <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
           <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
         </div>
@@ -88,595 +110,710 @@
             <span class="breadcrumb-item current">Decision Trees & Workflows</span>
           </div>
         </div>
-        <span class="badge primary">Visual Guides</span>
+        <span class="badge primary">11 Visual Guides</span>
       </header>
 
       <div class="page-content">
         <div class="section">
           <h1 class="section-title">Decision Trees & Workflows</h1>
-          <p class="section-subtitle">Visual guides for detection engineering decisions, triage processes, and operational workflows</p>
+          <p class="section-subtitle">Visual guides for detection engineering decisions, triage processes, and operational workflows. Click each tab for full-size diagrams.</p>
         </div>
 
-        <!-- Table of Contents -->
+        <!-- Tab Navigation -->
         <div class="section">
-          <h2 class="subsection-title">Quick Navigation</h2>
-          <div class="grid grid-4">
-            <a href="#detection-development" class="card clickable" style="text-align:center;padding:16px;">
-              <span style="font-size:1.5rem;">🔧</span>
-              <h4 style="font-size:0.875rem;margin-top:8px;">Detection Development</h4>
-            </a>
-            <a href="#alert-triage" class="card clickable" style="text-align:center;padding:16px;">
-              <span style="font-size:1.5rem;">🚨</span>
-              <h4 style="font-size:0.875rem;margin-top:8px;">Alert Triage</h4>
-            </a>
-            <a href="#data-validation" class="card clickable" style="text-align:center;padding:16px;">
-              <span style="font-size:1.5rem;">✅</span>
-              <h4 style="font-size:0.875rem;margin-top:8px;">Data Validation</h4>
-            </a>
-            <a href="#incident-response" class="card clickable" style="text-align:center;padding:16px;">
-              <span style="font-size:1.5rem;">🔥</span>
-              <h4 style="font-size:0.875rem;margin-top:8px;">Incident Response</h4>
-            </a>
+          <div class="tree-tabs">
+            <div class="tree-tab active" onclick="showTree('dev')"><span class="icon">🔧</span>Detection Dev</div>
+            <div class="tree-tab" onclick="showTree('triage')"><span class="icon">🚨</span>Alert Triage</div>
+            <div class="tree-tab" onclick="showTree('validation')"><span class="icon">✅</span>Data Validation</div>
+            <div class="tree-tab" onclick="showTree('incident')"><span class="icon">🔥</span>Incident Response</div>
+            <div class="tree-tab" onclick="showTree('notable')"><span class="icon">📋</span>Notable Lifecycle</div>
+            <div class="tree-tab" onclick="showTree('tuning')"><span class="icon">🎛️</span>Tuning Process</div>
+            <div class="tree-tab" onclick="showTree('escalation')"><span class="icon">📞</span>Escalation</div>
+            <div class="tree-tab" onclick="showTree('pattern')"><span class="icon">🎯</span>Pattern Selection</div>
+            <div class="tree-tab" onclick="showTree('timeline')"><span class="icon">📅</span>Project Timeline</div>
+            <div class="tree-tab" onclick="showTree('architecture')"><span class="icon">🏗️</span>Architecture</div>
+            <div class="tree-tab" onclick="showTree('waf')"><span class="icon">🛡️</span>WAF Response</div>
           </div>
-        </div>
 
-        <!-- 1. Detection Development Lifecycle -->
-        <div class="section" id="detection-development">
-          <h2 class="subsection-title">1. Detection Development Lifecycle</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
+          <!-- ==================== DETECTION DEVELOPMENT ==================== -->
+          <div id="dev" class="tree-content active">
+            <div class="tree-container">
+              <div class="tree-header">
+                <h3>🔧 Detection Development Lifecycle</h3>
+                <p>Complete workflow from use case request to production deployment. Follow this process for every new detection to ensure quality and consistency.</p>
+              </div>
+              <div class="tree-diagram">
+                <div class="mermaid">
 flowchart TD
-    subgraph Phase1["Phase 1: Requirements"]
+    subgraph P1["📝 Phase 1: Requirements"]
         A1[Receive use case request] --> A2{Clear requirements?}
         A2 -->|No| A3[Clarify with stakeholder]
         A3 --> A2
         A2 -->|Yes| A4[Document use case spec]
         A4 --> A5[Identify data sources]
-        A5 --> A6[Map to MITRE ATT&CK]
     end
     
-    subgraph Phase2["Phase 2: Data Validation"]
-        B1[Check data availability] --> B2{Data in Splunk?}
-        B2 -->|No| B3[Initiate log onboarding]
-        B3 --> B4[Wait for data flow]
-        B4 --> B2
-        B2 -->|Yes| B5[Validate field extraction]
-        B5 --> B6{All fields present?}
-        B6 -->|No| B7[Create field extractions]
-        B7 --> B5
-        B6 -->|Yes| B8[Calculate baseline]
+    subgraph P2["🔍 Phase 2: Data Validation"]
+        A5 --> B1{Data available?}
+        B1 -->|No| B2[Request onboarding]
+        B2 --> B1
+        B1 -->|Yes| B4[Validate fields]
+        B4 --> B5{Fields exist?}
+        B5 -->|No| B6[Fix parsing]
+        B6 --> B4
+        B5 -->|Yes| B7[Document mappings]
     end
     
-    subgraph Phase3["Phase 3: Development"]
-        C1[Write initial SPL] --> C2[Test against historical data]
-        C2 --> C3{Results expected?}
-        C3 -->|No| C4[Debug and refine]
+    subgraph P3["⚙️ Phase 3: Development"]
+        B7 --> C1[Build SPL query]
+        C1 --> C2[Test with known events]
+        C2 --> C3{Expected results?}
+        C3 -->|No| C4[Refine logic]
         C4 --> C2
-        C3 -->|Yes| C5[Calculate thresholds]
-        C5 --> C6[Add exclusions]
-        C6 --> C7[Optimize for performance]
+        C3 -->|Yes| C5[Add thresholds]
     end
     
-    subgraph Phase4["Phase 4: Testing"]
-        D1[Run in silent mode 7 days] --> D2[Analyze results]
-        D2 --> D3{FP rate acceptable?}
-        D3 -->|No - >20%| D4[Tune thresholds/exclusions]
-        D4 --> D1
-        D3 -->|Yes - <10%| D5[Create runbook]
-        D5 --> D6[Peer review]
+    subgraph P4["🧪 Phase 4: Testing"]
+        C5 --> D1[Run 7-day historical]
+        D1 --> D2{FP rate OK?}
+        D2 -->|High| D3[Tune thresholds]
+        D3 --> D1
+        D2 -->|OK| D6[Document tuning]
     end
     
-    subgraph Phase5["Phase 5: Deployment"]
-        E1[Enable alerting] --> E2[Monitor first 48 hours]
-        E2 --> E3{Issues?}
-        E3 -->|Yes| E4[Disable and investigate]
-        E4 --> D1
-        E3 -->|No| E5[Mark production ready]
-        E5 --> E6[Knowledge transfer]
+    subgraph P5["🚀 Phase 5: Deploy"]
+        D6 --> E1[Create correlation search]
+        E1 --> E2[Configure notable]
+        E2 --> E3[Set throttling]
+        E3 --> E4[Enable production]
+        E4 --> E5[Monitor 48 hours]
+        E5 --> E6{Working?}
+        E6 -->|No| E7[Hotfix]
+        E7 --> E5
+        E6 -->|Yes| E8[✅ Complete]
     end
     
-    A6 --> B1
-    B8 --> C1
-    C7 --> D1
-    D6 --> E1
-    
-    style A4 fill:#cce5ff,stroke:#007bff
-    style B8 fill:#cce5ff,stroke:#007bff
-    style C7 fill:#cce5ff,stroke:#007bff
-    style D5 fill:#cce5ff,stroke:#007bff
-    style E5 fill:#d4edda,stroke:#28a745
+    style A1 fill:#e0f2fe,stroke:#0284c7
+    style E8 fill:#dcfce7,stroke:#16a34a
+                </div>
+              </div>
+              <div class="quick-ref">
+                <h4>Quick Reference</h4>
+                <ul>
+                  <li><strong>Phase 1:</strong> Never start without documented requirements</li>
+                  <li><strong>Phase 2:</strong> Data validation prevents wasted development time</li>
+                  <li><strong>Phase 3:</strong> Always test with known-good events first</li>
+                  <li><strong>Phase 4:</strong> Target &lt;10 FPs/day before deployment</li>
+                  <li><strong>Phase 5:</strong> 48-hour monitoring period is mandatory</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 2. Alert Triage Decision Tree -->
-        <div class="section" id="alert-triage">
-          <h2 class="subsection-title">2. Alert Triage Decision Tree</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
+          <!-- ==================== ALERT TRIAGE ==================== -->
+          <div id="triage" class="tree-content">
+            <div class="tree-container">
+              <div class="tree-header">
+                <h3>🚨 Alert Triage Workflow</h3>
+                <p>Step-by-step process for SOC analysts to triage incoming alerts from creation to closure.</p>
+              </div>
+              <div class="tree-diagram">
+                <div class="mermaid">
 flowchart TD
-    A[Alert Received] --> B{What severity?}
+    A[🔔 New Alert] --> B[Open Incident Review]
+    B --> C[Review details]
     
-    B -->|CRITICAL| C[Respond within 5 min]
-    B -->|HIGH| D[Respond within 15 min]
-    B -->|MEDIUM| E[Respond within 1 hour]
-    B -->|LOW| F[Respond within 4 hours]
+    C --> D{Duplicate?}
+    D -->|Yes| E[Link to existing]
+    E --> F[Close duplicate]
     
-    C --> G{MFA Fatigue<br/>with Success?}
-    G -->|Yes| H[⚠️ ACCOUNT COMPROMISED]
-    H --> I[Disable account immediately]
-    I --> J[Revoke all sessions]
-    J --> K[Reset password]
-    K --> L[Escalate to IR]
+    D -->|No| G{Sufficient context?}
+    G -->|No| H[Run drilldowns]
+    H --> G
     
-    G -->|No| M{Other Critical<br/>Alert Type?}
-    M --> N[Follow specific runbook]
+    G -->|Yes| I{True positive?}
     
-    D --> O{Known scanner IP?}
-    O -->|Yes| P[Check scanner whitelist]
-    P --> Q{In whitelist?}
-    Q -->|Yes| R[Close as FP]
-    Q -->|No| S[Add to whitelist if valid]
+    I -->|Clear FP| J[Document reason]
+    J --> K{Recurring FP?}
+    K -->|Yes| L[Create tuning ticket]
+    K -->|No| M[Close as FP]
     
-    O -->|No| T{Attack pattern<br/>recognized?}
-    T -->|SQLi/XSS| U[Block IP in WAF]
-    T -->|Brute Force| V[Contact user]
-    T -->|DDoS| W[Engage Akamai support]
-    T -->|Unknown| X[Escalate to Tier 2]
+    I -->|Needs investigation| N[Escalate Tier 2]
     
-    E --> Y[Standard investigation]
-    F --> Z[Queue for review]
+    I -->|True Positive| O{Severity?}
     
-    style H fill:#f8d7da,stroke:#dc3545
-    style I fill:#f8d7da,stroke:#dc3545
-    style R fill:#d4edda,stroke:#28a745
-    style L fill:#fff3cd,stroke:#ffc107
+    O -->|Low/Med| P[Create ticket]
+    P --> Q[Follow runbook]
+    Q --> R[Close]
+    
+    O -->|High/Critical| S[🚨 Immediate escalation]
+    S --> T[Page on-call]
+    T --> U[Incident response]
+    
+    style A fill:#fef3c7,stroke:#d97706
+    style S fill:#fee2e2,stroke:#dc2626
+    style F fill:#dcfce7,stroke:#16a34a
+    style M fill:#dcfce7,stroke:#16a34a
+    style R fill:#dcfce7,stroke:#16a34a
+                </div>
+              </div>
+              <div class="tree-legend">
+                <h4>Disposition Codes</h4>
+                <div class="legend-items">
+                  <div class="legend-item"><div class="legend-color" style="background:#dc2626;"></div>True Positive - Confirmed</div>
+                  <div class="legend-item"><div class="legend-color" style="background:#f97316;"></div>True Positive - Benign</div>
+                  <div class="legend-item"><div class="legend-color" style="background:#eab308;"></div>False Positive - Tuning Needed</div>
+                  <div class="legend-item"><div class="legend-color" style="background:#22c55e;"></div>False Positive - Expected</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 3. MFA Fatigue Response Flow -->
-        <div class="section">
-          <h2 class="subsection-title">3. MFA Fatigue Attack Response Flow</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
+          <!-- ==================== DATA VALIDATION ==================== -->
+          <div id="validation" class="tree-content">
+            <div class="tree-container">
+              <div class="tree-header">
+                <h3>✅ Data Validation Workflow</h3>
+                <p>Verify data quality before building detections. Prevents building rules on broken data.</p>
+              </div>
+              <div class="tree-diagram">
+                <div class="mermaid">
 flowchart TD
-    A[MFA-UC1 Alert Triggered] --> B{Check alert severity}
+    A[🔍 Start Validation] --> B[Run health check]
     
-    B -->|CRITICAL<br/>Denials + Success| C[🚨 ASSUME COMPROMISED]
-    B -->|HIGH<br/>Denials only| D[Attack in progress]
+    B --> C{Events in 60m?}
+    C -->|No| D[❌ Data not flowing]
+    D --> E[Check HEC]
+    E --> F[Check source]
+    F --> G{Resolved?}
+    G -->|No| H[Escalate to admin]
+    G -->|Yes| B
     
-    C --> E[Step 1: Disable Account<br/>CyberArk Identity Portal]
-    E --> F[Step 2: Revoke Sessions<br/>Both CyberArk + Entra ID]
-    F --> G[Step 3: Reset Password]
-    G --> H[Step 4: Notify IR Team]
-    H --> I[Step 5: Begin Investigation]
+    C -->|Yes| I{Volume normal?}
+    I -->|Low| J[⚠️ Possible data loss]
+    J --> K[Compare to source]
     
-    D --> J[Step 1: Call User Directly<br/>Not email/chat]
-    J --> K{User trying<br/>to log in?}
+    I -->|OK| L[Check fields]
     
-    K -->|NO - Not them| L[Attacker has credentials]
-    L --> M[Reset password immediately]
-    M --> N[Warn user about phishing]
+    L --> M{Fields present?}
+    M -->|No| N[❌ Parsing issue]
+    N --> O[Fix props.conf]
     
-    K -->|YES - Legitimate| O{From expected<br/>location/device?}
-    O -->|Yes| P[May be false positive]
-    P --> Q[Document and close]
-    O -->|No| R[Suspicious - investigate further]
+    M -->|Yes| P{Values valid?}
+    P -->|No| Q[⚠️ Mapping issue]
+    Q --> R[Create ticket]
     
-    I --> S[Investigation Queries]
-    S --> T[Timeline of events]
-    S --> U[Post-compromise activity check]
-    S --> V[Session enumeration]
+    P -->|Yes| S[Check timestamps]
+    S --> T{Time accurate?}
+    T -->|No| U[⚠️ Timezone issue]
     
-    style C fill:#f8d7da,stroke:#dc3545
-    style E fill:#f8d7da,stroke:#dc3545
-    style L fill:#fff3cd,stroke:#ffc107
-    style Q fill:#d4edda,stroke:#28a745
+    T -->|Yes| V[✅ Validated]
+    V --> W[Document results]
+    W --> X[Proceed with detection]
+    
+    style D fill:#fee2e2,stroke:#dc2626
+    style N fill:#fee2e2,stroke:#dc2626
+    style J fill:#fef3c7,stroke:#d97706
+    style Q fill:#fef3c7,stroke:#d97706
+    style U fill:#fef3c7,stroke:#d97706
+    style V fill:#dcfce7,stroke:#16a34a
+                </div>
+              </div>
+              <div class="quick-ref">
+                <h4>Validation Checklist</h4>
+                <ul>
+                  <li>✅ Events flowing within last 60 minutes</li>
+                  <li>✅ Event count matches expected (±20%)</li>
+                  <li>✅ Required fields extracted</li>
+                  <li>✅ Field values match expected format</li>
+                  <li>✅ Timestamps accurate (within 5 min)</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 4. Data Validation Flow -->
-        <div class="section" id="data-validation">
-          <h2 class="subsection-title">4. Data Validation Flow</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
+          <!-- ==================== INCIDENT RESPONSE ==================== -->
+          <div id="incident" class="tree-content">
+            <div class="tree-container">
+              <div class="tree-header">
+                <h3>🔥 Incident Response Decision Tree</h3>
+                <p>High-level IR workflow for security incidents detected by your rules.</p>
+              </div>
+              <div class="tree-diagram">
+                <div class="mermaid">
 flowchart TD
-    A[Start Data Validation] --> B[Query: Check index exists]
-    B --> C{Events returned?}
+    A[🚨 Incident Detected] --> B{Type?}
     
-    C -->|No - 0 events| D[Check HEC token status]
-    D --> E{Token enabled?}
-    E -->|No| F[Enable HEC token]
-    E -->|Yes| G[Check source system]
-    G --> H{Sending data?}
-    H -->|No| I[Fix source config]
-    H -->|Yes| J[Check network/firewall]
+    B -->|Account Compromise| C[Disable account]
+    C --> C1[Reset credentials]
+    C1 --> C2[Review activity]
+    C2 --> C3[Check persistence]
     
-    C -->|Yes| K[Check timestamp parsing]
-    K --> L{_time matches<br/>raw timestamp?}
-    L -->|No| M[Fix TIME_FORMAT<br/>in props.conf]
-    L -->|Yes| N[Check field extraction]
+    B -->|Malware| D[Isolate system]
+    D --> D1[Preserve evidence]
+    D1 --> D2[ID malware family]
+    D2 --> D3[Determine scope]
     
-    N --> O{Critical fields<br/>extracted?}
-    O -->|No| P[Install/configure TA<br/>or create extractions]
-    O -->|Yes| Q[Check latency]
+    B -->|Data Exfil| E[ID data accessed]
+    E --> E1{PII/PHI?}
+    E1 -->|Yes| E2[Legal notification]
+    E1 -->|No| E3[Internal investigation]
     
-    Q --> R{Latency < 10 min?}
-    R -->|No| S[Investigate queue backup]
-    R -->|Yes| T[Check CIM mapping]
+    B -->|Active Attack| F[🚨 Block attacker IP]
+    F --> F1[Preserve artifacts]
+    F1 --> F2[Page IR Lead]
+    F2 --> F3[Activate war room]
     
-    T --> U{CIM fields<br/>populated?}
-    U -->|No| V[Create field aliases<br/>and calculated fields]
-    U -->|Yes| W[✅ Data Validated]
+    C3 --> G[Document]
+    D3 --> G
+    E2 --> G
+    E3 --> G
+    F3 --> G
     
-    F --> B
-    I --> B
-    J --> B
-    M --> K
-    P --> N
-    S --> Q
-    V --> T
+    G --> H[Post-mortem]
+    H --> I[Update detections]
+    I --> J[Close incident]
     
-    style W fill:#d4edda,stroke:#28a745
-    style D fill:#fff3cd,stroke:#ffc107
-    style M fill:#fff3cd,stroke:#ffc107
-    style P fill:#fff3cd,stroke:#ffc107
+    style A fill:#fee2e2,stroke:#dc2626
+    style F fill:#fee2e2,stroke:#dc2626
+    style J fill:#dcfce7,stroke:#16a34a
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 5. WAF Alert Triage -->
-        <div class="section">
-          <h2 class="subsection-title">5. WAF Alert Triage Flow</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
-flowchart TD
-    A[WAF Alert Received] --> B{Alert Type?}
-    
-    B -->|Block Volume Anomaly| C[Check deviation value]
-    C --> D{Deviation >= 3σ?}
-    D -->|Yes| E[Likely real attack]
-    D -->|No| F[May be normal variance]
-    
-    B -->|Single Source Flood| G[Check source IP]
-    G --> H{Scanner IP?}
-    H -->|Yes| I[Verify in whitelist]
-    I --> J{Whitelisted?}
-    J -->|Yes| K[Close as FP]
-    J -->|No| L[Add to whitelist<br/>if legitimate]
-    H -->|No| M[Malicious traffic]
-    
-    B -->|SQLi/XSS Campaign| N[🚨 HIGH PRIORITY]
-    N --> O[Check targeted endpoints]
-    O --> P{Critical asset?}
-    P -->|Yes| Q[Immediate escalation]
-    P -->|No| R[Standard response]
-    
-    B -->|Auth Endpoint Attack| S[Check user impact]
-    S --> T{Successful logins<br/>after blocks?}
-    T -->|Yes| U[Possible compromise]
-    T -->|No| V[Attack mitigated by WAF]
-    
-    E --> W[Investigate attack pattern]
-    W --> X{Distributed<br/>attack?}
-    X -->|Yes - Many IPs| Y[DDoS - Contact Akamai]
-    X -->|No - Single IP| Z[Block IP if not already]
-    
-    M --> Z
-    
-    style N fill:#f8d7da,stroke:#dc3545
-    style Q fill:#f8d7da,stroke:#dc3545
-    style U fill:#fff3cd,stroke:#ffc107
-    style K fill:#d4edda,stroke:#28a745
-    style V fill:#d4edda,stroke:#28a745
-            </div>
-          </div>
-        </div>
-
-        <!-- 6. Incident Response Flow -->
-        <div class="section" id="incident-response">
-          <h2 class="subsection-title">6. Incident Response Escalation Flow</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
-flowchart TD
-    subgraph Tier1["Tier 1 SOC"]
-        A1[Alert received] --> A2[Initial triage]
-        A2 --> A3{Can resolve<br/>in 15 min?}
-        A3 -->|Yes| A4[Resolve and document]
-        A3 -->|No| A5[Escalate to Tier 2]
+          <!-- ==================== NOTABLE LIFECYCLE ==================== -->
+          <div id="notable" class="tree-content">
+            <div class="tree-container">
+              <div class="tree-header">
+                <h3>📋 Notable Event Lifecycle</h3>
+                <p>Complete lifecycle of a Notable event in Splunk Enterprise Security.</p>
+              </div>
+              <div class="tree-diagram">
+                <div class="mermaid">
+flowchart LR
+    subgraph S1["1️⃣ Creation"]
+        A1[Search Runs] --> A2[Threshold Met]
+        A2 --> A3[Notable Created]
+        A3 --> A4["Status: NEW"]
     end
     
-    subgraph Tier2["Tier 2 SOC"]
-        B1[Receive escalation] --> B2[Deep investigation]
-        B2 --> B3{Confirmed<br/>incident?}
-        B3 -->|No - FP| B4[Tune detection<br/>Return to Tier 1]
-        B3 -->|Yes| B5{Severity?}
-        B5 -->|Low/Medium| B6[Handle internally]
-        B5 -->|High/Critical| B7[Escalate to IR]
+    subgraph S2["2️⃣ Assignment"]
+        A4 --> B1[Incident Review]
+        B1 --> B2[Analyst Claims]
+        B2 --> B3["Status: IN PROGRESS"]
     end
     
-    subgraph IR["Incident Response Team"]
-        C1[Receive escalation] --> C2[Incident declared]
-        C2 --> C3[Containment actions]
-        C3 --> C4[Evidence collection]
-        C4 --> C5[Eradication]
-        C5 --> C6[Recovery]
-        C6 --> C7[Lessons learned]
+    subgraph S3["3️⃣ Investigation"]
+        B3 --> C1[Drilldowns]
+        C1 --> C2[Gather Context]
+        C2 --> C3[Make Decision]
     end
     
-    subgraph External["External Escalation"]
-        D1{Involve external?}
-        D1 -->|Legal required| D2[Legal team]
-        D1 -->|Data breach| D3[Privacy officer]
-        D1 -->|Law enforcement| D4[Management approval]
-        D1 -->|Vendor support| D5[Akamai/CyberArk]
+    subgraph S4["4️⃣ Resolution"]
+        C3 --> D1{Disposition}
+        D1 -->|TP| D2[Remediate]
+        D1 -->|FP| D3[Tune]
+        D1 -->|Benign| D4[Document]
+        D2 --> D5["Status: RESOLVED"]
+        D3 --> D5
+        D4 --> D5
     end
     
-    A5 --> B1
-    B4 --> A1
-    B7 --> C1
-    C3 --> D1
+    subgraph S5["5️⃣ Closure"]
+        D5 --> E1[Add Comments]
+        E1 --> E2["Status: CLOSED"]
+    end
     
-    style A4 fill:#d4edda,stroke:#28a745
-    style B4 fill:#cce5ff,stroke:#007bff
-    style C2 fill:#f8d7da,stroke:#dc3545
+    style A4 fill:#fef3c7,stroke:#d97706
+    style B3 fill:#e0f2fe,stroke:#0284c7
+    style D5 fill:#dbeafe,stroke:#3b82f6
+    style E2 fill:#dcfce7,stroke:#16a34a
+                </div>
+              </div>
+              <div class="tree-legend">
+                <h4>Status Flow</h4>
+                <div class="legend-items">
+                  <div class="legend-item"><div class="legend-color" style="background:#d97706;"></div>New</div>
+                  <div class="legend-item"><div class="legend-color" style="background:#0284c7;"></div>In Progress</div>
+                  <div class="legend-item"><div class="legend-color" style="background:#8b5cf6;"></div>Pending</div>
+                  <div class="legend-item"><div class="legend-color" style="background:#3b82f6;"></div>Resolved</div>
+                  <div class="legend-item"><div class="legend-color" style="background:#16a34a;"></div>Closed</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 7. Log Onboarding Decision -->
-        <div class="section">
-          <h2 class="subsection-title">7. Log Onboarding Decision Tree</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
+          <!-- ==================== TUNING PROCESS ==================== -->
+          <div id="tuning" class="tree-content">
+            <div class="tree-container">
+              <div class="tree-header">
+                <h3>🎛️ Detection Tuning Process</h3>
+                <p>Systematic approach to tuning based on false positive patterns.</p>
+              </div>
+              <div class="tree-diagram">
+                <div class="mermaid">
 flowchart TD
-    A[New log source needed] --> B{Splunkbase TA<br/>available?}
+    A[📊 FP Pattern Found] --> B{Single or recurring?}
     
-    B -->|Yes| C[Install TA from Splunkbase]
-    C --> D{TA vetted for<br/>Splunk Cloud?}
-    D -->|Yes| E[Self-service install]
-    D -->|No| F[Submit support ticket]
+    B -->|Single| C[Document exception]
+    C --> D[Close as FP]
     
-    B -->|No| G{Log format?}
-    G -->|JSON| H[Use KV_MODE=json]
-    G -->|Syslog| I[Use standard syslog TA]
-    G -->|Custom| J[Create custom parsing]
+    B -->|Recurring| E[Analyze pattern]
+    E --> F{Root cause?}
     
-    E --> K{Integration method?}
-    F --> K
-    H --> K
-    I --> K
-    J --> K
+    F -->|Legit Activity| G[Add to allowlist]
+    G --> H[Create lookup entry]
     
-    K -->|HEC| L[Create HEC token]
-    K -->|API Poll| M[Configure TA input]
-    K -->|Syslog| N[Configure syslog input]
-    K -->|File| O[Configure file monitor]
+    F -->|Threshold Issue| I[Adjust threshold]
+    I --> J{Direction?}
+    J -->|Fewer alerts| K[Increase value]
+    J -->|More coverage| L[Decrease value]
     
-    L --> P[Configure source to send]
-    M --> P
-    N --> P
-    O --> P
+    F -->|Missing Context| M[Add filter]
+    M --> N[Add WHERE clause]
     
-    P --> Q[Verify data flow]
-    Q --> R{Data arriving?}
-    R -->|No| S[Troubleshoot connectivity]
-    S --> P
-    R -->|Yes| T[Validate parsing]
-    T --> U[Create CIM mapping]
-    U --> V[✅ Onboarding complete]
+    F -->|Time Pattern| O[Add time filter]
+    O --> P[Business hours only?]
     
-    style V fill:#d4edda,stroke:#28a745
-    style E fill:#d4edda,stroke:#28a745
-    style F fill:#fff3cd,stroke:#ffc107
-    style J fill:#fff3cd,stroke:#ffc107
+    H --> Q[Validate tuning]
+    K --> Q
+    L --> Q
+    N --> Q
+    P --> Q
+    
+    Q --> R{FP rate OK?}
+    R -->|No| S[Refine more]
+    S --> E
+    R -->|Yes| T[Deploy]
+    T --> U[Monitor 7 days]
+    U --> V{Success?}
+    V -->|No| W[Rollback]
+    W --> E
+    V -->|Yes| X[✅ Document]
+    
+    style A fill:#fef3c7,stroke:#d97706
+    style X fill:#dcfce7,stroke:#16a34a
+    style W fill:#fee2e2,stroke:#dc2626
+                </div>
+              </div>
+              <div class="quick-ref">
+                <h4>Tuning Best Practices</h4>
+                <ul>
+                  <li><strong>Document:</strong> Every change needs a ticket</li>
+                  <li><strong>Test:</strong> Run against 7 days historical</li>
+                  <li><strong>Monitor:</strong> Watch 7 days post-tuning</li>
+                  <li><strong>Preserve:</strong> Don't tune away real attacks</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 8. Threshold Tuning Decision -->
-        <div class="section">
-          <h2 class="subsection-title">8. Threshold Tuning Decision Tree</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
+          <!-- ==================== ESCALATION ==================== -->
+          <div id="escalation" class="tree-content">
+            <div class="tree-container">
+              <div class="tree-header">
+                <h3>📞 Escalation Decision Tree</h3>
+                <p>When and how to escalate based on severity.</p>
+              </div>
+              <div class="tree-diagram">
+                <div class="mermaid">
 flowchart TD
-    A[Detection generating alerts] --> B{Alert volume?}
+    A[⚠️ Incident] --> B{Severity?}
     
-    B -->|Too many - FP storm| C[Threshold too low]
-    B -->|Just right| D[✅ Maintain current]
-    B -->|Too few - Missing attacks| E[Threshold too high]
+    B -->|Info| C[Log & Monitor]
+    C --> D[No escalation]
     
-    C --> F{FP pattern identified?}
-    F -->|Yes - Specific source| G[Add to exclusion list]
-    F -->|Yes - Time pattern| H[Add time-based exclusion]
-    F -->|No - General noise| I[Increase threshold]
+    B -->|Low| E[Standard ticket]
+    E --> F[Tier 1 handles]
+    F --> G{Resolved 4h?}
+    G -->|Yes| H[Close]
+    G -->|No| I[→ Tier 2]
     
-    E --> J{Baseline available?}
-    J -->|Yes| K[Recalculate with recent data]
-    J -->|No| L[Build 14-day baseline]
+    B -->|Medium| J[Priority ticket]
+    J --> K[Tier 2 assigned]
+    K --> L{Resolved 2h?}
+    L -->|Yes| M[Close]
+    L -->|No| N[→ Tier 3]
     
-    I --> M{How much to increase?}
-    M -->|Minor adjustment| N[Increase by 20%]
-    M -->|Major adjustment| O[Move from 2σ to 3σ]
+    B -->|High| O[🔴 Immediate]
+    O --> P[Page Tier 3]
+    P --> Q[15-min SLA]
+    Q --> R{Active threat?}
+    R -->|Yes| S[→ IR Lead]
+    R -->|No| T[Tier 3 investigates]
     
-    K --> P{Use statistical method}
-    L --> P
-    P -->|High variance data| Q[Use percentile P95/P99]
-    P -->|Normal distribution| R[Use mean + Nσ]
-    P -->|Seasonal patterns| S[Use hour-of-day baseline]
+    B -->|Critical| U[🚨 CRITICAL]
+    U --> V[Page IR Lead NOW]
+    V --> W[Page CISO 30m]
+    W --> X[War room]
     
-    G --> T[Test in silent mode 3 days]
-    H --> T
-    N --> T
-    O --> T
-    Q --> T
-    R --> T
-    S --> T
+    S --> Y[Containment]
+    T --> Y
+    X --> Y
     
-    T --> U{FP rate improved?}
-    U -->|Yes| V[Deploy to production]
-    U -->|No| W[Iterate - try different approach]
-    W --> F
-    
-    style D fill:#d4edda,stroke:#28a745
-    style V fill:#d4edda,stroke:#28a745
-    style C fill:#f8d7da,stroke:#dc3545
-    style E fill:#fff3cd,stroke:#ffc107
+    style U fill:#fee2e2,stroke:#dc2626
+    style O fill:#fef3c7,stroke:#d97706
+    style D fill:#dcfce7,stroke:#16a34a
+    style H fill:#dcfce7,stroke:#16a34a
+    style M fill:#dcfce7,stroke:#16a34a
+                </div>
+              </div>
+              <div class="tree-legend">
+                <h4>Escalation Contacts</h4>
+                <div class="legend-items">
+                  <div class="legend-item"><div class="legend-color" style="background:#22c55e;"></div>Tier 1: SOC (24/7)</div>
+                  <div class="legend-item"><div class="legend-color" style="background:#3b82f6;"></div>Tier 2: Senior (On-Call)</div>
+                  <div class="legend-item"><div class="legend-color" style="background:#8b5cf6;"></div>Tier 3: Engineers</div>
+                  <div class="legend-item"><div class="legend-color" style="background:#dc2626;"></div>IR Lead</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 9. Detection Selection Matrix -->
-        <div class="section">
-          <h2 class="subsection-title">9. Detection Method Selection</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
+          <!-- ==================== PATTERN SELECTION ==================== -->
+          <div id="pattern" class="tree-content">
+            <div class="tree-container">
+              <div class="tree-header">
+                <h3>🎯 Detection Pattern Selection</h3>
+                <p>Choose the right detection pattern for your use case.</p>
+              </div>
+              <div class="tree-diagram">
+                <div class="mermaid">
 flowchart TD
-    A[What are you detecting?] --> B{Attack type?}
+    A[🎯 New Use Case] --> B{Detecting what?}
     
-    B -->|Volume-based<br/>DDoS, Flood| C[Statistical threshold]
-    B -->|Sequence-based<br/>MFA fatigue, Brute force| D[Pattern matching]
-    B -->|Anomaly-based<br/>Unusual behavior| E[Baseline comparison]
-    B -->|Signature-based<br/>Known attacks| F[Rule matching]
+    B -->|Volume anomaly| C[Threshold-Based]
+    B -->|Specific behavior| D[Sequence-Based]
+    B -->|Deviation from normal| E[Baseline-Based]
+    B -->|Known patterns| F[Signature-Based]
     
-    C --> G{Data variance?}
-    G -->|Low - stable| H[Fixed threshold]
-    G -->|Medium| I[Mean + 2σ]
-    G -->|High - variable| J[Percentile P95]
-    G -->|Seasonal| K[Time-based baseline]
+    C --> G{Static or dynamic?}
+    G -->|Fixed| H["count > X"]
+    G -->|Relative| I["count > avg + 2σ"]
     
-    D --> L{Sequence complexity?}
-    L -->|Simple A then B| M[streamstats + where]
-    L -->|Complex chain| N[transaction command]
-    L -->|Time windowed| O[bin + stats]
+    D --> J{Complexity?}
+    J -->|A then B| K[streamstats]
+    J -->|Chain| L[transaction]
+    J -->|Time window| M[bin + stats]
     
-    E --> P{Baseline type?}
-    P -->|User behavior| Q[Per-user baseline lookup]
-    P -->|System behavior| R[Global baseline]
-    P -->|Time patterns| S[Hour/day baseline]
+    E --> N{Baseline type?}
+    N -->|User| O[Per-user lookup]
+    N -->|System| P[Global avg]
+    N -->|Time| Q[Hour/day pattern]
     
-    F --> T{Signature source?}
-    T -->|Vendor rules| U[Use native fields]
-    T -->|Threat intel| V[Lookup enrichment]
-    T -->|Custom rules| W[Regex matching]
+    F --> R{Source?}
+    R -->|Vendor| S[Native fields]
+    R -->|Intel| T[Lookup enrichment]
+    R -->|Custom| U[Regex match]
     
     style C fill:#cce5ff,stroke:#007bff
     style D fill:#d4edda,stroke:#28a745
     style E fill:#fff3cd,stroke:#ffc107
     style F fill:#e2e3e5,stroke:#6c757d
+                </div>
+              </div>
+              <div class="quick-ref">
+                <h4>Pattern Selection Guide</h4>
+                <ul>
+                  <li><strong>Threshold:</strong> DDoS, brute force, scanning</li>
+                  <li><strong>Sequence:</strong> Multi-stage attacks, kill chain</li>
+                  <li><strong>Baseline:</strong> Insider threats, unusual behavior</li>
+                  <li><strong>Signature:</strong> Known malware, exploits</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 10. Project Delivery Timeline -->
-        <div class="section">
-          <h2 class="subsection-title">10. 6-Month Project Delivery Timeline</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
+          <!-- ==================== PROJECT TIMELINE ==================== -->
+          <div id="timeline" class="tree-content">
+            <div class="tree-container">
+              <div class="tree-header">
+                <h3>📅 6-Month Project Delivery Timeline</h3>
+                <p>Gantt chart showing the planned rollout of all detection use cases.</p>
+              </div>
+              <div class="tree-diagram">
+                <div class="mermaid">
 gantt
-    title myfirstpro Detection Engineering - 6 Month Timeline
-    dateFormat  YYYY-MM-DD
-    section Phase 1
-    Kickoff & Discovery           :a1, 2024-01-01, 1w
-    Data Validation               :a2, after a1, 1w
-    Baseline Calculation          :a3, after a2, 1w
-    section WAF Tier 1
-    WAF-UC1 Block Anomaly        :b1, after a3, 1w
-    WAF-UC2 Single Source        :b2, after b1, 1w
-    WAF-UC3 Auth Endpoint        :b3, after b2, 1w
-    WAF-UC4 SQLi/XSS             :b4, after b3, 1w
-    section WAF Tier 2
-    WAF-UC5 Distributed          :c1, after b4, 1w
-    WAF-UC6 Geo Anomaly          :c2, after c1, 1w
-    WAF-UC7 WAF+Backend          :c3, after c2, 1w
-    WAF-UC8 Bot Behavior         :c4, after c3, 1w
+    title Detection Engineering - 6 Month Timeline
+    dateFormat YYYY-MM-DD
+    
+    section Foundation
+    Kickoff & Discovery :a1, 2024-01-01, 7d
+    Data Validation :a2, after a1, 7d
+    
+    section WAF Phase 1
+    UC1-UC4 Block/Source/Auth/SQLi :b1, after a2, 28d
+    
+    section WAF Phase 2
+    UC5-UC8 Distributed/Geo/Bypass/Bot :c1, after b1, 28d
+    
+    section WAF Phase 3
+    UC9-UC12 API/Path/Scanner/Rate :c2, after c1, 28d
+    
     section MFA
-    MFA-UC1 Fatigue              :d1, after c4, 1w
-    MFA-UC2 Burst Success        :d2, after d1, 1w
-    MFA-UC3 New Location         :d3, after d2, 1w
-    MFA-UC4 Impossible Travel    :d4, after d3, 1w
-    MFA-UC5 Method Downgrade     :d5, after d4, 1w
+    UC1-UC4 Fatigue/Success/Travel/Location :d1, after c2, 28d
+    UC5-UC8 Hours/Brute/Device/Dormant :d2, after d1, 28d
+    
     section Closeout
-    Documentation                 :e1, after d5, 2w
-    Knowledge Transfer            :e2, after e1, 1w
-    Hypercare                     :e3, after e2, 2w
+    Documentation :e1, after d2, 14d
+    Knowledge Transfer :e2, after e1, 7d
+    Hypercare :e3, after e2, 14d
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Architecture Diagrams -->
-        <div class="section">
-          <h2 class="subsection-title">11. Data Flow Architecture</h2>
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
+          <!-- ==================== ARCHITECTURE ==================== -->
+          <div id="architecture" class="tree-content">
+            <div class="tree-container">
+              <div class="tree-header">
+                <h3>🏗️ Data Flow Architecture</h3>
+                <p>End-to-end data flow from sources through Splunk to response.</p>
+              </div>
+              <div class="tree-diagram">
+                <div class="mermaid">
 flowchart LR
-    subgraph Sources["Data Sources"]
-        S1[Akamai WAF]
-        S2[CyberArk Identity]
-        S3[Entra ID]
+    subgraph Sources["📡 Sources"]
+        S1[🛡️ Akamai]
+        S2[🔐 CyberArk]
+        S3[☁️ Entra]
     end
     
-    subgraph Integration["Integration Layer"]
-        I1[Akamai SIEM API]
-        I2[CyberArk SIEM Connector]
-        I3[MS Graph API]
+    subgraph Integration["🔌 Integration"]
+        I1[SIEM API]
+        I2[Connector]
+        I3[Graph API]
     end
     
-    subgraph Splunk["Splunk Cloud"]
-        subgraph Ingest["Ingestion"]
-            HEC[HEC Endpoint]
-        end
-        subgraph Index["Indexing"]
-            IDX1[(akamai)]
-            IDX2[(cyberark)]
-            IDX3[(azure)]
-        end
-        subgraph Search["Search & Detection"]
-            SH[Search Head]
-            DET[Scheduled Searches]
-            ALERT[Alert Actions]
-        end
+    subgraph Splunk["☁️ Splunk Cloud"]
+        HEC[HEC] --> IDX[(Indexes)]
+        IDX --> SH[Search Head]
+        SH --> DET[Correlation]
+        DET --> NOT[Notables]
     end
     
-    subgraph Response["Response"]
-        R1[Email]
-        R2[Slack]
-        R3[SOAR]
-        R4[ServiceNow]
+    subgraph Response["📣 Response"]
+        R1[📧 Email]
+        R2[💬 Slack]
+        R3[🤖 SOAR]
+        R4[🎫 SNOW]
     end
     
     S1 --> I1 --> HEC
     S2 --> I2 --> HEC
     S3 --> I3 --> HEC
     
-    HEC --> IDX1
-    HEC --> IDX2
-    HEC --> IDX3
-    
-    IDX1 --> SH
-    IDX2 --> SH
-    IDX3 --> SH
-    
-    SH --> DET --> ALERT
-    
-    ALERT --> R1
-    ALERT --> R2
-    ALERT --> R3
-    ALERT --> R4
+    NOT --> R1 & R2 & R3 & R4
     
     style HEC fill:#65a637,stroke:#4a7c28
     style DET fill:#cce5ff,stroke:#007bff
-    style ALERT fill:#f8d7da,stroke:#dc3545
+    style NOT fill:#fee2e2,stroke:#dc2626
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
+          <!-- ==================== WAF RESPONSE ==================== -->
+          <div id="waf" class="tree-content">
+            <div class="tree-container">
+              <div class="tree-header">
+                <h3>🛡️ WAF Alert Response Workflow</h3>
+                <p>Specific workflow for responding to WAF security alerts.</p>
+              </div>
+              <div class="tree-diagram">
+                <div class="mermaid">
+flowchart TD
+    A[🛡️ WAF Alert] --> B{Type?}
+    
+    B -->|Volume| C[Check trend]
+    B -->|Single IP| D[Analyze IP]
+    B -->|Injection| E[Review payloads]
+    B -->|Auth| F[Check cred stuffing]
+    
+    C --> G{Spike > 5σ?}
+    G -->|Yes| H[🔴 Active attack]
+    G -->|No| I[Monitor]
+    
+    D --> J[IP reputation]
+    J --> K{Known bad?}
+    K -->|Yes| L[Verify blocking]
+    K -->|No| M{Corporate NAT?}
+    M -->|Yes| N[FP - NAT]
+    M -->|No| O[New threat]
+    
+    E --> P{Blocked?}
+    P -->|Yes| Q[Check bypass]
+    P -->|No| R[🚨 Check backend]
+    R --> S{500 errors?}
+    S -->|Yes| T[Possible compromise]
+    S -->|No| U[WAF effective]
+    
+    F --> V{Multi-user?}
+    V -->|Yes| W[Campaign]
+    V -->|No| X[Single brute force]
+    W --> Y[Alert identity team]
+    
+    H --> Z[Escalate Tier 2]
+    T --> Z
+    
+    L --> AA[Close]
+    Q --> AA
+    U --> AA
+    N --> AA
+    
+    style A fill:#e0f2fe,stroke:#0284c7
+    style H fill:#fee2e2,stroke:#dc2626
+    style T fill:#fee2e2,stroke:#dc2626
+    style AA fill:#dcfce7,stroke:#16a34a
+                </div>
+              </div>
+              <div class="quick-ref">
+                <h4>WAF Quick Actions</h4>
+                <ul>
+                  <li><strong>Volume spike:</strong> Check if legitimate (sale, launch)</li>
+                  <li><strong>Single IP:</strong> Verify blocking, geo-block if persistent</li>
+                  <li><strong>Injection:</strong> Always check backend for 500 errors</li>
+                  <li><strong>Auth attacks:</strong> Coordinate with identity team</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </main>
   </div>
+  
   <script src="../js/app.js"></script>
-  <script>mermaid.initialize({startOnLoad:true, theme:'neutral', flowchart: {curve: 'basis'}});</script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true, 
+      theme: 'neutral', 
+      flowchart: { 
+        curve: 'basis',
+        nodeSpacing: 50,
+        rankSpacing: 50,
+        padding: 15
+      },
+      gantt: {
+        fontSize: 11,
+        barHeight: 20,
+        barGap: 4
+      }
+    });
+
+    function showTree(id) {
+      document.querySelectorAll('.tree-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tree-tab').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(id).classList.add('active');
+      document.querySelector(`[onclick="showTree('${id}')"]`).classList.add('active');
+      
+      setTimeout(() => {
+        mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+      }, 100);
+    }
+  </script>
 </body>
 </html>
