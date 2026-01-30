@@ -36,10 +36,11 @@
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Splunk Fundamentals</div>
-          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101 (Start Here)</span></a>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
           <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
           <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow & Event Hub</span></a>
           <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Splunk How-To Guide</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Data Sources</div>
@@ -49,7 +50,7 @@
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Splunk Operations</div>
-          <a href="waf-onboarding.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
           <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
           <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
           <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
@@ -144,12 +145,92 @@ flowchart TD
             <h4 style="font-size:1rem;margin-bottom:12px;">Akamai Onboarding Checklist (with How-To)</h4>
             <div class="card bordered-left akamai" style="padding:20px;margin-bottom:24px;">
               
-              <!-- Step 1 -->
+              <!-- Step 1 with FULL INDEX DETAILS -->
               <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
                 <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>akamai</code> exists</span></label>
                 <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
                   <strong>How to check:</strong> Run this SPL: <code>| eventcount index=akamai</code><br>
-                  <strong>If index doesn't exist:</strong> Ask Splunk admin to create it, OR <a href="splunk-howto.html#create-index">see How-To Guide → Create Index</a>
+                  <strong>If returns 0 or error:</strong> Index doesn't exist — see "How to Create an Index" below
+                </div>
+                
+                <!-- DETAILED INDEX CREATION SECTION -->
+                <div style="margin-left:28px;margin-top:16px;padding:16px;background:var(--gray-50);border-radius:8px;border:1px solid var(--gray-200);">
+                  <h5 style="font-size:0.9375rem;margin-bottom:12px;color:var(--gray-800);">📁 How to Create an Index</h5>
+                  
+                  <!-- What is an Index -->
+                  <div style="margin-bottom:12px;">
+                    <strong style="color:var(--gray-700);">What is an Index?</strong>
+                    <p style="margin-top:4px;color:var(--gray-600);">An index is where Splunk stores your data. Think of it like a folder or database. Each data source should have its own index (e.g., <code>akamai</code>, <code>cyberark</code>, <code>azure</code>) for organization, access control, and retention management.</p>
+                  </div>
+                  
+                  <!-- Option A: Self-Service -->
+                  <div style="margin-bottom:16px;padding:12px;background:white;border-radius:6px;border-left:3px solid var(--success-500);">
+                    <strong style="color:var(--success-700);">Option A: Create It Yourself (If You Have Permissions)</strong>
+                    <ol style="margin:8px 0 0 16px;color:var(--gray-600);">
+                      <li>Go to <strong>Settings</strong> (top menu bar)</li>
+                      <li>Click <strong>Indexes</strong></li>
+                      <li>Click <strong>"New Index"</strong> button (top right)</li>
+                      <li>Fill in:
+                        <ul style="margin:4px 0 4px 16px;">
+                          <li><strong>Index Name:</strong> <code>akamai</code> (lowercase, no spaces)</li>
+                          <li><strong>Index Data Type:</strong> Events</li>
+                          <li><strong>Max Size:</strong> Ask Splunk admin for guidance (e.g., 100GB)</li>
+                          <li><strong>Searchable retention:</strong> e.g., 90 days</li>
+                        </ul>
+                      </li>
+                      <li>Click <strong>Save</strong></li>
+                    </ol>
+                    <p style="margin-top:8px;color:var(--gray-500);font-size:0.8125rem;">⚠️ If "New Index" is grayed out or you get permission error → Use Option B</p>
+                  </div>
+                  
+                  <!-- Option B: Request from Admin -->
+                  <div style="margin-bottom:16px;padding:12px;background:white;border-radius:6px;border-left:3px solid var(--primary-500);">
+                    <strong style="color:var(--primary-700);">Option B: Request from Splunk Admin (Splunk Cloud)</strong>
+                    <p style="margin:8px 0;color:var(--gray-600);">In Splunk Cloud, index creation is often restricted. You need to request it:</p>
+                    
+                    <div style="margin-top:12px;">
+                      <strong style="font-size:0.8125rem;color:var(--gray-700);">Who to Contact:</strong>
+                      <ul style="margin:4px 0 8px 16px;color:var(--gray-600);">
+                        <li>Internal Splunk admin team at Sobeys</li>
+                        <li>OR submit Splunk Cloud support case (if no internal admin)</li>
+                      </ul>
+                    </div>
+                    
+                    <div style="margin-top:8px;">
+                      <strong style="font-size:0.8125rem;color:var(--gray-700);">Information to Include in Request:</strong>
+                      <div style="background:var(--gray-100);padding:12px;border-radius:4px;margin-top:8px;font-family:monospace;font-size:0.8125rem;">
+                        <strong>Subject:</strong> Request: New Index Creation - Akamai WAF Logs<br><br>
+                        <strong>Index Name:</strong> akamai<br>
+                        <strong>Purpose:</strong> Store Akamai WAF security events for detection engineering<br>
+                        <strong>Data Source:</strong> Akamai SIEM Integration API<br>
+                        <strong>Expected Daily Volume:</strong> ~5-10 GB/day (estimate)<br>
+                        <strong>Retention Required:</strong> 90 days searchable<br>
+                        <strong>Sourcetype:</strong> akamai:siem<br>
+                        <strong>Project:</strong> WAF/DDoS Detection Engineering<br>
+                        <strong>Requested By:</strong> [Your Name]<br>
+                        <strong>Business Justification:</strong> Required for security monitoring and threat detection
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Option C: Splunk Cloud Support -->
+                  <div style="padding:12px;background:white;border-radius:6px;border-left:3px solid var(--warning-500);">
+                    <strong style="color:var(--warning-700);">Option C: Splunk Cloud Support Case</strong>
+                    <p style="margin:8px 0;color:var(--gray-600);">If there's no internal Splunk admin:</p>
+                    <ol style="margin:8px 0 0 16px;color:var(--gray-600);">
+                      <li>Go to <a href="https://splunk.com/support" target="_blank">splunk.com/support</a></li>
+                      <li>Log in with your Splunk Cloud credentials</li>
+                      <li>Create new case → "Cloud Operations"</li>
+                      <li>Use the information template above</li>
+                      <li>Typical turnaround: 1-3 business days</li>
+                    </ol>
+                  </div>
+                  
+                  <!-- Verify Index Created -->
+                  <div style="margin-top:16px;padding:8px 12px;background:var(--success-50);border-radius:4px;">
+                    <strong style="color:var(--success-700);font-size:0.8125rem;">✅ Verify Index Was Created:</strong>
+                    <code style="display:block;margin-top:4px;color:var(--gray-700);">| eventcount summarize=false index=akamai | table index count</code>
+                  </div>
                 </div>
               </div>
 
@@ -331,7 +412,8 @@ flowchart TD
               <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
                 <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>cyberark</code> exists</span></label>
                 <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> Run: <code>| eventcount index=cyberark</code> — if returns 0 or error, index doesn't exist
+                  <strong>How:</strong> Run: <code>| eventcount index=cyberark</code> — if returns 0 or error, index doesn't exist<br>
+                  <strong>If index doesn't exist:</strong> See the <strong>Akamai tab → Step 1</strong> for detailed index creation instructions (same process, just use index name <code>cyberark</code>)
                 </div>
               </div>
 
@@ -533,7 +615,8 @@ flowchart TD
               <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
                 <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>azure</code> exists</span></label>
                 <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> Run: <code>| eventcount index=azure</code>
+                  <strong>How:</strong> Run: <code>| eventcount index=azure</code><br>
+                  <strong>If index doesn't exist:</strong> See the <strong>Akamai tab → Step 1</strong> for detailed index creation instructions (same process, just use index name <code>azure</code>)
                 </div>
               </div>
 

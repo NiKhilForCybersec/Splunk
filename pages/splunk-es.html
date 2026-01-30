@@ -36,9 +36,11 @@
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Splunk Fundamentals</div>
-          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk Basics (Start Here)</span></a>
-          <a href="splunk-es.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security (ES)</span></a>
-          <a href="event-hub.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Event Hub & Data Flow</span></a>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
+          <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow & Event Hub</span></a>
+          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Splunk How-To Guide</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Data Sources</div>
@@ -180,7 +182,166 @@ cross a threshold, reducing alert fatigue."</code></pre>
             </table>
           </div>
 
-          <h3 style="font-size:1rem;margin:24px 0 12px;">Notable Event Lifecycle</h3>
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Complete Detection Lifecycle (End-to-End)</h3>
+          
+          <div class="callout info" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">The Big Picture</div>
+              <div class="callout-body">This shows the COMPLETE flow — from data leaving the source system all the way to alert resolution. Understanding this helps you know where things can go wrong and who is responsible for each step.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+            <div class="mermaid">
+flowchart TB
+    subgraph SOURCES ["📡 PHASE 1: DATA SOURCES (External Systems)"]
+        S1[Akamai WAF]
+        S2[CyberArk Identity]
+        S3[Entra ID]
+    end
+    
+    subgraph INGEST ["📥 PHASE 2: DATA INGESTION (Splunk Admins)"]
+        I1[HEC / Event Hub /<br/>API Connector]
+        I2[Parsing &<br/>Field Extraction]
+        I3[CIM Mapping]
+        I4[(Stored in Index)]
+    end
+    
+    subgraph DETECT ["🔍 PHASE 3: DETECTION ENGINEERING (You)"]
+        D1[Write SPL Query]
+        D2[Test & Tune]
+        D3[Create Correlation<br/>Search in ES]
+        D4[Configure Alert<br/>Actions]
+    end
+    
+    subgraph AUTO ["⚙️ PHASE 4: AUTOMATED DETECTION (Splunk Scheduler)"]
+        A1[Scheduler Triggers<br/>Every X Minutes]
+        A2[Searches<br/>Indexed Data]
+        A3{Conditions<br/>Met?}
+    end
+    
+    subgraph ALERT ["🚨 PHASE 5: ALERTING"]
+        AL1[Create Notable<br/>Event]
+        AL2[Appears in<br/>Incident Review]
+    end
+    
+    subgraph SOC ["👤 PHASE 6: SOC RESPONSE (Analysts)"]
+        R1[Analyst Sees<br/>Alert]
+        R2[Triage &<br/>Assign]
+        R3[Investigation]
+        R4{True<br/>Positive?}
+        R5[Escalate /<br/>Remediate]
+        R6[Close as FP<br/>+ Tune Detection]
+        R7[Close as<br/>Resolved]
+    end
+    
+    S1 --> I1
+    S2 --> I1
+    S3 --> I1
+    I1 --> I2
+    I2 --> I3
+    I3 --> I4
+    
+    I4 -.->|Data Available<br/>for Searching| A2
+    
+    D1 --> D2
+    D2 --> D3
+    D3 --> D4
+    D4 -.->|Detection<br/>Configured| A1
+    
+    A1 --> A2
+    A2 --> A3
+    A3 -->|No| A1
+    A3 -->|Yes| AL1
+    
+    AL1 --> AL2
+    AL2 --> R1
+    R1 --> R2
+    R2 --> R3
+    R3 --> R4
+    R4 -->|Yes| R5
+    R4 -->|No| R6
+    R5 --> R7
+    R6 -.->|Feedback| D2
+    
+    style S1 fill:#ff6b35,stroke:#cc5629
+    style S2 fill:#00a3e0,stroke:#0077b3
+    style S3 fill:#0078d4,stroke:#005a9e
+    style I4 fill:#e8f4f8,stroke:#17a2b8
+    style D3 fill:#fff3cd,stroke:#ffc107
+    style AL1 fill:#f8d7da,stroke:#dc3545
+    style R5 fill:#d4edda,stroke:#28a745
+    style R7 fill:#d4edda,stroke:#28a745
+            </div>
+          </div>
+
+          <!-- Phase-by-Phase Breakdown -->
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Phase-by-Phase Breakdown</h3>
+          
+          <div class="table-container" style="margin-bottom:24px;">
+            <table>
+              <thead><tr><th>Phase</th><th>Who Does It</th><th>What Happens</th><th>What Can Go Wrong</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">1. Data Sources</td>
+                  <td>Source System Admins<br/>(Akamai, CyberArk, Azure)</td>
+                  <td>Security events generated (WAF blocks, MFA prompts, sign-ins)</td>
+                  <td>Logging disabled, events not captured, audit not enabled</td>
+                </tr>
+                <tr>
+                  <td class="highlight">2. Data Ingestion</td>
+                  <td>Splunk Admins +<br/>Source Admins</td>
+                  <td>Logs sent to Splunk via HEC/Event Hub, parsed, fields extracted, CIM mapped</td>
+                  <td>HEC token wrong, firewall blocking, TA not installed, wrong sourcetype</td>
+                </tr>
+                <tr>
+                  <td class="highlight">3. Detection Engineering</td>
+                  <td><strong>YOU</strong><br/>(Detection Engineer)</td>
+                  <td>Write SPL, test with real data, create correlation search, configure actions</td>
+                  <td>Bad logic, wrong fields, threshold too low/high, no CIM mapping</td>
+                </tr>
+                <tr>
+                  <td class="highlight">4. Automated Detection</td>
+                  <td>Splunk (automated)</td>
+                  <td>Scheduler runs search every X minutes, evaluates conditions against indexed data</td>
+                  <td>Search disabled, schedule wrong, search timing out, no data in time range</td>
+                </tr>
+                <tr>
+                  <td class="highlight">5. Alerting</td>
+                  <td>Splunk ES (automated)</td>
+                  <td>Creates Notable Event with all context, appears in Incident Review queue</td>
+                  <td>Notable action not configured, wrong severity, missing fields</td>
+                </tr>
+                <tr>
+                  <td class="highlight">6. SOC Response</td>
+                  <td>SOC Analysts</td>
+                  <td>Triage, investigate, escalate or close, provide feedback for tuning</td>
+                  <td>Alert ignored, wrong triage, no feedback loop, FPs not reported</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Your Role Highlighted -->
+          <div class="card bordered-left warning" style="padding:20px;margin-bottom:24px;">
+            <h4 style="margin-bottom:12px;">🎯 Your Role as Detection Engineer</h4>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;">
+              You own <strong>Phase 3 (Detection Engineering)</strong> and provide feedback to improve <strong>Phase 2 (Data Ingestion)</strong> when data quality issues arise. You also work with SOC to get feedback from <strong>Phase 6</strong> to tune detections.
+            </p>
+            <div style="font-size:0.875rem;">
+              <strong>Your responsibilities:</strong>
+              <ul style="margin-left:16px;margin-top:8px;color:var(--gray-600);">
+                <li>Verify data is flowing and fields are correct (Phase 2 validation)</li>
+                <li>Write, test, and tune SPL queries (Phase 3)</li>
+                <li>Create and configure correlation searches (Phase 3)</li>
+                <li>Monitor detection performance and FP rates (Phase 4-5 metrics)</li>
+                <li>Incorporate SOC feedback to improve detections (Phase 6 feedback loop)</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Simple Notable Event Lifecycle -->
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Notable Event Lifecycle (Simplified View)</h3>
           <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
             <div class="mermaid">
 flowchart LR
