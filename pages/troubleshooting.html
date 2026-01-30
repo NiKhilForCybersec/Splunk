@@ -3,137 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Troubleshooting Hub | Sobeys Detection Engineering</title>
+  <title>Troubleshooting | myfirstpro Detection Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
   <div class="app-container">
-        <aside class="sidebar">
+                        <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
-          <div class="sidebar-logo-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="sidebar-logo-text">
-            <h1>Sobeys Detection</h1>
-            <span>Engineering Command Center</span>
-          </div>
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
         </div>
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section">
-          <div class="nav-section-title">Overview</div>
-          <a href="../index.html" class="nav-item" data-page="index">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-            <span>Command Center</span>
-          </a>
-          <a href="day1.html" class="nav-item" data-page="day1">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
-            <span>Day 1 — Getting Started</span>
-          </a>
-          <a href="client-meetings.html" class="nav-item" data-page="client-meetings">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            <span>Client Meeting Prep</span>
-          </a>
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Vendor Deep Dives</div>
-          <a href="vendor-akamai.html" class="nav-item" data-page="vendor-akamai">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Akamai WAF</span>
-          </a>
-          <a href="vendor-cyberark.html" class="nav-item" data-page="vendor-cyberark">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-            <span>CyberArk Identity</span>
-            <span class="badge critical" style="margin-left: auto; font-size: 0.625rem;">PRIMARY</span>
-          </a>
-          <a href="vendor-entra.html" class="nav-item" data-page="vendor-entra">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Microsoft Entra ID</span>
-          </a>
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Fundamentals</div>
-          <a href="fundamentals-waf.html" class="nav-item" data-page="fundamentals-waf">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>WAF Fundamentals</span>
-          </a>
-          <a href="fundamentals-ddos.html" class="nav-item" data-page="fundamentals-ddos">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
-            <span>DDoS Fundamentals</span>
-          </a>
-          <a href="fundamentals-mfa.html" class="nav-item" data-page="fundamentals-mfa">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>MFA Fundamentals</span>
-          </a>
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">WAF/DDoS Project</div>
-          <a href="waf-overview.html" class="nav-item" data-page="waf-overview">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Project Overview</span>
-          </a>
-          <a href="waf-uc1.html" class="nav-item" data-page="waf-uc1">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>UC1: Block Volume</span>
-          </a>
-          <a href="waf-uc2-4.html" class="nav-item" data-page="waf-uc2-4">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>UC2-4: Tier 1 Detections</span>
-          </a>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">MFA Project</div>
-          <a href="mfa-overview.html" class="nav-item" data-page="mfa-overview">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Project Overview</span>
-          </a>
-          <a href="mfa-uc1.html" class="nav-item" data-page="mfa-uc1">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-            <span>UC1: MFA Fatigue</span>
-          </a>
-          <a href="mfa-uc2-5.html" class="nav-item" data-page="mfa-uc2-5">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-            <span>UC2-5: All MFA Detections</span>
-          </a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Operations</div>
-          <a href="splunk-operations.html" class="nav-item" data-page="splunk-operations">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4"/></svg>
-            <span>Splunk Operations</span>
-          </a>
-          <a href="decision-trees.html" class="nav-item" data-page="decision-trees">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>Decision Trees</span>
-          </a>
-          <a href="troubleshooting.html" class="nav-item active" data-page="troubleshooting">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
-            <span>Troubleshooting</span>
-          </a>
-          <a href="runbooks.html" class="nav-item" data-page="runbooks">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
-            <span>SOC Runbooks</span>
-          </a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Reference</div>
-          <a href="spl-reference.html" class="nav-item" data-page="spl-reference">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            <span>SPL Reference</span>
-          </a>
-          <a href="glossary.html" class="nav-item" data-page="glossary">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            <span>Glossary</span>
-          </a>
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
         </div>
       </nav>
-      <div class="sidebar-footer">
-        <p>Version 2.0 — January 2026</p>
-      </div>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
     </aside>
 
     <main class="main-content">
@@ -145,262 +76,199 @@
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-item current">Troubleshooting Hub</span>
+            <span class="breadcrumb-item current">Troubleshooting</span>
           </div>
         </div>
-        <div class="header-right">
-          <span class="badge warning">50+ Scenarios</span>
-        </div>
+        <span class="badge error">Fix Issues Fast</span>
       </header>
 
       <div class="page-content">
-        <!-- Header -->
         <div class="section">
-          <div class="section-header">
-            <h1 class="section-title">Troubleshooting Hub</h1>
-            <p class="section-subtitle">Comprehensive guide for diagnosing and resolving detection engineering issues</p>
+          <h1 class="section-title">Troubleshooting Guide</h1>
+          <p class="section-subtitle">Quick fixes for common data and detection issues</p>
+        </div>
+
+
+        <!-- Troubleshooting Decision Tree -->
+        <div class="section">
+          <h2 class="subsection-title">Quick Diagnosis Flow</h2>
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TD
+    A[Issue Reported] --> B{Data visible<br/>in Splunk?}
+    B -->|No| C{HEC token<br/>enabled?}
+    B -->|Yes| D{Timestamp<br/>correct?}
+    
+    C -->|No| E[Enable HEC token]
+    C -->|Yes| F[Check source system]
+    
+    D -->|No| G[Fix TIME_FORMAT]
+    D -->|Yes| H{Fields<br/>extracted?}
+    
+    H -->|No| I[Check props.conf/TA]
+    H -->|Yes| J{Alert<br/>firing?}
+    
+    J -->|No| K[Check threshold/filter]
+    J -->|Yes| L[Issue resolved ✓]
+    
+    style L fill:#d4edda,stroke:#28a745
+    style A fill:#cce5ff,stroke:#007bff
+            </div>
           </div>
         </div>
 
-        <!-- Quick Search -->
-        <div class="search-box">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="text" class="search-input" placeholder="Search troubleshooting scenarios... (Ctrl+K)">
+
+        <!-- Quick Reference Table -->
+        <div class="section">
+          <h2 class="subsection-title">Quick Troubleshooting Reference</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Symptom</th>
+                  <th>Likely Cause</th>
+                  <th>Diagnostic Query</th>
+                  <th>Solution</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">No data in index</td>
+                  <td>HEC token disabled or wrong index</td>
+                  <td><code>| rest /services/data/inputs/http</code></td>
+                  <td>Enable token in Settings → Data Inputs</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Wrong timestamp</td>
+                  <td>Incorrect TIME_FORMAT in props.conf</td>
+                  <td><code>index=X | table _time _raw | head 5</code></td>
+                  <td>Update TIME_FORMAT to match log format</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Missing fields</td>
+                  <td>JSON not parsed or spath needed</td>
+                  <td><code>index=X | spath | table *</code></td>
+                  <td>Set KV_MODE=json or use spath in search</td>
+                </tr>
+                <tr>
+                  <td class="highlight">High latency (&gt;10 min)</td>
+                  <td>Network/queue backup</td>
+                  <td><code>index=_internal HEC queue</code></td>
+                  <td>Check source system, contact Splunk admin</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Too many alerts</td>
+                  <td>Threshold too low</td>
+                  <td><code>Run detection -14d | timechart count</code></td>
+                  <td>Increase threshold based on baseline</td>
+                </tr>
+                <tr>
+                  <td class="highlight">No alerts</td>
+                  <td>No matching data or filter too strict</td>
+                  <td><code>Run SPL without time filter</code></td>
+                  <td>Verify filter conditions and field names</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Lookup not working</td>
+                  <td>Field name mismatch</td>
+                  <td><code>| inputlookup privileged_users.csv</code></td>
+                  <td>Check field names match exactly</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Scheduled search failing</td>
+                  <td>Permission or resource issue</td>
+                  <td><code>index=_internal search_id | head 100</code></td>
+                  <td>Check search.log for errors</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <!-- Critical Issues -->
+        <!-- Data Not Flowing -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">🔴 Critical Issues</h3>
-
-            <div class="accordion">
-              <div class="accordion-item open">
-                <button class="accordion-header">
-                  <span>No Data in Index</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="callout error" style="margin-bottom: 16px;">
-                    <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <div class="callout-content">
-                      <div class="callout-title">Severity: Critical — Immediate Action Required</div>
-                      <div class="callout-body">No data means no visibility. This is a blocking issue that must be resolved before any detection work can proceed.</div>
-                    </div>
+          <h2 class="subsection-title">Issue: Data Not Flowing</h2>
+          
+          <div class="accordion">
+            <div class="accordion-item open">
+              <button class="accordion-header">
+                <span>Step 1: Verify Index Exists</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="code-block">
+                  <div class="code-header"><span class="code-title">Check if index exists</span></div>
+                  <div class="code-body">
+                    <pre><code>| eventcount summarize=false index=akamai
+| eventcount summarize=false index=cyberark
+| eventcount summarize=false index=azure</code></pre>
                   </div>
+                </div>
+                <p style="font-size:0.875rem;color:var(--gray-600);margin-top:12px;">
+                  <strong>If count = 0:</strong> Index may not exist or has no data. Check Settings → Indexes.
+                </p>
+              </div>
+            </div>
 
-                  <h4 style="margin-bottom: 12px;">Diagnostic Steps</h4>
-                  
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Step 1: Verify Index Exists</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>| rest /services/data/indexes 
-| search title=akamai OR title=*waf*
-| table title totalEventCount currentDBSizeMB</code></pre>
-                    </div>
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Step 2: Check HEC Token Status</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="code-block">
+                  <div class="code-header"><span class="code-title">List all HEC tokens</span></div>
+                  <div class="code-body">
+                    <pre><code>| rest /services/data/inputs/http 
+| search disabled=0 
+| table title index sourcetype disabled</code></pre>
                   </div>
+                </div>
+                <p style="font-size:0.875rem;color:var(--gray-600);margin-top:12px;">
+                  <strong>If disabled=1:</strong> Enable in Settings → Data Inputs → HTTP Event Collector
+                </p>
+              </div>
+            </div>
 
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Step 2: Check for ANY Events</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai earliest=-24h | stats count</code></pre>
-                    </div>
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Step 3: Check Source System</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="grid grid-2">
+                  <div class="card bordered-left akamai">
+                    <h4>Akamai</h4>
+                    <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;">
+                      <li>Check Akamai Control Center → SIEM Integration</li>
+                      <li>Verify API credentials not expired</li>
+                      <li>Check Splunk add-on input status</li>
+                    </ul>
                   </div>
-
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Step 3: Check Data Inputs</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>| rest /services/data/inputs/all 
-| search title=*akamai*
-| table title disabled interval</code></pre>
-                    </div>
+                  <div class="card bordered-left cyberark">
+                    <h4>CyberArk</h4>
+                    <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;">
+                      <li>Check CyberArk Identity → Logs → Export settings</li>
+                      <li>Verify SIEM connector configuration</li>
+                      <li>Check Splunk add-on input status</li>
+                    </ul>
                   </div>
+                </div>
+              </div>
+            </div>
 
-                  <h4 style="margin: 16px 0 12px;">Common Causes & Solutions</h4>
-                  <div class="table-container">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Cause</th>
-                          <th>Symptoms</th>
-                          <th>Solution</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Index doesn't exist</td>
-                          <td>REST call returns empty</td>
-                          <td>Create index or verify name</td>
-                        </tr>
-                        <tr>
-                          <td>Wrong index name in search</td>
-                          <td>Index exists but search fails</td>
-                          <td>Check exact index name spelling</td>
-                        </tr>
-                        <tr>
-                          <td>Data input disabled</td>
-                          <td>disabled=1 in REST output</td>
-                          <td>Enable input in Settings</td>
-                        </tr>
-                        <tr>
-                          <td>API credentials expired</td>
-                          <td>Input enabled but no data</td>
-                          <td>Renew Akamai API credentials</td>
-                        </tr>
-                        <tr>
-                          <td>Network/firewall blocking</td>
-                          <td>Connection errors in _internal</td>
-                          <td>Check firewall rules, proxy settings</td>
-                        </tr>
-                        <tr>
-                          <td>TA not installed</td>
-                          <td>No akamai inputs available</td>
-                          <td>Install Splunk TA for Akamai</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Step 4: Check for Errors in _internal</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=_internal sourcetype=splunkd log_level=ERROR 
-    (component=ModularInputs OR component=ExecProcessor)
-    earliest=-24h
-| stats count BY component message
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Step 4: Check Splunk Internal Logs</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="code-block">
+                  <div class="code-header"><span class="code-title">Check for HEC errors</span></div>
+                  <div class="code-body">
+                    <pre><code>index=_internal sourcetype=splunkd component=HttpInputDataHandler 
+| stats count BY log_level message 
 | sort - count</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Detection Not Firing (Should Be)</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <h4 style="margin-bottom: 12px;">Diagnostic Steps</h4>
-                  
-                  <div class="decision-tree">
-                    <div class="decision-step">
-                      <div class="decision-number">1</div>
-                      <div class="decision-content">
-                        <p><strong>Run the SPL manually</strong> — Does it return results?</p>
-                        <code>Copy the saved search SPL and run it directly</code>
-                        <p class="decision-outcome success">Yes, returns results → Problem is scheduling, not SPL</p>
-                        <p class="decision-outcome error">No results → Problem is SPL logic or data</p>
-                      </div>
-                    </div>
-                    <div class="decision-step">
-                      <div class="decision-number">2</div>
-                      <div class="decision-content">
-                        <p><strong>Check scheduler status</strong></p>
-                        <code>index=_internal sourcetype=scheduler savedsearch_name="YOUR_SEARCH" | table _time status run_time</code>
-                        <p class="decision-outcome success">Status=success → Search is running</p>
-                        <p class="decision-outcome error">Status=failed or skipped → Check error reason</p>
-                      </div>
-                    </div>
-                    <div class="decision-step">
-                      <div class="decision-number">3</div>
-                      <div class="decision-content">
-                        <p><strong>Verify time range matches schedule</strong></p>
-                        <p>If schedule is <code>*/5 * * * *</code>, time range should be <code>earliest=-10m</code></p>
-                        <p class="decision-outcome warning">Mismatched time range is common cause</p>
-                      </div>
-                    </div>
-                    <div class="decision-step">
-                      <div class="decision-number">4</div>
-                      <div class="decision-content">
-                        <p><strong>Check threshold isn't too high</strong></p>
-                        <p>Run query without threshold filter to see actual values</p>
-                        <code>... | where block_count > 0  ``` Instead of > threshold</code>
-                      </div>
-                    </div>
-                    <div class="decision-step">
-                      <div class="decision-number">5</div>
-                      <div class="decision-content">
-                        <p><strong>Verify alert is enabled</strong></p>
-                        <code>Settings → Searches, Reports, and Alerts → Find search → Check "Enabled"</code>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Data Delayed (Stale Events)</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <h4 style="margin-bottom: 12px;">Measure the Delay</h4>
-                  
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Calculate Indexing Latency</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
-| eval latency_seconds = _indextime - _time
-| stats avg(latency_seconds) as avg_latency 
-        max(latency_seconds) as max_latency 
-        perc95(latency_seconds) as p95_latency
-| eval avg_minutes = round(avg_latency/60, 1)
-| eval max_minutes = round(max_latency/60, 1)
-| eval p95_minutes = round(p95_latency/60, 1)
-| table avg_minutes max_minutes p95_minutes</code></pre>
-                    </div>
-                  </div>
-
-                  <h4 style="margin: 16px 0 12px;">Latency Impact & Mitigation</h4>
-                  <div class="table-container">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Latency</th>
-                          <th>Impact</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>&lt; 5 minutes</td>
-                          <td>Acceptable</td>
-                          <td>No action needed</td>
-                        </tr>
-                        <tr>
-                          <td>5-15 minutes</td>
-                          <td>Detection delay</td>
-                          <td>Extend detection time window</td>
-                        </tr>
-                        <tr>
-                          <td>15-60 minutes</td>
-                          <td>Significant delay</td>
-                          <td>Investigate source, document risk</td>
-                        </tr>
-                        <tr>
-                          <td>&gt; 60 minutes</td>
-                          <td>Critical gap</td>
-                          <td>Escalate to Akamai/Splunk admin</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div class="callout info">
-                    <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                    <div class="callout-content">
-                      <div class="callout-title">Adjusting for Latency</div>
-                      <div class="callout-body">If avg latency is 10 minutes, change detection from <code>earliest=-10m</code> to <code>earliest=-20m</code> to ensure events are captured.</div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -408,387 +276,193 @@
           </div>
         </div>
 
-        <!-- Detection Issues -->
+        <!-- Wrong Timestamp -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">🟡 Detection Issues</h3>
+          <h2 class="subsection-title">Issue: Wrong Timestamp</h2>
+          
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Compare _time vs raw timestamp</span></div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| head 10
+| eval parsed_time = strftime(_time, "%Y-%m-%d %H:%M:%S")
+| table _time parsed_time _raw</code></pre>
+            </div>
+          </div>
 
-            <div class="accordion">
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Too Many False Positives</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <h4 style="margin-bottom: 12px;">FP Analysis Framework</h4>
-                  
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Step 1: Identify FP Patterns</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>``` Run your detection query with additional breakdowns
-[YOUR DETECTION SPL]
-| stats count BY src geo.country httpMessage.path
-| sort - count
-| head 20
+          <div class="grid grid-3" style="margin-top:16px;">
+            <div class="card bordered-left akamai">
+              <h4>Akamai</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
+                <code>TIME_FORMAT = %s%3N</code><br>
+                Epoch milliseconds
+              </p>
+            </div>
+            <div class="card bordered-left cyberark">
+              <h4>CyberArk</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
+                <code>TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%3N%Z</code><br>
+                ISO 8601 format
+              </p>
+            </div>
+            <div class="card bordered-left microsoft">
+              <h4>Entra ID</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
+                <code>TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%6N%Z</code><br>
+                ISO 8601 with microseconds
+              </p>
+            </div>
+          </div>
+        </div>
 
-``` Look for:
-``` - Single source causing most alerts
-``` - Specific paths being hit
-``` - Expected countries/sources</code></pre>
-                    </div>
-                  </div>
+        <!-- Missing Fields -->
+        <div class="section">
+          <h2 class="subsection-title">Issue: Missing Fields</h2>
+          
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Check field extraction</span></div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| head 100
+| fieldsummary 
+| where count < 100
+| table field count distinct_count
+| sort - count</code></pre>
+            </div>
+          </div>
 
-                  <h4 style="margin: 16px 0 12px;">Common FP Sources & Solutions</h4>
-                  <div class="table-container">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>FP Type</th>
-                          <th>How to Identify</th>
-                          <th>Solution</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Security scanners</td>
-                          <td>Scheduled, known IPs, high volume</td>
-                          <td>IP allowlist</td>
-                        </tr>
-                        <tr>
-                          <td>Legitimate bots</td>
-                          <td>Known UA (Googlebot), specific paths</td>
-                          <td>UA allowlist or path exclusion</td>
-                        </tr>
-                        <tr>
-                          <td>Partner/API traffic</td>
-                          <td>Known IP ranges, API endpoints</td>
-                          <td>Source allowlist</td>
-                        </tr>
-                        <tr>
-                          <td>Threshold too low</td>
-                          <td>Alerts on normal variation</td>
-                          <td>Raise threshold (2σ → 3σ)</td>
-                        </tr>
-                        <tr>
-                          <td>Time window too narrow</td>
-                          <td>Spiky baseline</td>
-                          <td>Widen window (5m → 10m)</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+          <div class="callout warning" style="margin-top:16px;">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+            <div class="callout-content">
+              <div class="callout-title">Nested JSON Fields</div>
+              <div class="callout-body">Akamai and CyberArk use nested JSON. Use <code>| spath</code> at the start of your search to extract all fields, or <code>| spath path=attackData.clientIP output=clientIP</code> for specific fields.</div>
+            </div>
+          </div>
+        </div>
 
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Allowlist Implementation Template</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>``` Add to your SPL after field extractions:
-| lookup waf_allowlist.csv src OUTPUT is_allowlisted reason
-| where isnull(is_allowlisted)
+        <!-- Lookup Issues -->
+        <div class="section">
+          <h2 class="subsection-title">Issue: Lookup Not Working</h2>
+          
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Verify lookup file</span></div>
+            <div class="code-body">
+              <pre><code>``` Check if lookup exists and has data
+| inputlookup privileged_users.csv
+| head 10
 
-``` Or for inline exclusion:
-| where NOT (
-    cidrmatch("10.1.1.0/24", src) OR      ``` Internal scanners
-    cidrmatch("203.0.113.0/24", src) OR   ``` Partner range
-    match(ua, "(?i)qualys|nessus|rapid7") ``` Scanner UAs
-)</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
+``` Test lookup with sample data
+| makeresults 
+| eval user="<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4b3f2e383f652a2f2622250b26322d2239383f3b392465282426">[email&#160;protected]</a>"
+| lookup privileged_users.csv userPrincipalName as user OUTPUT is_privileged role
+| table user is_privileged role</code></pre>
+            </div>
+          </div>
 
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Search Performance Issues (Timeout/Slow)</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <h4 style="margin-bottom: 12px;">Performance Analysis</h4>
-                  
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Check Search Performance</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=_internal sourcetype=scheduler status=success
-| stats avg(run_time) as avg_runtime max(run_time) as max_runtime BY savedsearch_name
-| where avg_runtime > 30
-| sort - avg_runtime</code></pre>
-                    </div>
-                  </div>
+          <div class="grid grid-2" style="margin-top:16px;">
+            <div class="card bordered-left error">
+              <h4>Common Issues</h4>
+              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;">
+                <li>Field name case mismatch (user vs User)</li>
+                <li>Lookup file not in correct location</li>
+                <li>CSV has BOM or encoding issues</li>
+                <li>Missing transforms.conf definition</li>
+              </ul>
+            </div>
+            <div class="card bordered-left success">
+              <h4>Solutions</h4>
+              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;">
+                <li>Use lowercase field names consistently</li>
+                <li>Upload via Settings → Lookups → Add new</li>
+                <li>Save as UTF-8 without BOM</li>
+                <li>Create automatic lookup in transforms.conf</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-                  <h4 style="margin: 16px 0 12px;">SPL Optimization Checklist</h4>
-                  <div class="grid grid-2">
-                    <div class="card bordered-left success">
-                      <h5 style="margin-bottom: 8px; color: var(--success-600);">✅ Do This</h5>
-                      <ul style="font-size: 0.8125rem; color: var(--gray-600); margin-left: 16px;">
-                        <li>Specify index and sourcetype FIRST</li>
-                        <li>Use narrow time range</li>
-                        <li>Filter early with <code>where</code></li>
-                        <li>Use <code>stats</code> instead of <code>transaction</code></li>
-                        <li>Use <code>tstats</code> for data models</li>
-                        <li>Limit fields with <code>fields</code> command</li>
-                      </ul>
-                    </div>
-                    <div class="card bordered-left error">
-                      <h5 style="margin-bottom: 8px; color: var(--error-600);">❌ Avoid This</h5>
-                      <ul style="font-size: 0.8125rem; color: var(--gray-600); margin-left: 16px;">
-                        <li><code>index=*</code> — always specify index</li>
-                        <li>All Time searches without need</li>
-                        <li>Heavy operations before filtering</li>
-                        <li>Multiple <code>spath</code> in large datasets</li>
-                        <li><code>join</code> with large tables</li>
-                        <li>Regex on unindexed fields</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div class="code-block" style="margin-top: 16px;">
-                    <div class="code-header">
-                      <span class="code-title">Before & After Optimization Example</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>``` BEFORE (Slow - 45 seconds)
-index=* sourcetype=akamai:siem
-| spath
-| search action=deny
-| stats count BY clientIP
-
-``` AFTER (Fast - 3 seconds)
-index=akamai sourcetype=akamai:siem earliest=-1h
+        <!-- Alert Issues -->
+        <div class="section">
+          <h2 class="subsection-title">Issue: Alert Not Firing</h2>
+          
+          <div class="accordion">
+            <div class="accordion-item open">
+              <button class="accordion-header">
+                <span>Step 1: Test the SPL manually</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <p style="font-size:0.875rem;color:var(--gray-600);">Run the detection query manually in Search. If it returns results, the SPL is working.</p>
+                <div class="code-block" style="margin-top:12px;">
+                  <div class="code-body">
+                    <pre><code>``` Run over longer time range to verify logic
+index=akamai sourcetype=akamai:siem earliest=-7d
 | spath path=attackData.rules{}.ruleAction output=action
 | where action="deny"
-| spath path=clientIP output=src
-| stats count BY src</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Fields Not Extracting Correctly</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Check Field Extraction Coverage</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
-| head 1000
-| fieldsummary
-| eval extraction_pct = round(count/1000*100, 1)
-| where extraction_pct < 100
-| table field count distinct_count extraction_pct
-| sort extraction_pct</code></pre>
-                    </div>
-                  </div>
-
-                  <h4 style="margin: 16px 0 12px;">Common Field Issues</h4>
-                  <div class="table-container">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Issue</th>
-                          <th>Symptom</th>
-                          <th>Solution</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Nested JSON</td>
-                          <td>Field shows as null</td>
-                          <td>Use <code>spath path=parent.child</code></td>
-                        </tr>
-                        <tr>
-                          <td>Array fields</td>
-                          <td>Field is multivalue</td>
-                          <td>Use <code>mvindex()</code> or <code>mvexpand</code></td>
-                        </tr>
-                        <tr>
-                          <td>KV_MODE not set</td>
-                          <td>No automatic extraction</td>
-                          <td>Add <code>KV_MODE=json</code> to props.conf</td>
-                        </tr>
-                        <tr>
-                          <td>Inconsistent schema</td>
-                          <td>Field exists sometimes</td>
-                          <td>Use <code>coalesce()</code> or null checks</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Proper spath Usage for Akamai</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
-| spath                                            ``` Parse root level
-| spath path=attackData.rules{}.ruleAction output=action    ``` Array field
-| spath path=attackData.rules{}.ruleTag output=category
-| spath path=httpMessage.path output=uri
-| spath path=httpMessage.requestHeaders.User-Agent output=ua
-| spath path=geo.country output=country
-| eval action = mvindex(action, 0)                 ``` Get first action if multiple</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Timestamp Issues (Wrong Time)</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Diagnose Timestamp Extraction</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
-| head 10
-| eval extracted_time = strftime(_time, "%Y-%m-%d %H:%M:%S %Z")
-| eval index_time = strftime(_indextime, "%Y-%m-%d %H:%M:%S %Z")
-| table _raw extracted_time index_time</code></pre>
-                    </div>
-                  </div>
-
-                  <h4 style="margin: 16px 0 12px;">Common Timestamp Formats</h4>
-                  <div class="table-container">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Source</th>
-                          <th>Format</th>
-                          <th>props.conf Setting</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Akamai SIEM</td>
-                          <td>ISO 8601 (2026-01-15T14:32:45Z)</td>
-                          <td><code>TIME_FORMAT = %Y-%m-%dT%H:%M:%SZ</code></td>
-                        </tr>
-                        <tr>
-                          <td>Epoch seconds</td>
-                          <td>1705329165</td>
-                          <td><code>TIME_FORMAT = %s</code></td>
-                        </tr>
-                        <tr>
-                          <td>Epoch milliseconds</td>
-                          <td>1705329165000</td>
-                          <td><code>TIME_FORMAT = %s%3N</code></td>
-                        </tr>
-                        <tr>
-                          <td>Epoch nanoseconds</td>
-                          <td>1705329165000000000</td>
-                          <td><code>TIME_FORMAT = %s%9N</code></td>
-                        </tr>
-                      </tbody>
-                    </table>
+| stats count BY _time | where count > 0</code></pre>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- What-If Scenarios -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">🔮 What-If Scenarios</h3>
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Step 2: Check scheduled search settings</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="code-block">
+                  <div class="code-body">
+                    <pre><code>| rest /services/saved/searches 
+| search title="WAF*" OR title="MFA*"
+| table title is_scheduled disabled cron_schedule next_scheduled_time</code></pre>
+                  </div>
+                </div>
+                <p style="font-size:0.875rem;color:var(--gray-600);margin-top:12px;">
+                  <strong>Check:</strong> is_scheduled=1, disabled=0, cron_schedule is valid
+                </p>
+              </div>
+            </div>
 
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Scenario</th>
-                    <th>Impact</th>
-                    <th>Detection</th>
-                    <th>Mitigation</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight">Akamai logs stop flowing</td>
-                    <td>Complete WAF visibility loss</td>
-                    <td>Data freshness monitor</td>
-                    <td>Escalate to Akamai admin, use backup logs</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Akamai logs delayed &gt;30min</td>
-                    <td>Detection latency</td>
-                    <td>Latency monitor</td>
-                    <td>Extend detection windows, document risk</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Akamai schema changes</td>
-                    <td>Broken extractions</td>
-                    <td>Field extraction monitor</td>
-                    <td>Update props.conf, test detections</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Privileged user list stale</td>
-                    <td>MFA detection gaps</td>
-                    <td>Lookup freshness check</td>
-                    <td>Weekly IAM sync</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">CyberArk logs unavailable</td>
-                    <td>Privileged MFA blind</td>
-                    <td>Data source monitor</td>
-                    <td>Fallback to Entra ID (partial coverage)</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">High alert volume at go-live</td>
-                    <td>SOC overwhelmed</td>
-                    <td>Volume monitoring</td>
-                    <td>Enable critical only, rapid tuning</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">DDoS during detection tuning</td>
-                    <td>Skewed baselines</td>
-                    <td>Volume anomaly</td>
-                    <td>Exclude attack period, use percentile</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Splunk Cloud maintenance</td>
-                    <td>Temporary blindness</td>
-                    <td>Scheduled notification</td>
-                    <td>Document gap, inform SOC</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Step 3: Check alert trigger condition</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <p style="font-size:0.875rem;color:var(--gray-600);">
+                  Verify the alert is set to trigger when "Number of results is greater than 0" (not equal to).<br>
+                  Also check suppression settings aren't preventing alerts.
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Emergency Contacts -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">📞 Escalation Contacts</h3>
-
-            <div class="grid grid-3">
-              <div class="card bordered-left primary">
-                <h4 style="margin-bottom: 8px;">Splunk Issues</h4>
-                <p style="font-size: 0.875rem; color: var(--gray-600);">Splunk Admin: [Name]<br>Email: [email]<br>Slack: #splunk-support</p>
-              </div>
-              <div class="card bordered-left info">
-                <h4 style="margin-bottom: 8px;">Akamai Issues</h4>
-                <p style="font-size: 0.875rem; color: var(--gray-600);">Akamai Admin: [Name]<br>Email: [email]<br>Portal: control.akamai.com</p>
-              </div>
-              <div class="card bordered-left warning">
-                <h4 style="margin-bottom: 8px;">Project Escalation</h4>
-                <p style="font-size: 0.875rem; color: var(--gray-600);">Client POC: [Name]<br>Manager: [Name]<br>Email: [email]</p>
-              </div>
+          <h2 class="subsection-title">Escalation Contacts</h2>
+          <div class="grid grid-3">
+            <div class="card bordered-left primary">
+              <h4>Splunk Cloud Support</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
+                For platform issues, index creation, app installation<br>
+                <strong>Method:</strong> Support ticket via Splunk portal
+              </p>
+            </div>
+            <div class="card bordered-left warning">
+              <h4>Akamai Support</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
+                For SIEM API issues, Logpush problems<br>
+                <strong>Method:</strong> Akamai Control Center → Support
+              </p>
+            </div>
+            <div class="card bordered-left error">
+              <h4>Internal Escalation</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
+                For access issues, data source problems<br>
+                <strong>Contact:</strong> [myfirstpro IT contact]
+              </p>
             </div>
           </div>
         </div>
@@ -796,7 +470,4 @@ index=akamai sourcetype=akamai:siem earliest=-1h
       </div>
     </main>
   </div>
-
-  <script src="../js/app.js"></script>
-</body>
-</html>
+  <

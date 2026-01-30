@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Communication | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+                        <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">WAF/DDoS Project</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Client Communication</span>
+          </div>
+        </div>
+        <span class="badge success">Templates Ready</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Client Communication Guide</h1>
+          <p class="section-subtitle">Email templates, meeting prep, and professional response patterns</p>
+        </div>
+
+        <!-- Communication Principles -->
+        <div class="section">
+          <h2 class="subsection-title">Communication Principles</h2>
+          <div class="grid grid-3">
+            <div class="card bordered-left success">
+              <h4>Be Specific</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
+                Provide concrete timelines, specific actions, and clear deliverables. Avoid vague language.
+              </p>
+            </div>
+            <div class="card bordered-left primary">
+              <h4>Own the Problem</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
+                Never say "I don't know" without a follow-up plan. Take ownership and provide next steps.
+              </p>
+            </div>
+            <div class="card bordered-left warning">
+              <h4>Set Expectations</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
+                Under-promise and over-deliver. Give realistic timelines with buffer for unknowns.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email Templates -->
+        <div class="section">
+          <h2 class="subsection-title">Email Templates</h2>
+          
+          <div class="accordion">
+            <div class="accordion-item open">
+              <button class="accordion-header">
+                <span>📧 Status Update: Data Not Flowing</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="code-block">
+                  <div class="code-header"><span class="code-title">Template</span></div>
+                  <div class="code-body">
+                    <pre><code>Subject: [myfirstpro Detection] Data Ingestion Issue - Akamai WAF
+
+Hi [Name],
+
+I've identified an issue with Akamai WAF data ingestion into Splunk that requires your team's assistance.
+
+**Current Status:**
+- Last data received: [timestamp]
+- Expected interval: Every 60 seconds
+- Gap detected: [X] hours
+
+**Diagnostic Steps Completed:**
+1. ✅ Verified Splunk HEC token is enabled
+2. ✅ Confirmed index exists and is accepting data
+3. ❓ Unable to verify Akamai SIEM API configuration (no access)
+
+**Required Action:**
+Could someone from your team verify the Akamai SIEM integration status in Akamai Control Center? Specifically:
+- Is the SIEM connector showing "Active"?
+- Are there any error messages in the connector logs?
+
+**Impact:**
+Until resolved, WAF detection development is blocked. I'm using historical data for query development in the meantime.
+
+**Next Steps:**
+I'm available for a call at [times] if it would be easier to troubleshoot together.
+
+Best regards,
+[Your name]</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>📧 Detection Ready for Review</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="code-block">
+                  <div class="code-header"><span class="code-title">Template</span></div>
+                  <div class="code-body">
+                    <pre><code>Subject: [myfirstpro Detection] WAF-UC1 Ready for Review
+
+Hi [Name],
+
+I've completed development of WAF-UC1 (Block Volume Anomaly) and it's ready for your review before production deployment.
+
+**Detection Summary:**
+- **Name:** WAF Block Volume Anomaly
+- **Severity:** Medium
+- **Threshold:** 2-sigma above 14-day baseline (currently ~47 blocks/5min)
+- **Alert Frequency:** Every 5 minutes
+- **MITRE ATT&CK:** T1190 (Exploit Public-Facing Application)
+
+**Testing Results:**
+- Historical 14-day backtest: 12 alerts generated
+- Estimated true positive rate: ~85%
+- False positive sources identified: Qualys scans (excluded)
+
+**Attached:**
+1. Use case specification document
+2. SOC runbook
+3. Dashboard screenshot
+
+**Questions for Review:**
+1. Is the threshold appropriate, or should we adjust sensitivity?
+2. Who should receive these alerts? (Current: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bccfd9dfc9ced5c8c5fcd1c5dad5cecfc8ccced392dfd3d1">[email&#160;protected]</a>)
+3. Any additional exclusions needed?
+
+Please let me know if you'd like to schedule a walkthrough of the detection logic.
+
+Best regards,
+[Your name]</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>📧 Weekly Status Report</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="code-block">
+                  <div class="code-header"><span class="code-title">Template</span></div>
+                  <div class="code-body">
+                    <pre><code>Subject: [myfirstpro Detection] Weekly Status - Week [X]
+
+Hi [Name],
+
+Here's the weekly progress update for the Detection Engineering engagement.
+
+**Overall Progress:** [X/13] use cases complete (XX%)
+
+**Completed This Week:**
+✅ WAF-UC1: Block Volume Anomaly - In production
+✅ WAF-UC2: Single Source Flood - Ready for review
+
+**In Progress:**
+🔄 WAF-UC3: Auth Endpoint Attack - SPL development (70%)
+🔄 WAF-UC4: SQLi/XSS Campaign - Threshold tuning
+
+**Blocked:**
+⚠️ MFA-UC1: Awaiting privileged user list from IAM team
+
+**Next Week Plan:**
+- Complete WAF-UC3 and UC4
+- Begin MFA detection development (pending IAM response)
+- Schedule mid-point review meeting
+
+**Risks:**
+- MFA detections blocked until user list received (requested [date])
+
+**Action Items for myfirstpro:**
+1. [ ] Provide privileged user list (Owner: IAM team)
+2. [ ] Review WAF-UC2 detection (Owner: Security)
+
+Best regards,
+[Your name]</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Anticipated Questions -->
+        <div class="section">
+          <h2 class="subsection-title">Anticipated Client Questions</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>Question</th><th>Senior-Level Answer</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">"How accurate are these detections?"</td>
+                  <td>"Detection accuracy depends on two factors: true positive rate and false positive rate. I'm targeting &gt;90% TP rate with &lt;10% FP rate. Thresholds are calculated from your 14-day baseline using statistical methods — mean plus two standard deviations — rather than arbitrary values. This approach is industry standard for SIEM detection engineering."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Why Akamai specifically?"</td>
+                  <td>"Akamai is your deployed WAF vendor. The Splunk Add-on for Akamai provides native integration with field extractions and CIM mapping. The detections I'm building leverage Akamai-specific fields like rule tags, client reputation scores, and bot classification — capabilities specific to Kona Site Defender."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"How do detections handle DDoS vs legitimate traffic spikes?"</td>
+                  <td>"I'm implementing multi-signal correlation: source diversity analysis, geographic distribution, user agent patterns, and request entropy. A legitimate traffic spike from a marketing campaign shows different characteristics than a botnet attack — recognizable user agents, expected geographic distribution, and natural request patterns."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"What happens after you leave?"</td>
+                  <td>"I'm documenting everything for self-sufficiency: runbooks for each detection, threshold tuning procedures, and a troubleshooting guide. Your team will be able to tune thresholds, add exclusions, and create new detections using the patterns I've established. I'll also conduct a knowledge transfer session before wrap-up."</td>
+                </tr>
+                <tr>
+                  <td class="highlight">"Are we on track for the deadline?"</td>
+                  <td>"Based on current velocity, we're [on track / at risk]. I've completed X of 13 use cases. The critical path is [specific item]. If we maintain current pace, we'll complete by [date]. However, [blocker] could impact timeline if not resolved by [date]. I recommend [specific action] to mitigate."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Response Patterns -->
+        <div class="section">
+          <h2 class="subsection-title">Professional Response Patterns</h2>
+          <div class="grid grid-2">
+            <div class="card bordered-left error">
+              <h4>❌ Avoid Saying</h4>
+              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;margin-top:8px;">
+                <li>"I don't know" (without follow-up)</li>
+                <li>"That's not my area"</li>
+                <li>"I think maybe..."</li>
+                <li>"It should work..."</li>
+                <li>"Someone needs to..."</li>
+              </ul>
+            </div>
+            <div class="card bordered-left success">
+              <h4>✅ Say Instead</h4>
+              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;margin-top:8px;">
+                <li>"Let me research this and get back to you by [time]"</li>
+                <li>"I'll coordinate with [team] to resolve this"</li>
+                <li>"Based on the data, I recommend..."</li>
+                <li>"I've tested this configuration and confirmed..."</li>
+                <li>"I'll take ownership of [task] and update you by [date]"</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Meeting Tips -->
+        <div class="section">
+          <h2 class="subsection-title">Meeting Best Practices</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Before the Meeting</h4>
+                <p class="timeline-body">
+                  Review progress since last meeting. Prepare 2-3 key points to cover. Have SPL queries ready to demo. Anticipate questions.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Start of Meeting</h4>
+                <p class="timeline-body">
+                  State the agenda upfront. "Today I'll cover: progress update, demo of UC1, and discuss blockers." Respect their time.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">During the Meeting</h4>
+                <p class="timeline-body">
+                  Be concise. Show working demos, not just slides. When asked something you don't know, write it down and commit to following up.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">End of Meeting</h4>
+                <p class="timeline-body">
+                  Summarize action items with owners and dates. "To confirm: I'll have UC2 ready by Friday, and [Name] will provide the user list by Wednesday."
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      
+        <!-- EDGE CASES & CLIENT CHALLENGES -->
+        <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
+          <h2 class="subsection-title" style="color:var(--warning-600);">⚠️ Client Challenges & How to Handle</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Scenario</th><th>Client Says</th><th>Real Issue</th><th>How to Respond</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">Unrealistic expectations</td><td>"Zero false positives"</td><td>Don't understand tradeoffs</td><td>Educate on FP/FN tradeoff with examples</td></tr>
+                <tr><td class="highlight">Scope creep</td><td>"Add 5 more use cases"</td><td>Expanding beyond SOW</td><td>Document as change request, get approval</td></tr>
+                <tr><td class="highlight">Missing data</td><td>"Detect X" but no X logs</td><td>Data source not onboarded</td><td>Document gap, add to roadmap or scope</td></tr>
+                <tr><td class="highlight">Unresponsive</td><td>No reply for days</td><td>Other priorities</td><td>Escalate to sponsor, document delays</td></tr>
+                <tr><td class="highlight">Conflicting requirements</td><td>Security wants X, IT wants Y</td><td>No decision owner</td><td>Identify RACI, escalate for decision</td></tr>
+                <tr><td class="highlight">Don't know what they want</td><td>"Detect bad things"</td><td>No specific requirements</td><td>Propose standard set based on MITRE ATT&CK</td></tr>
+                <tr><td class="highlight">Blame game</td><td>"You missed the attack"</td><td>May be data/scope issue</td><td>Root cause analysis, document objectively</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Response Template: Scope Creep</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Email Template</span></div>
+            <div class="code-body">
+              <pre><code>Hi [Name],
+
+Thank you for the additional use case request. I'd be happy to help with [X].
+
+This is in addition to the [N] use cases in our statement of work. 
+To proceed, I need to:
+1. Confirm this extends the scope
+2. Discuss timeline impact ([estimate])
+3. Get approval for resource implications
+
+Can we schedule a quick call to align?
+
+Best regards</code></pre>
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Response Template: Missing Data</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Email Template</span></div>
+            <div class="code-body">
+              <pre><code>Hi [Name],
+
+I've analyzed the requirements for [Use Case X]. To build this detection, 
+we need [specific log/field] which is not currently in Splunk.
+
+Options:
+A) Onboard [data source] - estimated [X] days
+B) Build partial detection - covers [Y%] of scenarios  
+C) Document as gap for future roadmap
+
+My recommendation is Option [N] because [reasoning].
+
+What would you like to proceed with?</code></pre>
+            </div>
+          </div>
+
+          <div class="callout info" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Pro Tips</div>
+              <div class="callout-body">
+                • <strong>Never take sides</strong> in stakeholder conflicts - present options, let them decide<br>
+                • <strong>Always get decisions in writing</strong> (email follow-up after calls)<br>
+                • <strong>Never just absorb extra work</strong> - document impact first<br>
+                • <strong>CC your manager</strong> on scope change discussions
+              </div>
+            </d

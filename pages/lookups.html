@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lookups Deep Dive | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+                        <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">WAF/DDoS Project</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Lookups Deep Dive</span>
+          </div>
+        </div>
+        <span class="badge splunk">Splunk Cloud</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Lookups Deep Dive</h1>
+          <p class="section-subtitle">Complete guide to all lookup types, configurations, and project-specific lookup tables</p>
+        </div>
+
+        <!-- Lookup Types Overview -->
+        <div class="section">
+          <h2 class="subsection-title">Lookup Types in Splunk</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Storage</th>
+                  <th>Max Size</th>
+                  <th>Use Case</th>
+                  <th>Splunk Cloud</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="highlight"><strong>CSV Lookup</strong></td>
+                  <td>File on search head</td>
+                  <td>~100MB recommended</td>
+                  <td>Static reference data (users, assets)</td>
+                  <td><span class="badge success">✓ Supported</span></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><strong>KV Store</strong></td>
+                  <td>MongoDB backend</td>
+                  <td>~1GB per collection</td>
+                  <td>Dynamic data, frequent updates</td>
+                  <td><span class="badge success">✓ Supported</span></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><strong>External Lookup</strong></td>
+                  <td>Python/script</td>
+                  <td>N/A (API calls)</td>
+                  <td>Real-time enrichment (threat intel)</td>
+                  <td><span class="badge warning">Limited</span></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><strong>Geolocation</strong></td>
+                  <td>MaxMind DB</td>
+                  <td>Built-in</td>
+                  <td>IP to location mapping</td>
+                  <td><span class="badge success">✓ Built-in</span></td>
+                </tr>
+                <tr>
+                  <td class="highlight"><strong>Asset/Identity</strong></td>
+                  <td>ES Framework</td>
+                  <td>Varies</td>
+                  <td>ES asset correlation</td>
+                  <td><span class="badge info">ES Required</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Decision Tree: Which Lookup Type -->
+        <div class="section">
+          <h2 class="subsection-title">Decision Tree: Choosing Lookup Type</h2>
+          <div class="card" style="padding:24px;background:var(--gray-50);">
+            <div class="mermaid">
+flowchart TD
+    A[Need to enrich data?] --> B{How often does<br/>data change?}
+    B -->|Rarely - weekly/monthly| C{Size of data?}
+    B -->|Frequently - daily/hourly| D[KV Store Lookup]
+    B -->|Real-time| E{Splunk Cloud?}
+    
+    C -->|< 100MB| F[CSV Lookup]
+    C -->|> 100MB| G[KV Store Lookup]
+    
+    E -->|Yes| H[KV Store + Scheduled Update]
+    E -->|No - On-prem| I[External Python Lookup]
+    
+    F --> J[Upload via UI]
+    G --> K[Create via REST API]
+    D --> K
+    H --> K
+    
+    style F fill:#d4edda,stroke:#28a745
+    style D fill:#cce5ff,stroke:#007bff
+    style G fill:#cce5ff,stroke:#007bff
+    style H fill:#fff3cd,stroke:#ffc107
+    style I fill:#f8d7da,stroke:#dc3545
+            </div>
+          </div>
+        </div>
+
+        <!-- Where to Add Lookups in Splunk Cloud -->
+        <div class="section">
+          <h2 class="subsection-title">Adding Lookups in Splunk Cloud</h2>
+          
+          <div class="callout warning">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+            <div class="callout-content">
+              <div class="callout-title">Splunk Cloud Consideration</div>
+              <div class="callout-body">In Splunk Cloud, you cannot directly access the filesystem. All lookups must be uploaded via the UI or API. For transforms.conf changes, you may need to submit a support ticket or use a custom app.</div>
+            </div>
+          </div>
+
+          <h3 style="margin-top:24px;font-size:1rem;">Method 1: Splunk Web UI (Recommended)</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 1: Navigate to Lookups</h4>
+                <p class="timeline-body"><strong>Settings → Lookups</strong></p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 2: Add Lookup Table File</h4>
+                <p class="timeline-body"><strong>Lookup table files → + Add new</strong><br>
+                Select destination app (search, SA-IdentityManagement, or custom app)<br>
+                Upload your CSV file<br>
+                Name the lookup (e.g., privileged_users)</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 3: Create Lookup Definition</h4>
+                <p class="timeline-body"><strong>Lookup definitions → + Add new</strong><br>
+                Name: privileged_users (must match what you use in SPL)<br>
+                Type: File-based<br>
+                Lookup file: privileged_users.csv<br>
+                ☑️ Configure time-based lookup (if time field exists)</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 4: (Optional) Create Automatic Lookup</h4>
+                <p class="timeline-body"><strong>Automatic lookups → + Add new</strong><br>
+                This auto-enriches events at search time without explicit | lookup command</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="margin-top:32px;font-size:1rem;">Method 2: REST API (For Automation)</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Upload CSV via REST API</span></div>
+            <div class="code-body">
+              <pre><code># Upload lookup file
+curl -k -u admin:password \
+  https://your-splunk-cloud:8089/servicesNS/nobody/search/data/lookup-table-files \
+  -F "name=privileged_users.csv" \
+  -F "eai:data=@/path/to/privileged_users.csv"
+
+# Create lookup definition
+curl -k -u admin:password \
+  https://your-splunk-cloud:8089/servicesNS/nobody/search/data/transforms/lookups \
+  -d "name=privileged_users" \
+  -d "filename=privileged_users.csv"</code></pre>
+            </div>
+          </div>
+
+          <h3 style="margin-top:32px;font-size:1rem;">Method 3: Via Custom App (Best Practice)</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">App Directory Structure</span></div>
+            <div class="code-body">
+              <pre><code>TA-myfirstpro-lookups/
+├── default/
+│   └── transforms.conf
+├── lookups/
+│   ├── privileged_users.csv
+│   ├── scanner_whitelist.csv
+│   ├── critical_assets.csv
+│   └── geo_whitelist.csv
+├── metadata/
+│   └── default.meta
+└── app.conf</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- All Project Lookups -->
+        <div class="section">
+          <h2 class="subsection-title">All Required Lookup Tables</h2>
+          
+          <!-- Lookup 1: Privileged Users -->
+          <div class="card bordered-left critical" style="margin-bottom:24px;">
+            <h3 style="font-size:1rem;">1. privileged_users.csv</h3>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Purpose:</strong> Identify privileged accounts for MFA detection prioritization</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Used by:</strong> MFA-UC1, MFA-UC2, MFA-UC3, MFA-UC5</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Update frequency:</strong> Weekly (from IAM team)</p>
+            
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">Schema & Sample Data</span></div>
+              <div class="code-body">
+                <pre><code>userPrincipalName,is_privileged,role,department,risk_level,manager
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="076d686f692966636a6e69476a7e616e7574737775682964686a">[email&#160;protected]</a>,true,Domain Admin,IT,critical,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4329222d266d202a302c032e3a252a31303733312c6d202c2e">[email&#160;protected]</a>
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1cbc0cfc48fc5c3c0e1ccd8c7c8d3d2d5d1d3ce8fc2cecc">[email&#160;protected]</a>,true,Database Administrator,IT,high,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="04666b662a6d70606d7644697d626d76777074766b2a676b69">[email&#160;protected]</a>
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="64060b064a171d170500090d0a24091d020d16171014160b4a070b09">[email&#160;protected]</a>,true,System Administrator,IT,high,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="12707d703c7b66767b60527f6b747b60616662607d3c717d7f">[email&#160;protected]</a>
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f49795869b98da87919781869d808db4998d929d86878084869bda979b99">[email&#160;protected]</a>,true,Security Analyst,Security,high,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="462c27282368252f3529062b3f202f3435323634296825292b">[email&#160;protected]</a>
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6e0a0f180b40000b1a0f0a0307002e031708071c1d1a1e1c01400d0103">[email&#160;protected]</a>,true,Network Administrator,IT,high,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="42202d206c2b36262b30022f3b242b30313632302d6c212d2f">[email&#160;protected]</a>
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94f1e2f1baf7f8fbe1f0f5f0f9fdfad4f9edf2fde6e7e0e4e6fbbaf7fbf9">[email&#160;protected]</a>,true,Cloud Administrator,IT,critical,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d1b3beb3ffb8a5b5b8a391bca8b7b8a3a2a5a1a3beffb2bebc">[email&#160;protected]</a>
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f19783909f9adf81909cb19c88979883828581839edf929e9c">[email&#160;protected]</a>,true,PAM Administrator,Security,critical,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8be1eae5eea5e8e2f8e4cbe6f2ede2f9f8fffbf9e4a5e8e4e6">[email&#160;protected]</a></code></pre>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">transforms.conf</span></div>
+              <div class="code-body">
+                <pre><code>[privileged_users]
+filename = privileged_users.csv
+case_sensitive_match = false
+match_type = WILDCARD(userPrincipalName)
+max_matches = 1
+default_match = false
+min_matches = 0</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">SPL Usage Examples</span></div>
+              <div class="code-body">
+                <pre><code>``` Manual lookup
+| lookup privileged_users userPrincipalName AS user OUTPUT is_privileged role risk_level
+
+``` Filter to privileged only
+| lookup privileged_users userPrincipalName AS user OUTPUT is_privileged
+| where is_privileged="true"
+
+``` Enrich with all fields
+| lookup privileged_users userPrincipalName AS user OUTPUTNEW is_privileged role department risk_level manager</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lookup 2: Scanner Whitelist -->
+          <div class="card bordered-left warning" style="margin-bottom:24px;">
+            <h3 style="font-size:1rem;">2. scanner_whitelist.csv</h3>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Purpose:</strong> Exclude known vulnerability scanners from WAF alerts</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Used by:</strong> WAF-UC1, WAF-UC2, WAF-UC3, WAF-UC4</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Update frequency:</strong> As needed (when scanner IPs change)</p>
+            
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">Schema & Sample Data</span></div>
+              <div class="code-body">
+                <pre><code>ip_address,scanner_name,owner,approved_date,expiry_date,ticket_number
+10.1.50.100,Qualys Scanner 1,Security Team,2024-01-15,2025-01-15,CHG0012345
+10.1.50.101,Qualys Scanner 2,Security Team,2024-01-15,2025-01-15,CHG0012345
+10.1.50.102,Tenable Scanner,Security Team,2024-02-01,2025-02-01,CHG0012456
+192.168.100.50,Nessus Dev,IT Dev Team,2024-03-01,2024-09-01,CHG0012567
+10.2.100.0/24,Pentest Range,External Vendor,2024-06-01,2024-06-30,CHG0012789</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">transforms.conf</span></div>
+              <div class="code-body">
+                <pre><code>[scanner_whitelist]
+filename = scanner_whitelist.csv
+case_sensitive_match = false
+match_type = CIDR(ip_address)
+max_matches = 1
+default_match = unknown</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">SPL Usage - Exclude Scanners</span></div>
+              <div class="code-body">
+                <pre><code>index=akamai sourcetype=akamai:siem
+| spath path=attackData.clientIP output=src_ip
+| lookup scanner_whitelist ip_address AS src_ip OUTPUT scanner_name
+| where isnull(scanner_name)
+``` Now only non-scanner traffic remains</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lookup 3: Critical Assets -->
+          <div class="card bordered-left error" style="margin-bottom:24px;">
+            <h3 style="font-size:1rem;">3. critical_assets.csv</h3>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Purpose:</strong> Prioritize alerts for critical applications and endpoints</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Used by:</strong> WAF-UC3, WAF-UC4, WAF-UC7</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Update frequency:</strong> Monthly (from App team)</p>
+            
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">Schema & Sample Data</span></div>
+              <div class="code-body">
+                <pre><code>hostname,asset_type,criticality,business_unit,data_classification,owner,pci_scope
+checkout.myfirstpro.com,web_app,critical,eCommerce,confidential,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e184828e8ccc9584808ca18c98878893929591938ecf828e8c">[email&#160;protected]</a>,true
+api.myfirstpro.com,api,critical,eCommerce,confidential,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0a6f696567277e6f6b674a67736c6378797e7a786524696567">[email&#160;protected]</a>,true
+admin.myfirstpro.com,admin_portal,critical,IT,restricted,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="167f623b796665567b6f707f6465626664793875797b">[email&#160;protected]</a>,false
+loyalty.myfirstpro.com,web_app,high,Marketing,confidential,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e08c8f99818c9499cd9485818da08d99868992939490928fce838f8d">[email&#160;protected]</a>,true
+careers.myfirstpro.com,web_app,low,HR,public,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="79110b540d1c18143914001f100b0a0d090b16571a1614">[email&#160;protected]</a>,false
+intranet.myfirstpro.com,internal,medium,IT,internal,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2d445900425d5e6d40544b445f5e595d5f42034e4240">[email&#160;protected]</a>,false
+*.myfirstpro.com,wildcard,medium,All,varies,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3a0b6b0a6a1baa7aa93beaab5baa1a0a7a3a1bcfdb0bcbe">[email&#160;protected]</a>,false</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">transforms.conf</span></div>
+              <div class="code-body">
+                <pre><code>[critical_assets]
+filename = critical_assets.csv
+case_sensitive_match = false
+match_type = WILDCARD(hostname)
+max_matches = 1
+default_match = unknown</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">SPL Usage - Severity Boost</span></div>
+              <div class="code-body">
+                <pre><code>index=akamai sourcetype=akamai:siem
+| spath path=httpMessage.requestHeaders.Host output=dest_host
+| lookup critical_assets hostname AS dest_host OUTPUT criticality pci_scope
+| eval alert_severity = case(
+    criticality="critical" AND pci_scope="true", "CRITICAL",
+    criticality="critical", "HIGH",
+    criticality="high", "HIGH",
+    criticality="medium", "MEDIUM",
+    1=1, "LOW"
+)</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lookup 4: Geo Whitelist -->
+          <div class="card bordered-left info" style="margin-bottom:24px;">
+            <h3 style="font-size:1rem;">4. geo_whitelist.csv</h3>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Purpose:</strong> Define expected geographic locations for users and traffic</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Used by:</strong> WAF-UC6, MFA-UC3, MFA-UC4</p>
+            
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">Schema & Sample Data</span></div>
+              <div class="code-body">
+                <pre><code>country_code,country_name,region,is_expected,risk_score,notes
+CA,Canada,North America,true,0,Primary business location
+US,United States,North America,true,1,Business partners
+GB,United Kingdom,Europe,true,2,UK office
+DE,Germany,Europe,true,2,EU operations
+FR,France,Europe,true,2,EU operations
+CN,China,Asia,false,8,High risk - no business presence
+RU,Russia,Europe,false,9,High risk - no business presence
+KP,North Korea,Asia,false,10,Blocked country
+IR,Iran,Middle East,false,10,Blocked country</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">SPL Usage - Flag Unexpected Geo</span></div>
+              <div class="code-body">
+                <pre><code>index=azure sourcetype=azure:aad:signin
+| spath path=properties.location.countryOrRegion output=country
+| lookup geo_whitelist country_code AS country OUTPUT is_expected risk_score
+| where is_expected="false" OR risk_score >= 5
+| eval geo_alert = "Login from unexpected location: ".country</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lookup 5: Threat Intel -->
+          <div class="card bordered-left critical" style="margin-bottom:24px;">
+            <h3 style="font-size:1rem;">5. threat_intel_ip.csv</h3>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Purpose:</strong> Known malicious IPs from threat intelligence feeds</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Used by:</strong> All WAF detections, MFA-UC3</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Update frequency:</strong> Daily (automated from TI platform)</p>
+            
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">Schema & Sample Data</span></div>
+              <div class="code-body">
+                <pre><code>ip_address,threat_type,confidence,source,first_seen,last_seen,description
+192.0.2.100,botnet,high,AlienVault,2024-01-15,2024-06-20,Mirai botnet C2
+198.51.100.50,scanner,medium,Shodan,2024-03-01,2024-06-19,Mass scanner
+203.0.113.25,bruteforce,high,AbuseIPDB,2024-05-01,2024-06-20,SSH brute force
+192.0.2.0/24,tor_exit,medium,TorProject,2024-01-01,2024-06-20,Tor exit nodes
+198.51.100.0/24,vpn_proxy,low,Internal,2024-04-01,2024-06-20,Known VPN range</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">transforms.conf (CIDR matching)</span></div>
+              <div class="code-body">
+                <pre><code>[threat_intel_ip]
+filename = threat_intel_ip.csv
+case_sensitive_match = false
+match_type = CIDR(ip_address)
+max_matches = 5
+default_match = clean</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lookup 6: User Baseline -->
+          <div class="card bordered-left info" style="margin-bottom:24px;">
+            <h3 style="font-size:1rem;">6. user_baseline.csv</h3>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Purpose:</strong> Store user behavior baselines for anomaly detection</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Used by:</strong> MFA-UC3, MFA-UC4</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Update frequency:</strong> Generated daily by scheduled search</p>
+            
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">Schema (Auto-generated)</span></div>
+              <div class="code-body">
+                <pre><code>userPrincipalName,typical_countries,typical_cities,typical_hours,typical_devices,last_updated
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aec4c1c6c080cfcac3c7c0eec3d7c8c7dcdddadedcc180cdc1c3">[email&#160;protected]</a>,"CA,US","Toronto,New York","8,9,10,11,12,13,14,15,16,17","device123,device456",2024-06-20
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2b414a454e054f494a6b46524d4259585f5b594405484446">[email&#160;protected]</a>,"CA","Montreal","7,8,9,10,11,12,13,14,15,16","device789",2024-06-20</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">Scheduled Search to Generate Baseline</span></div>
+              <div class="code-body">
+                <pre><code>``` Run daily at 2 AM, covers last 30 days
+index=azure sourcetype=azure:aad:signin earliest=-30d latest=-1d
+| spath
+| eval user = 'properties.userPrincipalName'
+| eval country = 'properties.location.countryOrRegion'
+| eval city = 'properties.location.city'
+| eval hour = strftime(_time, "%H")
+| eval device = 'properties.deviceDetail.deviceId'
+| where 'properties.status.errorCode' = 0
+| stats 
+    values(country) as typical_countries
+    values(city) as typical_cities
+    values(hour) as typical_hours
+    values(device) as typical_devices
+    BY user
+| eval last_updated = strftime(now(), "%Y-%m-%d")
+| outputlookup user_baseline.csv</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lookup 7: WAF Rule Mapping -->
+          <div class="card bordered-left akamai" style="margin-bottom:24px;">
+            <h3 style="font-size:1rem;">7. akamai_rule_mapping.csv</h3>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Purpose:</strong> Map Akamai rule IDs to human-readable names and categories</p>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin:8px 0;"><strong>Used by:</strong> All WAF detections, dashboards</p>
+            
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">Schema & Sample Data</span></div>
+              <div class="code-body">
+                <pre><code>rule_id,rule_name,category,severity,mitre_technique,description
+950001,SQL Injection Attack,SQLI,critical,T1190,SQL injection attempt detected
+950002,SQL Injection - Blind,SQLI,critical,T1190,Blind SQL injection attempt
+941100,XSS Attack Detected,XSS,high,T1189,Cross-site scripting attack
+941110,XSS Filter - Category 1,XSS,high,T1189,XSS using script tag
+930100,Path Traversal Attack,LFI,high,T1083,Local file inclusion attempt
+930110,Path Traversal - Encoded,LFI,high,T1083,Encoded path traversal
+932100,Remote Command Execution,CMD,critical,T1059,OS command injection
+920350,IP Blocked by Rate Limit,RATE,medium,T1498,Rate limiting triggered
+910100,Bot Detection - Bad Bot,BOT,medium,T1595,Automated bot detected</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lookup Configuration Reference -->
+        <div class="section">
+          <h2 class="subsection-title">transforms.conf Complete Reference</h2>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">All Lookup Definitions</span></div>
+            <div class="code-body">
+              <pre><code># ============================================
+# myfirstpro Detection Engineering - Lookups
+# File: TA-myfirstpro-lookups/default/transforms.conf
+# ============================================
+
+[privileged_users]
+filename = privileged_users.csv
+case_sensitive_match = false
+max_matches = 1
+min_matches = 0
+default_match = false
+
+[scanner_whitelist]
+filename = scanner_whitelist.csv
+case_sensitive_match = false
+match_type = CIDR(ip_address)
+max_matches = 1
+
+[critical_assets]
+filename = critical_assets.csv
+case_sensitive_match = false
+match_type = WILDCARD(hostname)
+max_matches = 1
+
+[geo_whitelist]
+filename = geo_whitelist.csv
+case_sensitive_match = false
+max_matches = 1
+
+[threat_intel_ip]
+filename = threat_intel_ip.csv
+case_sensitive_match = false
+match_type = CIDR(ip_address)
+max_matches = 5
+
+[user_baseline]
+filename = user_baseline.csv
+case_sensitive_match = false
+max_matches = 1
+
+[akamai_rule_mapping]
+filename = akamai_rule_mapping.csv
+case_sensitive_match = false
+max_matches = 1</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lookup Troubleshooting -->
+        <div class="section">
+          <h2 class="subsection-title">Lookup Troubleshooting</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>Issue</th><th>Diagnostic</th><th>Solution</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Lookup returns no matches</td>
+                  <td><code>| inputlookup privileged_users.csv</code></td>
+                  <td>Verify file exists and has data</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Case mismatch</td>
+                  <td>Check if user vs User</td>
+                  <td>Set <code>case_sensitive_match = false</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight">Field name mismatch</td>
+                  <td>Compare CSV header to SPL field</td>
+                  <td>Use AS keyword: <code>lookup X field AS alias</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight">CIDR not matching</td>
+                  <td>Verify CIDR notation (10.0.0.0/8)</td>
+                  <td>Ensure <code>match_type = CIDR(field)</code> in transforms.conf</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Wildcard not working</td>
+                  <td>Check for * in lookup data</td>
+                  <td>Use <code>match_type = WILDCARD(field)</code></td>
+                </tr>
+                <tr>
+                  <td class="highlight">Lookup slows search</td>
+                  <td>Check lookup file size</td>
+                  <td>Move to KV Store if > 100MB</td>
+                </tr>
+                <tr>
+                  <td class="highlight">OUTPUT vs OUTPUTNEW</td>
+                  <td>Fields being overwritten</td>
+                  <td>Use OUTPUTNEW to preserve existing values</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-block" style="margin-top:16px;">
+            <div class="code-header"><span class="code-title">Lookup Debugging Queries</span></div>
+            <div class="code-body">
+              <pre><code>``` Test lookup file exists and has data
+| inputlookup privileged_users.csv
+| stats count
+
+``` Test specific match
+| makeresults 
+| eval user = "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="167c797e783877727b7f78567b6f707f6465626664793875797b">[email&#160;protected]</a>"
+| lookup privileged_users userPrincipalName AS user OUTPUT is_privileged role
+| table user is_privileged role
+
+``` Debug why lookup isn't matching
+index=cyberark sourcetype=cyberark:identity:audit earliest=-1h
+| head 10
+| eval user = ActorId
+| lookup privileged_users userPrincipalName AS user OUTPUT is_privileged
+| tab

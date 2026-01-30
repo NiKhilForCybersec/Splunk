@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Splunk Operations | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+                        <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">WAF/DDoS Project</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Splunk Operations</span>
+          </div>
+        </div>
+        <span class="badge splunk">Splunk Cloud</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Splunk Cloud Operations</h1>
+          <p class="section-subtitle">Platform-specific guidance for Splunk Cloud deployments</p>
+        </div>
+
+
+        <!-- Detection Deployment Lifecycle -->
+        <div class="section">
+          <h2 class="subsection-title">Detection Deployment Lifecycle</h2>
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart LR
+    A[1. Development] --> B[2. Silent Mode<br/>7 days]
+    B --> C{FP Rate<br/>< 10%?}
+    C -->|No| D[Tune & Retry]
+    D --> B
+    C -->|Yes| E[3. Limited Alert<br/>Security Only]
+    E --> F[4. Production<br/>Full SOC]
+    
+    style A fill:#cce5ff,stroke:#007bff
+    style F fill:#d4edda,stroke:#28a745
+    style D fill:#fff3cd,stroke:#ffc107
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Splunk Cloud Limitations -->
+        <div class="callout warning">
+          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          <div class="callout-content">
+            <div class="callout-title">Splunk Cloud Limitations</div>
+            <div class="callout-body">Cannot directly edit props.conf/transforms.conf. All changes via: (1) Splunk Web UI, (2) Apps/Add-ons, or (3) Support tickets.</div>
+          </div>
+        </div>
+
+        <!-- Detection Deployment Phases -->
+        <div class="section">
+          <h2 class="subsection-title">Detection Deployment Lifecycle</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Phase 1: Development</h4>
+                <p class="timeline-body">Write SPL in Search, test against historical data, tune thresholds. Save as report (not alert yet).</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Phase 2: Silent Mode</h4>
+                <p class="timeline-body">Schedule search to run every 5 min, output to lookup or summary index. NO alerts. Monitor for 1 week.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Phase 3: Limited Alerting</h4>
+                <p class="timeline-body">Enable alerts for CRITICAL severity only. Send to security team only. Monitor for FPs.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Phase 4: Full Production</h4>
+                <p class="timeline-body">Enable all severity levels. Add to Incident Review. Full SOC distribution.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Creating Alerts -->
+        <div class="section">
+          <h2 class="subsection-title">Creating a Scheduled Alert</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Setting</th><th>Recommended Value</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">Schedule</td><td><code>*/5 * * * *</code></td><td>Every 5 minutes for near real-time</td></tr>
+                <tr><td class="highlight">Time Range</td><td><code>-10m to now</code></td><td>Overlap prevents missed events</td></tr>
+                <tr><td class="highlight">Trigger</td><td>Number of results > 0</td><td>Any match should alert</td></tr>
+                <tr><td class="highlight">Throttle</td><td>15-30 minutes</td><td>Prevent alert storms</td></tr>
+                <tr><td class="highlight">Throttle Field</td><td>user or src</td><td>Group by primary entity</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-block" style="margin-top:16px;">
+            <div class="code-header"><span class="code-title">Example savedsearches.conf</span></div>
+            <div class="code-body">
+              <pre><code>[WAF-UC1 Block Volume Anomaly]
+search = index=akamai sourcetype=akamai:siem ... (SPL)
+cron_schedule = */5 * * * *
+dispatch.earliest_time = -10m
+dispatch.latest_time = now
+alert_type = number of events
+alert_comparator = greater than
+alert_threshold = 0
+alert.suppress = 1
+alert.suppress.period = 15m
+alert.severity = 3
+disabled = 0</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Creating Lookups -->
+        <div class="section">
+          <h2 class="subsection-title">Creating Lookup Files</h2>
+          
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 1: Prepare CSV</h4>
+                <p class="timeline-body">Create CSV with header row. Save as UTF-8 without BOM. Use lowercase field names.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 2: Upload to Splunk</h4>
+                <p class="timeline-body">Settings → Lookups → Lookup table files → Add new</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 3: Create Lookup Definition</h4>
+                <p class="timeline-body">Settings → Lookups → Lookup definitions → Add new → Select the file</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 4: Test</h4>
+                <div class="code-block" style="margin-top:8px;">
+                  <div class="code-body">
+                    <pre><code>| inputlookup privileged_users.csv | head 5</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Common Tasks -->
+        <div class="section">
+          <h2 class="subsection-title">Common Operations</h2>
+          <div class="grid grid-2">
+            <div class="card">
+              <h4>Check Index Size</h4>
+              <div class="code-block" style="margin-top:8px;">
+                <div class="code-body">
+                  <pre><code>| rest /services/data/indexes 
+| search title IN (akamai, cyberark, azure)
+| table title currentDBSizeMB maxTotalDataSizeMB</code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h4>List Scheduled Searches</h4>
+              <div class="code-block" style="margin-top:8px;">
+                <div class="code-body">
+                  <pre><code>| rest /services/saved/searches
+| search is_scheduled=1 disabled=0
+| table title cron_schedule next_scheduled_time</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Retention -->
+        <div class="section">
+          <h2 class="subsection-title">Data Retention Guidelines</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Index</th><th>Recommended Retention</th><th>Rationale</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">akamai</td><td>90 days</td><td>Balance storage vs. investigation needs</td></tr>
+                <tr><td class="highlight">cyberark</td><td>365 days</td><td>Compliance, privileged access auditing</td></tr>
+                <tr><td class="highlight">azure</td><td>365 days</td><td>Compliance, identity investigation</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      
+        <!-- SPLUNK CLOUD EDGE CASES -->
+        <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
+          <h2 class="subsection-title" style="color:var(--warning-600);">⚠️ Splunk Cloud Constraints & Workarounds</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Constraint</th><th>Impact</th><th>Workaround</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">Can't edit system configs</td><td>No direct props.conf changes</td><td>Custom app with local/props.conf</td></tr>
+                <tr><td class="highlight">App vetting delays</td><td>2-5 days to deploy custom apps</td><td>Plan ahead, batch changes</td></tr>
+                <tr><td class="highlight">Search concurrency limits</td><td>Scheduled searches may skip</td><td>Stagger search schedules</td></tr>
+                <tr><td class="highlight">No direct indexer access</td><td>Can't tune indexer settings</td><td>Support ticket for tuning</td></tr>
+                <tr><td class="highlight">HEC token management</td><td>Limited UI options</td><td>Use REST API for management</td></tr>
+                <tr><td class="highlight">Summary indexing limits</td><td>May need approval for large summaries</td><td>Design efficient summary schemas</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Performance Edge Cases</h3>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Issue</th><th>Symptom</th><th>Solution</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">Search timeout</td><td>Search killed after 10 min</td><td>Optimize SPL, narrow time range, use tstats</td></tr>
+                <tr><td class="highlight">License overrun</td><td>Warning emails, throttling</td><td>Filter at source, reduce retention</td></tr>
+                <tr><td class="highlight">Skipped searches</td><td>Alert gaps</td><td>Check for concurrency, stagger schedules</td></tr>
+                <tr><td class="highlight">Slow dashboards</td><td>User complaints</td><td>Use accelerated data models, summary indexes</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout info" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Quick Performance Checks</div>
+              <div class="callout-body">
+                <code>| rest /services/search/jobs | stats count by dispatchState</code> - Check job queue<br>
+                <code>index=_internal source=*scheduler.log action=skipped</code> - Find skipped searches<br>
+                <code>index=_internal source=*metrics.log group=per_index_thruput</code> - Check ingestion rate
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</body>
+</html>

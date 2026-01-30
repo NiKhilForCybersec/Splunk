@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parsing & CIM Mapping | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+                        <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">WAF/DDoS Project</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Parsing & CIM Mapping</span>
+          </div>
+        </div>
+        <span class="badge splunk">Splunk Cloud</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Parsing & CIM Mapping</h1>
+          <p class="section-subtitle">Complete guide to data normalization in Splunk Cloud — props.conf, transforms.conf, and CIM compliance</p>
+        </div>
+
+        <!-- Splunk Cloud Limitations -->
+        <div class="section">
+          <h2 class="subsection-title">Splunk Cloud: What You CAN and CANNOT Do</h2>
+          
+          <div class="grid grid-2">
+            <div class="card bordered-left success">
+              <h4>✅ What You CAN Do</h4>
+              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;margin-top:8px;">
+                <li>Install Splunk-approved apps from Splunkbase</li>
+                <li>Upload lookup files via UI</li>
+                <li>Create calculated fields via UI</li>
+                <li>Create field aliases via UI</li>
+                <li>Create field extractions via UI</li>
+                <li>Use search-time commands (spath, rex, eval)</li>
+                <li>Create custom apps (with approval)</li>
+                <li>Configure HEC inputs</li>
+              </ul>
+            </div>
+            <div class="card bordered-left error">
+              <h4>❌ What You CANNOT Do Directly</h4>
+              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;margin-top:8px;">
+                <li>SSH into search heads or indexers</li>
+                <li>Directly edit props.conf on indexers</li>
+                <li>Directly edit transforms.conf system files</li>
+                <li>Install non-vetted apps</li>
+                <li>Modify system configurations</li>
+                <li>Access filesystem directly</li>
+                <li>Run custom scripts on indexers</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout critical" style="margin-top:16px;">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+            <div class="callout-content">
+              <div class="callout-title">Key Insight for Splunk Cloud</div>
+              <div class="callout-body">In Splunk Cloud, all parsing/normalization configurations must be packaged in a <strong>Splunk App</strong> and submitted for vetting, OR you can use <strong>search-time field extractions</strong> which work immediately but are less efficient.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parsing Decision Flow -->
+        <div class="section">
+          <h2 class="subsection-title">Decision Flow: How to Parse Data in Splunk Cloud</h2>
+          <div class="card" style="padding:24px;background:var(--gray-50);">
+            <div class="mermaid">
+flowchart TD
+    A[Need to parse/normalize data] --> B{Is there a<br/>Splunkbase Add-on?}
+    B -->|Yes| C[Install TA from Splunkbase]
+    B -->|No| D{Need index-time<br/>parsing?}
+    
+    C --> E{Fields extracted<br/>correctly?}
+    E -->|Yes| F[Done - Use the TA]
+    E -->|No| G[Create search-time<br/>extractions to supplement]
+    
+    D -->|Yes - Critical| H[Create custom app<br/>with props.conf]
+    D -->|No| I[Use search-time<br/>extraction methods]
+    
+    H --> J[Submit to Splunk<br/>for vetting]
+    J --> K{Approved?}
+    K -->|Yes| L[Install via<br/>Admin Config Service]
+    K -->|No| M[Revise and resubmit]
+    
+    I --> N{Complexity?}
+    N -->|Simple - few fields| O[Settings → Fields →<br/>Field Extractions]
+    N -->|Complex - JSON/nested| P[Use spath in<br/>saved search]
+    N -->|Need CIM mapping| Q[Create field aliases<br/>+ calculated fields]
+    
+    style C fill:#d4edda,stroke:#28a745
+    style F fill:#d4edda,stroke:#28a745
+    style O fill:#cce5ff,stroke:#007bff
+    style P fill:#cce5ff,stroke:#007bff
+    style Q fill:#cce5ff,stroke:#007bff
+    style H fill:#fff3cd,stroke:#ffc107
+    style J fill:#fff3cd,stroke:#ffc107
+            </div>
+          </div>
+        </div>
+
+        <!-- Method 1: Use Existing TAs -->
+        <div class="section">
+          <h2 class="subsection-title">Method 1: Use Splunkbase Technology Add-ons</h2>
+          
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">This is the <strong>recommended approach</strong>. Splunkbase TAs are pre-vetted for Splunk Cloud and include all necessary parsing configurations.</p>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>Data Source</th><th>Splunkbase Add-on</th><th>Sourcetype</th><th>CIM Models</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">Akamai WAF</td>
+                  <td><a href="https://splunkbase.splunk.com/app/4876/" target="_blank">Splunk Add-on for Akamai</a></td>
+                  <td>akamai:siem</td>
+                  <td>Web, Network Traffic, Intrusion Detection</td>
+                </tr>
+                <tr>
+                  <td class="highlight">CyberArk</td>
+                  <td><a href="https://splunkbase.splunk.com/app/2891/" target="_blank">CyberArk Add-on for Splunk</a></td>
+                  <td>cyberark:epv:*</td>
+                  <td>Authentication, Change</td>
+                </tr>
+                <tr>
+                  <td class="highlight">Microsoft Entra ID</td>
+                  <td><a href="https://splunkbase.splunk.com/app/3110/" target="_blank">Microsoft Cloud Services</a></td>
+                  <td>azure:aad:signin</td>
+                  <td>Authentication</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-block" style="margin-top:16px;">
+            <div class="code-header"><span class="code-title">Verify TA is Working</span></div>
+            <div class="code-body">
+              <pre><code>``` Check if fields are being extracted by the TA
+index=akamai sourcetype=akamai:siem earliest=-1h
+| fieldsummary
+| where count > 0
+| table field count distinct_count
+
+``` If you see nested JSON paths like attackData.clientIP, the TA is working
+``` If you only see _raw, the TA may not be installed or configured</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Method 2: Search-Time Extractions -->
+        <div class="section">
+          <h2 class="subsection-title">Method 2: Search-Time Field Extractions</h2>
+          
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">When TAs don't exist or don't extract all needed fields, use these search-time methods. These work immediately without app vetting.</p>
+
+          <h3 style="margin-top:24px;font-size:1rem;">Option A: Field Extraction via UI</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 1: Navigate to Field Extractions</h4>
+                <p class="timeline-body"><strong>Settings → Fields → Field Extractions → + New Field Extraction</strong></p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 2: Configure Extraction</h4>
+                <p class="timeline-body">
+                  <strong>Name:</strong> extract_client_ip<br>
+                  <strong>Apply to:</strong> sourcetype = akamai:siem<br>
+                  <strong>Type:</strong> Inline (uses regex) or Uses transform<br>
+                  <strong>Extraction:</strong> <code>\"clientIP\":\"(?P&lt;src_ip&gt;[^\"]+)\"</code>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="margin-top:24px;font-size:1rem;">Option B: Calculated Fields via UI</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 1: Navigate to Calculated Fields</h4>
+                <p class="timeline-body"><strong>Settings → Fields → Calculated Fields → + New Calculated Field</strong></p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 2: Configure Field</h4>
+                <p class="timeline-body">
+                  <strong>Name:</strong> action<br>
+                  <strong>Apply to:</strong> sourcetype = akamai:siem<br>
+                  <strong>Eval Expression:</strong><br>
+                  <code>if(match('attackData.rules{}.ruleAction', "deny"), "blocked", "allowed")</code>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="margin-top:24px;font-size:1rem;">Option C: Field Aliases via UI</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 1: Navigate to Field Aliases</h4>
+                <p class="timeline-body"><strong>Settings → Fields → Field Aliases → + New Field Alias</strong></p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Step 2: Configure Alias</h4>
+                <p class="timeline-body">
+                  <strong>Name:</strong> akamai_src_alias<br>
+                  <strong>Apply to:</strong> sourcetype = akamai:siem<br>
+                  <strong>Field alias:</strong> attackData.clientIP = src
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="margin-top:24px;font-size:1rem;">Option D: spath for JSON (In Search)</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Using spath for Nested JSON Extraction</span></div>
+            <div class="code-body">
+              <pre><code>``` Extract all JSON fields automatically
+index=akamai sourcetype=akamai:siem
+| spath
+
+``` Extract specific nested field
+index=akamai sourcetype=akamai:siem
+| spath path=attackData.clientIP output=src_ip
+| spath path=attackData.rules{}.ruleAction output=action
+| spath path=httpMessage.requestHeaders.Host output=dest_host
+
+``` Extract array elements
+index=akamai sourcetype=akamai:siem
+| spath path=attackData.rules{}
+| mvexpand attackData.rules{}
+| spath input=attackData.rules{} path=ruleTag output=attack_type</code></pre>
+            </div>
+          </div>
+
+          <h3 style="margin-top:24px;font-size:1rem;">Option E: rex for Regex Extraction (In Search)</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Using rex for Pattern Extraction</span></div>
+            <div class="code-body">
+              <pre><code>``` Extract field using regex
+index=akamai sourcetype=akamai:siem
+| rex field=_raw "\"clientIP\":\"(?P<src_ip>[^\"]+)\""
+| rex field=_raw "\"ruleTag\":\"(?P<attack_type>[^\"]+)\""
+
+``` Extract multiple values (mode=sed for replacement)
+index=akamai sourcetype=akamai:siem
+| rex field=_raw max_match=0 "\"ruleId\":\"(?P<rule_ids>[^\"]+)\""</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Method 3: Custom App -->
+        <div class="section">
+          <h2 class="subsection-title">Method 3: Custom App with props.conf (For Complex Cases)</h2>
+          
+          <div class="callout warning">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+            <div class="callout-content">
+              <div class="callout-title">App Vetting Process</div>
+              <div class="callout-body">Custom apps in Splunk Cloud require vetting by Splunk. Timeline: 2-5 business days. Submit via the Admin Config Service or Splunk Support ticket.</div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">App Structure</span></div>
+            <div class="code-body">
+              <pre><code>TA-myfirstpro-detection/
+├── default/
+│   ├── app.conf
+│   ├── props.conf
+│   ├── transforms.conf
+│   └── eventtypes.conf
+├── lookups/
+│   └── (lookup files)
+├── metadata/
+│   └── default.meta
+└── README.txt</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">app.conf</span></div>
+            <div class="code-body">
+              <pre><code>[install]
+is_configured = 0
+state = enabled
+build = 1
+
+[ui]
+is_visible = false
+label = myfirstpro Detection Engineering
+
+[launcher]
+author = myfirstpro Security
+description = Custom parsing and normalization for myfirstpro detection engineering
+version = 1.0.0
+
+[package]
+check_for_updates = false
+id = TA-myfirstpro-detection</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">default.meta</span></div>
+            <div class="code-body">
+              <pre><code># Application-level permissions
+[]
+access = read : [ * ], write : [ admin, sc_admin ]
+export = system
+
+[props]
+export = system
+
+[transforms]
+export = system
+
+[eventtypes]
+export = system</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Complete props.conf Reference -->
+        <div class="section">
+          <h2 class="subsection-title">Complete props.conf Reference</h2>
+          
+          <div class="accordion">
+            <div class="accordion-item open">
+              <button class="accordion-header">
+                <span>Akamai WAF (akamai:siem)</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="code-block">
+                  <div class="code-body">
+                    <pre><code>[akamai:siem]
+# ============================================
+# TIMESTAMP PARSING
+# ============================================
+# Akamai uses epoch milliseconds
+TIME_FORMAT = %s%3N
+TIME_PREFIX = \"httpMessage\":\{\"start\":\"
+MAX_TIMESTAMP_LOOKAHEAD = 20
+TZ = UTC
+
+# ============================================
+# LINE BREAKING
+# ============================================
+SHOULD_LINEMERGE = false
+LINE_BREAKER = ([\r\n]+)
+TRUNCATE = 999999
+
+# ============================================
+# JSON PARSING
+# ============================================
+KV_MODE = json
+AUTO_KV_JSON = true
+
+# ============================================
+# FIELD ALIASES (CIM Mapping)
+# ============================================
+FIELDALIAS-src = attackData.clientIP AS src
+FIELDALIAS-src_ip = attackData.clientIP AS src_ip
+FIELDALIAS-dest = httpMessage.requestHeaders.Host AS dest
+FIELDALIAS-dest_host = httpMessage.requestHeaders.Host AS dest_host
+FIELDALIAS-url = httpMessage.path AS url
+FIELDALIAS-uri_path = httpMessage.path AS uri_path
+FIELDALIAS-http_method = httpMessage.method AS http_method
+FIELDALIAS-status = httpMessage.status AS status
+FIELDALIAS-http_user_agent = httpMessage.requestHeaders.User-Agent AS http_user_agent
+FIELDALIAS-src_country = geo.country AS src_country
+FIELDALIAS-src_city = geo.city AS src_city
+
+# ============================================
+# CALCULATED FIELDS (CIM Compliance)
+# ============================================
+EVAL-action = case(
+    'attackData.rules{}.ruleAction'=="deny", "blocked",
+    'attackData.rules{}.ruleAction'=="alert", "allowed",
+    'attackData.rules{}.ruleAction'=="allow", "allowed",
+    1=1, "unknown"
+)
+
+EVAL-vendor = "Akamai"
+EVAL-product = "Kona Site Defender"
+EVAL-vendor_product = "Akamai Kona Site Defender"
+
+EVAL-signature = 'attackData.rules{}.ruleTag'
+EVAL-signature_id = 'attackData.rules{}.ruleId'
+EVAL-category = 'attackData.rules{}.ruleTag'
+
+EVAL-bytes_in = 'httpMessage.bytes'
+EVAL-bytes_out = 'httpMessage.responseBytes'
+
+EVAL-app = "web"
+EVAL-transport = "tcp"
+EVAL-dest_port = 443
+
+# ============================================
+# LOOKUPS (Auto-enrichment)
+# ============================================
+LOOKUP-critical_assets = critical_assets hostname AS dest_host OUTPUT criticality pci_scope
+LOOKUP-threat_intel = threat_intel_ip ip_address AS src OUTPUT threat_type confidence</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>CyberArk Identity (cyberark:identity:audit)</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="code-block">
+                  <div class="code-body">
+                    <pre><code>[cyberark:identity:audit]
+# ============================================
+# TIMESTAMP PARSING
+# ============================================
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%3N%Z
+TIME_PREFIX = \"WhenOccurred\":\"
+MAX_TIMESTAMP_LOOKAHEAD = 50
+TZ = UTC
+
+# ============================================
+# LINE BREAKING
+# ============================================
+SHOULD_LINEMERGE = false
+LINE_BREAKER = ([\r\n]+)
+TRUNCATE = 999999
+
+# ============================================
+# JSON PARSING
+# ============================================
+KV_MODE = json
+AUTO_KV_JSON = true
+
+# ============================================
+# FIELD ALIASES (CIM Authentication Model)
+# ============================================
+FIELDALIAS-user = ActorId AS user
+FIELDALIAS-src = ClientIP AS src
+FIELDALIAS-src_ip = ClientIP AS src_ip
+FIELDALIAS-src_country = Country AS src_country
+FIELDALIAS-src_city = City AS src_city
+FIELDALIAS-app = ApplicationName AS app
+FIELDALIAS-dest = TargetId AS dest
+
+# ============================================
+# CALCULATED FIELDS
+# ============================================
+EVAL-action = case(
+    Result=="Success", "success",
+    Result=="Failure", "failure",
+    Result=="Denied", "failure",
+    Result=="Timeout", "failure",
+    1=1, "unknown"
+)
+
+EVAL-authentication_method = AuthMethod
+
+EVAL-vendor = "CyberArk"
+EVAL-product = "Identity"
+EVAL-vendor_product = "CyberArk Identity"
+
+EVAL-signature = EventType
+EVAL-signature_id = EventId
+
+# MFA-specific calculated fields
+EVAL-mfa_result = case(
+    EventType IN ("Cloud.Core.MfaAuthentication") AND Result=="Success", "success",
+    EventType IN ("Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout"), "failure",
+    EventType IN ("Cloud.Core.MfaAuthentication") AND Result=="Failure", "failure",
+    1=1, "unknown"
+)
+
+EVAL-mfa_method = case(
+    match(AuthMethod, "(?i)push"), "push",
+    match(AuthMethod, "(?i)totp|authenticator"), "totp",
+    match(AuthMethod, "(?i)sms"), "sms",
+    match(AuthMethod, "(?i)phone|call"), "phone",
+    match(AuthMethod, "(?i)email"), "email",
+    match(AuthMethod, "(?i)fido|yubikey|hardware"), "hardware_token",
+    1=1, AuthMethod
+)
+
+# ============================================
+# LOOKUPS
+# ============================================
+LOOKUP-privileged_users = privileged_users userPrincipalName AS user OUTPUT is_privileged role risk_level</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Microsoft Entra ID (azure:aad:signin)</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="code-block">
+                  <div class="code-body">
+                    <pre><code>[azure:aad:signin]
+# ============================================
+# TIMESTAMP PARSING
+# ============================================
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%6N%Z
+TIME_PREFIX = \"createdDateTime\":\"
+MAX_TIMESTAMP_LOOKAHEAD = 50
+TZ = UTC
+
+# ============================================
+# LINE BREAKING
+# ============================================
+SHOULD_LINEMERGE = false
+LINE_BREAKER = ([\r\n]+)
+TRUNCATE = 999999
+
+# ============================================
+# JSON PARSING
+# ============================================
+KV_MODE = json
+AUTO_KV_JSON = true
+
+# ============================================
+# FIELD ALIASES (Nested JSON - require spath first)
+# ============================================
+# Note: For deeply nested fields, use EVAL instead of FIELDALIAS
+
+# ============================================
+# CALCULATED FIELDS (CIM Authentication Model)
+# ============================================
+EVAL-user = 'properties.userPrincipalName'
+EVAL-src = 'properties.ipAddress'
+EVAL-src_ip = 'properties.ipAddress'
+EVAL-src_country = 'properties.location.countryOrRegion'
+EVAL-src_city = 'properties.location.city'
+EVAL-src_lat = 'properties.location.geoCoordinates.latitude'
+EVAL-src_lon = 'properties.location.geoCoordinates.longitude'
+EVAL-app = 'properties.appDisplayName'
+EVAL-dest = 'properties.resourceDisplayName'
+
+EVAL-action = if('properties.status.errorCode'=0, "success", "failure")
+EVAL-result_id = 'properties.status.errorCode'
+EVAL-reason = 'properties.status.failureReason'
+
+EVAL-authentication_method = 'properties.mfaDetail.authMethod'
+EVAL-device_id = 'properties.deviceDetail.deviceId'
+EVAL-device_os = 'properties.deviceDetail.operatingSystem'
+EVAL-browser = 'properties.deviceDetail.browser'
+
+EVAL-vendor = "Microsoft"
+EVAL-product = "Entra ID"
+EVAL-vendor_product = "Microsoft Entra ID"
+
+EVAL-risk_level = 'properties.riskLevelAggregated'
+EVAL-risk_state = 'properties.riskState'
+
+# MFA-specific
+EVAL-mfa_result = case(
+    'properties.status.errorCode'=0 AND isnotnull('properties.mfaDetail.authMethod'), "success",
+    'properties.status.errorCode'=500121, "denied",
+    'properties.status.errorCode' IN (50074, 50076), "failed",
+    1=1, "unknown"
+)
+
+# ============================================
+# LOOKUPS
+# ============================================
+LOOKUP-geo_whitelist = geo_whitelist country_code AS src_country OUTPUT is_expected risk_score
+LOOKUP-privileged_users = privileged_users userPrincipalName AS user OUTPUT is_privileged role</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CIM Data Models -->
+        <div class="section">
+          <h2 class="subsection-title">CIM Data Models Reference</h2>
+          
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">The Common Information Model (CIM) provides standardized field names. Mapping to CIM enables correlation across different data sources and compatibility with Splunk Enterprise Security.</p>
+
+          <div class="card" style="padding:24px;background:var(--gray-50);">
+            <div class="mermaid">
+flowchart LR
+    subgraph Raw["Raw Data"]
+        A1[attackData.clientIP]
+        A2[httpMessage.status]
+        A3[ActorId]
+        A4[ClientIP]
+    end
+    
+    subgraph CIM["CIM Fields"]
+        B1[src]
+        B2[status]
+        B3[user]
+        B4[src_ip]
+    end
+    
+    subgraph Models["CIM Models"]
+        C1[Web]
+        C2[Authentication]
+        C3[Network Traffic]
+        C4[Intrusion Detection]
+    end
+    
+    A1 --> B1
+    A2 --> B2
+    A3 --> B3
+    A4 --> B4
+    
+    B1 --> C1
+    B1 --> C3
+    B2 --> C1
+    B3 --> C2
+    B4 --> C2
+    B4 --> C4
+    
+    style B1 fill:#d4edda,stroke:#28a745
+    style B2 fill:#d4edda,stroke:#28a745
+    style B3 fill:#d4edda,stroke:#28a745
+    style B4 fill:#d4edda,stroke:#28a745
+            </div>
+          </div>
+
+          <h3 style="margin-top:32px;font-size:1rem;">Authentication Data Model Fields</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>CIM Field</th><th>Type</th><th>Description</th><th>Akamai</th><th>CyberArk</th><th>Entra ID</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="highlight"><code>action</code></td><td>string</td><td>success, failure, error</td><td>—</td><td>Result</td><td>errorCode</td></tr>
+                <tr><td class="highlight"><code>app</code></td><td>string</td><td>Application name</td><td>—</td><td>ApplicationName</td><td>appDisplayName</td></tr>
+                <tr><td class="highlight"><code>authentication_method</code></td><td>string</td><td>MFA method</td><td>—</td><td>AuthMethod</td><td>mfaDetail.authMethod</td></tr>
+                <tr><td class="highlight"><code>dest</code></td><td>string</td><td>Target system</td><td>Host</td><td>TargetId</td><td>resourceDisplayName</td></tr>
+                <tr><td class="highlight"><code>src</code></td><td>string</td><td>Source IP</td><td>clientIP</td><td>ClientIP</td><td>ipAddress</td></tr>
+                <tr><td class="highlight"><code>src_ip</code></td><td>string</td><td>Source IP (alias)</td><td>clientIP</td><td>ClientIP</td><td>ipAddress</td></tr>
+                <tr><td class="highlight"><code>user</code></td><td>string</td><td>Username/UPN</td><td>—</td><td>ActorId</td><td>userPrincipalName</td></tr>
+                <tr><td class="highlight"><code>vendor_product</code></td><td>string</td><td>Vendor + Product</td><td>Akamai Kona</td><td>CyberArk Identity</td><td>Microsoft Entra ID</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="margin-top:32px;font-size:1rem;">Web Data Model Fields</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>CIM Field</th><th>Type</th><th>Description</th><th>Akamai Mapping</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="highlight"><code>action</code></td><td>string</td><td>allowed, blocked</td><td>ruleAction</td></tr>
+                <tr><td class="highlight"><code>bytes_in</code></td><td>number</td><td>Request size</td><td>httpMessage.bytes</td></tr>
+                <tr><td class="highlight"><code>bytes_out</code></td><td>number</td><td>Response size</td><td>httpMessage.responseBytes</td></tr>
+                <tr><td class="highlight"><code>dest</code></td><td>string</td><td>Target host</td><td>requestHeaders.Host</td></tr>
+                <tr><td class="highlight"><code>http_method</code></td><td>string</td><td>GET, POST, etc.</td><td>httpMessage.method</td></tr>
+                <tr><td class="highlight"><code>http_user_agent</code></td><td>string</td><td>User agent string</td><td>requestHeaders.User-Agent</td></tr>
+                <tr><td class="highlight"><code>src</code></td><td>string</td><td>Source IP</td><td>attackData.clientIP</td></tr>
+                <tr><td class="highlight"><code>status</code></td><td>number</td><td>HTTP status code</td><td>httpMessage.status</td></tr>
+                <tr><td class="highlight"><code>uri_path</code></td><td>string</td><td>Request path</td><td>httpMessage.path</td></tr>
+                <tr><td class="highlight"><code>url</code></td><td>string</td><td>Full URL</td><td>httpMessage.path</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="margin-top:32px;font-size:1rem;">Intrusion Detection Model Fields</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>CIM Field</th><th>Type</th><th>Description</th><th>Akamai Mapping</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="highlight"><code>category</code></td><td>string</td><td>Attack category</td><td>ruleTag (SQLI, XSS, etc.)</td></tr>
+                <tr><td class="highlight"><code>severity</code></td><td>string</td><td>Severity level</td><td>Calculated</td></tr>
+                <tr><td class="highlight"><code>signature</code></td><td>string</td><td>Detection signature name</td><td>ruleTag</td></tr>
+                <tr><td class="highlight"><code>signature_id</code></td><td>string</td><td>Signature ID</td><td>ruleId</td></tr>
+                <tr><td class="highlight"><code>src</code></td><td>string</td><td>Attacker IP</td><td>attackData.clientIP</td></tr>
+                <tr><td class="highlight"><code>dest</code></td><td>string</td><td>Target host</td><td>requestHeaders.Host</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Verify CIM Compliance -->
+        <div class="section">
+          <h2 class="subsection-title">Verify CIM Compliance</h2>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">CIM Validation Queries</span></div>
+            <div class="code-body">
+              <pre><code>``` Check if data populates Authentication data model
+| datamodel Authentication Successful_Authentication search
+| head 10
+| table _time user src action app authentication_method
+
+``` Check if data populates Web data model
+| datamodel Web Proxy search
+| head 10
+| table _time src dest action http_method url status
+
+``` Check CIM field coverage for Akamai
+index=akamai sourcetype=akamai:siem earliest=-1h
+| head 100
+| table src dest action url http_method status category signature
+| where isnotnull(src) AND isnotnull(action)
+| stats count
+
+``` Check CIM field coverage for CyberArk
+index=cyberark sourcetype=cyberark:identity:audit earliest=-1h
+| head 100
+| table user src action app authentication_method vendor_product
+| where isnotnull(user) AND isnotnull(action)
+| stats count
+
+``` List all fields and their CIM mapping status
+index=akamai sourcetype=akamai:siem earliest=-1h
+| head 1
+| fieldsummary
+| eval cim_field = case(
+    field IN ("src", "src_ip", "dest", "action", "url", "status"), "✅ CIM",
+    match(field, "^(attackData|httpMessage|geo)\."), "⚠️ Needs mapping",
+    1=1, "ℹ️ Custom"
+)
+| table field cim_field count</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Normalization Best Practices -->
+        <div class="section">
+          <h2 class="subsection-title">Normalization Best Practices</h2>
+          <div class="grid grid-2">
+            <div class="card bordered-left success">
+              <h4>✅ Do</h4>
+              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;margin-top:8px;">
+                <li>Use existing Splunkbase TAs whenever possible</li>
+                <li>Map to CIM fields for ES compatibility</li>
+                <li>Use EVAL for complex transformations</li>
+                <li>Use FIELDALIAS for simple 1:1 mapping</li>
+                <li>Document all custom field extractions</li>
+                <li>Test parsing with sample data first</li>
+                <li>Use search-time extraction for quick fixes</li>
+              </ul>
+            </div>
+            <div class="card bordered-left error">
+              <h4>❌ Don't</h4>
+              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;margin-top:8px;">
+                <li>Overwrite existing TA configurations</li>
+                <li>Create duplicate field aliases</li>
+                <li>Use index-time transforms for simple extractions</li>
+                <li>Forget to handle null values in EVAL</li>
+                <li>Ignore CIM - it enables correlation</li>
+                <li>Hard-code values that should be lookups</li>
+                <li>Skip testing after configuration changes</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      
+        <!-- PARSING EDGE CASES -->
+        <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
+          <h2 class="subsection-title" style="color:var(--warning-600);">⚠️ Parsing Edge Cases & Issues</h2>
+          
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Issue</th><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">TA exists but incomplete</td><td>Missing fields you need</td><td>TA doesn't extract all fields</td><td>Add search-time extraction in local/props.conf</td></tr>
+                <tr><td class="highlight">No TA exists</td><td>Need full custom parsing</td><td>Vendor not supported</td><td>Create custom app, submit for vetting</td></tr>
+                <tr><td class="highlight">Nested JSON slow</td><td>spath performance issues</td><td>Deep JSON parsed at search time</td><td>Use INDEXED_EXTRACTIONS if possible</td></tr>
+                <tr><td class="highlight">Field name conflicts</td><td>CIM mapping issues</td><td>Source field same as CIM field</td><td>Use FIELDALIAS carefully, rename source field</td></tr>
+                <tr><td class="highlight">Multi-value fields</td><td>Aggregation problems</td><td>Field contains array</td><td>Use mvexpand, mvcount, mvindex</td></tr>
+                <tr><td class="highlight">Splunk Cloud restrictions</td><td>Can't edit system props.conf</td><td>Cloud architecture</td><td>Custom app or support ticket</td></tr>
+                <tr><td class="highlight">Timestamp parse failures</td><td>_time is index time</td><td>TIME_FORMAT doesn't match</td><td>Test with strptime(), fix TIME_FORMAT</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout warning" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Field Name Changes After Vendor Upgrade</div>
+              <div class="callout-body">
+                If vendor changes field names after upgrade, handle both:<br>
+                <code>| eval user = coalesce(NewFieldName, OldFieldName, "unknown")</code><br><br>
+                Document the change with version numbers!
+              </div>
+            </div>
+          </div>
+
+          <h3 style="font-size:1rem;margin:24px 0 12px;">Test Your Parsing</h3>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Validation Queries</span></div>
+            <div class="code-body">
+              <pre><code>``` Check for extraction failures (null fields)
+index=akamai earliest=-1h
+| stats count(eval(isnull(src_ip))) as missing_src
+        count(eval(isnull(action))) as missing_action
+        count as total
+
+``` Check for unexpected field values
+index=akamai earliest=-1h
+| stats count by action
+| sort - count
+
+``` Find events with parsing errors
+index=akamai earliest=-1h 
+| where _time = _indextime
+``` Events where event time = index time usually means parse failure</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</body>
+</html>

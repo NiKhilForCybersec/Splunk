@@ -3,138 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sobeys Detection Engineering — Command Center</title>
+  <title>myfirstpro Detection Engineering — Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
   <div class="app-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
+            <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
-          <div class="sidebar-logo-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="sidebar-logo-text">
-            <h1>Sobeys Detection</h1>
-            <span>Engineering Command Center</span>
-          </div>
+          <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
         </div>
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section">
-          <div class="nav-section-title">Overview</div>
-          <a href="index.html" class="nav-item active">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-            <span>Command Center</span>
-          </a>
-          <a href="pages/day1.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
-            <span>Day 1 — Getting Started</span>
-          </a>
-          <a href="pages/client-meetings.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            <span>Client Meeting Prep</span>
-          </a>
+          <div class="nav-section-title">Getting Started</div>
+          <a href="index.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="pages/day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="pages/client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Vendor Deep Dives</div>
-          <a href="pages/vendor-akamai.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Akamai WAF</span>
-          </a>
-          <a href="pages/vendor-cyberark.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-            <span>CyberArk Identity</span>
-            <span class="badge critical" style="margin-left: auto; font-size: 0.625rem;">PRIMARY</span>
-          </a>
-          <a href="pages/vendor-entra.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Microsoft Entra ID</span>
-          </a>
+          <div class="nav-section-title">Data Sources</div>
+          <a href="pages/vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="pages/vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="pages/vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Fundamentals</div>
-          <a href="pages/fundamentals-waf.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>WAF Fundamentals</span>
-          </a>
-          <a href="pages/fundamentals-ddos.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
-            <span>DDoS Fundamentals</span>
-          </a>
-          <a href="pages/fundamentals-mfa.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>MFA Fundamentals</span>
-          </a>
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="pages/waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="pages/parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="pages/lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="pages/splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="pages/spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">WAF/DDoS Project</div>
-          <a href="pages/waf-overview.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Project Overview</span>
-          </a>
-          <a href="pages/waf-uc1.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>UC1: Block Volume</span>
-          </a>
-          <a href="pages/waf-uc2-4.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>UC2-4: Tier 1 Detections</span>
-          </a>
+          <a href="pages/waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="pages/waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">MFA Project</div>
-          <a href="pages/mfa-overview.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Project Overview</span>
-          </a>
-          <a href="pages/mfa-uc1.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-            <span>UC1: MFA Fatigue</span>
-          </a>
-          <a href="pages/mfa-uc2-5.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-            <span>UC2-5: All MFA Detections</span>
-          </a>
+          <a href="pages/mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="pages/mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Operations</div>
-          <a href="pages/splunk-operations.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4"/></svg>
-            <span>Splunk Operations</span>
-          </a>
-          <a href="pages/decision-trees.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>Decision Trees</span>
-          </a>
-          <a href="pages/troubleshooting.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
-            <span>Troubleshooting</span>
-          </a>
-          <a href="pages/runbooks.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
-            <span>SOC Runbooks</span>
-          </a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Reference</div>
-          <a href="pages/spl-reference.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            <span>SPL Reference</span>
-          </a>
-          <a href="pages/glossary.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            <span>Glossary</span>
-          </a>
+          <div class="nav-section-title">Response & Support</div>
+          <a href="pages/decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="pages/troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="pages/runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
         </div>
       </nav>
-      <div class="sidebar-footer">
-        <p>Version 2.0 — January 2026</p>
-      </div>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
     </aside>
 
     <main class="main-content">
@@ -148,15 +78,15 @@
           </div>
         </div>
         <div class="header-right">
-          <span class="badge success">Solo Engagement</span>
-          <span class="badge akamai">Akamai Confirmed</span>
+          <span class="badge success">6-Month Engagement</span>
+          <span class="badge akamai">Akamai WAF</span>
+          <span class="badge cyberark">CyberArk + Entra</span>
         </div>
       </header>
 
       <div class="page-content">
-        <!-- Hero -->
         <div class="hero">
-          <h1>Sobeys Detection Engineering</h1>
+          <h1>myfirstpro Detection Engineering</h1>
           <p class="hero-subtitle">Comprehensive WAF/DDoS and MFA detection platform for Splunk Cloud</p>
           <div class="hero-stats">
             <div class="hero-stat">
@@ -164,382 +94,177 @@
               <span class="hero-stat-label">Use Cases</span>
             </div>
             <div class="hero-stat">
-              <span class="hero-stat-value">5</span>
+              <span class="hero-stat-value">3</span>
               <span class="hero-stat-label">Vendors</span>
             </div>
             <div class="hero-stat">
-              <span class="hero-stat-value">25+</span>
-              <span class="hero-stat-label">Decision Trees</span>
+              <span class="hero-stat-value">8</span>
+              <span class="hero-stat-label">WAF Detections</span>
             </div>
             <div class="hero-stat">
-              <span class="hero-stat-value">50+</span>
-              <span class="hero-stat-label">Troubleshooting Scenarios</span>
+              <span class="hero-stat-value">5</span>
+              <span class="hero-stat-label">MFA Detections</span>
             </div>
           </div>
         </div>
 
-        <!-- Critical Notice -->
-        <div class="callout critical">
-          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <div class="callout-content">
-            <div class="callout-title">WAF Vendor Confirmed: Akamai</div>
-            <div class="callout-body">All WAF detections use <strong>Akamai Kona Site Defender</strong> via Splunk TA-akamai. Sourcetype: <code>akamai:siem</code>. See <a href="pages/vendor-akamai.html">Akamai Deep Dive</a> for field reference.</div>
-          </div>
-        </div>
-
-        <!-- Project Status -->
+        <!-- Step-by-Step Project Flow -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Project Status</h3>
-            <div class="grid grid-2">
-              <div class="progress-card">
-                <div class="progress-card-header">
-                  <span class="progress-card-title">WAF/DDoS Detection</span>
-                  <span class="badge warning">Phase 2</span>
-                </div>
-                <div class="progress-bar-container">
-                  <div class="progress-bar">
-                    <div class="progress-bar-fill" style="width: 25%"></div>
-                  </div>
-                  <span class="progress-count">2/8</span>
-                </div>
-                <div class="progress-items">
-                  <div class="progress-item done">
-                    <svg class="progress-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    <span>UC1: Block Volume Anomaly</span>
-                  </div>
-                  <div class="progress-item done">
-                    <svg class="progress-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    <span>UC2: Single Source Flood</span>
-                  </div>
-                  <div class="progress-item">
-                    <svg class="progress-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
-                    <span>UC3-UC8: In Development</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="progress-card">
-                <div class="progress-card-header">
-                  <span class="progress-card-title">MFA Detection</span>
-                  <span class="badge info">Phase 1</span>
-                </div>
-                <div class="progress-bar-container">
-                  <div class="progress-bar">
-                    <div class="progress-bar-fill" style="width: 0%"></div>
-                  </div>
-                  <span class="progress-count">0/5</span>
-                </div>
-                <div class="progress-items">
-                  <div class="progress-item">
-                    <svg class="progress-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
-                    <span>UC1: MFA Fatigue Detection</span>
-                  </div>
-                  <div class="progress-item">
-                    <svg class="progress-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
-                    <span>UC2-UC5: Planning</span>
-                  </div>
-                </div>
-              </div>
+          <h2 class="subsection-title">Step-by-Step Project Flow</h2>
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart LR
+    subgraph Phase1["1. Setup"]
+        A[Day 1<br/>Checklist]
+    end
+    subgraph Phase2["2. Data Sources"]
+        B[Vendor<br/>Config]
+    end
+    subgraph Phase3["3. Splunk Ops"]
+        C[Onboarding] --> D[Parsing]
+        D --> E[Lookups]
+    end
+    subgraph Phase4["4. Detections"]
+        F[WAF<br/>Use Cases] --> G[MFA<br/>Use Cases]
+    end
+    subgraph Phase5["5. Go Live"]
+        H[Testing] --> I[Production]
+    end
+    
+    A --> B --> C
+    E --> F
+    G --> H
+    
+    style A fill:#cce5ff,stroke:#007bff
+    style I fill:#d4edda,stroke:#28a745
+            </div>
+          </div>
+          <div class="callout info" style="margin-top:16px;">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="callout-content">
+              <div class="callout-title">Follow the Sidebar Order</div>
+              <div class="callout-body">Pages are organized in step-by-step order. Start with "Day 1 Checklist", set up data sources, configure Splunk operations, then build your detections.</div>
             </div>
           </div>
         </div>
 
-        <!-- Quick Actions -->
+        <!-- Quick Start Cards -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Quick Actions</h3>
-            <div class="grid grid-4">
-              <a href="pages/day1.html" class="card clickable">
-                <div class="card-icon primary" style="margin-bottom: 12px;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
-                </div>
-                <h4 style="font-size: 1rem; margin-bottom: 4px;">Day 1 Checklist</h4>
-                <p style="font-size: 0.8125rem; color: var(--gray-500);">First day discovery guide</p>
-              </a>
-              <a href="pages/client-meetings.html" class="card clickable">
-                <div class="card-icon info" style="margin-bottom: 12px;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                </div>
-                <h4 style="font-size: 1rem; margin-bottom: 4px;">Client Meeting Prep</h4>
-                <p style="font-size: 0.8125rem; color: var(--gray-500);">Talking points & questions</p>
-              </a>
-              <a href="pages/troubleshooting.html" class="card clickable">
-                <div class="card-icon warning" style="margin-bottom: 12px;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                </div>
-                <h4 style="font-size: 1rem; margin-bottom: 4px;">Troubleshooting</h4>
-                <p style="font-size: 0.8125rem; color: var(--gray-500);">50+ diagnostic scenarios</p>
-              </a>
-              <a href="pages/decision-trees.html" class="card clickable">
-                <div class="card-icon success" style="margin-bottom: 12px;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                </div>
-                <h4 style="font-size: 1rem; margin-bottom: 4px;">Decision Trees</h4>
-                <p style="font-size: 0.8125rem; color: var(--gray-500);">Guided flowcharts</p>
-              </a>
-            </div>
+          <h2 class="subsection-title">Quick Start</h2>
+          <div class="grid grid-4">
+            <a href="pages/day1.html" class="card clickable">
+              <div class="card-icon primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+              </div>
+              <h4 style="margin-top:12px;font-size:0.9375rem;">1. Day 1 Checklist</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-500);margin-top:4px;">Access & critical questions</p>
+            </a>
+            <a href="pages/waf-onboarding.html" class="card clickable">
+              <div class="card-icon info">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <h4 style="margin-top:12px;font-size:0.9375rem;">2. Log Onboarding</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-500);margin-top:4px;">Data source integration</p>
+            </a>
+            <a href="pages/parsing-cim.html" class="card clickable">
+              <div class="card-icon warning">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              </div>
+              <h4 style="margin-top:12px;font-size:0.9375rem;">3. Parsing & CIM</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-500);margin-top:4px;">Field normalization</p>
+            </a>
+            <a href="pages/lookups.html" class="card clickable">
+              <div class="card-icon success">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              </div>
+              <h4 style="margin-top:12px;font-size:0.9375rem;">4. Lookups</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-500);margin-top:4px;">Enrichment tables</p>
+            </a>
           </div>
         </div>
 
         <!-- Technology Stack -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Technology Stack</h3>
-            <div class="grid grid-5">
-              <div class="card" style="text-align: center;">
-                <div class="card-icon splunk" style="margin: 0 auto 12px;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-                </div>
-                <h4 style="font-size: 0.9375rem; margin-bottom: 4px;">Splunk Cloud</h4>
-                <p style="font-size: 0.75rem; color: var(--gray-500);">SIEM Platform</p>
-              </div>
-              <div class="card" style="text-align: center;">
-                <div class="card-icon akamai" style="margin: 0 auto 12px;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                </div>
-                <h4 style="font-size: 0.9375rem; margin-bottom: 4px;">Akamai WAF</h4>
-                <p style="font-size: 0.75rem; color: var(--gray-500);">Web Protection</p>
-              </div>
-              <div class="card" style="text-align: center;">
-                <div class="card-icon microsoft" style="margin: 0 auto 12px;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                </div>
-                <h4 style="font-size: 0.9375rem; margin-bottom: 4px;">Entra ID</h4>
-                <p style="font-size: 0.75rem; color: var(--gray-500);">Corporate SSO</p>
-              </div>
-              <div class="card" style="text-align: center;">
-                <div class="card-icon cyberark" style="margin: 0 auto 12px;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-                </div>
-                <h4 style="font-size: 0.9375rem; margin-bottom: 4px;">CyberArk</h4>
-                <p style="font-size: 0.75rem; color: var(--gray-500);">Privileged MFA</p>
-              </div>
-              <div class="card" style="text-align: center;">
-                <div class="card-icon info" style="margin: 0 auto 12px;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
-                </div>
-                <h4 style="font-size: 0.9375rem; margin-bottom: 4px;">SAP CDC</h4>
-                <p style="font-size: 0.75rem; color: var(--gray-500);">Customer IAM</p>
-              </div>
-            </div>
+          <h2 class="subsection-title">Technology Stack</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>Component</th><th>Technology</th><th>Index</th><th>Sourcetype</th><th>Documentation</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">WAF</td>
+                  <td>Akamai Kona Site Defender</td>
+                  <td><code>akamai</code></td>
+                  <td><code>akamai:siem</code></td>
+                  <td><a href="pages/vendor-akamai.html">Akamai Guide →</a></td>
+                </tr>
+                <tr>
+                  <td class="highlight">MFA Primary</td>
+                  <td>CyberArk Identity</td>
+                  <td><code>cyberark</code></td>
+                  <td><code>cyberark:identity:audit</code></td>
+                  <td><a href="pages/vendor-cyberark.html">CyberArk Guide →</a></td>
+                </tr>
+                <tr>
+                  <td class="highlight">MFA Secondary</td>
+                  <td>Microsoft Entra ID</td>
+                  <td><code>azure</code></td>
+                  <td><code>azure:aad:signin</code></td>
+                  <td><a href="pages/vendor-entra.html">Entra ID Guide →</a></td>
+                </tr>
+                <tr>
+                  <td class="highlight">SIEM</td>
+                  <td>Splunk Cloud</td>
+                  <td>—</td>
+                  <td>—</td>
+                  <td><a href="pages/splunk-ops.html">Splunk Ops →</a></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <!-- Use Case Summary -->
+        <!-- Projects Summary -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Use Case Summary</h3>
-            
-            <div class="tabs">
-              <div class="tab-list">
-                <button class="tab-button active">WAF/DDoS (8)</button>
-                <button class="tab-button">MFA (5)</button>
-                <button class="tab-button">Advanced (3)</button>
+          <h2 class="subsection-title">Detection Projects</h2>
+          <div class="grid grid-2">
+            <div class="card bordered-left akamai">
+              <div style="display:flex;justify-content:space-between;align-items:start;">
+                <h3 style="font-size:1.125rem;">WAF/DDoS Project</h3>
+                <span class="badge akamai">8 Use Cases</span>
               </div>
-              
-              <div class="tab-panel active">
-                <div class="table-container">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Use Case</th>
-                        <th>Tier</th>
-                        <th>Severity</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="highlight">WAF-UC1</td>
-                        <td>WAF Block Volume Anomaly</td>
-                        <td><span class="badge default">Tier 1</span></td>
-                        <td><span class="badge warning">Medium</span></td>
-                        <td><span class="badge success">Complete</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">WAF-UC2</td>
-                        <td>Single Source Flood</td>
-                        <td><span class="badge default">Tier 1</span></td>
-                        <td><span class="badge error">High</span></td>
-                        <td><span class="badge success">Complete</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">WAF-UC3</td>
-                        <td>Auth Endpoint Attack</td>
-                        <td><span class="badge default">Tier 1</span></td>
-                        <td><span class="badge error">High</span></td>
-                        <td><span class="badge info">In Progress</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">WAF-UC4</td>
-                        <td>SQLi/XSS Campaign</td>
-                        <td><span class="badge default">Tier 1</span></td>
-                        <td><span class="badge critical">Critical</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">WAF-UC5</td>
-                        <td>Distributed Low-and-Slow</td>
-                        <td><span class="badge primary">Tier 2</span></td>
-                        <td><span class="badge error">High</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">WAF-UC6</td>
-                        <td>Suspicious Geo Access</td>
-                        <td><span class="badge primary">Tier 2</span></td>
-                        <td><span class="badge warning">Medium</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">WAF-UC7</td>
-                        <td>WAF + Backend Correlation</td>
-                        <td><span class="badge primary">Tier 2</span></td>
-                        <td><span class="badge error">High</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">WAF-UC8</td>
-                        <td>Bot Behavior Anomaly</td>
-                        <td><span class="badge primary">Tier 2</span></td>
-                        <td><span class="badge warning">Medium</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+              <p style="font-size:0.875rem;color:var(--gray-600);margin:12px 0;">Akamai Kona Site Defender detections</p>
+              <div class="table-container" style="margin-top:12px;">
+                <table style="font-size:0.8125rem;">
+                  <tbody>
+                    <tr><td>WAF-UC1</td><td>Block Volume Anomaly</td><td><span class="badge warning">Med</span></td></tr>
+                    <tr><td>WAF-UC2</td><td>Single Source Flood</td><td><span class="badge error">High</span></td></tr>
+                    <tr><td>WAF-UC3</td><td>Auth Endpoint Attack</td><td><span class="badge error">High</span></td></tr>
+                    <tr><td>WAF-UC4</td><td>SQLi/XSS Campaign</td><td><span class="badge critical">Crit</span></td></tr>
+                  </tbody>
+                </table>
               </div>
-              
-              <div class="tab-panel">
-                <div class="table-container">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Use Case</th>
-                        <th>Primary Source</th>
-                        <th>Severity</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="highlight">MFA-UC1</td>
-                        <td>MFA Fatigue / Push Bombing</td>
-                        <td>CyberArk</td>
-                        <td><span class="badge critical">Critical</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">MFA-UC2</td>
-                        <td>MFA Failure Burst → Success</td>
-                        <td>CyberArk</td>
-                        <td><span class="badge error">High</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">MFA-UC3</td>
-                        <td>Privileged New Location/Device</td>
-                        <td>Entra ID</td>
-                        <td><span class="badge warning">Medium</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">MFA-UC4</td>
-                        <td>Impossible Travel</td>
-                        <td>Entra ID</td>
-                        <td><span class="badge error">High</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">MFA-UC5</td>
-                        <td>MFA Method Downgrade</td>
-                        <td>Entra ID</td>
-                        <td><span class="badge error">High</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              
-              <div class="tab-panel">
-                <div class="table-container">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Use Case</th>
-                        <th>Sources</th>
-                        <th>Severity</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="highlight">ADV-UC1</td>
-                        <td>MFA Bypass + Suspicious WAF</td>
-                        <td>CyberArk + Akamai</td>
-                        <td><span class="badge critical">Critical</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">ADV-UC2</td>
-                        <td>Identity + WAF Attack Chain</td>
-                        <td>Entra + Akamai</td>
-                        <td><span class="badge critical">Critical</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                      <tr>
-                        <td class="highlight">ADV-UC3</td>
-                        <td>Customer Account Takeover</td>
-                        <td>SAP CDC + Akamai</td>
-                        <td><span class="badge error">High</span></td>
-                        <td><span class="badge default">Planned</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <a href="pages/waf-usecases.html" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">View All 8 Use Cases →</a>
             </div>
-          </div>
-        </div>
 
-        <!-- Critical Reminders -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Critical Reminders</h3>
-            <div class="grid grid-2">
-              <div class="callout warning">
-                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-                <div class="callout-content">
-                  <div class="callout-title">CyberArk is PRIMARY for Privileged MFA</div>
-                  <div class="callout-body">Query CyberArk logs first for privileged user MFA events. Entra ID is secondary.</div>
-                </div>
+            <div class="card bordered-left cyberark">
+              <div style="display:flex;justify-content:space-between;align-items:start;">
+                <h3 style="font-size:1.125rem;">MFA Project</h3>
+                <span class="badge cyberark">5 Use Cases</span>
               </div>
-              <div class="callout info">
-                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                <div class="callout-content">
-                  <div class="callout-title">Splunk TA-akamai Required</div>
-                  <div class="callout-body">All Akamai detections require the Splunk Add-on for Akamai to be properly configured.</div>
-                </div>
+              <p style="font-size:0.875rem;color:var(--gray-600);margin:12px 0;">CyberArk + Entra ID detections</p>
+              <div class="table-container" style="margin-top:12px;">
+                <table style="font-size:0.8125rem;">
+                  <tbody>
+                    <tr><td>MFA-UC1</td><td>MFA Fatigue Attack</td><td><span class="badge critical">Crit</span></td></tr>
+                    <tr><td>MFA-UC2</td><td>Failure Burst → Success</td><td><span class="badge error">High</span></td></tr>
+                    <tr><td>MFA-UC4</td><td>Impossible Travel</td><td><span class="badge error">High</span></td></tr>
+                    <tr><td>MFA-UC5</td><td>MFA Method Downgrade</td><td><span class="badge error">High</span></td></tr>
+                  </tbody>
+                </table>
               </div>
-              <div class="callout success">
-                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <div class="callout-content">
-                  <div class="callout-title">Solo Engagement</div>
-                  <div class="callout-body">You are the sole engineer on this project. Document everything thoroughly for handover.</div>
-                </div>
-              </div>
-              <div class="callout error">
-                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                <div class="callout-content">
-                  <div class="callout-title">Complete Documentation</div>
-                  <div class="callout-body">Every detection needs: SPL, thresholds, test cases, runbook, and MITRE mapping.</div>
-                </div>
-              </div>
+              <a href="pages/mfa-usecases.html" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">View All 5 Use Cases →</a>
             </div>
           </div>
         </div>
@@ -547,7 +272,7 @@
       </div>
     </main>
   </div>
-
   <script src="js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
 </body>
 </html>

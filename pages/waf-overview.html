@@ -3,137 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WAF/DDoS Project Overview | Sobeys Detection Engineering</title>
+  <title>WAF/DDoS Project Overview | myfirstpro Detection Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
   <div class="app-container">
-        <aside class="sidebar">
+                        <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
-          <div class="sidebar-logo-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="sidebar-logo-text">
-            <h1>Sobeys Detection</h1>
-            <span>Engineering Command Center</span>
-          </div>
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
         </div>
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section">
-          <div class="nav-section-title">Overview</div>
-          <a href="../index.html" class="nav-item" data-page="index">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-            <span>Command Center</span>
-          </a>
-          <a href="day1.html" class="nav-item" data-page="day1">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
-            <span>Day 1 — Getting Started</span>
-          </a>
-          <a href="client-meetings.html" class="nav-item" data-page="client-meetings">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            <span>Client Meeting Prep</span>
-          </a>
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Vendor Deep Dives</div>
-          <a href="vendor-akamai.html" class="nav-item" data-page="vendor-akamai">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Akamai WAF</span>
-          </a>
-          <a href="vendor-cyberark.html" class="nav-item" data-page="vendor-cyberark">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-            <span>CyberArk Identity</span>
-            <span class="badge critical" style="margin-left: auto; font-size: 0.625rem;">PRIMARY</span>
-          </a>
-          <a href="vendor-entra.html" class="nav-item" data-page="vendor-entra">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Microsoft Entra ID</span>
-          </a>
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Fundamentals</div>
-          <a href="fundamentals-waf.html" class="nav-item" data-page="fundamentals-waf">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>WAF Fundamentals</span>
-          </a>
-          <a href="fundamentals-ddos.html" class="nav-item" data-page="fundamentals-ddos">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
-            <span>DDoS Fundamentals</span>
-          </a>
-          <a href="fundamentals-mfa.html" class="nav-item" data-page="fundamentals-mfa">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>MFA Fundamentals</span>
-          </a>
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">WAF/DDoS Project</div>
-          <a href="waf-overview.html" class="nav-item active" data-page="waf-overview">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Project Overview</span>
-          </a>
-          <a href="waf-uc1.html" class="nav-item" data-page="waf-uc1">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>UC1: Block Volume</span>
-          </a>
-          <a href="waf-uc2-4.html" class="nav-item" data-page="waf-uc2-4">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>UC2-4: Tier 1 Detections</span>
-          </a>
+          <a href="waf-overview.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">MFA Project</div>
-          <a href="mfa-overview.html" class="nav-item" data-page="mfa-overview">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Project Overview</span>
-          </a>
-          <a href="mfa-uc1.html" class="nav-item" data-page="mfa-uc1">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-            <span>UC1: MFA Fatigue</span>
-          </a>
-          <a href="mfa-uc2-5.html" class="nav-item" data-page="mfa-uc2-5">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-            <span>UC2-5: All MFA Detections</span>
-          </a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Operations</div>
-          <a href="splunk-operations.html" class="nav-item" data-page="splunk-operations">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4"/></svg>
-            <span>Splunk Operations</span>
-          </a>
-          <a href="decision-trees.html" class="nav-item" data-page="decision-trees">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>Decision Trees</span>
-          </a>
-          <a href="troubleshooting.html" class="nav-item" data-page="troubleshooting">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
-            <span>Troubleshooting</span>
-          </a>
-          <a href="runbooks.html" class="nav-item" data-page="runbooks">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
-            <span>SOC Runbooks</span>
-          </a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Reference</div>
-          <a href="spl-reference.html" class="nav-item" data-page="spl-reference">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            <span>SPL Reference</span>
-          </a>
-          <a href="glossary.html" class="nav-item" data-page="glossary">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            <span>Glossary</span>
-          </a>
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
         </div>
       </nav>
-      <div class="sidebar-footer">
-        <p>Version 2.0 — January 2026</p>
-      </div>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
     </aside>
 
     <main class="main-content">
@@ -148,399 +79,250 @@
             <span class="breadcrumb-item current">WAF/DDoS Project</span>
           </div>
         </div>
-        <div class="header-right">
-          <span class="badge akamai">Akamai WAF</span>
-          <span class="badge info">8 Use Cases</span>
-        </div>
+        <span class="badge akamai">Akamai Kona</span>
       </header>
 
       <div class="page-content">
-        <!-- Header -->
         <div class="section">
-          <div class="section-header">
-            <h1 class="section-title">WAF/DDoS Detection Project</h1>
-            <p class="section-subtitle">8 use cases for Akamai WAF detection in Splunk Cloud</p>
-          </div>
+          <h1 class="section-title">WAF/DDoS Detection Project</h1>
+          <p class="section-subtitle">8 production-ready detections for web application security using Akamai WAF</p>
+        </div>
 
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-value">8</div>
-              <div class="stat-label">Use Cases</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value primary">Akamai</div>
-              <div class="stat-label">WAF Vendor</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">KSD</div>
-              <div class="stat-label">Kona Site Defender</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">akamai:siem</div>
-              <div class="stat-label">Sourcetype</div>
+
+        <!-- WAF Detection Flow -->
+        <div class="section">
+          <h2 class="subsection-title">WAF Detection Flow</h2>
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TD
+    A[Web Traffic] --> B{Akamai WAF}
+    B -->|Blocked| C[akamai:siem logs]
+    B -->|Allowed| D[Application]
+    C --> E[Splunk Cloud]
+    E --> F{Detection Rules}
+    F -->|Match| G[Alert Generated]
+    F -->|No Match| H[Log Stored]
+    G --> I[SOC Triage]
+    
+    style B fill:#0096d6,stroke:#007ab8,color:#fff
+    style G fill:#f8d7da,stroke:#dc3545
             </div>
           </div>
         </div>
 
-        <!-- Project Scope -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Project Scope</h3>
 
-            <div class="card">
-              <p style="margin-bottom: 16px;">The WAF/DDoS detection project delivers 8 use cases that provide visibility into:</p>
-              <ul style="margin-left: 20px; color: var(--gray-600);">
-                <li><strong>Web Application Attacks</strong> — SQLi, XSS, command injection, file inclusion</li>
-                <li><strong>DDoS Attacks</strong> — Volumetric, application-layer, distributed attacks</li>
-                <li><strong>Credential Attacks</strong> — Brute force, credential stuffing on auth endpoints</li>
-                <li><strong>Bot Activity</strong> — Malicious bots, scraping, automated attacks</li>
-                <li><strong>Geographic Anomalies</strong> — Unexpected access patterns by location</li>
-              </ul>
+        <!-- Critical Config -->
+        <div class="callout info">
+          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div class="callout-content">
+            <div class="callout-title">Akamai Configuration</div>
+            <div class="callout-body">
+              <strong>Index:</strong> <code>akamai</code> | 
+              <strong>Sourcetype:</strong> <code>akamai:siem</code> | 
+              <strong>Add-on:</strong> TA-akamai (Splunk Add-on for Akamai SIEM)
             </div>
           </div>
         </div>
 
-        <!-- Use Case Matrix -->
+        <!-- Use Cases Table -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Use Case Matrix</h3>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Use Case Name</th>
-                    <th>Tier</th>
-                    <th>Severity</th>
-                    <th>MITRE</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight"><a href="waf-uc1.html">WAF-UC1</a></td>
-                    <td>WAF Block Volume Anomaly</td>
-                    <td><span class="badge default">Tier 1</span></td>
-                    <td><span class="badge warning">Medium</span></td>
-                    <td><code>T1190</code></td>
-                    <td>Detect sudden spikes in WAF block actions</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><a href="waf-uc2.html">WAF-UC2</a></td>
-                    <td>Single Source Flood</td>
-                    <td><span class="badge default">Tier 1</span></td>
-                    <td><span class="badge error">High</span></td>
-                    <td><code>T1498, T1499</code></td>
-                    <td>Detect concentrated attacks from single IP</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><a href="waf-uc3.html">WAF-UC3</a></td>
-                    <td>Authentication Endpoint Targeting</td>
-                    <td><span class="badge default">Tier 1</span></td>
-                    <td><span class="badge error">High</span></td>
-                    <td><code>T1110</code></td>
-                    <td>Detect attacks targeting login/auth endpoints</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><a href="waf-uc4.html">WAF-UC4</a></td>
-                    <td>SQL Injection / XSS Campaign</td>
-                    <td><span class="badge default">Tier 1</span></td>
-                    <td><span class="badge critical">Critical</span></td>
-                    <td><code>T1190</code></td>
-                    <td>Detect coordinated injection attack campaigns</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><a href="waf-uc5.html">WAF-UC5</a></td>
-                    <td>Distributed Low-and-Slow Attack</td>
-                    <td><span class="badge primary">Tier 2</span></td>
-                    <td><span class="badge error">High</span></td>
-                    <td><code>T1498.001</code></td>
-                    <td>Detect evasive distributed attacks</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><a href="waf-uc6.html">WAF-UC6</a></td>
-                    <td>Suspicious Geographic Access</td>
-                    <td><span class="badge primary">Tier 2</span></td>
-                    <td><span class="badge warning">Medium</span></td>
-                    <td><code>T1090</code></td>
-                    <td>Detect attacks from unexpected geolocations</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><a href="waf-uc7.html">WAF-UC7</a></td>
-                    <td>WAF Block + Backend Error Correlation</td>
-                    <td><span class="badge primary">Tier 2</span></td>
-                    <td><span class="badge error">High</span></td>
-                    <td><code>T1499</code></td>
-                    <td>Correlate WAF blocks with backend errors</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><a href="waf-uc8.html">WAF-UC8</a></td>
-                    <td>Bot Behavior / Challenge Anomaly</td>
-                    <td><span class="badge primary">Tier 2</span></td>
-                    <td><span class="badge warning">Medium</span></td>
-                    <td><code>T1595</code></td>
-                    <td>Detect malicious bot patterns and challenge failures</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <h2 class="subsection-title">Use Cases Summary</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Severity</th>
+                  <th>MITRE ATT&CK</th>
+                  <th>Tier</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">WAF-UC1</td>
+                  <td>Block Volume Anomaly</td>
+                  <td><span class="badge warning">Medium</span></td>
+                  <td>T1190</td>
+                  <td>Tier 1</td>
+                  <td>Detects sudden spikes in WAF blocks indicating attack</td>
+                </tr>
+                <tr>
+                  <td class="highlight">WAF-UC2</td>
+                  <td>Single Source Flood</td>
+                  <td><span class="badge error">High</span></td>
+                  <td>T1498, T1499</td>
+                  <td>Tier 1</td>
+                  <td>Single IP generating excessive requests/blocks</td>
+                </tr>
+                <tr>
+                  <td class="highlight">WAF-UC3</td>
+                  <td>Auth Endpoint Attack</td>
+                  <td><span class="badge error">High</span></td>
+                  <td>T1110</td>
+                  <td>Tier 1</td>
+                  <td>Targeted attacks on login/auth endpoints</td>
+                </tr>
+                <tr>
+                  <td class="highlight">WAF-UC4</td>
+                  <td>SQLi/XSS Campaign</td>
+                  <td><span class="badge critical">Critical</span></td>
+                  <td>T1190</td>
+                  <td>Tier 1</td>
+                  <td>Multiple injection attacks indicating campaign</td>
+                </tr>
+                <tr>
+                  <td class="highlight">WAF-UC5</td>
+                  <td>Distributed Low-Slow</td>
+                  <td><span class="badge error">High</span></td>
+                  <td>T1498</td>
+                  <td>Tier 2</td>
+                  <td>Distributed attack from many IPs at low volume</td>
+                </tr>
+                <tr>
+                  <td class="highlight">WAF-UC6</td>
+                  <td>Geographic Anomaly</td>
+                  <td><span class="badge warning">Medium</span></td>
+                  <td>T1595</td>
+                  <td>Tier 2</td>
+                  <td>Unusual geo distribution of attacks</td>
+                </tr>
+                <tr>
+                  <td class="highlight">WAF-UC7</td>
+                  <td>WAF + Backend Error Correlation</td>
+                  <td><span class="badge error">High</span></td>
+                  <td>T1190</td>
+                  <td>Tier 2</td>
+                  <td>WAF blocks correlated with app errors</td>
+                </tr>
+                <tr>
+                  <td class="highlight">WAF-UC8</td>
+                  <td>Bot Behavior Anomaly</td>
+                  <td><span class="badge warning">Medium</span></td>
+                  <td>T1595</td>
+                  <td>Tier 2</td>
+                  <td>Suspicious bot patterns and challenge failures</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
         <!-- Tier Definitions -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Tier Definitions</h3>
+          <h2 class="subsection-title">Tier Definitions</h2>
+          <div class="grid grid-2">
+            <div class="card bordered-left primary">
+              <h4>Tier 1 — Foundation Detections</h4>
+              <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:16px;margin-top:8px;">
+                <li>High confidence, low false positive rate</li>
+                <li>Detect obvious/volumetric attacks</li>
+                <li>Deploy first, establish baseline</li>
+                <li><strong>Use cases:</strong> UC1-UC4</li>
+              </ul>
+            </div>
+            <div class="card bordered-left info">
+              <h4>Tier 2 — Advanced Detections</h4>
+              <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:16px;margin-top:8px;">
+                <li>Higher complexity, requires tuning</li>
+                <li>Detect evasive/sophisticated attacks</li>
+                <li>Deploy after Tier 1 is stable</li>
+                <li><strong>Use cases:</strong> UC5-UC8</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-            <div class="grid grid-2">
-              <div class="card bordered-left primary">
-                <h4 style="margin-bottom: 12px;">Tier 1 — Foundation Detections</h4>
-                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
-                  <li>High confidence, low false positive rate</li>
-                  <li>Detect obvious/volumetric attacks</li>
-                  <li>Deploy first, establish baseline</li>
-                  <li>Use cases: UC1-UC4</li>
-                </ul>
+        <!-- Detection Development Process -->
+        <div class="section">
+          <h2 class="subsection-title">Detection Development Lifecycle</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Phase 1: Data Validation (Day 1-2)</h4>
+                <p class="timeline-body">Confirm Akamai logs flowing, verify field extraction, check data freshness and latency.</p>
               </div>
-              <div class="card bordered-left info">
-                <h4 style="margin-bottom: 12px;">Tier 2 — Advanced Detections</h4>
-                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
-                  <li>Higher complexity, requires tuning</li>
-                  <li>Detect evasive/sophisticated attacks</li>
-                  <li>Deploy after Tier 1 is stable</li>
-                  <li>Use cases: UC5-UC8</li>
-                </ul>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Phase 2: Baseline Analysis (Day 3-5)</h4>
+                <p class="timeline-body">Calculate 14-day historical baseline for block volumes, identify normal patterns by hour/day.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Phase 3: Detection Development (Week 2-3)</h4>
+                <p class="timeline-body">Write SPL queries, test against historical data, tune thresholds using statistical methods.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Phase 4: FP Analysis (Week 3-4)</h4>
+                <p class="timeline-body">Run detections in silent mode, identify false positive sources, build exclusion lists.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Phase 5: Documentation (Week 4)</h4>
+                <p class="timeline-body">Create runbooks, dashboard panels, use case specifications for each detection.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h4 class="timeline-title">Phase 6: Go-Live (Week 5+)</h4>
+                <p class="timeline-body">Enable alerts in production, monitor initial period, fine-tune as needed.</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Akamai Integration -->
+        <!-- Key Metrics -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Akamai Integration Details</h3>
-
-            <div class="callout info">
-              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-              <div class="callout-content">
-                <div class="callout-title">Splunk Add-on for Akamai</div>
-                <div class="callout-body">All WAF detections require the Splunk TA for Akamai (TA-akamai) to be installed and configured. This provides SIEM API integration, field extractions, and CIM mapping.</div>
-              </div>
+          <h2 class="subsection-title">Success Metrics</h2>
+          <div class="grid grid-4">
+            <div class="card stat-card">
+              <div class="stat-value primary">&gt;90%</div>
+              <div class="stat-label">True Positive Rate</div>
             </div>
-
-            <div class="table-container" style="margin-top: 16px;">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Configuration</th>
-                    <th>Value</th>
-                    <th>Notes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight">Index</td>
-                    <td><code>akamai</code></td>
-                    <td>Verify exact name with Splunk admin</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Sourcetype</td>
-                    <td><code>akamai:siem</code></td>
-                    <td>SIEM integration events</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Data Format</td>
-                    <td>JSON</td>
-                    <td>Nested structure, use spath</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Expected Latency</td>
-                    <td>2-5 minutes</td>
-                    <td>Akamai API polling interval</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Key Fields</td>
-                    <td>clientIP, attackData.rules{}, httpMessage.*</td>
-                    <td>See vendor-akamai.html for full reference</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="card stat-card">
+              <div class="stat-value success">&lt;10%</div>
+              <div class="stat-label">False Positive Rate</div>
             </div>
-          </div>
-        </div>
-
-        <!-- Key Lookups -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Required Lookup Tables</h3>
-
-            <div class="grid grid-2">
-              <div class="card">
-                <h4 style="margin-bottom: 12px;">sensitive_endpoints.csv</h4>
-                <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 12px;">Authentication and high-value endpoints for targeted attack detection.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>endpoint,is_sensitive,category
-/login,true,authentication
-/signin,true,authentication
-/auth/token,true,authentication
-/api/auth,true,authentication
-/admin,true,admin_panel
-/wp-admin,true,admin_panel
-/api/users,true,user_data
-/api/checkout,true,payment</code></pre>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <h4 style="margin-bottom: 12px;">waf_allowlist.csv</h4>
-                <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 12px;">Known good sources to exclude from detection.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>src,is_allowlisted,reason
-10.1.1.100,true,Qualys Scanner
-10.1.1.101,true,Nessus Scanner
-10.2.0.0/16,true,Partner API Range
-203.0.113.50,true,Penetration Tester</code></pre>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <h4 style="margin-bottom: 12px;">high_risk_countries.csv</h4>
-                <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 12px;">Countries flagged for elevated monitoring based on threat intel.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>country_code,country_name,risk_level
-RU,Russia,high
-CN,China,high
-KP,North Korea,critical
-IR,Iran,high
-BY,Belarus,medium</code></pre>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <h4 style="margin-bottom: 12px;">geo_baseline.csv</h4>
-                <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 12px;">Expected geographic distribution of legitimate traffic.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>country_code,expected_pct,is_expected
-CA,85,true
-US,10,true
-UK,2,true
-DE,1,true
-FR,1,true</code></pre>
-                  </div>
-                </div>
-              </div>
+            <div class="card stat-card">
+              <div class="stat-value warning">&lt;5 min</div>
+              <div class="stat-label">Detection Latency</div>
             </div>
-          </div>
-        </div>
-
-        <!-- MITRE Coverage -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">MITRE ATT&CK Coverage</h3>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Technique ID</th>
-                    <th>Technique Name</th>
-                    <th>Tactic</th>
-                    <th>Covered By</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight"><code>T1190</code></td>
-                    <td>Exploit Public-Facing Application</td>
-                    <td>Initial Access</td>
-                    <td>UC1, UC3, UC4</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>T1110</code></td>
-                    <td>Brute Force</td>
-                    <td>Credential Access</td>
-                    <td>UC3</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>T1498</code></td>
-                    <td>Network Denial of Service</td>
-                    <td>Impact</td>
-                    <td>UC2, UC5</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>T1499</code></td>
-                    <td>Endpoint Denial of Service</td>
-                    <td>Impact</td>
-                    <td>UC2, UC7</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>T1090</code></td>
-                    <td>Proxy</td>
-                    <td>Command and Control</td>
-                    <td>UC6</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>T1595</code></td>
-                    <td>Active Scanning</td>
-                    <td>Reconnaissance</td>
-                    <td>UC8</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="card stat-card">
+              <div class="stat-value info">100%</div>
+              <div class="stat-label">Runbook Coverage</div>
             </div>
           </div>
         </div>
 
         <!-- Quick Links -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Quick Links</h3>
-
-            <div class="grid grid-4">
-              <a href="vendor-akamai.html" class="card clickable">
-                <div class="card-icon akamai" style="margin-bottom: 8px;">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                </div>
-                <h4 style="font-size: 0.875rem;">Akamai Deep Dive</h4>
-                <p style="font-size: 0.75rem; color: var(--gray-500);">Field reference, sample events</p>
-              </a>
-              <a href="spl-reference.html" class="card clickable">
-                <div class="card-icon info" style="margin-bottom: 8px;">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                </div>
-                <h4 style="font-size: 0.875rem;">SPL Reference</h4>
-                <p style="font-size: 0.75rem; color: var(--gray-500);">Common query patterns</p>
-              </a>
-              <a href="troubleshooting.html" class="card clickable">
-                <div class="card-icon warning" style="margin-bottom: 8px;">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                </div>
-                <h4 style="font-size: 0.875rem;">Troubleshooting</h4>
-                <p style="font-size: 0.75rem; color: var(--gray-500);">When things go wrong</p>
-              </a>
-              <a href="runbooks.html" class="card clickable">
-                <div class="card-icon success" style="margin-bottom: 8px;">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
-                </div>
-                <h4 style="font-size: 0.875rem;">SOC Runbooks</h4>
-                <p style="font-size: 0.75rem; color: var(--gray-500);">Response procedures</p>
-              </a>
-            </div>
+          <h2 class="subsection-title">Quick Links</h2>
+          <div class="grid grid-3">
+            <a href="vendor-akamai.html" class="card clickable">
+              <h4 style="font-size:0.9375rem;">Akamai Reference</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-500);">Field schema, props.conf, integration</p>
+            </a>
+            <a href="waf-onboarding.html" class="card clickable">
+              <h4 style="font-size:0.9375rem;">Log Onboarding</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-500);">SIEM integration steps</p>
+            </a>
+            <a href="spl-reference.html#waf" class="card clickable">
+              <h4 style="font-size:0.9375rem;">SPL Queries</h4>
+              <p style="font-size:0.8125rem;color:var(--gray-500);">Copy-paste detection queries</p>
+            </a>
           </div>
         </div>
 
       </div>
     </main>
   </div>
-
   <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
 </body>
 </html>

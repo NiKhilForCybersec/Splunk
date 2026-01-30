@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SPL Reference | Sobeys Detection Engineering</title>
+  <title>SPL Reference | myfirstpro Detection Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -11,129 +11,59 @@
 </head>
 <body>
   <div class="app-container">
-        <aside class="sidebar">
+                        <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
-          <div class="sidebar-logo-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="sidebar-logo-text">
-            <h1>Sobeys Detection</h1>
-            <span>Engineering Command Center</span>
-          </div>
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
         </div>
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section">
-          <div class="nav-section-title">Overview</div>
-          <a href="../index.html" class="nav-item" data-page="index">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-            <span>Command Center</span>
-          </a>
-          <a href="day1.html" class="nav-item" data-page="day1">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
-            <span>Day 1 — Getting Started</span>
-          </a>
-          <a href="client-meetings.html" class="nav-item" data-page="client-meetings">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            <span>Client Meeting Prep</span>
-          </a>
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Vendor Deep Dives</div>
-          <a href="vendor-akamai.html" class="nav-item" data-page="vendor-akamai">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Akamai WAF</span>
-          </a>
-          <a href="vendor-cyberark.html" class="nav-item" data-page="vendor-cyberark">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-            <span>CyberArk Identity</span>
-            <span class="badge critical" style="margin-left: auto; font-size: 0.625rem;">PRIMARY</span>
-          </a>
-          <a href="vendor-entra.html" class="nav-item" data-page="vendor-entra">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Microsoft Entra ID</span>
-          </a>
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Fundamentals</div>
-          <a href="fundamentals-waf.html" class="nav-item" data-page="fundamentals-waf">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>WAF Fundamentals</span>
-          </a>
-          <a href="fundamentals-ddos.html" class="nav-item" data-page="fundamentals-ddos">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
-            <span>DDoS Fundamentals</span>
-          </a>
-          <a href="fundamentals-mfa.html" class="nav-item" data-page="fundamentals-mfa">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>MFA Fundamentals</span>
-          </a>
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">WAF/DDoS Project</div>
-          <a href="waf-overview.html" class="nav-item" data-page="waf-overview">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Project Overview</span>
-          </a>
-          <a href="waf-uc1.html" class="nav-item" data-page="waf-uc1">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>UC1: Block Volume</span>
-          </a>
-          <a href="waf-uc2-4.html" class="nav-item" data-page="waf-uc2-4">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>UC2-4: Tier 1 Detections</span>
-          </a>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">MFA Project</div>
-          <a href="mfa-overview.html" class="nav-item" data-page="mfa-overview">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Project Overview</span>
-          </a>
-          <a href="mfa-uc1.html" class="nav-item" data-page="mfa-uc1">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-            <span>UC1: MFA Fatigue</span>
-          </a>
-          <a href="mfa-uc2-5.html" class="nav-item" data-page="mfa-uc2-5">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-            <span>UC2-5: All MFA Detections</span>
-          </a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Operations</div>
-          <a href="splunk-operations.html" class="nav-item" data-page="splunk-operations">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4"/></svg>
-            <span>Splunk Operations</span>
-          </a>
-          <a href="decision-trees.html" class="nav-item" data-page="decision-trees">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>Decision Trees</span>
-          </a>
-          <a href="troubleshooting.html" class="nav-item" data-page="troubleshooting">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
-            <span>Troubleshooting</span>
-          </a>
-          <a href="runbooks.html" class="nav-item" data-page="runbooks">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
-            <span>SOC Runbooks</span>
-          </a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Reference</div>
-          <a href="spl-reference.html" class="nav-item active" data-page="spl-reference">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            <span>SPL Reference</span>
-          </a>
-          <a href="glossary.html" class="nav-item" data-page="glossary">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            <span>Glossary</span>
-          </a>
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
         </div>
       </nav>
-      <div class="sidebar-footer">
-        <p>Version 2.0 — January 2026</p>
-      </div>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
     </aside>
 
     <main class="main-content">
@@ -148,610 +78,466 @@
             <span class="breadcrumb-item current">SPL Reference</span>
           </div>
         </div>
-        <div class="header-right">
-          <span class="badge splunk">Splunk SPL</span>
-        </div>
+        <span class="badge splunk">Copy-Paste Ready</span>
       </header>
 
       <div class="page-content">
-        <!-- Header -->
         <div class="section">
-          <div class="section-header">
-            <h1 class="section-title">SPL Reference Guide</h1>
-            <p class="section-subtitle">Common patterns, utility searches, and optimized queries for detection engineering</p>
+          <h1 class="section-title">SPL Quick Reference</h1>
+          <p class="section-subtitle">Copy-paste queries for Akamai WAF, CyberArk, and Entra ID</p>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="section">
+          <div class="grid grid-4">
+            <a href="#validation" class="card clickable">
+              <h4 style="font-size:0.9rem;">Data Validation</h4>
+              <p style="font-size:0.75rem;color:var(--gray-500);">Check data presence</p>
+            </a>
+            <a href="#waf" class="card clickable">
+              <h4 style="font-size:0.9rem;">WAF Detections</h4>
+              <p style="font-size:0.75rem;color:var(--gray-500);">Akamai queries</p>
+            </a>
+            <a href="#mfa" class="card clickable">
+              <h4 style="font-size:0.9rem;">MFA Detections</h4>
+              <p style="font-size:0.75rem;color:var(--gray-500);">CyberArk + Entra</p>
+            </a>
+            <a href="#baseline" class="card clickable">
+              <h4 style="font-size:0.9rem;">Baseline Calculation</h4>
+              <p style="font-size:0.75rem;color:var(--gray-500);">Threshold setting</p>
+            </a>
           </div>
         </div>
 
-        <!-- Quick Copy Patterns -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Data Discovery Queries</h3>
+        <!-- DATA VALIDATION SECTION -->
+        <div class="section" id="validation">
+          <h2 class="subsection-title">Data Validation Queries</h2>
 
-            <div class="accordion">
-              <div class="accordion-item open">
-                <button class="accordion-header">
-                  <span>Find All Data Sources</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">List All Indexes and Sourcetypes</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>| tstats count WHERE index=* BY index sourcetype
-| sort - count
-| head 100</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Check All Data Sources at Once</span>
+            </div>
+            <div class="code-body">
+              <pre><code>| tstats count WHERE index IN (akamai, cyberark, azure) BY index sourcetype
+| eval status = if(count > 0, "✅ OK", "❌ Missing")
+| sort index</code></pre>
+            </div>
+          </div>
 
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Check Data Freshness</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Data Freshness by Sourcetype</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>| tstats latest(_time) as last_event WHERE index IN (akamai, azure, cyberark) BY index sourcetype
-| eval hours_ago = round((now() - last_event) / 3600, 1)
-| eval status = case(
-    hours_ago < 1, "✅ Current",
-    hours_ago < 4, "⚠️ Delayed",
-    true(), "❌ Stale"
-)
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Akamai WAF Data Check</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| stats count as events 
+        dc(attackData.clientIP) as unique_ips
+        dc(httpMessage.requestHeaders.Host) as unique_hosts
+        latest(_time) as last_event
 | eval last_event = strftime(last_event, "%Y-%m-%d %H:%M:%S")
-| table index sourcetype last_event hours_ago status
-| sort status</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
+| eval age_minutes = round((now() - last_event) / 60, 1)
+| eval status = case(events=0, "❌ No data", age_minutes > 15, "⚠️ Stale", 1=1, "✅ OK")</code></pre>
+            </div>
+          </div>
 
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Field Extraction Coverage</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Check Field Extraction Quality</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
-| head 1000
-| fieldsummary
-| eval extraction_pct = round(count/1000*100, 1)."%"
-| where count > 0
-| table field count distinct_count extraction_pct
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">CyberArk Data Check</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-1h
+| stats count as events 
+        dc(ActorId) as unique_users
+        dc(EventType) as event_types
+        latest(_time) as last_event
+| eval last_event = strftime(last_event, "%Y-%m-%d %H:%M:%S")
+| eval status = if(events > 0, "✅ Data flowing", "❌ No data")</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Entra ID Data Check</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=azure sourcetype=azure:aad:signin earliest=-1h
+| spath
+| stats count as events 
+        dc(properties.userPrincipalName) as unique_users
+        latest(_time) as last_event
+| eval last_event = strftime(last_event, "%Y-%m-%d %H:%M:%S")
+| eval status = if(events > 0, "✅ Data flowing", "❌ No data")</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Field Extraction Validation</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| fieldsummary 
+| eval coverage = round(count/totalCount*100, 1)."%"
+| table field count distinct_count coverage
 | sort - count</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            </div>
+          </div>
 
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Calculate Indexing Latency</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Measure Data Latency</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Indexing Latency Check</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
 | eval latency_seconds = _indextime - _time
-| stats avg(latency_seconds) as avg_latency
-        max(latency_seconds) as max_latency
-        perc95(latency_seconds) as p95_latency
-| eval avg_minutes = round(avg_latency/60, 1)
-| eval max_minutes = round(max_latency/60, 1)
-| eval p95_minutes = round(p95_latency/60, 1)
-| table avg_minutes max_minutes p95_minutes</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
+| stats avg(latency_seconds) as avg_latency 
+        max(latency_seconds) as max_latency 
+        p95(latency_seconds) as p95_latency
+| eval avg_min = round(avg_latency/60, 1)." min"
+| eval max_min = round(max_latency/60, 1)." min"
+| eval p95_min = round(p95_latency/60, 1)." min"
+| eval status = if(p95_latency/60 < 10, "✅ OK", "⚠️ High latency")</code></pre>
             </div>
           </div>
         </div>
 
-        <!-- Akamai Patterns -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Akamai WAF Patterns</h3>
+        <!-- WAF DETECTIONS SECTION -->
+        <div class="section" id="waf">
+          <h2 class="subsection-title">WAF/DDoS Detection Queries (Akamai)</h2>
 
-            <div class="accordion">
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Basic Block Analysis</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Top Blocked IPs</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
-| spath path=attackData.rules{}.ruleAction output=action
-| where action="deny"
-| spath path=clientIP output=src
-| spath path=geo.country output=country
-| stats count as blocks BY src country
-| sort - blocks
-| head 20</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Attack Categories Distribution</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Blocks by Attack Type</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
-| spath path=attackData.rules{}.ruleAction output=action
-| where action="deny"
-| spath path=attackData.rules{}.ruleTag output=category
-| eval category = mvindex(category, 0)
-| rex field=category "(?<attack_type>[^/]+)$"
-| stats count BY attack_type
-| sort - count</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Targeted Endpoints Analysis</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Most Attacked URIs</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
-| spath path=attackData.rules{}.ruleAction output=action
-| where action="deny"
-| spath path=httpMessage.path output=uri
-| spath path=httpMessage.method output=method
-| rex field=uri "^(?<endpoint>/[^/\\?]+)"
-| stats count as attacks dc(clientIP) as unique_ips BY endpoint method
-| sort - attacks
-| head 20</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Geographic Analysis</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Blocks by Country</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
-| spath path=attackData.rules{}.ruleAction output=action
-| where action="deny"
-| spath path=geo.country output=country
-| spath path=geo.city output=city
-| stats count as blocks dc(clientIP) as unique_ips BY country
-| sort - blocks
-| head 20</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Timechart Visualization</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Block Volume Over Time</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
-| spath path=attackData.rules{}.ruleAction output=action
-| where action="deny"
-| spath path=attackData.rules{}.ruleTag output=category
-| eval attack_type = case(
-    match(category, "SQL_INJECTION"), "SQLi",
-    match(category, "XSS"), "XSS",
-    match(category, "COMMAND_INJECTION"), "RCE",
-    match(category, "LFI|RFI"), "File Inclusion",
-    match(category, "BOT"), "Bot",
-    match(category, "RATE"), "Rate Limit",
-    true(), "Other"
-)
-| timechart span=1h count BY attack_type</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">WAF-UC1: Block Volume Anomaly</span>
+              <span class="code-lang">Production Ready</span>
             </div>
-          </div>
-        </div>
-
-        <!-- MFA/Auth Patterns -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">MFA & Authentication Patterns</h3>
-
-            <div class="accordion">
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Entra ID Sign-in Analysis</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Failed Sign-ins by Error Code</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=azure sourcetype=azure:aad:signin earliest=-24h
-| spath
-| eval user = 'properties.userPrincipalName'
-| eval error_code = 'properties.status.errorCode'
-| eval error_reason = 'properties.status.failureReason'
-| where error_code != 0
-| stats count BY error_code error_reason
-| sort - count
-| head 20
-
-``` Common Error Codes:
-``` 50126 = Invalid username or password
-``` 50074 = Strong Auth Required (MFA)
-``` 500121 = MFA Failed / User denied
-``` 53003 = Conditional Access blocked
-``` 530032 = Compliant device required</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>MFA Events Analysis</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">MFA Success/Failure by User</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=azure sourcetype=azure:aad:signin earliest=-24h
-| spath
-| eval user = 'properties.userPrincipalName'
-| eval error_code = 'properties.status.errorCode'
-| eval mfa_denied = if(error_code == 500121, 1, 0)
-| eval mfa_success = if(error_code == 0, 1, 0)
-| stats sum(mfa_denied) as denials
-        sum(mfa_success) as successes
-        count as total
-        BY user
-| where denials > 0
-| eval denial_rate = round(denials/total*100, 1)."%"
-| sort - denials
-| head 20</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>CyberArk MFA Events</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">CyberArk MFA Activity</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-24h
-    EventType IN ("Cloud.Core.MfaAuthentication", "Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout")
-| spath
-| eval user = ActorId
-| eval result = Result
-| eval mfa_method = AuthMethod
-| stats count BY user result mfa_method
-| sort - count</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Impossible Travel Detection</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Impossible Travel SPL Pattern</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=azure sourcetype=azure:aad:signin earliest=-24h
-| spath
-| eval user = 'properties.userPrincipalName'
-| eval lat = 'properties.location.geoCoordinates.latitude'
-| eval lon = 'properties.location.geoCoordinates.longitude'
-| eval city = 'properties.location.city'
-| eval country = 'properties.location.countryOrRegion'
-| where isnotnull(lat) AND isnotnull(lon)
-| sort user _time
-| streamstats current=f last(lat) as prev_lat last(lon) as prev_lon
-              last(_time) as prev_time last(city) as prev_city
-              BY user
-
-``` Haversine formula for distance calculation
-| eval lat1 = lat * 3.14159 / 180
-| eval lat2 = prev_lat * 3.14159 / 180
-| eval dlon = (lon - prev_lon) * 3.14159 / 180
-| eval dlat = (lat - prev_lat) * 3.14159 / 180
-| eval a = pow(sin(dlat/2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlon/2), 2)
-| eval distance_km = 6371 * 2 * asin(sqrt(a))
-| eval time_diff_hours = (_time - prev_time) / 3600
-| eval speed_kmh = if(time_diff_hours > 0, distance_km / time_diff_hours, 0)
-
-``` Flag impossible travel (>800 km/h is faster than commercial flight)
-| where speed_kmh > 800
-| table _time user prev_city city distance_km time_diff_hours speed_kmh</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Statistical Patterns -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Statistical Analysis Patterns</h3>
-
-            <div class="accordion">
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Calculate Baseline Statistics</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">14-Day Baseline Calculation</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-14d latest=-1d
-| spath path=attackData.rules{}.ruleAction output=action
-| where action="deny"
-| bin _time span=1h
-| stats count as hourly_blocks BY _time
-| stats avg(hourly_blocks) as baseline_mean
-        stdev(hourly_blocks) as baseline_stdev
-        perc50(hourly_blocks) as median
-        perc95(hourly_blocks) as p95
-        perc99(hourly_blocks) as p99
-        min(hourly_blocks) as minimum
-        max(hourly_blocks) as maximum
-| eval threshold_2sigma = round(baseline_mean + (2 * baseline_stdev), 0)
-| eval threshold_3sigma = round(baseline_mean + (3 * baseline_stdev), 0)
-| table baseline_mean baseline_stdev median p95 p99 minimum maximum threshold_2sigma threshold_3sigma</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Day-of-Week Aware Baseline</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Baseline by Day of Week and Hour</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-30d latest=-1d
-| spath path=attackData.rules{}.ruleAction output=action
-| where action="deny"
-| bin _time span=1h
-| eval day_of_week = strftime(_time, "%A")
-| eval hour_of_day = strftime(_time, "%H")
-| stats count as hourly_blocks BY _time day_of_week hour_of_day
-| stats avg(hourly_blocks) as avg_blocks
-        stdev(hourly_blocks) as stdev_blocks
-        BY day_of_week hour_of_day
-| eval threshold = round(avg_blocks + (2 * stdev_blocks), 0)
-| table day_of_week hour_of_day avg_blocks stdev_blocks threshold
-| sort day_of_week hour_of_day</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Anomaly Detection with streamstats</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="code-block">
-                    <div class="code-header">
-                      <span class="code-title">Rolling Window Anomaly Detection</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
 | spath path=attackData.rules{}.ruleAction output=action
 | where action="deny"
 | bin _time span=5m
-| stats count as block_count BY _time
-| streamstats window=24 avg(block_count) as rolling_avg stdev(block_count) as rolling_stdev
-| eval threshold = rolling_avg + (2 * rolling_stdev)
-| eval is_anomaly = if(block_count > threshold, 1, 0)
-| eval deviation = round((block_count - rolling_avg) / rolling_stdev, 2)
-| where is_anomaly = 1
-| table _time block_count rolling_avg threshold deviation</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
+| stats count as block_count 
+        dc(attackData.clientIP) as unique_ips 
+        values(httpMessage.requestHeaders.Host) as hosts
+        BY _time
+| eventstats avg(block_count) as baseline stdev(block_count) as stdev
+| eval threshold = baseline + (2 * stdev)
+| eval threshold = if(threshold < 50, 50, threshold)
+| where block_count > threshold AND block_count > 10
+| eval deviation = round((block_count - baseline) / stdev, 2)
+| eval severity = case(deviation >= 5, "CRITICAL", deviation >= 3, "HIGH", 1=1, "MEDIUM")
+| table _time block_count baseline threshold deviation unique_ips hosts severity</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">WAF-UC2: Single Source Flood</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-5m
+| bin _time span=1m
+| stats count as total_requests 
+        count(eval('attackData.rules{}.ruleAction'="deny")) as blocked
+        values(httpMessage.path) as paths
+        BY _time attackData.clientIP geo.country
+| where total_requests > 500 OR blocked > 50
+| eval block_ratio = round(blocked/total_requests*100, 1)."%"
+| sort - total_requests</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">WAF-UC3: Auth Endpoint Attack</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| where match(httpMessage.path, "(?i)(login|auth|signin|oauth|token|session)")
+| bin _time span=5m
+| stats count as blocked 
+        dc(attackData.clientIP) as unique_attackers
+        values(attackData.clientIP) as attacker_ips
+        BY _time httpMessage.path
+| where blocked > 20 OR (blocked > 5 AND unique_attackers > 3)
+| eval severity = if(blocked > 50, "CRITICAL", "HIGH")
+| table _time httpMessage.path blocked unique_attackers attacker_ips severity</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">WAF-UC4: SQLi/XSS Campaign</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
+| spath path=attackData.rules{}.ruleAction output=action
+| spath path=attackData.rules{}.ruleTag output=category
+| where action="deny" AND category IN ("SQLI", "XSS", "CMD", "LFI", "RFI")
+| bin _time span=5m
+| stats count as attack_count
+        dc(attackData.clientIP) as unique_attackers
+        values(attackData.clientIP) as attacker_ips
+        values(category) as attack_types
+        BY _time
+| where attack_count > 15
+| eval severity = case(
+    attack_count > 100, "CRITICAL",
+    attack_count > 50, "HIGH",
+    1=1, "MEDIUM"
+)
+| table _time attack_count unique_attackers attack_types attacker_ips severity</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Top Blocked IPs (Last 24h)</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| stats count as blocks 
+        dc(httpMessage.path) as unique_paths
+        values(attackData.rules{}.ruleTag) as attack_types
+        latest(geo.country) as country
+        BY attackData.clientIP
+| sort - blocks
+| head 25</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Geographic Block Distribution</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| stats count as blocks dc(attackData.clientIP) as unique_ips BY geo.country
+| eventstats sum(blocks) as total
+| eval percentage = round(blocks/total*100, 1)."%"
+| sort - blocks
+| head 20</code></pre>
             </div>
           </div>
         </div>
 
-        <!-- Performance Optimization -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Performance Optimization</h3>
+        <!-- MFA DETECTIONS SECTION -->
+        <div class="section" id="mfa">
+          <h2 class="subsection-title">MFA Detection Queries</h2>
 
-            <div class="grid grid-2">
-              <div class="card bordered-left success">
-                <h4 style="margin-bottom: 12px; color: var(--success-600);">✅ Optimized Patterns</h4>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>``` GOOD: Specific index, sourcetype, time
-index=akamai sourcetype=akamai:siem earliest=-1h
-
-``` GOOD: Filter early
-| where action="deny"
-
-``` GOOD: Extract only needed fields
-| spath path=clientIP output=src
-| spath path=geo.country output=country
-
-``` GOOD: Use tstats for data model
-| tstats count WHERE index=akamai BY sourcetype</code></pre>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card bordered-left error">
-                <h4 style="margin-bottom: 12px; color: var(--error-600);">❌ Anti-Patterns (Avoid)</h4>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>``` BAD: Wildcard index
-index=*
-
-``` BAD: All time search
-earliest=0
-
-``` BAD: Parse entire JSON first
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">MFA-UC1: CyberArk MFA Fatigue Detection</span>
+              <span class="code-lang">Production Ready</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-15m
+    EventType IN ("Cloud.Core.MfaAuthentication", "Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout")
 | spath
-| where action="deny"
+| eval user = ActorId
+| eval mfa_denied = if(Result IN ("Failure", "Denied", "Timeout"), 1, 0)
+| eval mfa_success = if(Result == "Success", 1, 0)
+| lookup privileged_users.csv userPrincipalName as user OUTPUT is_privileged role
+| where is_privileged = "true"
+| bin _time span=10m
+| stats sum(mfa_denied) as denials 
+        sum(mfa_success) as successes
+        values(ClientIP) as source_ips
+        values(City) as cities
+        latest(role) as role
+        BY _time user
+| where denials >= 5
+| eval severity = if(denials >= 5 AND successes >= 1, "CRITICAL", "HIGH")
+| eval alert = if(successes >= 1, "MFA BYPASS - Account compromised", "Push bombing in progress")
+| table _time user role denials successes source_ips cities severity alert</code></pre>
+            </div>
+          </div>
 
-``` BAD: Heavy regex on all events
-| rex field=_raw "complex_pattern"
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">MFA-UC1: Entra ID MFA Fatigue (Standard Users)</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=azure sourcetype=azure:aad:signin earliest=-15m
+| spath
+| eval user = 'properties.userPrincipalName'
+| eval error_code = 'properties.status.errorCode'
+| eval mfa_denied = if(error_code=500121, 1, 0)
+| eval mfa_success = if(error_code=0 AND isnotnull('properties.mfaDetail.authMethod'), 1, 0)
+| bin _time span=10m
+| stats sum(mfa_denied) as denials 
+        sum(mfa_success) as successes
+        values(properties.ipAddress) as source_ips
+        values(properties.location.city) as cities
+        BY _time user
+| where denials >= 5
+| eval severity = if(successes >= 1, "CRITICAL", "HIGH")
+| table _time user denials successes source_ips cities severity</code></pre>
+            </div>
+          </div>
 
-``` BAD: Unnecessary join
-| join type=outer ...</code></pre>
-                  </div>
-                </div>
-              </div>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">MFA-UC4: Impossible Travel Detection</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=azure sourcetype=azure:aad:signin earliest=-4h
+| spath
+| eval user = 'properties.userPrincipalName'
+| eval error_code = 'properties.status.errorCode'
+| where error_code = 0
+| lookup privileged_users.csv userPrincipalName as user OUTPUT is_privileged
+| where is_privileged = "true"
+| eval lat = 'properties.location.geoCoordinates.latitude'
+| eval lon = 'properties.location.geoCoordinates.longitude'
+| eval city = 'properties.location.city'
+| where isnotnull(lat) AND isnotnull(lon)
+| sort 0 user _time
+| streamstats current=f window=1 
+    first(lat) as prev_lat 
+    first(lon) as prev_lon 
+    first(_time) as prev_time 
+    first(city) as prev_city 
+    BY user
+| where isnotnull(prev_lat)
+| eval distance_km = 6371 * acos(
+    cos(lat*3.14159/180)*cos(prev_lat*3.14159/180)*
+    cos((prev_lon-lon)*3.14159/180)+
+    sin(lat*3.14159/180)*sin(prev_lat*3.14159/180))
+| eval time_diff_hours = (_time - prev_time) / 3600
+| eval speed_kmh = round(distance_km / time_diff_hours, 0)
+| where distance_km > 500 AND speed_kmh > 800
+| eval alert = "Impossible travel: ".round(distance_km,0)." km in ".round(time_diff_hours,1)." hours (".speed_kmh." km/h)"
+| table _time user prev_city city distance_km time_diff_hours speed_kmh alert</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">MFA Denial Trends by User</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-7d
+    EventType IN ("Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout")
+| timechart span=1d count BY ActorId limit=10</code></pre>
             </div>
           </div>
         </div>
 
-        <!-- Utility Functions -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Utility Functions Reference</h3>
+        <!-- BASELINE CALCULATION SECTION -->
+        <div class="section" id="baseline">
+          <h2 class="subsection-title">Baseline Calculation Queries</h2>
 
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Function</th>
-                    <th>Purpose</th>
-                    <th>Example</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight"><code>spath</code></td>
-                    <td>Extract JSON fields</td>
-                    <td><code>| spath path=attackData.rules{}.ruleAction output=action</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>mvindex</code></td>
-                    <td>Get specific array element</td>
-                    <td><code>| eval first_action = mvindex(action, 0)</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>mvexpand</code></td>
-                    <td>Create rows from multivalue</td>
-                    <td><code>| mvexpand rules</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>coalesce</code></td>
-                    <td>First non-null value</td>
-                    <td><code>| eval user = coalesce(ActorId, username)</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>streamstats</code></td>
-                    <td>Running calculations</td>
-                    <td><code>| streamstats window=10 avg(count) as rolling_avg</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>eventstats</code></td>
-                    <td>Stats without aggregation</td>
-                    <td><code>| eventstats avg(count) as global_avg</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>lookup</code></td>
-                    <td>Enrich with lookup table</td>
-                    <td><code>| lookup privileged_users.csv user OUTPUT is_privileged</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>cidrmatch</code></td>
-                    <td>CIDR subnet matching</td>
-                    <td><code>| where cidrmatch("10.0.0.0/8", src)</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>strftime</code></td>
-                    <td>Format timestamp</td>
-                    <td><code>| eval time_str = strftime(_time, "%Y-%m-%d %H:%M:%S")</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>relative_time</code></td>
-                    <td>Calculate relative time</td>
-                    <td><code>| eval yesterday = relative_time(now(), "-1d@d")</code></td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">WAF Block Baseline (14 days)</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-14d latest=-1d
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| bin _time span=5m
+| stats count as blocks BY _time
+| stats 
+    avg(blocks) as mean
+    stdev(blocks) as stdev
+    perc50(blocks) as p50
+    perc90(blocks) as p90
+    perc95(blocks) as p95
+    perc99(blocks) as p99
+    min(blocks) as min_blocks
+    max(blocks) as max_blocks
+| eval threshold_2sigma = round(mean + (2*stdev), 0)
+| eval threshold_3sigma = round(mean + (3*stdev), 0)
+| eval recommendation = "Use threshold_2sigma (".threshold_2sigma.") for medium sensitivity"</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Hour-of-Day Baseline</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-14d latest=-1d
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| eval hour = strftime(_time, "%H")
+| bin _time span=1h
+| stats count as blocks BY _time hour
+| stats avg(blocks) as avg_blocks stdev(blocks) as stdev BY hour
+| eval threshold = round(avg_blocks + (2*stdev), 0)
+| sort hour
+| table hour avg_blocks stdev threshold</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Day-of-Week Baseline</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-28d latest=-1d
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| eval dow = strftime(_time, "%A")
+| bin _time span=1d
+| stats count as blocks BY _time dow
+| stats avg(blocks) as avg_daily stdev(blocks) as stdev BY dow
+| eval threshold = round(avg_daily + (2*stdev), 0)
+| table dow avg_daily stdev threshold</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- UTILITY QUERIES SECTION -->
+        <div class="section">
+          <h2 class="subsection-title">Utility Queries</h2>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Find All Available Indexes</span>
+            </div>
+            <div class="code-body">
+              <pre><code>| eventcount summarize=false index=* 
+| dedup index 
+| fields index</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Find Sourcetypes by Pattern</span>
+            </div>
+            <div class="code-body">
+              <pre><code>| tstats count WHERE index=* sourcetype=*akamai* OR sourcetype=*cyberark* OR sourcetype=*azure* BY index sourcetype
+| sort - count</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Sample Raw Event</span>
+            </div>
+            <div class="code-body">
+              <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| head 1
+| table _time _raw</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">Check Scheduled Search Status</span>
+            </div>
+            <div class="code-body">
+              <pre><code>| rest /services/saved/searches
+| search is_scheduled=1 disabled=0
+| table title cron_schedule next_scheduled_time dispatch.earliest_time</code></pre>
             </div>
           </div>
         </div>
@@ -759,7 +545,6 @@ earliest=0
       </div>
     </main>
   </div>
-
   <script src="../js/app.js"></script>
 </body>
 </html>
