@@ -194,14 +194,14 @@ flowchart LR
             </div>
           </div>
 
-          <div class="tabs">
-            <div class="tab-list">
-              <button class="tab-button active">CyberArk (Primary)</button>
-              <button class="tab-button">Entra ID (Secondary)</button>
-              <button class="tab-button">Combined (Advanced)</button>
+          <div class="tabs-container">
+            <div class="tabs-nav">
+              <button class="tab-btn cyberark active" data-tab="uc1-cyberark">CyberArk (Primary)</button>
+              <button class="tab-btn entra" data-tab="uc1-entra">Entra ID (Secondary)</button>
+              <button class="tab-btn" data-tab="uc1-combined" style="background:var(--gray-100);">Combined (Advanced)</button>
             </div>
 
-            <div class="tab-panel active">
+            <div id="uc1-cyberark" class="tab-content active">
               <div class="code-block">
                 <div class="code-header">
                   <span class="code-title">MFA-UC1: CyberArk MFA Fatigue Detection</span>
@@ -257,7 +257,7 @@ flowchart LR
               </div>
             </div>
 
-            <div class="tab-panel">
+            <div id="uc1-entra" class="tab-content">
               <div class="code-block">
                 <div class="code-header">
                   <span class="code-title">MFA-UC1: Entra ID MFA Fatigue (Standard Users)</span>
@@ -288,7 +288,7 @@ flowchart LR
               </div>
             </div>
 
-            <div class="tab-panel">
+            <div id="uc1-combined" class="tab-content">
               <div class="code-block">
                 <div class="code-header">
                   <span class="code-title">MFA-UC1: Combined CyberArk + Entra Detection</span>

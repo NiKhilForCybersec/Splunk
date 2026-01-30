@@ -134,6 +134,185 @@ flowchart LR
           </div>
         </div>
 
+        <!-- ==================== RAW LOG JOURNEY ==================== -->
+        <div class="section">
+          <h2 class="subsection-title">📜 Raw Log Journey: Source → Splunk → Detection</h2>
+          <p style="color:var(--gray-600);margin-bottom:24px;">See exactly how Akamai logs transform at each stage</p>
+
+          <!-- STAGE 1: Raw from Akamai -->
+          <div class="card" style="padding:20px;margin-bottom:16px;border-left:4px solid #ff9900;">
+            <h4 style="color:#ff9900;margin-bottom:12px;">📤 Stage 1: Raw JSON from Akamai SIEM API</h4>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:12px;">This is what Akamai sends via the SIEM Integration API:</p>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Raw Akamai SIEM Event (JSON)</span></div>
+              <div class="code-body">
+                <pre style="font-size:0.75rem;"><code>{
+  "type": "akamai_siem",
+  "format": "json",
+  "version": "1.0",
+  "attackData": {
+    "configId": "12345",
+    "policyId": "qik1_12345",
+    "clientIP": "203.0.113.42",
+    "rules": [
+      {
+        "ruleId": "950001",
+        "ruleTag": "SQLI",
+        "ruleAction": "deny",
+        "ruleMessage": "SQL Injection Attack Detected",
+        "ruleData": "' OR '1'='1"
+      }
+    ],
+    "ruleVersions": ["2023.12.1"],
+    "apiId": "API_12345",
+    "apiKey": "attack_key_001"
+  },
+  "httpMessage": {
+    "requestId": "1a2b3c4d",
+    "start": "2025-01-30T10:15:30Z",
+    "protocol": "HTTP/1.1",
+    "method": "POST",
+    "host": "api.myfirstpro.com",
+    "port": 443,
+    "path": "/api/v1/login",
+    "query": "redirect=/admin",
+    "requestHeaders": {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0)",
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Host": "api.myfirstpro.com"
+    },
+    "status": 403,
+    "bytes": 1234,
+    "responseHeaders": {
+      "Content-Type": "text/html"
+    }
+  },
+  "geo": {
+    "continent": "EU",
+    "country": "RU",
+    "city": "Moscow",
+    "regionCode": "MOW",
+    "asn": "12345",
+    "network": "Example ISP"
+  }
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 2: In Splunk _raw -->
+          <div class="card" style="padding:20px;margin-bottom:16px;border-left:4px solid #65a637;">
+            <h4 style="color:#65a637;margin-bottom:12px;">📥 Stage 2: Arrives in Splunk (_raw field)</h4>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:12px;">When the event hits Splunk via HEC, it's stored as a single JSON string in _raw:</p>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Splunk _raw (Before TA Processing)</span></div>
+              <div class="code-body">
+                <pre style="font-size:0.75rem;"><code>index=akamai sourcetype=akamai:siem earliest=-5m | head 1 | table _raw
+
+_raw:
+{"type":"akamai_siem","format":"json","version":"1.0","attackData":{"configId":"12345","policyId":"qik1_12345","clientIP":"203.0.113.42","rules":[{"ruleId":"950001","ruleTag":"SQLI","ruleAction":"deny","ruleMessage":"SQL Injection Attack Detected","ruleData":"' OR '1'='1"}]...}</code></pre>
+              </div>
+            </div>
+            <div class="callout warning" style="margin-top:12px;padding:12px;">
+              <div class="callout-content">
+                <div class="callout-body" style="font-size:0.8125rem;">
+                  <strong>Without TA:</strong> All data is in _raw as one long JSON string. You'd need to use <code>spath</code> to extract every field manually!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 3: After TA Extraction -->
+          <div class="card" style="padding:20px;margin-bottom:16px;border-left:4px solid var(--primary-500);">
+            <h4 style="color:var(--primary-700);margin-bottom:12px;">⚙️ Stage 3: After TA-akamai Field Extraction</h4>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:12px;">The Splunk Add-on for Akamai automatically extracts JSON into searchable fields:</p>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Extracted Fields (Automatic)</span></div>
+              <div class="code-body">
+                <pre style="font-size:0.75rem;"><code>index=akamai sourcetype=akamai:siem earliest=-5m | head 1 | table *
+
+EXTRACTED FIELDS:
+_time                    = 2025-01-30 10:15:30
+attackData.clientIP      = 203.0.113.42
+attackData.configId      = 12345
+attackData.rules{}.ruleId      = 950001
+attackData.rules{}.ruleTag     = SQLI
+attackData.rules{}.ruleAction  = deny
+attackData.rules{}.ruleMessage = SQL Injection Attack Detected
+httpMessage.method       = POST
+httpMessage.host         = api.myfirstpro.com
+httpMessage.path         = /api/v1/login
+httpMessage.status       = 403
+httpMessage.bytes        = 1234
+geo.country              = RU
+geo.city                 = Moscow</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 4: CIM Mapped -->
+          <div class="card" style="padding:20px;margin-bottom:16px;border-left:4px solid var(--success-500);">
+            <h4 style="color:var(--success-700);margin-bottom:12px;">✅ Stage 4: CIM-Mapped Fields (Detection Ready)</h4>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:12px;">The TA also creates CIM-compliant field aliases for the Web data model:</p>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">CIM Fields (Ready for Detections)</span></div>
+              <div class="code-body">
+                <pre style="font-size:0.75rem;"><code>index=akamai sourcetype=akamai:siem earliest=-5m | head 1 
+| table _time src_ip dest http_method uri_path status action signature src_country
+
+CIM FIELDS:
+_time        = 2025-01-30 10:15:30
+src_ip       = 203.0.113.42          ← attackData.clientIP
+dest         = api.myfirstpro.com    ← httpMessage.host
+http_method  = POST                   ← httpMessage.method
+uri_path     = /api/v1/login         ← httpMessage.path
+status       = 403                    ← httpMessage.status
+action       = blocked                ← mapped from ruleAction="deny"
+signature    = SQLI                   ← attackData.rules{}.ruleTag
+src_country  = RU                     ← geo.country</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visual Summary -->
+          <div class="card" style="padding:24px;background:var(--gray-50);margin-bottom:24px;">
+            <h4 style="margin-bottom:16px;">🔄 Field Transformation Summary</h4>
+            <div class="table-container">
+              <table style="font-size:0.8125rem;">
+                <thead><tr><th>Stage</th><th>Source Field</th><th>→</th><th>Splunk Field</th><th>→</th><th>CIM Field</th></tr></thead>
+                <tbody>
+                  <tr><td>IP</td><td><code>attackData.clientIP</code></td><td>→</td><td><code>attackData.clientIP</code></td><td>→</td><td><code>src_ip</code></td></tr>
+                  <tr><td>Host</td><td><code>httpMessage.host</code></td><td>→</td><td><code>httpMessage.host</code></td><td>→</td><td><code>dest</code></td></tr>
+                  <tr><td>Path</td><td><code>httpMessage.path</code></td><td>→</td><td><code>httpMessage.path</code></td><td>→</td><td><code>uri_path</code></td></tr>
+                  <tr><td>Method</td><td><code>httpMessage.method</code></td><td>→</td><td><code>httpMessage.method</code></td><td>→</td><td><code>http_method</code></td></tr>
+                  <tr><td>Action</td><td><code>rules[].ruleAction</code></td><td>→</td><td><code>attackData.rules{}.ruleAction</code></td><td>→</td><td><code>action</code> (blocked/allowed)</td></tr>
+                  <tr><td>Attack Type</td><td><code>rules[].ruleTag</code></td><td>→</td><td><code>attackData.rules{}.ruleTag</code></td><td>→</td><td><code>signature</code></td></tr>
+                  <tr><td>Country</td><td><code>geo.country</code></td><td>→</td><td><code>geo.country</code></td><td>→</td><td><code>src_country</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Sample Detection Using CIM -->
+          <div class="card bordered-left success" style="padding:20px;">
+            <h4 style="color:var(--success-700);margin-bottom:12px;">🎯 Now You Can Write Detections!</h4>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:12px;">With CIM fields, detection queries are clean and readable:</p>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Detection: SQLi Attack from High-Risk Country</span></div>
+              <div class="code-body">
+                <pre style="font-size:0.75rem;"><code>index=akamai sourcetype=akamai:siem earliest=-15m
+| where action="blocked" AND signature="SQLI"
+| lookup country_risk.csv country AS src_country OUTPUT risk_level
+| where risk_level="high"
+| stats count as attacks dc(uri_path) as endpoints BY src_ip src_country
+| where attacks > 5
+| eval severity = if(attacks > 20, "CRITICAL", "HIGH")
+| table _time src_ip src_country attacks endpoints severity</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Log Schema -->
         <div class="section">
           <h2 class="subsection-title">Akamai SIEM Log Schema</h2>

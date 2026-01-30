@@ -105,6 +105,79 @@
               </div>
             </div>
           </div>
+
+          <!-- HOW CIM MAPPING WORKS -->
+          <h3 style="font-size:1.125rem;margin:24px 0 16px;">🔧 How CIM Mapping Works (3 Methods)</h3>
+          
+          <div class="card" style="padding:20px;margin-bottom:24px;background:var(--gray-50);">
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">
+              CIM mapping transforms vendor-specific field names to Splunk's standard names. There are 3 ways to do this:
+            </p>
+            
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">
+              <!-- Method 1 -->
+              <div style="background:white;padding:16px;border-radius:8px;border-left:3px solid var(--success-500);">
+                <h5 style="color:var(--success-700);margin-bottom:8px;">✅ Method 1: Technology Add-on (TA)</h5>
+                <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:8px;"><strong>Best for:</strong> Most cases — TAs do the mapping automatically</p>
+                <p style="font-size:0.8125rem;color:var(--gray-600);"><strong>How:</strong> Install the vendor's TA from Splunkbase → mapping happens automatically</p>
+              </div>
+              
+              <!-- Method 2 -->
+              <div style="background:white;padding:16px;border-radius:8px;border-left:3px solid var(--primary-500);">
+                <h5 style="color:var(--primary-700);margin-bottom:8px;">🔨 Method 2: Manual Config Files</h5>
+                <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:8px;"><strong>Best for:</strong> Custom data sources, or when TA is incomplete</p>
+                <p style="font-size:0.8125rem;color:var(--gray-600);"><strong>How:</strong> Edit props.conf and transforms.conf files</p>
+              </div>
+              
+              <!-- Method 3 -->
+              <div style="background:white;padding:16px;border-radius:8px;border-left:3px solid var(--warning-500);">
+                <h5 style="color:var(--warning-700);margin-bottom:8px;">⚡ Method 3: Search-Time Extraction</h5>
+                <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:8px;"><strong>Best for:</strong> Quick fixes, testing, or when you can't modify config files</p>
+                <p style="font-size:0.8125rem;color:var(--gray-600);"><strong>How:</strong> Use eval/rename in your SPL queries</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- WHERE ARE CONFIG FILES -->
+          <h3 style="font-size:1.125rem;margin:24px 0 16px;">📁 Where Are Config Files Located?</h3>
+          
+          <div class="table-container" style="margin-bottom:24px;">
+            <table>
+              <thead><tr><th>File</th><th>Location (Splunk Cloud)</th><th>Purpose</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="highlight">props.conf</td>
+                  <td><code>$SPLUNK_HOME/etc/apps/[app_name]/local/props.conf</code></td>
+                  <td>Field extractions, field aliases, calculated fields</td>
+                </tr>
+                <tr>
+                  <td class="highlight">transforms.conf</td>
+                  <td><code>$SPLUNK_HOME/etc/apps/[app_name]/local/transforms.conf</code></td>
+                  <td>Lookup definitions, field transformations</td>
+                </tr>
+                <tr>
+                  <td class="highlight">CIM Add-on</td>
+                  <td><code>Splunk_SA_CIM</code> (installed on Search Heads)</td>
+                  <td>Defines data models, enables tstats acceleration</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout warning" style="margin-bottom:24px;">
+            <div class="callout-content">
+              <div class="callout-title">⚠️ Splunk Cloud Note</div>
+              <div class="callout-body">
+                In <strong>Splunk Cloud</strong>, you cannot directly edit files on the server. Instead, you:<br>
+                1. Create/edit config files locally in an app package<br>
+                2. Use <strong>Settings → Source types</strong> for field extractions<br>
+                3. Use <strong>Settings → Fields → Calculated fields</strong> for aliases<br>
+                4. Submit a support case to deploy custom apps<br>
+                <br>
+                <strong>OR</strong> use the UI-based methods shown in each tab below.
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- TABS -->
@@ -136,6 +209,101 @@ flowchart LR
     style A fill:#ff9900,stroke:#ff6600
     style F fill:#d4edda,stroke:#28a745
               </div>
+            </div>
+
+            <!-- HOW TO CONFIGURE AKAMAI CIM -->
+            <h4 style="font-size:1rem;margin:24px 0 12px;">🔧 How to Configure Akamai CIM Mapping</h4>
+            
+            <!-- Method 1: TA -->
+            <div class="card bordered-left success" style="padding:20px;margin-bottom:16px;">
+              <h5 style="color:var(--success-700);margin-bottom:12px;">✅ Method 1: Install Splunk Add-on for Akamai (Recommended)</h5>
+              <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;">The TA handles all CIM mapping automatically.</p>
+              
+              <div style="background:var(--gray-50);padding:16px;border-radius:8px;margin-bottom:12px;">
+                <strong style="font-size:0.875rem;">Step-by-Step:</strong>
+                <ol style="margin:8px 0 0 16px;font-size:0.875rem;color:var(--gray-600);">
+                  <li><strong>Find the TA:</strong> Go to <a href="https://splunkbase.splunk.com" target="_blank">splunkbase.splunk.com</a> → Search "Akamai"</li>
+                  <li><strong>Download:</strong> Splunk Add-on for Akamai (TA-akamai)</li>
+                  <li><strong>Install:</strong> In Splunk: <code>Apps → Manage Apps → Install app from file</code></li>
+                  <li><strong>Restart:</strong> Restart Splunk (or wait for Cloud to apply)</li>
+                  <li><strong>Verify:</strong> Run the validation query below</li>
+                </ol>
+              </div>
+              
+              <div style="font-size:0.8125rem;color:var(--gray-500);">
+                <strong>What the TA does:</strong> Creates field extractions in <code>props.conf</code>, sets up field aliases in <code>transforms.conf</code>, and tags events for the Web data model.
+              </div>
+            </div>
+
+            <!-- Method 2: Manual Config -->
+            <div class="card bordered-left info" style="padding:20px;margin-bottom:16px;">
+              <h5 style="color:var(--primary-700);margin-bottom:12px;">🔨 Method 2: Manual Configuration (If TA Incomplete)</h5>
+              <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;">Add field aliases manually via Splunk UI or config files.</p>
+              
+              <!-- UI Method -->
+              <div style="background:var(--gray-50);padding:16px;border-radius:8px;margin-bottom:12px;">
+                <strong style="font-size:0.875rem;">Option A: Via Splunk UI (Calculated Fields)</strong>
+                <ol style="margin:8px 0 0 16px;font-size:0.875rem;color:var(--gray-600);">
+                  <li>Go to <strong>Settings → Fields → Calculated fields</strong></li>
+                  <li>Click <strong>"New Calculated Field"</strong></li>
+                  <li>Fill in:
+                    <ul style="margin:4px 0 4px 16px;">
+                      <li><strong>Source type:</strong> <code>akamai:siem</code></li>
+                      <li><strong>Name:</strong> <code>src_ip</code></li>
+                      <li><strong>Eval expression:</strong> <code>'attackData.clientIP'</code></li>
+                    </ul>
+                  </li>
+                  <li>Click <strong>Save</strong></li>
+                  <li>Repeat for each field mapping in the table below</li>
+                </ol>
+              </div>
+              
+              <!-- Config File Method -->
+              <div style="background:var(--gray-50);padding:16px;border-radius:8px;">
+                <strong style="font-size:0.875rem;">Option B: Via props.conf (Field Aliases)</strong>
+                <p style="margin:8px 0;font-size:0.8125rem;color:var(--gray-600);">Add to <code>$SPLUNK_HOME/etc/apps/TA-akamai/local/props.conf</code>:</p>
+                <div class="code-block" style="margin:8px 0;">
+                  <div class="code-body" style="padding:12px;">
+                    <pre style="margin:0;font-size:0.75rem;"><code>[akamai:siem]
+# Field Aliases for CIM Web Data Model
+FIELDALIAS-src_ip = attackData.clientIP AS src_ip
+FIELDALIAS-dest = httpMessage.host AS dest
+FIELDALIAS-uri_path = httpMessage.requestUrl AS uri_path
+FIELDALIAS-http_method = httpMessage.method AS http_method
+FIELDALIAS-status = httpMessage.status AS status
+FIELDALIAS-signature = attackData.rules AS signature
+FIELDALIAS-http_user_agent = httpMessage.useragent AS http_user_agent
+FIELDALIAS-src_country = geo.country AS src_country
+
+# Calculated field for CIM action
+EVAL-action = case(attackData.action="deny", "blocked", attackData.action="alert", "allowed", 1=1, "allowed")
+
+# Tag for Web data model
+LOOKUP-action_lookup = akamai_action_lookup akamai_action AS attackData.action OUTPUT action</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Method 3: Search-time -->
+            <div class="card bordered-left warning" style="padding:20px;margin-bottom:24px;">
+              <h5 style="color:var(--warning-700);margin-bottom:12px;">⚡ Method 3: Search-Time Extraction (Quick Fix)</h5>
+              <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;">Use eval/rename in your SPL when you can't modify config files.</p>
+              
+              <div class="code-block" style="margin:0;">
+                <div class="code-body" style="padding:12px;">
+                  <pre style="margin:0;font-size:0.75rem;"><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| rename "attackData.clientIP" AS src_ip
+| rename "httpMessage.host" AS dest
+| rename "httpMessage.requestUrl" AS uri_path
+| rename "httpMessage.method" AS http_method
+| rename "httpMessage.status" AS status
+| rename "attackData.rules" AS signature
+| eval action = case('attackData.action'="deny", "blocked", 'attackData.action'="alert", "allowed", 1=1, "allowed")
+| table _time src_ip dest uri_path http_method status signature action</code></pre>
+                </div>
+              </div>
+              <p style="font-size:0.75rem;color:var(--gray-500);margin-top:8px;">⚠️ This only works for this specific search. For permanent mapping, use Method 1 or 2.</p>
             </div>
 
             <!-- Akamai Field Mapping -->
@@ -231,6 +399,123 @@ flowchart LR
     
     style A fill:#00a3e0,stroke:#0077b3
     style F fill:#d4edda,stroke:#28a745
+              </div>
+            </div>
+
+            <!-- HOW TO CONFIGURE CYBERARK CIM -->
+            <h4 style="font-size:1rem;margin:24px 0 12px;">🔧 How to Configure CyberArk CIM Mapping</h4>
+            
+            <!-- Method 1: TA -->
+            <div class="card bordered-left success" style="padding:20px;margin-bottom:16px;">
+              <h5 style="color:var(--success-700);margin-bottom:12px;">✅ Method 1: Install CyberArk Add-on (Recommended)</h5>
+              <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;">The TA handles JSON parsing and CIM mapping automatically.</p>
+              
+              <div style="background:var(--gray-50);padding:16px;border-radius:8px;margin-bottom:12px;">
+                <strong style="font-size:0.875rem;">Step-by-Step:</strong>
+                <ol style="margin:8px 0 0 16px;font-size:0.875rem;color:var(--gray-600);">
+                  <li><strong>Find the TA:</strong> Go to <a href="https://splunkbase.splunk.com" target="_blank">splunkbase.splunk.com</a> → Search "CyberArk Identity"</li>
+                  <li><strong>Download:</strong> Splunk Add-on for CyberArk Identity (if available) OR CyberArk EPM Add-on</li>
+                  <li><strong>Install:</strong> In Splunk: <code>Apps → Manage Apps → Install app from file</code></li>
+                  <li><strong>Configure sourcetype:</strong> Set HEC token to use <code>cyberark:identity:audit</code></li>
+                  <li><strong>Verify:</strong> Run the validation query below</li>
+                </ol>
+              </div>
+              
+              <div class="callout warning" style="margin-top:12px;padding:12px;">
+                <div class="callout-content">
+                  <div class="callout-body" style="font-size:0.8125rem;">
+                    <strong>Note:</strong> CyberArk Identity may not have a dedicated TA on Splunkbase. If not available, use Method 2 (Manual Config) below.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Method 2: Manual Config -->
+            <div class="card bordered-left info" style="padding:20px;margin-bottom:16px;">
+              <h5 style="color:var(--primary-700);margin-bottom:12px;">🔨 Method 2: Manual Configuration</h5>
+              <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;">Configure JSON parsing and field aliases manually.</p>
+              
+              <!-- Step 1: Enable JSON Parsing -->
+              <div style="background:var(--gray-50);padding:16px;border-radius:8px;margin-bottom:12px;">
+                <strong style="font-size:0.875rem;">Step 1: Enable JSON Parsing for Sourcetype</strong>
+                <ol style="margin:8px 0 0 16px;font-size:0.875rem;color:var(--gray-600);">
+                  <li>Go to <strong>Settings → Source types</strong></li>
+                  <li>Click <strong>"New Source Type"</strong></li>
+                  <li>Fill in:
+                    <ul style="margin:4px 0 4px 16px;">
+                      <li><strong>Name:</strong> <code>cyberark:identity:audit</code></li>
+                      <li><strong>Category:</strong> Application</li>
+                      <li><strong>Event Breaks:</strong> Auto</li>
+                    </ul>
+                  </li>
+                  <li>Click <strong>Advanced</strong> tab</li>
+                  <li>Set <strong>KV_MODE:</strong> <code>json</code></li>
+                  <li>Click <strong>Save</strong></li>
+                </ol>
+              </div>
+              
+              <!-- Step 2: Create Field Aliases -->
+              <div style="background:var(--gray-50);padding:16px;border-radius:8px;margin-bottom:12px;">
+                <strong style="font-size:0.875rem;">Step 2: Create CIM Field Aliases (via UI)</strong>
+                <ol style="margin:8px 0 0 16px;font-size:0.875rem;color:var(--gray-600);">
+                  <li>Go to <strong>Settings → Fields → Calculated fields</strong></li>
+                  <li>Click <strong>"New Calculated Field"</strong></li>
+                  <li>Create each mapping:
+                    <table style="margin:8px 0;font-size:0.75rem;width:100%;">
+                      <tr style="background:white;"><td style="padding:4px 8px;"><strong>Source type:</strong></td><td style="padding:4px 8px;"><code>cyberark:identity:audit</code></td></tr>
+                      <tr style="background:white;"><td style="padding:4px 8px;"><strong>Name:</strong></td><td style="padding:4px 8px;"><code>user</code></td></tr>
+                      <tr style="background:white;"><td style="padding:4px 8px;"><strong>Eval expression:</strong></td><td style="padding:4px 8px;"><code>Username</code></td></tr>
+                    </table>
+                  </li>
+                  <li>Click <strong>Save</strong> → Repeat for each field in the table below</li>
+                </ol>
+              </div>
+              
+              <!-- props.conf example -->
+              <div style="background:var(--gray-50);padding:16px;border-radius:8px;">
+                <strong style="font-size:0.875rem;">Alternative: props.conf Configuration</strong>
+                <p style="margin:8px 0;font-size:0.8125rem;color:var(--gray-600);">Create/edit <code>props.conf</code> in your app:</p>
+                <div class="code-block" style="margin:8px 0;">
+                  <div class="code-body" style="padding:12px;">
+                    <pre style="margin:0;font-size:0.75rem;"><code>[cyberark:identity:audit]
+# Enable JSON parsing
+KV_MODE = json
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S
+TIME_PREFIX = "Timestamp":"
+
+# CIM Field Aliases for Authentication Data Model
+FIELDALIAS-user = Username AS user
+FIELDALIAS-src_ip = FromIPAddress AS src_ip
+FIELDALIAS-app = Application AS app
+FIELDALIAS-auth_method = MfaMethod AS authentication_method
+FIELDALIAS-src_device = DeviceId AS src_device_id
+
+# Calculated field for CIM action (success/failure)
+EVAL-action = case(match(EventType, "(?i)approve|login$|success"), "success", match(EventType, "(?i)deny|fail|expire"), "failure", 1=1, "unknown")
+
+# Calculated field for authentication_result
+EVAL-authentication_result = case(Result="Success", "success", Result="Failure", "failure", 1=1, lower(Result))</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Method 3: Search-time -->
+            <div class="card bordered-left warning" style="padding:20px;margin-bottom:24px;">
+              <h5 style="color:var(--warning-700);margin-bottom:12px;">⚡ Method 3: Search-Time Extraction (Quick Fix)</h5>
+              <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;">Use in your SPL when config changes aren't possible.</p>
+              
+              <div class="code-block" style="margin:0;">
+                <div class="code-body" style="padding:12px;">
+                  <pre style="margin:0;font-size:0.75rem;"><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-24h
+| rename Username AS user
+| rename FromIPAddress AS src_ip
+| rename Application AS app
+| rename MfaMethod AS authentication_method
+| eval action = case(match(EventType, "(?i)approve|login$"), "success", match(EventType, "(?i)deny|fail"), "failure", 1=1, "unknown")
+| eval authentication_result = lower(Result)
+| table _time user src_ip app authentication_method action authentication_result EventType</code></pre>
+                </div>
               </div>
             </div>
 
@@ -351,6 +636,142 @@ flowchart LR
     style A fill:#0078d4,stroke:#005a9e
     style F fill:#d4edda,stroke:#28a745
               </div>
+            </div>
+
+            <!-- Entra ID Special Considerations -->
+            <div class="callout warning" style="margin-bottom:24px;">
+              <div class="callout-content">
+                <div class="callout-title">⚠️ Entra ID Has Deeply Nested JSON</div>
+                <div class="callout-body">
+                  Entra ID logs have <strong>nested JSON structures</strong> (e.g., <code>properties.status.errorCode</code>). This requires either:<br>
+                  • A TA that handles nested extraction automatically<br>
+                  • Manual <code>spath</code> commands in your searches<br>
+                  • Calculated fields that extract nested paths
+                </div>
+              </div>
+            </div>
+
+            <!-- HOW TO CONFIGURE ENTRA CIM -->
+            <h4 style="font-size:1rem;margin:24px 0 12px;">🔧 How to Configure Entra ID CIM Mapping</h4>
+            
+            <!-- Method 1: TA -->
+            <div class="card bordered-left success" style="padding:20px;margin-bottom:16px;">
+              <h5 style="color:var(--success-700);margin-bottom:12px;">✅ Method 1: Install Splunk Add-on for Microsoft Cloud Services (Recommended)</h5>
+              <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;">This TA handles nested JSON extraction and CIM mapping.</p>
+              
+              <div style="background:var(--gray-50);padding:16px;border-radius:8px;margin-bottom:12px;">
+                <strong style="font-size:0.875rem;">Step-by-Step:</strong>
+                <ol style="margin:8px 0 0 16px;font-size:0.875rem;color:var(--gray-600);">
+                  <li><strong>Find the TA:</strong> Go to <a href="https://splunkbase.splunk.com" target="_blank">splunkbase.splunk.com</a> → Search "Microsoft Cloud Services"</li>
+                  <li><strong>Download:</strong> Splunk Add-on for Microsoft Cloud Services (TA-MS-AAD)</li>
+                  <li><strong>Install:</strong> In Splunk: <code>Apps → Manage Apps → Install app from file</code></li>
+                  <li><strong>Configure Input:</strong> Set up Azure Event Hub input in the TA</li>
+                  <li><strong>Set sourcetype:</strong> Use <code>azure:aad:signin</code> for sign-in logs</li>
+                  <li><strong>Verify:</strong> Run the validation query below</li>
+                </ol>
+              </div>
+              
+              <div style="font-size:0.8125rem;color:var(--gray-500);">
+                <strong>What the TA does:</strong> Extracts nested <code>properties.*</code> fields, creates CIM field aliases, and tags events for the Authentication data model.
+              </div>
+            </div>
+
+            <!-- Method 2: Manual Config -->
+            <div class="card bordered-left info" style="padding:20px;margin-bottom:16px;">
+              <h5 style="color:var(--primary-700);margin-bottom:12px;">🔨 Method 2: Manual Configuration (Handle Nested JSON)</h5>
+              <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;">Configure extraction for deeply nested Entra ID fields.</p>
+              
+              <!-- Step 1: Create Sourcetype -->
+              <div style="background:var(--gray-50);padding:16px;border-radius:8px;margin-bottom:12px;">
+                <strong style="font-size:0.875rem;">Step 1: Create/Configure Sourcetype</strong>
+                <ol style="margin:8px 0 0 16px;font-size:0.875rem;color:var(--gray-600);">
+                  <li>Go to <strong>Settings → Source types</strong></li>
+                  <li>Click <strong>"New Source Type"</strong> (or edit existing)</li>
+                  <li>Fill in:
+                    <ul style="margin:4px 0 4px 16px;">
+                      <li><strong>Name:</strong> <code>azure:aad:signin</code></li>
+                      <li><strong>Category:</strong> Cloud</li>
+                    </ul>
+                  </li>
+                  <li>Click <strong>Advanced</strong> → Set <strong>KV_MODE:</strong> <code>json</code></li>
+                  <li>Click <strong>Save</strong></li>
+                </ol>
+              </div>
+              
+              <!-- Step 2: Create Calculated Fields for Nested Paths -->
+              <div style="background:var(--gray-50);padding:16px;border-radius:8px;margin-bottom:12px;">
+                <strong style="font-size:0.875rem;">Step 2: Create Calculated Fields for Nested JSON</strong>
+                <p style="margin:8px 0;font-size:0.8125rem;color:var(--gray-600);">Go to <strong>Settings → Fields → Calculated fields</strong> and create each:</p>
+                
+                <div class="table-container" style="margin-top:8px;">
+                  <table style="font-size:0.75rem;">
+                    <thead><tr><th>Name</th><th>Eval Expression</th><th>Purpose</th></tr></thead>
+                    <tbody>
+                      <tr><td><code>user</code></td><td><code>spath(_raw, "properties.userPrincipalName")</code></td><td>Extract username</td></tr>
+                      <tr><td><code>src_ip</code></td><td><code>spath(_raw, "properties.ipAddress")</code></td><td>Extract source IP</td></tr>
+                      <tr><td><code>app</code></td><td><code>spath(_raw, "properties.appDisplayName")</code></td><td>Extract app name</td></tr>
+                      <tr><td><code>error_code</code></td><td><code>spath(_raw, "properties.status.errorCode")</code></td><td>Extract error code</td></tr>
+                      <tr><td><code>action</code></td><td><code>if(spath(_raw,"properties.status.errorCode")=0,"success","failure")</code></td><td>CIM action</td></tr>
+                      <tr><td><code>city</code></td><td><code>spath(_raw, "properties.location.city")</code></td><td>Location city</td></tr>
+                      <tr><td><code>country</code></td><td><code>spath(_raw, "properties.location.countryOrRegion")</code></td><td>Location country</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+              <!-- props.conf example -->
+              <div style="background:var(--gray-50);padding:16px;border-radius:8px;">
+                <strong style="font-size:0.875rem;">Alternative: Complete props.conf Configuration</strong>
+                <p style="margin:8px 0;font-size:0.8125rem;color:var(--gray-600);">Add to your app's <code>local/props.conf</code>:</p>
+                <div class="code-block" style="margin:8px 0;">
+                  <div class="code-body" style="padding:12px;">
+                    <pre style="margin:0;font-size:0.7rem;"><code>[azure:aad:signin]
+# Enable JSON parsing
+KV_MODE = json
+
+# Time extraction from nested field
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%6N%Z
+TIME_PREFIX = "createdDateTime"\s*:\s*"
+
+# Extract nested fields for CIM Authentication data model
+EVAL-user = json_extract(_raw, "properties.userPrincipalName")
+EVAL-src_ip = json_extract(_raw, "properties.ipAddress")
+EVAL-app = json_extract(_raw, "properties.appDisplayName")
+EVAL-dest = json_extract(_raw, "properties.resourceDisplayName")
+EVAL-error_code = json_extract(_raw, "properties.status.errorCode")
+EVAL-action = if(json_extract(_raw, "properties.status.errorCode")="0", "success", "failure")
+EVAL-authentication_method = json_extract(_raw, "properties.authenticationRequirement")
+EVAL-src_city = json_extract(_raw, "properties.location.city")
+EVAL-src_country = json_extract(_raw, "properties.location.countryOrRegion")
+
+# Vendor/product identification
+EVAL-vendor_product = "Microsoft Entra ID"</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Method 3: Search-time -->
+            <div class="card bordered-left warning" style="padding:20px;margin-bottom:24px;">
+              <h5 style="color:var(--warning-700);margin-bottom:12px;">⚡ Method 3: Search-Time Extraction with spath (Quick Fix)</h5>
+              <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;">Use spath to extract nested JSON at search time.</p>
+              
+              <div class="code-block" style="margin:0;">
+                <div class="code-body" style="padding:12px;">
+                  <pre style="margin:0;font-size:0.7rem;"><code>index=azure sourcetype=azure:aad:signin earliest=-24h
+| spath
+| eval user = 'properties.userPrincipalName'
+| eval src_ip = 'properties.ipAddress'
+| eval app = 'properties.appDisplayName'
+| eval error_code = 'properties.status.errorCode'
+| eval action = if(error_code=0, "success", "failure")
+| eval city = 'properties.location.city'
+| eval country = 'properties.location.countryOrRegion'
+| eval auth_requirement = 'properties.authenticationRequirement'
+| table _time user src_ip app action error_code city country auth_requirement</code></pre>
+                </div>
+              </div>
+              <p style="font-size:0.75rem;color:var(--gray-500);margin-top:8px;">⚠️ <code>spath</code> can be slow on large datasets. For production, use Method 2 calculated fields.</p>
             </div>
 
             <!-- Entra Special Note -->

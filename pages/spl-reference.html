@@ -99,6 +99,10 @@
         <!-- Quick Navigation -->
         <div class="section">
           <div class="grid grid-4">
+            <a href="#commands" class="card clickable">
+              <h4 style="font-size:0.9rem;">📚 Commands Deep Dive</h4>
+              <p style="font-size:0.75rem;color:var(--gray-500);">Complete use cases</p>
+            </a>
             <a href="#validation" class="card clickable">
               <h4 style="font-size:0.9rem;">Data Validation</h4>
               <p style="font-size:0.75rem;color:var(--gray-500);">Check data presence</p>
@@ -111,10 +115,597 @@
               <h4 style="font-size:0.9rem;">MFA Detections</h4>
               <p style="font-size:0.75rem;color:var(--gray-500);">CyberArk + Entra</p>
             </a>
-            <a href="#baseline" class="card clickable">
-              <h4 style="font-size:0.9rem;">Baseline Calculation</h4>
-              <p style="font-size:0.75rem;color:var(--gray-500);">Threshold setting</p>
-            </a>
+          </div>
+        </div>
+
+        <!-- ==================== SPL COMMANDS DEEP DIVE ==================== -->
+        <div class="section" id="commands">
+          <h2 class="subsection-title">📚 SPL Commands Deep Dive</h2>
+          <p style="color:var(--gray-600);margin-bottom:24px;">Complete use cases, scenarios, and examples for every essential command</p>
+
+          <!-- ===== STATS COMMAND ===== -->
+          <div class="card" style="padding:24px;margin-bottom:24px;border-left:4px solid var(--primary-500);">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:var(--primary-700);">📊 stats — Aggregate Data</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">
+              <strong>When to Use:</strong> When you need to count, sum, average, or aggregate data. This is your go-to command for analysis.
+            </p>
+            
+            <div class="table-container" style="margin-bottom:16px;">
+              <table style="font-size:0.8125rem;">
+                <thead><tr><th>Function</th><th>What It Does</th><th>Example</th></tr></thead>
+                <tbody>
+                  <tr><td><code>count</code></td><td>Count events</td><td><code>stats count</code></td></tr>
+                  <tr><td><code>dc(field)</code></td><td>Distinct count (unique values)</td><td><code>stats dc(src_ip) as unique_ips</code></td></tr>
+                  <tr><td><code>sum(field)</code></td><td>Add up values</td><td><code>stats sum(bytes) as total_bytes</code></td></tr>
+                  <tr><td><code>avg(field)</code></td><td>Calculate average</td><td><code>stats avg(response_time)</code></td></tr>
+                  <tr><td><code>values(field)</code></td><td>List all unique values</td><td><code>stats values(user) as users</code></td></tr>
+                  <tr><td><code>latest(field)</code></td><td>Most recent value</td><td><code>stats latest(_time) as last_seen</code></td></tr>
+                  <tr><td><code>earliest(field)</code></td><td>Oldest value</td><td><code>stats earliest(_time) as first_seen</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:0.9rem;margin:16px 0 8px;color:var(--gray-700);">🎯 Use Case Scenarios:</h4>
+            
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 1: Count attacks per IP</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| stats count as attacks BY src_ip
+| sort - attacks
+| head 10</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 2: Multiple aggregations at once</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| stats count as total_blocks 
+        dc(src_ip) as unique_attackers 
+        dc(uri_path) as targeted_endpoints
+        values(http_method) as methods_used
+        earliest(_time) as attack_start
+        latest(_time) as attack_end
+        BY dest</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 3: User login patterns</span></div>
+              <div class="code-body"><pre><code>index=cyberark EventType=*Login* earliest=-24h
+| stats count as login_attempts 
+        dc(ClientIP) as unique_locations 
+        values(City) as cities
+        sum(eval(Result="Success")) as successes
+        sum(eval(Result="Failure")) as failures
+        BY Username
+| eval success_rate = round(successes/login_attempts*100, 1)."%"</code></pre></div>
+            </div>
+
+            <div class="callout info" style="margin-top:12px;">
+              <div class="callout-content">
+                <div class="callout-body" style="font-size:0.8125rem;">
+                  <strong>💡 Pro Tip:</strong> Use <code>BY field1, field2</code> to group by multiple fields. Without BY, stats aggregates everything into one row.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== EVAL COMMAND ===== -->
+          <div class="card" style="padding:24px;margin-bottom:24px;border-left:4px solid var(--success-500);">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:var(--success-700);">🔧 eval — Create & Modify Fields</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">
+              <strong>When to Use:</strong> When you need to calculate new fields, transform values, or add conditional logic.
+            </p>
+
+            <div class="table-container" style="margin-bottom:16px;">
+              <table style="font-size:0.8125rem;">
+                <thead><tr><th>Function</th><th>What It Does</th><th>Example</th></tr></thead>
+                <tbody>
+                  <tr><td><code>if(condition, true, false)</code></td><td>Simple conditional</td><td><code>eval status=if(count>100, "high", "low")</code></td></tr>
+                  <tr><td><code>case(cond1, val1, cond2, val2...)</code></td><td>Multiple conditions</td><td><code>eval severity=case(count>100,"critical", count>50,"high", 1=1,"medium")</code></td></tr>
+                  <tr><td><code>coalesce(f1, f2, f3)</code></td><td>First non-null value</td><td><code>eval user=coalesce(username, email, "unknown")</code></td></tr>
+                  <tr><td><code>lower(field)</code></td><td>Convert to lowercase</td><td><code>eval user=lower(Username)</code></td></tr>
+                  <tr><td><code>round(num, decimals)</code></td><td>Round numbers</td><td><code>eval pct=round(ratio*100, 2)</code></td></tr>
+                  <tr><td><code>strftime(time, format)</code></td><td>Format time</td><td><code>eval date=strftime(_time, "%Y-%m-%d")</code></td></tr>
+                  <tr><td><code>now()</code></td><td>Current timestamp</td><td><code>eval age_hours=(now()-_time)/3600</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:0.9rem;margin:16px 0 8px;color:var(--gray-700);">🎯 Use Case Scenarios:</h4>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 1: Categorize severity levels</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| stats count as attacks BY src_ip
+| eval severity = case(
+    attacks >= 1000, "CRITICAL",
+    attacks >= 500, "HIGH", 
+    attacks >= 100, "MEDIUM",
+    1=1, "LOW"
+)
+| eval alert_message = "IP ".src_ip." blocked ".attacks." times - ".severity</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 2: Calculate time differences</span></div>
+              <div class="code-body"><pre><code>index=cyberark EventType=*Login* earliest=-24h
+| sort 0 Username _time
+| streamstats current=f last(_time) as prev_login BY Username
+| eval time_since_last = (_time - prev_login) / 60
+| eval time_since_last_str = round(time_since_last, 0)." minutes"
+| where isnotnull(prev_login)</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 3: Normalize fields from different sources</span></div>
+              <div class="code-body"><pre><code>(index=cyberark) OR (index=azure)
+| eval user = lower(coalesce(ActorId, 'properties.userPrincipalName'))
+| eval src_ip = coalesce(ClientIP, 'properties.ipAddress')
+| eval source_system = case(
+    sourcetype=="cyberark:identity:audit", "CyberArk",
+    sourcetype=="azure:aad:signin", "EntraID",
+    1=1, "Unknown"
+)</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 4: Calculate ratios and percentages</span></div>
+              <div class="code-body"><pre><code>index=akamai earliest=-24h
+| stats count as total 
+        count(eval(action="blocked")) as blocked
+        count(eval(action="allowed")) as allowed
+| eval block_rate = round(blocked/total*100, 2)."%"
+| eval risk_level = if(blocked/total > 0.1, "HIGH ATTACK ACTIVITY", "NORMAL")</code></pre></div>
+            </div>
+          </div>
+
+          <!-- ===== WHERE COMMAND ===== -->
+          <div class="card" style="padding:24px;margin-bottom:24px;border-left:4px solid var(--warning-500);">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:var(--warning-700);">🔍 where — Filter Results</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">
+              <strong>When to Use:</strong> After stats/eval to filter calculated results. Use <code>search</code> for raw event filtering, <code>where</code> for computed values.
+            </p>
+
+            <div class="table-container" style="margin-bottom:16px;">
+              <table style="font-size:0.8125rem;">
+                <thead><tr><th>Operator</th><th>What It Does</th><th>Example</th></tr></thead>
+                <tbody>
+                  <tr><td><code>=, !=</code></td><td>Equals / Not equals</td><td><code>where action="blocked"</code></td></tr>
+                  <tr><td><code>&gt;, &lt;, &gt;=, &lt;=</code></td><td>Comparisons</td><td><code>where count > 100</code></td></tr>
+                  <tr><td><code>AND, OR, NOT</code></td><td>Logical operators</td><td><code>where count > 100 AND user!="admin"</code></td></tr>
+                  <tr><td><code>like(field, pattern)</code></td><td>Wildcard match</td><td><code>where like(user, "%admin%")</code></td></tr>
+                  <tr><td><code>match(field, regex)</code></td><td>Regex match</td><td><code>where match(uri, "(?i)login")</code></td></tr>
+                  <tr><td><code>isnotnull(field)</code></td><td>Check field exists</td><td><code>where isnotnull(src_ip)</code></td></tr>
+                  <tr><td><code>isnull(field)</code></td><td>Check field missing</td><td><code>where isnull(error_code)</code></td></tr>
+                  <tr><td><code>cidrmatch(cidr, ip)</code></td><td>IP in CIDR range</td><td><code>where cidrmatch("10.0.0.0/8", src_ip)</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:0.9rem;margin:16px 0 8px;color:var(--gray-700);">🎯 Use Case Scenarios:</h4>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 1: Filter by threshold after aggregation</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| stats count as attacks BY src_ip
+| where attacks > 50
+| sort - attacks</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 2: Multiple conditions</span></div>
+              <div class="code-body"><pre><code>index=cyberark earliest=-24h
+| stats count as attempts 
+        sum(eval(Result="Failure")) as failures 
+        BY Username
+| where attempts > 10 AND failures > 5
+| eval failure_rate = round(failures/attempts*100, 1)
+| where failure_rate > 50</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 3: Exclude internal IPs</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| stats count BY src_ip
+| where NOT cidrmatch("10.0.0.0/8", src_ip) 
+    AND NOT cidrmatch("172.16.0.0/12", src_ip) 
+    AND NOT cidrmatch("192.168.0.0/16", src_ip)</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 4: Regex pattern matching</span></div>
+              <div class="code-body"><pre><code>index=akamai earliest=-1h
+| where match(uri_path, "(?i)(admin|config|setup|install)")
+| stats count BY uri_path src_ip
+| where count > 5</code></pre></div>
+            </div>
+          </div>
+
+          <!-- ===== LOOKUP COMMAND ===== -->
+          <div class="card" style="padding:24px;margin-bottom:24px;border-left:4px solid #9333ea;">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:#9333ea;">📋 lookup — Enrich with External Data</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">
+              <strong>When to Use:</strong> When you need to add context from CSV files (user info, asset data, threat intel, etc.)
+            </p>
+
+            <div class="table-container" style="margin-bottom:16px;">
+              <table style="font-size:0.8125rem;">
+                <thead><tr><th>Syntax</th><th>What It Does</th></tr></thead>
+                <tbody>
+                  <tr><td><code>lookup file.csv field</code></td><td>Basic lookup (auto-matches field name)</td></tr>
+                  <tr><td><code>lookup file.csv csv_field AS event_field</code></td><td>Map different field names</td></tr>
+                  <tr><td><code>lookup file.csv field OUTPUT col1, col2</code></td><td>Get specific columns only</td></tr>
+                  <tr><td><code>lookup file.csv field OUTPUTNEW col1</code></td><td>Don't overwrite existing fields</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:0.9rem;margin:16px 0 8px;color:var(--gray-700);">🎯 Use Case Scenarios:</h4>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 1: Identify privileged users</span></div>
+              <div class="code-body"><pre><code>index=cyberark EventType=*MfaDenied* earliest=-1h
+| lookup privileged_users.csv userPrincipalName AS Username OUTPUT is_privileged role department
+| where is_privileged="true"
+| stats count BY Username role department</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 2: Add asset information</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| lookup assets.csv hostname AS dest OUTPUT asset_criticality owner business_unit
+| where asset_criticality="critical"
+| stats count BY dest owner business_unit</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 3: Threat intel enrichment</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-24h
+| lookup threat_intel.csv ip AS src_ip OUTPUT threat_type threat_score country_risk
+| where isnotnull(threat_type)
+| stats count values(threat_type) as threats max(threat_score) as max_score BY src_ip</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 4: GeoIP lookup</span></div>
+              <div class="code-body"><pre><code>index=akamai earliest=-1h
+| iplocation src_ip
+| lookup country_risk.csv country AS Country OUTPUT risk_level blocked_country
+| where blocked_country="true" OR risk_level="high"</code></pre></div>
+            </div>
+
+            <div class="callout warning" style="margin-top:12px;">
+              <div class="callout-content">
+                <div class="callout-body" style="font-size:0.8125rem;">
+                  <strong>⚠️ Requirement:</strong> Lookup files must be uploaded to Splunk first via <strong>Settings → Lookups → Lookup table files</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== TIMECHART COMMAND ===== -->
+          <div class="card" style="padding:24px;margin-bottom:24px;border-left:4px solid #0891b2;">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:#0891b2;">📈 timechart — Time-Series Visualization</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">
+              <strong>When to Use:</strong> When you need to visualize trends over time. Creates data perfect for line/area charts.
+            </p>
+
+            <div class="table-container" style="margin-bottom:16px;">
+              <table style="font-size:0.8125rem;">
+                <thead><tr><th>Syntax</th><th>What It Does</th></tr></thead>
+                <tbody>
+                  <tr><td><code>timechart count</code></td><td>Count events over time (auto-span)</td></tr>
+                  <tr><td><code>timechart span=1h count</code></td><td>Count per hour</td></tr>
+                  <tr><td><code>timechart count BY field</code></td><td>Split by field values</td></tr>
+                  <tr><td><code>timechart count BY field limit=5</code></td><td>Limit to top 5 values</td></tr>
+                  <tr><td><code>timechart avg(field)</code></td><td>Average value over time</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:0.9rem;margin:16px 0 8px;color:var(--gray-700);">🎯 Use Case Scenarios:</h4>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 1: Attack volume over time</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-24h
+| timechart span=1h count as blocks</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 2: Compare attack types over time</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-7d
+| timechart span=1d count BY signature limit=5</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 3: Login trends by result</span></div>
+              <div class="code-body"><pre><code>index=cyberark EventType=*Login* earliest=-7d
+| timechart span=1d count BY Result</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 4: MFA denial trend for specific user</span></div>
+              <div class="code-body"><pre><code>index=cyberark EventType=*MfaDenied* Username="admin@company.com" earliest=-30d
+| timechart span=1d count as mfa_denials
+| trendline sma7(mfa_denials) as trend</code></pre></div>
+            </div>
+          </div>
+
+          <!-- ===== REX COMMAND ===== -->
+          <div class="card" style="padding:24px;margin-bottom:24px;border-left:4px solid #dc2626;">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:#dc2626;">🔤 rex — Extract with Regex</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">
+              <strong>When to Use:</strong> When you need to extract values from unstructured text using regular expressions.
+            </p>
+
+            <div class="table-container" style="margin-bottom:16px;">
+              <table style="font-size:0.8125rem;">
+                <thead><tr><th>Syntax</th><th>What It Does</th></tr></thead>
+                <tbody>
+                  <tr><td><code>rex "(?&lt;fieldname&gt;pattern)"</code></td><td>Extract from _raw into new field</td></tr>
+                  <tr><td><code>rex field=myfield "(?&lt;new&gt;pattern)"</code></td><td>Extract from specific field</td></tr>
+                  <tr><td><code>rex mode=sed "s/old/new/g"</code></td><td>Search and replace</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:0.9rem;margin:16px 0 8px;color:var(--gray-700);">🎯 Use Case Scenarios:</h4>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 1: Extract API endpoints</span></div>
+              <div class="code-body"><pre><code>index=akamai earliest=-1h
+| rex field=uri_path "(?<api_endpoint>/api/[^/]+)"
+| stats count BY api_endpoint
+| sort - count</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 2: Extract domain from email</span></div>
+              <div class="code-body"><pre><code>index=cyberark earliest=-24h
+| rex field=Username "(?<email_domain>@[\w.-]+)"
+| stats dc(Username) as users BY email_domain</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 3: Extract parameters from URL</span></div>
+              <div class="code-body"><pre><code>index=akamai earliest=-1h
+| rex field=uri_path "\?(?<query_params>.*)"
+| rex field=query_params "id=(?<extracted_id>[^&]+)"
+| where isnotnull(extracted_id)
+| stats count BY extracted_id</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 4: Clean/mask sensitive data</span></div>
+              <div class="code-body"><pre><code>index=akamai earliest=-1h
+| rex mode=sed field=uri_path "s/password=[^&]+/password=***MASKED***/g"
+| rex mode=sed field=uri_path "s/token=[^&]+/token=***MASKED***/g"
+| table _time uri_path</code></pre></div>
+            </div>
+          </div>
+
+          <!-- ===== DEDUP COMMAND ===== -->
+          <div class="card" style="padding:24px;margin-bottom:24px;border-left:4px solid #65a30d;">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:#65a30d;">🔄 dedup — Remove Duplicates</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">
+              <strong>When to Use:</strong> When you need unique values only, keeping the first (most recent) occurrence.
+            </p>
+
+            <h4 style="font-size:0.9rem;margin:16px 0 8px;color:var(--gray-700);">🎯 Use Case Scenarios:</h4>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 1: Unique attackers only</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| dedup src_ip
+| table _time src_ip geo.country uri_path</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 2: Latest event per user</span></div>
+              <div class="code-body"><pre><code>index=cyberark earliest=-24h
+| sort 0 - _time
+| dedup Username
+| table _time Username EventType Result ClientIP</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 3: Unique IP + path combinations</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| dedup src_ip uri_path
+| stats count BY uri_path
+| sort - count</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 4: Keep top N duplicates</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| dedup 3 src_ip
+| table _time src_ip uri_path
+``` Keeps first 3 events per src_ip</code></pre></div>
+            </div>
+          </div>
+
+          <!-- ===== BIN/BUCKET COMMAND ===== -->
+          <div class="card" style="padding:24px;margin-bottom:24px;border-left:4px solid #ea580c;">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:#ea580c;">⏱️ bin — Time Bucketing</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">
+              <strong>When to Use:</strong> When you need to group events into time windows before aggregating with stats.
+            </p>
+
+            <div class="table-container" style="margin-bottom:16px;">
+              <table style="font-size:0.8125rem;">
+                <thead><tr><th>Span</th><th>Meaning</th><th>Use For</th></tr></thead>
+                <tbody>
+                  <tr><td><code>span=1m</code></td><td>1 minute</td><td>Real-time alerting</td></tr>
+                  <tr><td><code>span=5m</code></td><td>5 minutes</td><td>Near real-time detection</td></tr>
+                  <tr><td><code>span=1h</code></td><td>1 hour</td><td>Hourly trends</td></tr>
+                  <tr><td><code>span=1d</code></td><td>1 day</td><td>Daily patterns</td></tr>
+                  <tr><td><code>span=1w</code></td><td>1 week</td><td>Weekly trends</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:0.9rem;margin:16px 0 8px;color:var(--gray-700);">🎯 Use Case Scenarios:</h4>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 1: 5-minute attack windows</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| bin _time span=5m
+| stats count as attacks dc(src_ip) as unique_ips BY _time
+| where attacks > 100</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 2: Hourly login patterns</span></div>
+              <div class="code-body"><pre><code>index=cyberark EventType=*Login* earliest=-7d
+| bin _time span=1h
+| stats count as logins BY _time
+| eval hour = strftime(_time, "%H")
+| stats avg(logins) as avg_logins BY hour
+| sort hour</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 3: MFA fatigue detection (10-min windows)</span></div>
+              <div class="code-body"><pre><code>index=cyberark EventType=*Mfa* earliest=-30m
+| bin _time span=10m
+| stats sum(eval(Result="Denied")) as denials 
+        sum(eval(Result="Success")) as successes 
+        BY _time Username
+| where denials >= 5
+| eval severity = if(successes > 0, "CRITICAL", "HIGH")</code></pre></div>
+            </div>
+          </div>
+
+          <!-- ===== TABLE COMMAND ===== -->
+          <div class="card" style="padding:24px;margin-bottom:24px;border-left:4px solid #6366f1;">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:#6366f1;">📋 table — Display Results</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">
+              <strong>When to Use:</strong> Always at the end of your query to select which fields to display and in what order.
+            </p>
+
+            <h4 style="font-size:0.9rem;margin:16px 0 8px;color:var(--gray-700);">🎯 Use Case Scenarios:</h4>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 1: Simple field selection</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| table _time src_ip dest uri_path http_method action</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 2: Rename fields in output</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| stats count as attacks BY src_ip
+| rename src_ip as "Source IP", attacks as "Attack Count"
+| table "Source IP" "Attack Count"</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Scenario 3: Alert-ready output</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| stats count as attacks dc(uri_path) as endpoints BY src_ip
+| where attacks > 100
+| eval severity = if(attacks > 500, "CRITICAL", "HIGH")
+| eval alert_title = "High Attack Volume from ".src_ip
+| table alert_title severity attacks endpoints src_ip</code></pre></div>
+            </div>
+          </div>
+
+          <!-- ===== TIME RANGE REFERENCE ===== -->
+          <div class="card" style="padding:24px;margin-bottom:24px;border-left:4px solid #0d9488;">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:#0d9488;">🕐 Time Range Modifiers</h3>
+            
+            <div class="table-container" style="margin-bottom:16px;">
+              <table style="font-size:0.8125rem;">
+                <thead><tr><th>Modifier</th><th>Meaning</th><th>Example</th></tr></thead>
+                <tbody>
+                  <tr><td><code>earliest=-1h</code></td><td>From 1 hour ago</td><td><code>index=akamai earliest=-1h</code></td></tr>
+                  <tr><td><code>earliest=-24h</code></td><td>From 24 hours ago</td><td><code>index=akamai earliest=-24h</code></td></tr>
+                  <tr><td><code>earliest=-7d</code></td><td>From 7 days ago</td><td><code>index=akamai earliest=-7d</code></td></tr>
+                  <tr><td><code>earliest=@d</code></td><td>From start of today</td><td><code>index=akamai earliest=@d</code></td></tr>
+                  <tr><td><code>earliest=-1d@d</code></td><td>From start of yesterday</td><td><code>index=akamai earliest=-1d@d latest=@d</code></td></tr>
+                  <tr><td><code>earliest=-1w@w</code></td><td>From start of last week</td><td><code>index=akamai earliest=-1w@w</code></td></tr>
+                  <tr><td><code>earliest=-1mon@mon</code></td><td>From start of last month</td><td><code>index=akamai earliest=-1mon@mon latest=@mon</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:0.9rem;margin:16px 0 8px;color:var(--gray-700);">🎯 Common Time Range Patterns:</h4>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Pattern 1: Last full hour</span></div>
+              <div class="code-body"><pre><code>index=akamai earliest=-1h@h latest=@h</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Pattern 2: Yesterday only</span></div>
+              <div class="code-body"><pre><code>index=akamai earliest=-1d@d latest=@d</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Pattern 3: Last 7 full days (for baseline)</span></div>
+              <div class="code-body"><pre><code>index=akamai earliest=-8d@d latest=-1d@d</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">Pattern 4: Business hours only</span></div>
+              <div class="code-body"><pre><code>index=cyberark earliest=-7d
+| eval hour = strftime(_time, "%H")
+| where hour >= 9 AND hour <= 17</code></pre></div>
+            </div>
+          </div>
+
+          <!-- ===== ADDITIONAL USEFUL COMMANDS ===== -->
+          <div class="card" style="padding:24px;margin-bottom:24px;border-left:4px solid #78716c;">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:#78716c;">🛠️ Additional Useful Commands</h3>
+            
+            <div class="table-container" style="margin-bottom:16px;">
+              <table style="font-size:0.8125rem;">
+                <thead><tr><th>Command</th><th>What It Does</th><th>Example</th></tr></thead>
+                <tbody>
+                  <tr><td><code>sort</code></td><td>Sort results (- for descending)</td><td><code>sort - count</code></td></tr>
+                  <tr><td><code>head</code></td><td>First N results</td><td><code>head 10</code></td></tr>
+                  <tr><td><code>tail</code></td><td>Last N results</td><td><code>tail 10</code></td></tr>
+                  <tr><td><code>rename</code></td><td>Rename fields</td><td><code>rename src_ip as "Source IP"</code></td></tr>
+                  <tr><td><code>fillnull</code></td><td>Replace null values</td><td><code>fillnull value="N/A"</code></td></tr>
+                  <tr><td><code>spath</code></td><td>Extract JSON fields</td><td><code>spath path=properties.user</code></td></tr>
+                  <tr><td><code>mvexpand</code></td><td>Expand multi-value field</td><td><code>mvexpand rules</code></td></tr>
+                  <tr><td><code>transaction</code></td><td>Group related events</td><td><code>transaction user maxspan=30m</code></td></tr>
+                  <tr><td><code>eventstats</code></td><td>Stats without reducing rows</td><td><code>eventstats avg(count) as baseline</code></td></tr>
+                  <tr><td><code>streamstats</code></td><td>Running calculations</td><td><code>streamstats sum(count) as running_total</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:0.9rem;margin:16px 0 8px;color:var(--gray-700);">🎯 Quick Examples:</h4>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">eventstats: Add baseline to each row</span></div>
+              <div class="code-body"><pre><code>index=akamai action=blocked earliest=-1h
+| bin _time span=5m
+| stats count BY _time
+| eventstats avg(count) as baseline stdev(count) as stdev
+| eval threshold = baseline + (2 * stdev)
+| where count > threshold</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">transaction: Group login attempts into sessions</span></div>
+              <div class="code-body"><pre><code>index=cyberark EventType=*Login* earliest=-24h
+| transaction Username maxspan=30m maxpause=5m
+| eval duration_min = duration / 60
+| eval event_count = eventcount
+| where event_count > 5
+| table _time Username event_count duration_min</code></pre></div>
+            </div>
+
+            <div class="code-block" style="margin-bottom:12px;">
+              <div class="code-header"><span class="code-title">streamstats: Running count per user</span></div>
+              <div class="code-body"><pre><code>index=cyberark EventType=*MfaDenied* earliest=-1h
+| sort 0 Username _time
+| streamstats count as denial_sequence BY Username
+| where denial_sequence >= 5
+| table _time Username denial_sequence</code></pre></div>
+            </div>
           </div>
         </div>
 

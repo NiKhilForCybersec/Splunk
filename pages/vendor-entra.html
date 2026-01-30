@@ -136,6 +136,277 @@ flowchart LR
           </div>
         </div>
 
+        <!-- ==================== RAW LOG JOURNEY ==================== -->
+        <div class="section">
+          <h2 class="subsection-title">📜 Raw Log Journey: Source → Splunk → Detection</h2>
+          <p style="color:var(--gray-600);margin-bottom:24px;">See exactly how Entra ID logs transform at each stage. <strong>Note:</strong> Entra has deeply nested JSON!</p>
+
+          <!-- STAGE 1: Raw from Entra -->
+          <div class="card" style="padding:20px;margin-bottom:16px;border-left:4px solid #0078d4;">
+            <h4 style="color:#0078d4;margin-bottom:12px;">📤 Stage 1: Raw JSON from Azure Event Hub</h4>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:12px;">This is what Microsoft sends via Event Hub/Diagnostic Settings:</p>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Raw Entra ID Sign-in Event (JSON) - DEEPLY NESTED!</span></div>
+              <div class="code-body">
+                <pre style="font-size:0.7rem;"><code>{
+  "time": "2025-01-30T10:15:30.1234567Z",
+  "resourceId": "/tenants/12345678-abcd-efgh-ijkl-123456789012/providers/Microsoft.aadiam",
+  "operationName": "Sign-in activity",
+  "operationVersion": "1.0",
+  "category": "SignInLogs",
+  "tenantId": "12345678-abcd-efgh-ijkl-123456789012",
+  "resultType": "50074",
+  "resultSignature": "None",
+  "resultDescription": "Strong authentication is required.",
+  "durationMs": 0,
+  "callerIpAddress": "203.0.113.50",
+  "correlationId": "abc123-def456-ghi789",
+  "identity": "Jane Smith",
+  "Level": 4,
+  "location": "CA",
+  "properties": {
+    "id": "sign-in-id-12345",
+    "createdDateTime": "2025-01-30T10:15:30Z",
+    "userDisplayName": "Jane Smith",
+    "userPrincipalName": "jane.smith@myfirstpro.com",
+    "userId": "user-guid-12345",
+    "appId": "app-guid-67890",
+    "appDisplayName": "Microsoft Teams",
+    "ipAddress": "203.0.113.50",
+    "ipAddressFromResourceProvider": null,
+    "clientAppUsed": "Mobile Apps and Desktop clients",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "correlationId": "abc123-def456-ghi789",
+    "conditionalAccessStatus": "success",
+    "originalRequestId": "req-12345",
+    "isInteractive": true,
+    "tokenIssuerName": "",
+    "tokenIssuerType": "AzureAD",
+    "processingTimeInMilliseconds": 234,
+    "riskDetail": "none",
+    "riskLevelAggregated": "none",
+    "riskLevelDuringSignIn": "none",
+    "riskState": "none",
+    "riskEventTypes": [],
+    "riskEventTypes_v2": [],
+    "resourceDisplayName": "Microsoft Teams",
+    "resourceId": "resource-guid-12345",
+    "resourceServicePrincipalId": "sp-guid-12345",
+    "authenticationMethodsUsed": [],
+    "authenticationRequirement": "multiFactorAuthentication",
+    "status": {
+      "errorCode": 0,
+      "failureReason": null,
+      "additionalDetails": null
+    },
+    "deviceDetail": {
+      "deviceId": "device-guid-12345",
+      "displayName": "JANE-LAPTOP",
+      "operatingSystem": "Windows 10",
+      "browser": "Edge 120.0",
+      "isCompliant": true,
+      "isManaged": true,
+      "trustType": "AzureAd"
+    },
+    "location": {
+      "city": "Toronto",
+      "state": "Ontario",
+      "countryOrRegion": "CA",
+      "geoCoordinates": {
+        "latitude": 43.6532,
+        "longitude": -79.3832
+      }
+    },
+    "mfaDetail": {
+      "authMethod": "PhoneAppNotification",
+      "authDetail": "Notification was sent to authenticator app"
+    },
+    "authenticationDetails": [
+      {
+        "authenticationStepDateTime": "2025-01-30T10:15:25Z",
+        "authenticationMethod": "Password",
+        "authenticationMethodDetail": "Password in the cloud",
+        "succeeded": true,
+        "authenticationStepResultDetail": "MFA completed in Azure AD",
+        "authenticationStepRequirement": "Primary authentication"
+      },
+      {
+        "authenticationStepDateTime": "2025-01-30T10:15:30Z",
+        "authenticationMethod": "PhoneAppNotification",
+        "succeeded": true,
+        "authenticationStepResultDetail": "MFA completed",
+        "authenticationStepRequirement": "Additional authentication"
+      }
+    ]
+  }
+}</code></pre>
+              </div>
+            </div>
+            <div class="callout warning" style="margin-top:12px;padding:12px;">
+              <div class="callout-content">
+                <div class="callout-body" style="font-size:0.8125rem;">
+                  <strong>⚠️ Challenge:</strong> All the useful data is buried in <code>properties.*</code> - up to 3-4 levels deep!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 2: In Splunk _raw -->
+          <div class="card" style="padding:20px;margin-bottom:16px;border-left:4px solid #65a637;">
+            <h4 style="color:#65a637;margin-bottom:12px;">📥 Stage 2: Arrives in Splunk (_raw field)</h4>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:12px;">When the event hits Splunk via Event Hub input:</p>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Splunk _raw (One Long JSON String)</span></div>
+              <div class="code-body">
+                <pre style="font-size:0.7rem;"><code>index=azure sourcetype=azure:aad:signin earliest=-5m | head 1 | table _raw
+
+_raw:
+{"time":"2025-01-30T10:15:30.1234567Z","resourceId":"/tenants/12345678.../providers/Microsoft.aadiam","operationName":"Sign-in activity","category":"SignInLogs","properties":{"userPrincipalName":"jane.smith@myfirstpro.com","ipAddress":"203.0.113.50","appDisplayName":"Microsoft Teams","status":{"errorCode":0},"location":{"city":"Toronto","countryOrRegion":"CA"},"mfaDetail":{"authMethod":"PhoneAppNotification"}...}}</code></pre>
+              </div>
+            </div>
+            <div class="callout critical" style="margin-top:12px;padding:12px;">
+              <div class="callout-content">
+                <div class="callout-body" style="font-size:0.8125rem;">
+                  <strong>❌ Problem:</strong> Without TA or manual extraction, you can't search for <code>userPrincipalName</code> directly! You'd need <code>spath</code> every time.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 3: After spath Extraction -->
+          <div class="card" style="padding:20px;margin-bottom:16px;border-left:4px solid var(--primary-500);">
+            <h4 style="color:var(--primary-700);margin-bottom:12px;">⚙️ Stage 3: After spath Extraction (Search-Time)</h4>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:12px;">Using <code>spath</code> to extract nested fields:</p>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Extracted Fields with spath</span></div>
+              <div class="code-body">
+                <pre style="font-size:0.75rem;"><code>index=azure sourcetype=azure:aad:signin earliest=-5m 
+| spath 
+| head 1 
+| table properties.userPrincipalName properties.ipAddress properties.status.errorCode properties.location.city
+
+EXTRACTED FIELDS (with spath):
+properties.userPrincipalName           = jane.smith@myfirstpro.com
+properties.ipAddress                   = 203.0.113.50
+properties.appDisplayName              = Microsoft Teams
+properties.status.errorCode            = 0
+properties.status.failureReason        = null
+properties.location.city               = Toronto
+properties.location.countryOrRegion    = CA
+properties.mfaDetail.authMethod        = PhoneAppNotification
+properties.deviceDetail.operatingSystem = Windows 10
+properties.authenticationRequirement   = multiFactorAuthentication</code></pre>
+              </div>
+            </div>
+            <div class="callout info" style="margin-top:12px;padding:12px;">
+              <div class="callout-content">
+                <div class="callout-body" style="font-size:0.8125rem;">
+                  <strong>💡 Note:</strong> <code>spath</code> is slow on large datasets. For production, configure calculated fields in props.conf!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 4: CIM Mapped / Friendly Names -->
+          <div class="card" style="padding:20px;margin-bottom:16px;border-left:4px solid var(--success-500);">
+            <h4 style="color:var(--success-700);margin-bottom:12px;">✅ Stage 4: CIM-Mapped Fields (Detection Ready)</h4>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:12px;">With TA or calculated fields, use clean CIM field names:</p>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">CIM Fields (Ready for Detections)</span></div>
+              <div class="code-body">
+                <pre style="font-size:0.75rem;"><code>index=azure sourcetype=azure:aad:signin earliest=-5m | head 1 
+| table _time user src_ip app action error_code city country authentication_method
+
+CIM FIELDS:
+_time                  = 2025-01-30 10:15:30
+user                   = jane.smith@myfirstpro.com  ← properties.userPrincipalName
+src_ip                 = 203.0.113.50               ← properties.ipAddress
+app                    = Microsoft Teams            ← properties.appDisplayName
+action                 = success                    ← mapped from errorCode=0
+error_code             = 0                          ← properties.status.errorCode
+city                   = Toronto                    ← properties.location.city
+country                = CA                         ← properties.location.countryOrRegion
+authentication_method  = PhoneAppNotification       ← properties.mfaDetail.authMethod</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visual Summary -->
+          <div class="card" style="padding:24px;background:var(--gray-50);margin-bottom:24px;">
+            <h4 style="margin-bottom:16px;">🔄 Field Transformation Summary (Nested Paths!)</h4>
+            <div class="table-container">
+              <table style="font-size:0.75rem;">
+                <thead><tr><th>Data</th><th>Entra JSON Path</th><th>→</th><th>CIM Field</th></tr></thead>
+                <tbody>
+                  <tr><td>User</td><td><code>properties.userPrincipalName</code></td><td>→</td><td><code>user</code></td></tr>
+                  <tr><td>IP</td><td><code>properties.ipAddress</code></td><td>→</td><td><code>src_ip</code></td></tr>
+                  <tr><td>App</td><td><code>properties.appDisplayName</code></td><td>→</td><td><code>app</code></td></tr>
+                  <tr><td>Error</td><td><code>properties.status.errorCode</code></td><td>→</td><td><code>error_code</code> + <code>action</code></td></tr>
+                  <tr><td>City</td><td><code>properties.location.city</code></td><td>→</td><td><code>city</code></td></tr>
+                  <tr><td>Country</td><td><code>properties.location.countryOrRegion</code></td><td>→</td><td><code>country</code></td></tr>
+                  <tr><td>MFA</td><td><code>properties.mfaDetail.authMethod</code></td><td>→</td><td><code>authentication_method</code></td></tr>
+                  <tr><td>Device</td><td><code>properties.deviceDetail.operatingSystem</code></td><td>→</td><td><code>src_os</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Error Codes Reference -->
+          <div class="card" style="padding:20px;margin-bottom:16px;border-left:4px solid #dc3545;">
+            <h4 style="color:#dc3545;margin-bottom:12px;">🚨 Critical Error Codes (properties.status.errorCode)</h4>
+            <div class="table-container">
+              <table style="font-size:0.8125rem;">
+                <thead><tr><th>Error Code</th><th>Meaning</th><th>Detection Use</th></tr></thead>
+                <tbody>
+                  <tr><td><code>0</code></td><td>Success</td><td>Normal login, track for anomalies</td></tr>
+                  <tr><td><code>50074</code></td><td>Strong auth required</td><td>MFA challenge triggered</td></tr>
+                  <tr><td><code>50076</code></td><td>MFA required but not completed</td><td>Partial auth - investigate</td></tr>
+                  <tr><td><code>500121</code></td><td><strong>MFA DENIED</strong></td><td>🔴 KEY for MFA fatigue detection!</td></tr>
+                  <tr><td><code>50053</code></td><td>Account locked</td><td>Brute force indicator</td></tr>
+                  <tr><td><code>50126</code></td><td>Invalid username/password</td><td>Failed password attempt</td></tr>
+                  <tr><td><code>53003</code></td><td>Blocked by Conditional Access</td><td>Policy enforcement</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Sample Detection Using CIM -->
+          <div class="card bordered-left success" style="padding:20px;">
+            <h4 style="color:var(--success-700);margin-bottom:12px;">🎯 Now You Can Write Detections!</h4>
+            <p style="font-size:0.8125rem;color:var(--gray-600);margin-bottom:12px;">With extracted/CIM fields, MFA and location detections are straightforward:</p>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Detection: MFA Denial from New Location</span></div>
+              <div class="code-body">
+                <pre style="font-size:0.7rem;"><code>index=azure sourcetype=azure:aad:signin earliest=-24h
+| spath
+| eval user = 'properties.userPrincipalName'
+| eval src_ip = 'properties.ipAddress'
+| eval error_code = 'properties.status.errorCode'
+| eval city = 'properties.location.city'
+| eval country = 'properties.location.countryOrRegion'
+| eval action = if(error_code=0, "success", "failure")
+
+``` Filter for MFA denials
+| where error_code=500121
+
+``` Check for unusual location
+| lookup user_locations.csv user OUTPUT usual_cities usual_countries
+| eval is_new_location = if(NOT match(usual_cities, city), "true", "false")
+| where is_new_location="true"
+
+| stats count as mfa_denials 
+        values(city) as attempted_cities 
+        values(src_ip) as source_ips 
+        BY user
+| where mfa_denials >= 3
+| eval severity = if(mfa_denials >= 5, "CRITICAL", "HIGH")
+| eval alert = "MFA denied ".mfa_denials." times from new location: ".attempted_cities
+| table user mfa_denials attempted_cities source_ips severity alert</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Log Types -->
         <div class="section">
           <h2 class="subsection-title">Entra ID Log Types</h2>
