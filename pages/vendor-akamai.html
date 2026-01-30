@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akamai WAF Deep Dive | Sobeys Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="sidebar-logo-text">
+            <h1>Sobeys Detection</h1>
+            <span>Engineering Command Center</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Vendor Deep Dives</div>
+          <a href="vendor-akamai.html" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Akamai WAF</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Akamai WAF</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <span class="badge akamai">Confirmed Vendor</span>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <!-- Header -->
+        <div class="section">
+          <div class="section-header">
+            <h1 class="section-title">Akamai WAF Deep Dive</h1>
+            <p class="section-subtitle">Field references, sample events, SPL patterns, and CIM mapping for Akamai Kona Site Defender</p>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-value">KSD</div>
+              <div class="stat-label">Kona Site Defender</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">akamai:siem</div>
+              <div class="stat-label">Sourcetype</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">JSON</div>
+              <div class="stat-label">Format</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">2-5 min</div>
+              <div class="stat-label">Typical Latency</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Overview -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Akamai Product Portfolio</h3>
+
+            <div class="grid grid-2">
+              <div class="card bordered-left primary">
+                <h4 style="margin-bottom: 8px;">Kona Site Defender (KSD)</h4>
+                <p style="font-size: 0.875rem; color: var(--gray-600);">Web application firewall providing protection against OWASP Top 10, custom rules, rate limiting, and bot detection. Primary WAF product for Sobeys.</p>
+              </div>
+              <div class="card bordered-left info">
+                <h4 style="margin-bottom: 8px;">Bot Manager</h4>
+                <p style="font-size: 0.875rem; color: var(--gray-600);">Advanced bot detection and mitigation using behavioral analysis, device fingerprinting, and challenge/response mechanisms.</p>
+              </div>
+              <div class="card bordered-left warning">
+                <h4 style="margin-bottom: 8px;">DDoS Protection</h4>
+                <p style="font-size: 0.875rem; color: var(--gray-600);">Network and application layer DDoS mitigation leveraging Akamai's global edge network capacity.</p>
+              </div>
+              <div class="card bordered-left success">
+                <h4 style="margin-bottom: 8px;">Client Reputation</h4>
+                <p style="font-size: 0.875rem; color: var(--gray-600);">IP reputation scoring based on observed malicious behavior across Akamai's customer base.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIEM Integration Architecture -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">SIEM Integration Architecture</h3>
+
+            <div class="card">
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-title">Data Flow: Akamai → Splunk</span>
+                </div>
+                <div class="code-body">
+                  <pre><code>┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
+│   Akamai Edge   │──────│  SIEM API /     │──────│  Splunk Cloud   │
+│   (KSD / Bot    │      │  TA-akamai      │      │                 │
+│   Manager)      │      │                 │      │  index=akamai   │
+└─────────────────┘      └─────────────────┘      └─────────────────┘
+        │                        │                        │
+        │ Real-time events       │ Pull every 2-5 min     │ sourcetype=
+        │ at edge               │ via SIEM API           │ akamai:siem
+        └────────────────────────┴────────────────────────┘</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Event -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Sample Akamai SIEM Event</h3>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Sample JSON Event</span>
+                <span class="code-lang">JSON</span>
+              </div>
+              <div class="code-body">
+                <pre><code>{
+  "format": "json",
+  "type": "akamai_siem",
+  "version": "1.0",
+  "attackData": {
+    "configId": "12345",
+    "policyId": "AAAA_67890",
+    "clientIP": "203.0.113.42",
+    "rules": [
+      {
+        "ruleId": "950001",
+        "ruleTag": "OWASP_CRS/WEB_ATTACK/SQL_INJECTION",
+        "ruleAction": "deny",
+        "ruleMessage": "SQL Injection Attack Detected",
+        "ruleData": "1' OR '1'='1",
+        "ruleSelector": "ARGS:id"
+      }
+    ],
+    "ruleVersions": ["2023.10.1"],
+    "clientReputation": "malicious-70"
+  },
+  "httpMessage": {
+    "requestId": "abc123def456",
+    "start": "2026-01-15T14:32:45Z",
+    "method": "GET",
+    "host": "www.sobeys.com",
+    "path": "/api/products",
+    "query": "id=1' OR '1'='1",
+    "port": 443,
+    "protocol": "HTTPS",
+    "status": 403,
+    "bytes": 0,
+    "requestHeaders": {
+      "User-Agent": "Mozilla/5.0 (compatible; sqlmap/1.5)",
+      "Accept": "*/*",
+      "Accept-Language": "en-US,en;q=0.5",
+      "Connection": "close"
+    },
+    "responseHeaders": {
+      "Content-Type": "text/html",
+      "X-Akamai-Transformed": "9 - 0 pmb=mRUM,3"
+    }
+  },
+  "geo": {
+    "country": "CN",
+    "city": "Beijing",
+    "regionCode": "BJ",
+    "asn": "4134",
+    "network": "203.0.113.0/24",
+    "latitude": 39.9042,
+    "longitude": 116.4074
+  },
+  "tlsVersion": "TLSv1.3"
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Field Reference -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Field Reference</h3>
+
+            <div class="tabs">
+              <div class="tab-list">
+                <button class="tab-button active">Attack Data Fields</button>
+                <button class="tab-button">HTTP Message Fields</button>
+                <button class="tab-button">Geo/Client Fields</button>
+                <button class="tab-button">CIM Mapping</button>
+              </div>
+
+              <div class="tab-panel active">
+                <div class="table-container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Path</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="highlight"><code>attackData.rules{}.ruleId</code></td>
+                        <td>String</td>
+                        <td>Unique rule identifier</td>
+                        <td>950001</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>attackData.rules{}.ruleTag</code></td>
+                        <td>String</td>
+                        <td>Rule category path</td>
+                        <td>OWASP_CRS/WEB_ATTACK/SQL_INJECTION</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>attackData.rules{}.ruleAction</code></td>
+                        <td>String</td>
+                        <td>Action taken (deny, alert, tarpit)</td>
+                        <td>deny</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>attackData.rules{}.ruleMessage</code></td>
+                        <td>String</td>
+                        <td>Human-readable description</td>
+                        <td>SQL Injection Attack Detected</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>attackData.rules{}.ruleData</code></td>
+                        <td>String</td>
+                        <td>Matched payload</td>
+                        <td>1' OR '1'='1</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>attackData.rules{}.ruleSelector</code></td>
+                        <td>String</td>
+                        <td>Where match occurred</td>
+                        <td>ARGS:id</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>attackData.clientReputation</code></td>
+                        <td>String</td>
+                        <td>IP reputation score</td>
+                        <td>malicious-70</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>attackData.configId</code></td>
+                        <td>String</td>
+                        <td>Akamai configuration ID</td>
+                        <td>12345</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>attackData.policyId</code></td>
+                        <td>String</td>
+                        <td>Security policy identifier</td>
+                        <td>AAAA_67890</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="tab-panel">
+                <div class="table-container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Path</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="highlight"><code>httpMessage.requestId</code></td>
+                        <td>String</td>
+                        <td>Unique request identifier</td>
+                        <td>abc123def456</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>httpMessage.start</code></td>
+                        <td>ISO 8601</td>
+                        <td>Request timestamp</td>
+                        <td>2026-01-15T14:32:45Z</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>httpMessage.method</code></td>
+                        <td>String</td>
+                        <td>HTTP method</td>
+                        <td>GET, POST, PUT, DELETE</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>httpMessage.host</code></td>
+                        <td>String</td>
+                        <td>Target hostname</td>
+                        <td>www.sobeys.com</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>httpMessage.path</code></td>
+                        <td>String</td>
+                        <td>URI path</td>
+                        <td>/api/products</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>httpMessage.query</code></td>
+                        <td>String</td>
+                        <td>Query string parameters</td>
+                        <td>id=1&sort=name</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>httpMessage.status</code></td>
+                        <td>Integer</td>
+                        <td>HTTP response status</td>
+                        <td>403, 200, 502</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>httpMessage.requestHeaders.User-Agent</code></td>
+                        <td>String</td>
+                        <td>Client user agent</td>
+                        <td>Mozilla/5.0...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="tab-panel">
+                <div class="table-container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Path</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="highlight"><code>attackData.clientIP</code></td>
+                        <td>String</td>
+                        <td>Source IP address</td>
+                        <td>203.0.113.42</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>geo.country</code></td>
+                        <td>String</td>
+                        <td>ISO country code</td>
+                        <td>CN, US, RU</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>geo.city</code></td>
+                        <td>String</td>
+                        <td>City name</td>
+                        <td>Beijing</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>geo.asn</code></td>
+                        <td>String</td>
+                        <td>Autonomous system number</td>
+                        <td>4134</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>geo.network</code></td>
+                        <td>String</td>
+                        <td>Network CIDR</td>
+                        <td>203.0.113.0/24</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>tlsVersion</code></td>
+                        <td>String</td>
+                        <td>TLS protocol version</td>
+                        <td>TLSv1.3</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="tab-panel">
+                <div class="table-container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>CIM Field</th>
+                        <th>Akamai Source</th>
+                        <th>Data Model</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="highlight"><code>src</code></td>
+                        <td>attackData.clientIP</td>
+                        <td>Web</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>dest</code></td>
+                        <td>httpMessage.host</td>
+                        <td>Web</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>uri_path</code></td>
+                        <td>httpMessage.path</td>
+                        <td>Web</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>uri_query</code></td>
+                        <td>httpMessage.query</td>
+                        <td>Web</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>http_method</code></td>
+                        <td>httpMessage.method</td>
+                        <td>Web</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>status</code></td>
+                        <td>httpMessage.status</td>
+                        <td>Web</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>action</code></td>
+                        <td>attackData.rules{}.ruleAction</td>
+                        <td>IDS</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>signature_id</code></td>
+                        <td>attackData.rules{}.ruleId</td>
+                        <td>IDS</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>signature</code></td>
+                        <td>attackData.rules{}.ruleMessage</td>
+                        <td>IDS</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>category</code></td>
+                        <td>attackData.rules{}.ruleTag</td>
+                        <td>IDS</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>http_user_agent</code></td>
+                        <td>httpMessage.requestHeaders.User-Agent</td>
+                        <td>Web</td>
+                      </tr>
+                      <tr>
+                        <td class="highlight"><code>src_country</code></td>
+                        <td>geo.country</td>
+                        <td>Network_Traffic</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rule Actions -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Rule Actions Reference</h3>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Action</th>
+                    <th>HTTP Status</th>
+                    <th>Description</th>
+                    <th>Detection Priority</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight"><code>deny</code></td>
+                    <td>403 Forbidden</td>
+                    <td>Request blocked, custom error page returned</td>
+                    <td><span class="badge error">High</span></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>alert</code></td>
+                    <td>Varies (request continues)</td>
+                    <td>Logged but not blocked</td>
+                    <td><span class="badge warning">Medium</span></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>tarpit</code></td>
+                    <td>Delayed response</td>
+                    <td>Slow response to waste attacker resources</td>
+                    <td><span class="badge warning">Medium</span></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>redirect</code></td>
+                    <td>302 Found</td>
+                    <td>Redirect to different URL</td>
+                    <td><span class="badge info">Low</span></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>custom_deny</code></td>
+                    <td>Custom code</td>
+                    <td>Block with customized response</td>
+                    <td><span class="badge error">High</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Common Rule Tags -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Common Rule Tags</h3>
+
+            <div class="grid grid-2">
+              <div class="card">
+                <h4 style="margin-bottom: 12px;">OWASP CRS Categories</h4>
+                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li><code>OWASP_CRS/WEB_ATTACK/SQL_INJECTION</code></li>
+                  <li><code>OWASP_CRS/WEB_ATTACK/XSS</code></li>
+                  <li><code>OWASP_CRS/WEB_ATTACK/COMMAND_INJECTION</code></li>
+                  <li><code>OWASP_CRS/WEB_ATTACK/LFI</code></li>
+                  <li><code>OWASP_CRS/WEB_ATTACK/RFI</code></li>
+                  <li><code>OWASP_CRS/PROTOCOL_VIOLATION</code></li>
+                </ul>
+              </div>
+              <div class="card">
+                <h4 style="margin-bottom: 12px;">Akamai-Specific Tags</h4>
+                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li><code>AKAMAI/BOT/...</code> — Bot detection</li>
+                  <li><code>AKAMAI/RATE/...</code> — Rate limiting</li>
+                  <li><code>AKAMAI/REPUTATION/...</code> — IP reputation</li>
+                  <li><code>AKAMAI/CUSTOM/...</code> — Custom rules</li>
+                  <li><code>AKAMAI/GEO/...</code> — Geographic blocks</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SPL Examples -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">SPL Query Examples</h3>
+
+            <div class="accordion">
+              <div class="accordion-item open">
+                <button class="accordion-header">
+                  <span>Basic Block Analysis by Source IP</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| spath path=attackData.clientIP output=src
+| spath path=geo.country output=country
+| stats count as blocks BY src country
+| sort - blocks
+| head 20</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Blocks by Attack Category</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| spath path=attackData.rules{}.ruleTag output=category
+| eval category = mvindex(category, 0)
+| rex field=category "OWASP_CRS/WEB_ATTACK/(?&lt;attack_type&gt;[^/]+)"
+| fillnull value="Other" attack_type
+| stats count BY attack_type
+| sort - count</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>SQLi/XSS Detection</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| spath path=attackData.rules{}.ruleAction output=action
+| spath path=attackData.rules{}.ruleTag output=category
+| where action="deny" AND (match(category, "SQL_INJECTION") OR match(category, "XSS"))
+| spath path=attackData.clientIP output=src
+| spath path=httpMessage.path output=uri
+| spath path=attackData.rules{}.ruleData output=payload
+| table _time src uri category payload
+| sort - _time</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>WAF-UC1: Block Volume Anomaly</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| spath path=attackData.clientIP output=src
+| bin _time span=5m
+| stats count as block_count dc(src) as unique_sources BY _time
+| appendpipe 
+    [| stats avg(block_count) as baseline stdev(block_count) as stdev]
+| eval threshold = round(baseline + (2 * stdev), 0)
+| eval threshold = if(threshold < 50, 50, threshold)
+| where block_count > threshold AND block_count > 50
+| eval deviation = round((block_count - baseline) / stdev, 2)
+| eval severity = case(
+    deviation > 5, "Critical",
+    deviation > 3, "High",
+    deviation > 2, "Medium",
+    true(), "Low"
+)
+| table _time block_count baseline threshold deviation severity unique_sources</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>WAF-UC2: Single Source Flood</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
+| spath path=attackData.rules{}.ruleAction output=action
+| spath path=attackData.clientIP output=src
+| spath path=geo.country output=country
+| spath path=httpMessage.path output=uri
+| eval is_blocked = if(action="deny", 1, 0)
+| stats count as total_requests 
+        sum(is_blocked) as blocked_requests
+        dc(uri) as unique_uris
+        values(country) as countries
+        BY src
+| eval block_ratio = round(blocked_requests / total_requests * 100, 1)
+| where total_requests > 500 OR blocked_requests > 100 OR block_ratio > 50
+| eval severity = case(
+    blocked_requests > 500, "Critical",
+    blocked_requests > 200 OR block_ratio > 80, "High",
+    true(), "Medium"
+)
+| sort - blocked_requests
+| table src total_requests blocked_requests block_ratio unique_uris countries severity</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>WAF-UC3: Authentication Endpoint Attack</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| spath path=httpMessage.path output=uri
+| spath path=attackData.clientIP output=src
+
+``` Lookup sensitive endpoints
+| lookup sensitive_endpoints.csv endpoint as uri OUTPUT is_sensitive category
+| where is_sensitive="true"
+
+``` Aggregate by endpoint
+| stats count as attacks
+        dc(src) as unique_sources
+        values(src) as source_ips
+        BY uri category
+| where attacks > 20
+
+``` Determine attack pattern
+| eval attack_pattern = case(
+    unique_sources > 10, "Distributed Attack",
+    unique_sources == 1 AND attacks > 50, "Single Source Brute Force",
+    true(), "Targeted Probing"
+)
+| eval severity = case(
+    category=="authentication" AND attacks > 100, "Critical",
+    category=="authentication", "High",
+    true(), "Medium"
+)
+| table uri category attacks unique_sources attack_pattern severity</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- props.conf Configuration -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Custom props.conf Configuration</h3>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">props.conf for akamai:siem</span>
+                <span class="code-lang">CONF</span>
+              </div>
+              <div class="code-body">
+                <pre><code>[akamai:siem]
+SHOULD_LINEMERGE = false
+LINE_BREAKER = ([\r\n]+)
+TIME_PREFIX = "start"\s*:\s*"
+TIME_FORMAT = %Y-%m-%dT%H:%M:%SZ
+MAX_TIMESTAMP_LOOKAHEAD = 30
+KV_MODE = json
+TRUNCATE = 0
+
+# CIM Field Aliases
+FIELDALIAS-src = attackData.clientIP AS src
+FIELDALIAS-dest = httpMessage.host AS dest
+FIELDALIAS-uri_path = httpMessage.path AS uri_path
+FIELDALIAS-uri_query = httpMessage.query AS uri_query
+FIELDALIAS-http_method = httpMessage.method AS http_method
+FIELDALIAS-status = httpMessage.status AS status
+FIELDALIAS-http_user_agent = httpMessage.requestHeaders.User-Agent AS http_user_agent
+
+# Calculated Fields
+EVAL-vendor = "Akamai"
+EVAL-product = "Kona Site Defender"
+EVAL-action = mvindex('attackData.rules{}.ruleAction', 0)
+EVAL-signature_id = mvindex('attackData.rules{}.ruleId', 0)
+EVAL-signature = mvindex('attackData.rules{}.ruleMessage', 0)
+EVAL-category = mvindex('attackData.rules{}.ruleTag', 0)</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Common Gotchas -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Common Gotchas</h3>
+
+            <div class="grid grid-2">
+              <div class="callout warning">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                <div class="callout-content">
+                  <div class="callout-title">rules{} is Multi-Valued</div>
+                  <div class="callout-body">A single request can trigger multiple rules. Use <code>mvindex()</code> to get first/specific value, or <code>mvexpand</code> to create separate events.</div>
+                </div>
+              </div>
+
+              <div class="callout warning">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                <div class="callout-content">
+                  <div class="callout-title">Nested JSON Paths</div>
+                  <div class="callout-body">Always use full spath path syntax: <code>| spath path=attackData.rules{}.ruleAction output=action</code></div>
+                </div>
+              </div>
+
+              <div class="callout info">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <div class="callout-content">
+                  <div class="callout-title">API Rate Limiting</div>
+                  <div class="callout-body">Akamai SIEM API has rate limits. Expect 2-5 minute latency. Adjust detection windows accordingly.</div>
+                </div>
+              </div>
+
+              <div class="callout info">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <div class="callout-content">
+                  <div class="callout-title">Config ID Context</div>
+                  <div class="callout-body">Different configId values may represent different Akamai properties. Filter appropriately for specific applications.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Validation Queries -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Data Validation Queries</h3>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Data Flow Check</span>
+              </div>
+              <div class="code-body">
+                <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| stats count as events 
+        min(_time) as first_event 
+        max(_time) as last_event
+| eval first = strftime(first_event, "%Y-%m-%d %H:%M:%S")
+| eval last = strftime(last_event, "%Y-%m-%d %H:%M:%S")
+| table events first last</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Field Extraction Quality</span>
+              </div>
+              <div class="code-body">
+                <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| head 1000
+| spath path=attackData.clientIP output=src
+| spath path=attackData.rules{}.ruleAction output=action
+| spath path=geo.country output=country
+| stats count as total
+        count(src) as has_src
+        count(action) as has_action
+        count(country) as has_country
+| eval src_pct = round(has_src/total*100, 1)."%"
+| eval action_pct = round(has_action/total*100, 1)."%"
+| eval country_pct = round(has_country/total*100, 1)."%"</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Event Volume by Hour</span>
+              </div>
+              <div class="code-body">
+                <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| timechart span=1h count as events
+| eventstats avg(events) as avg_hourly
+| eval status = if(events < avg_hourly * 0.5, "LOW - Possible Gap", "Normal")
+| table _time events avg_hourly status</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPL Reference | Sobeys Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="sidebar-logo-text">
+            <h1>Sobeys Detection</h1>
+            <span>Engineering Command Center</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Reference</div>
+          <a href="spl-reference.html" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <span>SPL Reference</span>
+          </a>
+          <a href="glossary.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <span>Glossary</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">SPL Reference</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <span class="badge splunk">Splunk SPL</span>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <!-- Header -->
+        <div class="section">
+          <div class="section-header">
+            <h1 class="section-title">SPL Reference Guide</h1>
+            <p class="section-subtitle">Common patterns, utility searches, and optimized queries for detection engineering</p>
+          </div>
+        </div>
+
+        <!-- Quick Copy Patterns -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Data Discovery Queries</h3>
+
+            <div class="accordion">
+              <div class="accordion-item open">
+                <button class="accordion-header">
+                  <span>Find All Data Sources</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">List All Indexes and Sourcetypes</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>| tstats count WHERE index=* BY index sourcetype
+| sort - count
+| head 100</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Check Data Freshness</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Data Freshness by Sourcetype</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>| tstats latest(_time) as last_event WHERE index IN (akamai, azure, cyberark) BY index sourcetype
+| eval hours_ago = round((now() - last_event) / 3600, 1)
+| eval status = case(
+    hours_ago < 1, "✅ Current",
+    hours_ago < 4, "⚠️ Delayed",
+    true(), "❌ Stale"
+)
+| eval last_event = strftime(last_event, "%Y-%m-%d %H:%M:%S")
+| table index sourcetype last_event hours_ago status
+| sort status</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Field Extraction Coverage</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Check Field Extraction Quality</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| head 1000
+| fieldsummary
+| eval extraction_pct = round(count/1000*100, 1)."%"
+| where count > 0
+| table field count distinct_count extraction_pct
+| sort - count</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Calculate Indexing Latency</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Measure Data Latency</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| eval latency_seconds = _indextime - _time
+| stats avg(latency_seconds) as avg_latency
+        max(latency_seconds) as max_latency
+        perc95(latency_seconds) as p95_latency
+| eval avg_minutes = round(avg_latency/60, 1)
+| eval max_minutes = round(max_latency/60, 1)
+| eval p95_minutes = round(p95_latency/60, 1)
+| table avg_minutes max_minutes p95_minutes</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Akamai Patterns -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Akamai WAF Patterns</h3>
+
+            <div class="accordion">
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Basic Block Analysis</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Top Blocked IPs</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| spath path=clientIP output=src
+| spath path=geo.country output=country
+| stats count as blocks BY src country
+| sort - blocks
+| head 20</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Attack Categories Distribution</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Blocks by Attack Type</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| spath path=attackData.rules{}.ruleTag output=category
+| eval category = mvindex(category, 0)
+| rex field=category "(?<attack_type>[^/]+)$"
+| stats count BY attack_type
+| sort - count</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Targeted Endpoints Analysis</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Most Attacked URIs</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| spath path=httpMessage.path output=uri
+| spath path=httpMessage.method output=method
+| rex field=uri "^(?<endpoint>/[^/\\?]+)"
+| stats count as attacks dc(clientIP) as unique_ips BY endpoint method
+| sort - attacks
+| head 20</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Geographic Analysis</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Blocks by Country</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| spath path=geo.country output=country
+| spath path=geo.city output=city
+| stats count as blocks dc(clientIP) as unique_ips BY country
+| sort - blocks
+| head 20</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Timechart Visualization</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Block Volume Over Time</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| spath path=attackData.rules{}.ruleTag output=category
+| eval attack_type = case(
+    match(category, "SQL_INJECTION"), "SQLi",
+    match(category, "XSS"), "XSS",
+    match(category, "COMMAND_INJECTION"), "RCE",
+    match(category, "LFI|RFI"), "File Inclusion",
+    match(category, "BOT"), "Bot",
+    match(category, "RATE"), "Rate Limit",
+    true(), "Other"
+)
+| timechart span=1h count BY attack_type</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MFA/Auth Patterns -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">MFA & Authentication Patterns</h3>
+
+            <div class="accordion">
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Entra ID Sign-in Analysis</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Failed Sign-ins by Error Code</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=azure sourcetype=azure:aad:signin earliest=-24h
+| spath
+| eval user = 'properties.userPrincipalName'
+| eval error_code = 'properties.status.errorCode'
+| eval error_reason = 'properties.status.failureReason'
+| where error_code != 0
+| stats count BY error_code error_reason
+| sort - count
+| head 20
+
+``` Common Error Codes:
+``` 50126 = Invalid username or password
+``` 50074 = Strong Auth Required (MFA)
+``` 500121 = MFA Failed / User denied
+``` 53003 = Conditional Access blocked
+``` 530032 = Compliant device required</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>MFA Events Analysis</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">MFA Success/Failure by User</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=azure sourcetype=azure:aad:signin earliest=-24h
+| spath
+| eval user = 'properties.userPrincipalName'
+| eval error_code = 'properties.status.errorCode'
+| eval mfa_denied = if(error_code == 500121, 1, 0)
+| eval mfa_success = if(error_code == 0, 1, 0)
+| stats sum(mfa_denied) as denials
+        sum(mfa_success) as successes
+        count as total
+        BY user
+| where denials > 0
+| eval denial_rate = round(denials/total*100, 1)."%"
+| sort - denials
+| head 20</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>CyberArk MFA Events</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">CyberArk MFA Activity</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-24h
+    EventType IN ("Cloud.Core.MfaAuthentication", "Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout")
+| spath
+| eval user = ActorId
+| eval result = Result
+| eval mfa_method = AuthMethod
+| stats count BY user result mfa_method
+| sort - count</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Impossible Travel Detection</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Impossible Travel SPL Pattern</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=azure sourcetype=azure:aad:signin earliest=-24h
+| spath
+| eval user = 'properties.userPrincipalName'
+| eval lat = 'properties.location.geoCoordinates.latitude'
+| eval lon = 'properties.location.geoCoordinates.longitude'
+| eval city = 'properties.location.city'
+| eval country = 'properties.location.countryOrRegion'
+| where isnotnull(lat) AND isnotnull(lon)
+| sort user _time
+| streamstats current=f last(lat) as prev_lat last(lon) as prev_lon
+              last(_time) as prev_time last(city) as prev_city
+              BY user
+
+``` Haversine formula for distance calculation
+| eval lat1 = lat * 3.14159 / 180
+| eval lat2 = prev_lat * 3.14159 / 180
+| eval dlon = (lon - prev_lon) * 3.14159 / 180
+| eval dlat = (lat - prev_lat) * 3.14159 / 180
+| eval a = pow(sin(dlat/2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlon/2), 2)
+| eval distance_km = 6371 * 2 * asin(sqrt(a))
+| eval time_diff_hours = (_time - prev_time) / 3600
+| eval speed_kmh = if(time_diff_hours > 0, distance_km / time_diff_hours, 0)
+
+``` Flag impossible travel (>800 km/h is faster than commercial flight)
+| where speed_kmh > 800
+| table _time user prev_city city distance_km time_diff_hours speed_kmh</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Statistical Patterns -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Statistical Analysis Patterns</h3>
+
+            <div class="accordion">
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Calculate Baseline Statistics</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">14-Day Baseline Calculation</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-14d latest=-1d
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| bin _time span=1h
+| stats count as hourly_blocks BY _time
+| stats avg(hourly_blocks) as baseline_mean
+        stdev(hourly_blocks) as baseline_stdev
+        perc50(hourly_blocks) as median
+        perc95(hourly_blocks) as p95
+        perc99(hourly_blocks) as p99
+        min(hourly_blocks) as minimum
+        max(hourly_blocks) as maximum
+| eval threshold_2sigma = round(baseline_mean + (2 * baseline_stdev), 0)
+| eval threshold_3sigma = round(baseline_mean + (3 * baseline_stdev), 0)
+| table baseline_mean baseline_stdev median p95 p99 minimum maximum threshold_2sigma threshold_3sigma</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Day-of-Week Aware Baseline</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Baseline by Day of Week and Hour</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-30d latest=-1d
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| bin _time span=1h
+| eval day_of_week = strftime(_time, "%A")
+| eval hour_of_day = strftime(_time, "%H")
+| stats count as hourly_blocks BY _time day_of_week hour_of_day
+| stats avg(hourly_blocks) as avg_blocks
+        stdev(hourly_blocks) as stdev_blocks
+        BY day_of_week hour_of_day
+| eval threshold = round(avg_blocks + (2 * stdev_blocks), 0)
+| table day_of_week hour_of_day avg_blocks stdev_blocks threshold
+| sort day_of_week hour_of_day</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Anomaly Detection with streamstats</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">Rolling Window Anomaly Detection</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| bin _time span=5m
+| stats count as block_count BY _time
+| streamstats window=24 avg(block_count) as rolling_avg stdev(block_count) as rolling_stdev
+| eval threshold = rolling_avg + (2 * rolling_stdev)
+| eval is_anomaly = if(block_count > threshold, 1, 0)
+| eval deviation = round((block_count - rolling_avg) / rolling_stdev, 2)
+| where is_anomaly = 1
+| table _time block_count rolling_avg threshold deviation</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance Optimization -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Performance Optimization</h3>
+
+            <div class="grid grid-2">
+              <div class="card bordered-left success">
+                <h4 style="margin-bottom: 12px; color: var(--success-600);">✅ Optimized Patterns</h4>
+                <div class="code-block">
+                  <div class="code-body">
+                    <pre><code>``` GOOD: Specific index, sourcetype, time
+index=akamai sourcetype=akamai:siem earliest=-1h
+
+``` GOOD: Filter early
+| where action="deny"
+
+``` GOOD: Extract only needed fields
+| spath path=clientIP output=src
+| spath path=geo.country output=country
+
+``` GOOD: Use tstats for data model
+| tstats count WHERE index=akamai BY sourcetype</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card bordered-left error">
+                <h4 style="margin-bottom: 12px; color: var(--error-600);">❌ Anti-Patterns (Avoid)</h4>
+                <div class="code-block">
+                  <div class="code-body">
+                    <pre><code>``` BAD: Wildcard index
+index=*
+
+``` BAD: All time search
+earliest=0
+
+``` BAD: Parse entire JSON first
+| spath
+| where action="deny"
+
+``` BAD: Heavy regex on all events
+| rex field=_raw "complex_pattern"
+
+``` BAD: Unnecessary join
+| join type=outer ...</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Utility Functions -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Utility Functions Reference</h3>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Function</th>
+                    <th>Purpose</th>
+                    <th>Example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight"><code>spath</code></td>
+                    <td>Extract JSON fields</td>
+                    <td><code>| spath path=attackData.rules{}.ruleAction output=action</code></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>mvindex</code></td>
+                    <td>Get specific array element</td>
+                    <td><code>| eval first_action = mvindex(action, 0)</code></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>mvexpand</code></td>
+                    <td>Create rows from multivalue</td>
+                    <td><code>| mvexpand rules</code></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>coalesce</code></td>
+                    <td>First non-null value</td>
+                    <td><code>| eval user = coalesce(ActorId, username)</code></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>streamstats</code></td>
+                    <td>Running calculations</td>
+                    <td><code>| streamstats window=10 avg(count) as rolling_avg</code></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>eventstats</code></td>
+                    <td>Stats without aggregation</td>
+                    <td><code>| eventstats avg(count) as global_avg</code></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>lookup</code></td>
+                    <td>Enrich with lookup table</td>
+                    <td><code>| lookup privileged_users.csv user OUTPUT is_privileged</code></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>cidrmatch</code></td>
+                    <td>CIDR subnet matching</td>
+                    <td><code>| where cidrmatch("10.0.0.0/8", src)</code></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>strftime</code></td>
+                    <td>Format timestamp</td>
+                    <td><code>| eval time_str = strftime(_time, "%Y-%m-%d %H:%M:%S")</code></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>relative_time</code></td>
+                    <td>Calculate relative time</td>
+                    <td><code>| eval yesterday = relative_time(now(), "-1d@d")</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

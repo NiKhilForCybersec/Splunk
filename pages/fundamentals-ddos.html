@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DDoS Fundamentals | Sobeys Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="sidebar-logo-text">
+            <h1>Sobeys Detection</h1>
+            <span>Engineering Command Center</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Fundamentals</div>
+          <a href="fundamentals-waf.html" class="nav-item">WAF Fundamentals</a>
+          <a href="fundamentals-ddos.html" class="nav-item active">DDoS Fundamentals</a>
+          <a href="fundamentals-mfa.html" class="nav-item">MFA Fundamentals</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item">Fundamentals</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">DDoS</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <div class="section-header">
+            <h1 class="section-title">DDoS Fundamentals</h1>
+            <p class="section-subtitle">Understanding Distributed Denial of Service attacks for Detection Engineering</p>
+          </div>
+        </div>
+
+        <!-- WHAT Section -->
+        <div class="section">
+          <div class="subsection">
+            <h2 class="subsection-title">❓ WHAT is a DDoS Attack?</h2>
+            
+            <p style="margin-bottom: 16px; color: var(--gray-700);"><strong>Distributed Denial of Service (DDoS)</strong> is an attack that aims to make a service unavailable by overwhelming it with traffic from multiple sources. Unlike a single-source DoS, DDoS uses many compromised systems (botnets) simultaneously.</p>
+
+            <div class="card" style="margin-bottom: 16px;">
+              <div class="mermaid">
+flowchart TD
+    subgraph Botnet[Botnet - 1000s of Compromised Devices]
+        B1[Bot 1]
+        B2[Bot 2]
+        B3[Bot 3]
+        B4[Bot ...]
+        B5[Bot N]
+    end
+    
+    A[Attacker C2] -->|Command| Botnet
+    
+    B1 -->|Traffic| T[Target: Sobeys]
+    B2 -->|Traffic| T
+    B3 -->|Traffic| T
+    B4 -->|Traffic| T
+    B5 -->|Traffic| T
+    
+    T -->|Overwhelmed| X[❌ Service Unavailable]
+    
+    style A fill:#dc2626,color:#fff
+    style X fill:#dc2626,color:#fff
+              </div>
+            </div>
+
+            <h4 style="margin-bottom: 12px;">DDoS Attack Layers (OSI Model)</h4>
+
+            <div class="card" style="margin-bottom: 16px;">
+              <div class="mermaid">
+flowchart LR
+    subgraph L3L4[Layer 3/4 - Network/Transport]
+        N1[SYN Flood]
+        N2[UDP Flood]
+        N3[ICMP Flood]
+        N4[Amplification]
+    end
+    
+    subgraph L7[Layer 7 - Application]
+        A1[HTTP Flood]
+        A2[Slowloris]
+        A3[API Abuse]
+        A4[DNS Query Flood]
+    end
+    
+    L3L4 -->|Mitigated by| M1[ISP / CDN Edge]
+    L7 -->|Mitigated by| M2[WAF / Rate Limiting]
+    
+    M2 -->|Logged in| S[Splunk - Our Focus]
+    
+    style S fill:#65a637,color:#fff
+              </div>
+            </div>
+
+            <div class="callout info">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <div class="callout-content">
+                <div class="callout-title">Our Detection Focus: Layer 7 (Application)</div>
+                <div class="callout-body">Layer 3/4 attacks are typically mitigated by Akamai's network before reaching applications. Our WAF detections focus on Layer 7 attacks that target application logic.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WHY Section -->
+        <div class="section">
+          <div class="subsection">
+            <h2 class="subsection-title">🎯 WHY Do We Need DDoS Detection?</h2>
+
+            <div class="grid grid-2">
+              <div class="card">
+                <h4 style="margin-bottom: 12px; color: var(--error-600);">Attacker Goals</h4>
+                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li><strong>Extortion:</strong> "Pay or we keep attacking"</li>
+                  <li><strong>Competitive Sabotage:</strong> Take down rival's site</li>
+                  <li><strong>Hacktivism:</strong> Political/social statement</li>
+                  <li><strong>Distraction:</strong> Cover for data theft</li>
+                  <li><strong>Testing:</strong> Probe defenses for future attack</li>
+                </ul>
+              </div>
+              <div class="card">
+                <h4 style="margin-bottom: 12px; color: var(--primary-700);">Sobeys Business Impact</h4>
+                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li><strong>Voilà Downtime:</strong> Lost grocery orders</li>
+                  <li><strong>Scene+ Unavailable:</strong> Customer frustration</li>
+                  <li><strong>Store Systems:</strong> POS/inventory disruption</li>
+                  <li><strong>Revenue Loss:</strong> $X per minute of downtime</li>
+                  <li><strong>Brand Damage:</strong> Customer trust erosion</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WHEN Section -->
+        <div class="section">
+          <div class="subsection">
+            <h2 class="subsection-title">⏰ WHEN to Alert on DDoS Indicators</h2>
+
+            <div class="card" style="margin-bottom: 16px;">
+              <div class="mermaid">
+flowchart TD
+    A[Traffic Anomaly Detected] --> B{What Type?}
+    
+    B -->|Volume Spike| C{How Much?}
+    B -->|Single Source Flood| D{Rate?}
+    B -->|Distributed Low-and-Slow| E{Pattern?}
+    
+    C -->|2σ above baseline| F[🟡 Monitor]
+    C -->|3σ above baseline| G[🟠 Alert - HIGH]
+    C -->|5σ+ above baseline| H[🔴 Alert - CRITICAL]
+    
+    D -->|>1000 req/min| I[🟠 Alert - Flood]
+    D -->|>5000 req/min| J[🔴 Alert - Attack]
+    
+    E -->|200+ IPs, <5 req each| K[🟠 Alert - Distributed]
+    E -->|Coordinated timing| L[🔴 Alert - Botnet]
+    
+    style H fill:#dc2626,color:#fff
+    style J fill:#dc2626,color:#fff
+    style L fill:#dc2626,color:#fff
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Indicator</th>
+                    <th>Threshold</th>
+                    <th>Severity</th>
+                    <th>Use Case</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">Block volume spike</td>
+                    <td>2σ above baseline</td>
+                    <td><span class="badge warning">Medium</span></td>
+                    <td>WAF-UC1</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Single IP flood</td>
+                    <td>>1000 req/min</td>
+                    <td><span class="badge error">High</span></td>
+                    <td>WAF-UC2</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Auth endpoint targeting</td>
+                    <td>>50 blocks on /login</td>
+                    <td><span class="badge error">High</span></td>
+                    <td>WAF-UC3</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Distributed attack</td>
+                    <td>200+ IPs, coordinated</td>
+                    <td><span class="badge error">High</span></td>
+                    <td>WAF-UC5</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Geographic anomaly</td>
+                    <td>Unusual country + high volume</td>
+                    <td><span class="badge warning">Medium</span></td>
+                    <td>WAF-UC6</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- WHERE Section -->
+        <div class="section">
+          <div class="subsection">
+            <h2 class="subsection-title">📍 WHERE Does DDoS Data Come From?</h2>
+
+            <div class="card" style="margin-bottom: 16px;">
+              <div class="mermaid">
+flowchart LR
+    subgraph Internet
+        A[Attack Traffic]
+        L[Legitimate Traffic]
+    end
+    
+    subgraph Akamai[Akamai Edge Network]
+        K[Kona Site Defender<br/>WAF + DDoS]
+        P[Prolexic<br/>L3/L4 DDoS]
+    end
+    
+    subgraph Logging
+        S1[SIEM API<br/>L7 Events]
+        S2[Summary Reports<br/>L3/L4 Events]
+    end
+    
+    subgraph Splunk
+        SP[index=akamai<br/>sourcetype=akamai:siem]
+    end
+    
+    A --> Akamai
+    L --> Akamai
+    
+    K -->|Per-request logs| S1
+    P -->|Aggregated stats| S2
+    
+    S1 --> SP
+    
+    style SP fill:#65a637,color:#fff
+              </div>
+            </div>
+
+            <div class="grid grid-2">
+              <div class="card bordered-left akamai">
+                <h4 style="margin-bottom: 8px;">What We See in Splunk</h4>
+                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li>Individual blocked/challenged requests</li>
+                  <li>Source IPs and geolocation</li>
+                  <li>Target URIs and HTTP methods</li>
+                  <li>WAF rule matches</li>
+                  <li>Rate limiting triggers</li>
+                </ul>
+              </div>
+              <div class="card bordered-left info">
+                <h4 style="margin-bottom: 8px;">What We Don't See</h4>
+                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li>L3/L4 attacks (blocked at network edge)</li>
+                  <li>Traffic dropped before WAF</li>
+                  <li>Full packet captures</li>
+                  <li>Real-time bandwidth metrics</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HOW Section -->
+        <div class="section">
+          <div class="subsection">
+            <h2 class="subsection-title">🔧 HOW to Detect DDoS in Splunk</h2>
+
+            <div class="card" style="margin-bottom: 16px;">
+              <div class="mermaid">
+flowchart TD
+    A[Collect WAF Logs] --> B[Aggregate by Time Window]
+    B --> C[Calculate Baselines]
+    C --> D[Compare Current vs Baseline]
+    D --> E{Anomaly?}
+    
+    E -->|No| F[Normal Operations]
+    E -->|Yes| G[Analyze Pattern]
+    
+    G --> H{Single Source?}
+    H -->|Yes| I[WAF-UC2: Flood Detection]
+    H -->|No| J{Coordinated?}
+    
+    J -->|Yes| K[WAF-UC5: Distributed Attack]
+    J -->|No| L[WAF-UC1: Volume Anomaly]
+    
+    I --> M[🔴 ALERT]
+    K --> M
+    L --> M
+    
+    style M fill:#dc2626,color:#fff
+              </div>
+            </div>
+
+            <h4 style="margin-bottom: 12px;">Key Detection Patterns</h4>
+
+            <div class="accordion">
+              <div class="accordion-item open">
+                <button class="accordion-header">
+                  <span>Pattern 1: Volume-Based (Statistical Anomaly)</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <p>Compare current traffic to historical baseline using standard deviation.</p>
+                  <div class="code-block" style="margin-top: 12px;">
+                    <div class="code-body">
+                      <pre><code>``` Volume-based DDoS indicator
+index=akamai sourcetype=akamai:siem earliest=-10m
+| bin _time span=5m
+| stats count as current_count BY _time
+| eventstats avg(current_count) as baseline stdev(current_count) as stdev
+| eval zscore = (current_count - baseline) / stdev
+| where zscore > 2
+| eval severity = case(zscore > 5, "CRITICAL", zscore > 3, "HIGH", 1=1, "MEDIUM")</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Pattern 2: Rate-Based (Per-Source Threshold)</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <p>Identify single sources exceeding request rate limits.</p>
+                  <div class="code-block" style="margin-top: 12px;">
+                    <div class="code-body">
+                      <pre><code>``` Rate-based detection per source
+index=akamai sourcetype=akamai:siem earliest=-5m
+| spath path=attackData.clientIP output=src
+| bin _time span=1m
+| stats count as requests_per_min BY src _time
+| where requests_per_min > 1000
+| eval severity = case(requests_per_min > 5000, "CRITICAL", 1=1, "HIGH")</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Pattern 3: Distribution-Based (Many Sources, Low Volume Each)</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <p>Detect coordinated attacks from many IPs with individually low request counts.</p>
+                  <div class="code-block" style="margin-top: 12px;">
+                    <div class="code-body">
+                      <pre><code>``` Distributed low-and-slow attack
+index=akamai sourcetype=akamai:siem earliest=-10m
+| spath path=attackData.clientIP output=src
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| bin _time span=5m
+| stats count as total_blocks dc(src) as unique_sources BY _time
+| where unique_sources > 200 AND total_blocks > 500
+| eval avg_per_source = round(total_blocks / unique_sources, 1)
+| where avg_per_source < 5  ``` Low volume per source = distributed
+| eval alert = "Distributed DDoS - ".unique_sources." sources, "avg_per_source." req each"</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DDoS vs Legitimate Spikes -->
+        <div class="section">
+          <div class="subsection">
+            <h2 class="subsection-title">DDoS vs Legitimate Traffic Spikes</h2>
+
+            <div class="callout warning" style="margin-bottom: 16px;">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+              <div class="callout-content">
+                <div class="callout-title">Critical Distinction</div>
+                <div class="callout-body">Not every traffic spike is an attack. Sobeys may experience legitimate spikes during sales events, holiday shopping, or marketing campaigns.</div>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Indicator</th>
+                    <th>DDoS Attack</th>
+                    <th>Legitimate Spike</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">Block Ratio</td>
+                    <td>High (>30% blocked)</td>
+                    <td>Low (<5% blocked)</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Source Distribution</td>
+                    <td>Few sources OR unusual countries</td>
+                    <td>Many Canadian IPs</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Target URIs</td>
+                    <td>Specific endpoints (/login, /api)</td>
+                    <td>Diverse pages</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">User Agents</td>
+                    <td>Fake/missing/identical</td>
+                    <td>Real browsers, diverse</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Request Patterns</td>
+                    <td>Repetitive, automated</td>
+                    <td>Human-like behavior</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Timing</td>
+                    <td>Sudden, sustained</td>
+                    <td>Correlates with promotion</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

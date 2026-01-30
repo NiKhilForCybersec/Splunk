@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Runbooks | Sobeys Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="sidebar-logo-text">
+            <h1>Sobeys Detection</h1>
+            <span>Engineering Command Center</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="decision-trees.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Decision Trees</span>
+          </a>
+          <a href="troubleshooting.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+            <span>Troubleshooting Hub</span>
+          </a>
+          <a href="runbooks.html" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+            <span>SOC Runbooks</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">SOC Runbooks</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <span class="badge success">13 Runbooks</span>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <!-- Header -->
+        <div class="section">
+          <div class="section-header">
+            <h1 class="section-title">SOC Runbooks</h1>
+            <p class="section-subtitle">Step-by-step response procedures for each detection use case</p>
+          </div>
+        </div>
+
+        <!-- Runbook Index -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Runbook Index</h3>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Runbook ID</th>
+                    <th>Alert Name</th>
+                    <th>Severity</th>
+                    <th>SLA</th>
+                    <th>Use Case</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight"><a href="#rb-waf-01">RB-WAF-01</a></td>
+                    <td>WAF Block Volume Anomaly</td>
+                    <td><span class="badge warning">Medium</span></td>
+                    <td>4 hours</td>
+                    <td>WAF-UC1</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><a href="#rb-waf-02">RB-WAF-02</a></td>
+                    <td>Single Source Flood</td>
+                    <td><span class="badge error">High</span></td>
+                    <td>30 minutes</td>
+                    <td>WAF-UC2</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><a href="#rb-waf-03">RB-WAF-03</a></td>
+                    <td>Authentication Endpoint Attack</td>
+                    <td><span class="badge error">High</span></td>
+                    <td>30 minutes</td>
+                    <td>WAF-UC3</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><a href="#rb-waf-04">RB-WAF-04</a></td>
+                    <td>SQLi/XSS Campaign</td>
+                    <td><span class="badge critical">Critical</span></td>
+                    <td>15 minutes</td>
+                    <td>WAF-UC4</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><a href="#rb-mfa-01">RB-MFA-01</a></td>
+                    <td>MFA Fatigue Attack</td>
+                    <td><span class="badge critical">Critical</span></td>
+                    <td>15 minutes</td>
+                    <td>MFA-UC1</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><a href="#rb-mfa-02">RB-MFA-02</a></td>
+                    <td>MFA Failure Burst → Success</td>
+                    <td><span class="badge error">High</span></td>
+                    <td>30 minutes</td>
+                    <td>MFA-UC2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- RB-WAF-01 -->
+        <div class="section" id="rb-waf-01">
+          <div class="subsection">
+            <h3 class="subsection-title">RB-WAF-01: WAF Block Volume Anomaly</h3>
+
+            <div class="card">
+              <div class="grid grid-2" style="margin-bottom: 16px;">
+                <div>
+                  <h4 style="margin-bottom: 8px; font-weight: 600;">Alert Information</h4>
+                  <ul style="font-size: 0.875rem; color: var(--gray-600);">
+                    <li><strong>Severity:</strong> Medium (dynamic)</li>
+                    <li><strong>MITRE ATT&CK:</strong> T1190</li>
+                    <li><strong>Data Source:</strong> Akamai SIEM</li>
+                    <li><strong>SLA:</strong> Acknowledge 4h, Resolve 24h</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 style="margin-bottom: 8px; font-weight: 600;">Escalation Path</h4>
+                  <ul style="font-size: 0.875rem; color: var(--gray-600);">
+                    <li><strong>Tier 1:</strong> Initial triage, FP check</li>
+                    <li><strong>Tier 2:</strong> Deep analysis, rule review</li>
+                    <li><strong>Escalate if:</strong> Confirmed campaign</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion" style="margin-top: 16px;">
+              <div class="accordion-item open">
+                <button class="accordion-header">
+                  <span>Step 1: Initial Triage (5 minutes)</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <ol style="margin-left: 20px; color: var(--gray-600);">
+                    <li>Verify alert is not a known false positive</li>
+                    <li>Check block count and deviation — is this significant?</li>
+                    <li>Review unique_sources — single vs distributed attack?</li>
+                    <li>Check attack_types — what rules are triggering?</li>
+                  </ol>
+                  <div class="code-block" style="margin-top: 12px;">
+                    <div class="code-header"><span class="code-title">Pivot Query</span></div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| spath path=attackData.clientIP output=src
+| spath path=attackData.rules{}.ruleTag output=category
+| stats count BY src category
+| sort - count</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Step 2: Source Analysis (10 minutes)</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <ol style="margin-left: 20px; color: var(--gray-600);">
+                    <li>Identify top source IPs contributing to spike</li>
+                    <li>Check IP reputation (AbuseIPDB, VirusTotal)</li>
+                    <li>Determine if sources are known (internal, partner, scanner)</li>
+                    <li>Check geographic distribution</li>
+                  </ol>
+                  <div class="code-block" style="margin-top: 12px;">
+                    <div class="code-header"><span class="code-title">Top Sources Query</span></div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
+| spath path=attackData.rules{}.ruleAction output=action
+| where action="deny"
+| spath path=attackData.clientIP output=src
+| spath path=geo.country output=country
+| spath path=geo.asn output=asn
+| stats count as blocks BY src country asn
+| sort - blocks | head 20</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Step 3: Response Actions</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="grid grid-2">
+                    <div>
+                      <h5 style="font-weight: 600; margin-bottom: 8px; color: var(--success-600);">True Positive Actions</h5>
+                      <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                        <li>Document source IPs, attack types, targets</li>
+                        <li>Consider temporary IP block in Akamai</li>
+                        <li>Notify application owners if targeted</li>
+                        <li>Escalate to IR if coordinated campaign</li>
+                        <li>Create incident ticket</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 style="font-weight: 600; margin-bottom: 8px; color: var(--warning-600);">False Positive Actions</h5>
+                      <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                        <li>Document FP reason</li>
+                        <li>Add to allowlist if recurring</li>
+                        <li>Adjust threshold if systematic</li>
+                        <li>Close alert with FP disposition</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RB-WAF-02 -->
+        <div class="section" id="rb-waf-02">
+          <div class="subsection">
+            <h3 class="subsection-title">RB-WAF-02: Single Source Flood</h3>
+
+            <div class="card">
+              <div class="grid grid-2" style="margin-bottom: 16px;">
+                <div>
+                  <h4 style="margin-bottom: 8px; font-weight: 600;">Alert Information</h4>
+                  <ul style="font-size: 0.875rem; color: var(--gray-600);">
+                    <li><strong>Severity:</strong> High</li>
+                    <li><strong>MITRE ATT&CK:</strong> T1498, T1499</li>
+                    <li><strong>Data Source:</strong> Akamai SIEM</li>
+                    <li><strong>SLA:</strong> Acknowledge 30m, Resolve 4h</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 style="margin-bottom: 8px; font-weight: 600;">Threshold Criteria</h4>
+                  <ul style="font-size: 0.875rem; color: var(--gray-600);">
+                    <li>&gt;500 requests from single IP, OR</li>
+                    <li>&gt;100 blocks from single IP, OR</li>
+                    <li>&gt;50% block ratio from single IP</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion" style="margin-top: 16px;">
+              <div class="accordion-item open">
+                <button class="accordion-header">
+                  <span>Step 1: Assess Attack Severity (5 minutes)</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="callout error" style="margin-bottom: 12px;">
+                    <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <div class="callout-content">
+                      <div class="callout-title">High Volume = Potential DDoS</div>
+                      <div class="callout-body">If single source is generating &gt;1000 req/min, this may be an active DDoS attempt. Consider immediate block.</div>
+                    </div>
+                  </div>
+                  <ol style="margin-left: 20px; color: var(--gray-600);">
+                    <li>Check total request volume from source IP</li>
+                    <li>Calculate requests per minute rate</li>
+                    <li>Review attack categories being triggered</li>
+                    <li>Check if application is experiencing degradation</li>
+                  </ol>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Step 2: IP Intelligence Lookup (5 minutes)</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <ol style="margin-left: 20px; color: var(--gray-600);">
+                    <li>Check AbuseIPDB for IP reputation</li>
+                    <li>Check VirusTotal for known malicious activity</li>
+                    <li>Verify ASN ownership (hosting provider, residential, enterprise)</li>
+                    <li>Check if IP is in known VPN/proxy/Tor range</li>
+                  </ol>
+                  <div class="table-container" style="margin-top: 12px;">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Source Type</th>
+                          <th>Risk Level</th>
+                          <th>Recommended Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Known hosting provider</td>
+                          <td><span class="badge error">High</span></td>
+                          <td>Likely malicious — consider blocking</td>
+                        </tr>
+                        <tr>
+                          <td>VPN/Proxy service</td>
+                          <td><span class="badge warning">Medium</span></td>
+                          <td>Could be attacker hiding — monitor closely</td>
+                        </tr>
+                        <tr>
+                          <td>Residential ISP</td>
+                          <td><span class="badge warning">Medium</span></td>
+                          <td>May be compromised device — rate limit</td>
+                        </tr>
+                        <tr>
+                          <td>Enterprise network</td>
+                          <td><span class="badge info">Low</span></td>
+                          <td>Could be misconfigured scanner — verify</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Step 3: Containment Actions</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="timeline">
+                    <div class="timeline-item">
+                      <div class="timeline-content">
+                        <h4 class="timeline-title">Immediate (if &gt;1000 req/min)</h4>
+                        <p class="timeline-body">Request Akamai admin to temporarily block IP. Document ticket number.</p>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-content">
+                        <h4 class="timeline-title">Short-term (24-48 hours)</h4>
+                        <p class="timeline-body">Implement IP-level rate limiting in Akamai policy. Monitor for evasion (new IPs).</p>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-content">
+                        <h4 class="timeline-title">Long-term</h4>
+                        <p class="timeline-body">Add IP/range to permanent blocklist if confirmed malicious. Update threat intel feeds.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RB-MFA-01 -->
+        <div class="section" id="rb-mfa-01">
+          <div class="subsection">
+            <h3 class="subsection-title">RB-MFA-01: MFA Fatigue Attack</h3>
+
+            <div class="callout critical" style="margin-bottom: 16px;">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <div class="callout-content">
+                <div class="callout-title">CRITICAL: If Denials + Success → Account Compromised</div>
+                <div class="callout-body">MFA denials followed by success indicates the attacker successfully socially engineered the user. <strong>Immediate account disable required.</strong></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="grid grid-2" style="margin-bottom: 16px;">
+                <div>
+                  <h4 style="margin-bottom: 8px; font-weight: 600;">Alert Information</h4>
+                  <ul style="font-size: 0.875rem; color: var(--gray-600);">
+                    <li><strong>Severity:</strong> CRITICAL</li>
+                    <li><strong>MITRE ATT&CK:</strong> T1621</li>
+                    <li><strong>Data Source:</strong> CyberArk (primary), Entra ID</li>
+                    <li><strong>SLA:</strong> Acknowledge 15m, Resolve 1h</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 style="margin-bottom: 8px; font-weight: 600;">Alert Patterns</h4>
+                  <ul style="font-size: 0.875rem; color: var(--gray-600);">
+                    <li><strong>Pattern A:</strong> ≥5 denials, no success → Active attack</li>
+                    <li><strong>Pattern B:</strong> ≥5 denials + success → Compromised</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-2" style="margin-top: 16px;">
+              <div class="card bordered-left critical">
+                <h4 style="margin-bottom: 12px; color: var(--error-600);">🔴 If Denials + Success (Compromised)</h4>
+                <ol style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li><strong>Immediately disable</strong> the user account</li>
+                  <li>Force password reset</li>
+                  <li>Revoke all active sessions</li>
+                  <li>Re-enroll MFA device</li>
+                  <li>Contact user via phone (NOT email/chat)</li>
+                  <li>Check for post-compromise activity</li>
+                  <li>Create IR ticket immediately</li>
+                  <li>Preserve logs for investigation</li>
+                </ol>
+              </div>
+
+              <div class="card bordered-left warning">
+                <h4 style="margin-bottom: 12px; color: var(--warning-600);">🟡 If Denials Only (Attack Blocked)</h4>
+                <ol style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li>Contact user immediately via phone</li>
+                  <li>Confirm they received unexpected prompts</li>
+                  <li>Force password reset (credentials leaked)</li>
+                  <li>Monitor for continued attempts</li>
+                  <li>Consider temporary account lock</li>
+                  <li>Document incident</li>
+                  <li>Security awareness reminder to user</li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="code-block" style="margin-top: 16px;">
+              <div class="code-header">
+                <span class="code-title">Post-Compromise Activity Check</span>
+                <span class="code-lang">SPL</span>
+              </div>
+              <div class="code-body">
+                <pre><code>``` Run IMMEDIATELY after compromise detection
+``` Replace USER_UPN with affected user
+
+index=azure sourcetype IN (azure:aad:signin, azure:aad:audit) 
+    "properties.userPrincipalName"="USER_UPN"
+    earliest=-24h
+| spath
+| eval event_type = case(
+    sourcetype=="azure:aad:signin", "Sign-in",
+    sourcetype=="azure:aad:audit", "Audit",
+    true(), "Other"
+)
+| eval activity = coalesce('properties.activityDisplayName', 'properties.appDisplayName')
+| eval status = coalesce('properties.result', 'properties.status.errorCode')
+| eval ip = 'properties.ipAddress'
+| eval location = 'properties.location.city'.", ".'properties.location.countryOrRegion'
+| table _time event_type activity status ip location
+| sort _time</code></pre>
+              </div>
+            </div>
+
+            <div class="callout warning" style="margin-top: 16px;">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+              <div class="callout-content">
+                <div class="callout-title">Never Auto-Close MFA Alerts</div>
+                <div class="callout-body">Always verify with user via phone before closing as FP. An attacker could claim "phone issues" if contacted via potentially compromised channels.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Response SLA Matrix -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Response SLA Matrix</h3>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Severity</th>
+                    <th>Acknowledge</th>
+                    <th>Initial Response</th>
+                    <th>Resolution</th>
+                    <th>Examples</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="badge critical">Critical</span></td>
+                    <td>15 minutes</td>
+                    <td>30 minutes</td>
+                    <td>4 hours</td>
+                    <td>MFA compromise, SQLi success, active data exfil</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge error">High</span></td>
+                    <td>30 minutes</td>
+                    <td>1 hour</td>
+                    <td>8 hours</td>
+                    <td>Single source flood, auth endpoint attack, MFA bombing</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge warning">Medium</span></td>
+                    <td>4 hours</td>
+                    <td>8 hours</td>
+                    <td>24 hours</td>
+                    <td>Block volume anomaly, geographic anomaly</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge info">Low</span></td>
+                    <td>24 hours</td>
+                    <td>48 hours</td>
+                    <td>72 hours</td>
+                    <td>Informational alerts, minor anomalies</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disposition Codes -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Alert Disposition Codes</h3>
+
+            <div class="grid grid-2">
+              <div class="card">
+                <h4 style="margin-bottom: 12px;">True Positive Dispositions</h4>
+                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li><strong>TP-BLOCKED:</strong> Attack detected and blocked</li>
+                  <li><strong>TP-CONTAINED:</strong> Attack detected, containment actions taken</li>
+                  <li><strong>TP-ESCALATED:</strong> Escalated to Incident Response</li>
+                  <li><strong>TP-COMPROMISED:</strong> Confirmed compromise</li>
+                </ul>
+              </div>
+              <div class="card">
+                <h4 style="margin-bottom: 12px;">False Positive Dispositions</h4>
+                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li><strong>FP-SCANNER:</strong> Legitimate security scanner</li>
+                  <li><strong>FP-PARTNER:</strong> Known partner/vendor traffic</li>
+                  <li><strong>FP-THRESHOLD:</strong> Threshold too sensitive</li>
+                  <li><strong>FP-BENIGN:</strong> Confirmed benign activity</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Escalation Contacts -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Escalation Contacts</h3>
+
+            <div class="grid grid-3">
+              <div class="card bordered-left primary">
+                <h4 style="margin-bottom: 8px;">Tier 2 SOC</h4>
+                <p style="font-size: 0.875rem; color: var(--gray-600);">Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="46322f2334746b35292506352924233f356825292b">[email&#160;protected]</a><br>Slack: #soc-escalations<br>On-call: [Phone]</p>
+              </div>
+              <div class="card bordered-left error">
+                <h4 style="margin-bottom: 8px;">Incident Response</h4>
+                <p style="font-size: 0.875rem; color: var(--gray-600);">Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="69001b291a060b0c101a470a0604">[email&#160;protected]</a><br>Slack: #incident-response<br>On-call: [Phone]</p>
+              </div>
+              <div class="card bordered-left info">
+                <h4 style="margin-bottom: 8px;">Platform Admins</h4>
+                <p style="font-size: 0.875rem; color: var(--gr

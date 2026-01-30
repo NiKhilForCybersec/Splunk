@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decision Trees | Sobeys Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="sidebar-logo-text">
+            <h1>Sobeys Detection</h1>
+            <span>Engineering Command Center</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="decision-trees.html" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Decision Trees</span>
+          </a>
+          <a href="troubleshooting.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+            <span>Troubleshooting Hub</span>
+          </a>
+          <a href="runbooks.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+            <span>SOC Runbooks</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Decision Trees</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <span class="badge success">25+ Decision Trees</span>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <!-- Header -->
+        <div class="section">
+          <div class="section-header">
+            <h1 class="section-title">Decision Trees</h1>
+            <p class="section-subtitle">Guided flowcharts for complex decisions, triage, and troubleshooting scenarios</p>
+          </div>
+        </div>
+
+        <!-- Navigation Cards -->
+        <div class="section">
+          <div class="grid grid-4">
+            <a href="#data-validation" class="card clickable">
+              <div class="card-icon primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/></svg>
+              </div>
+              <h4 style="margin-top: 12px; font-size: 0.9375rem;">Data Validation</h4>
+              <p style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 4px;">Is the data correct?</p>
+            </a>
+            <a href="#threshold-selection" class="card clickable">
+              <div class="card-icon warning">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+              <h4 style="margin-top: 12px; font-size: 0.9375rem;">Threshold Selection</h4>
+              <p style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 4px;">Which threshold method?</p>
+            </a>
+            <a href="#alert-triage" class="card clickable">
+              <div class="card-icon error">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+              </div>
+              <h4 style="margin-top: 12px; font-size: 0.9375rem;">Alert Triage</h4>
+              <p style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 4px;">TP or FP?</p>
+            </a>
+            <a href="#go-live" class="card clickable">
+              <div class="card-icon success">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <h4 style="margin-top: 12px; font-size: 0.9375rem;">Go-Live Readiness</h4>
+              <p style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 4px;">Ready to deploy?</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- DT1: Data Validation -->
+        <div class="section" id="data-validation">
+          <div class="subsection">
+            <h3 class="subsection-title">DT-01: Data Validation Decision Tree</h3>
+
+            <div class="decision-tree">
+              <div class="decision-step">
+                <div class="decision-number">1</div>
+                <div class="decision-content">
+                  <p><strong>Is data present in the expected index?</strong></p>
+                  <code>index=[expected] sourcetype=[expected] | stats count</code>
+                  <p class="decision-outcome success">✅ Yes (count > 0) → Continue to Step 2</p>
+                  <p class="decision-outcome error">❌ No (count = 0) → Escalate: Data not onboarded. Contact Splunk admin.</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">2</div>
+                <div class="decision-content">
+                  <p><strong>Is data recent (within last hour)?</strong></p>
+                  <code>index=[expected] sourcetype=[expected] earliest=-1h | stats count</code>
+                  <p class="decision-outcome success">✅ Yes → Continue to Step 3</p>
+                  <p class="decision-outcome warning">⚠️ No recent data → Check data freshness, may have latency issues</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">3</div>
+                <div class="decision-content">
+                  <p><strong>Are expected fields being extracted?</strong></p>
+                  <code>index=[expected] sourcetype=[expected] | head 100 | fieldsummary</code>
+                  <p class="decision-outcome success">✅ Fields present with high extraction rate → Continue to Step 4</p>
+                  <p class="decision-outcome warning">⚠️ Fields missing or low extraction → Check props.conf, may need custom extractions</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">4</div>
+                <div class="decision-content">
+                  <p><strong>Is the timestamp extracted correctly?</strong></p>
+                  <code>... | eval time_diff = abs(_time - _indextime) | where time_diff > 300</code>
+                  <p class="decision-outcome success">✅ Timestamps accurate (time_diff < 300 seconds) → Data validated!</p>
+                  <p class="decision-outcome warning">⚠️ Timestamp issues → Check TIME_FORMAT in props.conf</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">5</div>
+                <div class="decision-content">
+                  <p><strong>Does data volume match expectations?</strong></p>
+                  <code>... | timechart span=1h count | stats avg(count) as avg_hourly</code>
+                  <p class="decision-outcome success">✅ Volume reasonable → DATA VALIDATED ✓</p>
+                  <p class="decision-outcome warning">⚠️ Volume too low/high → Investigate with data owner</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DT2: Threshold Selection -->
+        <div class="section" id="threshold-selection">
+          <div class="subsection">
+            <h3 class="subsection-title">DT-02: Threshold Selection Decision Tree</h3>
+
+            <div class="callout info">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <div class="callout-content">
+                <div class="callout-title">Threshold Selection Philosophy</div>
+                <div class="callout-body">Always use data-driven thresholds over arbitrary numbers. The right threshold depends on data distribution, acceptable false positive rate, and attack severity.</div>
+              </div>
+            </div>
+
+            <div class="decision-tree">
+              <div class="decision-step">
+                <div class="decision-number">1</div>
+                <div class="decision-content">
+                  <p><strong>Is the metric normally distributed?</strong></p>
+                  <p>Run a histogram to check distribution shape</p>
+                  <code>... | stats count as events BY value | sort value</code>
+                  <p class="decision-outcome success">✅ Bell curve shape → Use Standard Deviation method (mean + Nσ)</p>
+                  <p class="decision-outcome warning">⚠️ Skewed/Long tail → Use Percentile method (P95, P99)</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">2</div>
+                <div class="decision-content">
+                  <p><strong>For Standard Deviation method — How sensitive should detection be?</strong></p>
+                  <div style="margin-top: 12px;">
+                    <span class="badge success" style="margin-right: 8px;">Low sensitivity: mean + 3σ</span>
+                    <span class="badge warning" style="margin-right: 8px;">Medium: mean + 2σ</span>
+                    <span class="badge error">High sensitivity: mean + 1.5σ</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">3</div>
+                <div class="decision-content">
+                  <p><strong>For Percentile method — Choose based on FP tolerance</strong></p>
+                  <div style="margin-top: 12px;">
+                    <span class="badge success" style="margin-right: 8px;">P99 = Low FPs, may miss attacks</span>
+                    <span class="badge warning" style="margin-right: 8px;">P95 = Balanced (recommended)</span>
+                    <span class="badge error">P90 = More alerts, more FPs</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">4</div>
+                <div class="decision-content">
+                  <p><strong>Always add a minimum threshold floor</strong></p>
+                  <p>Prevent alerting on statistically significant but operationally irrelevant events</p>
+                  <code>| where metric > threshold AND metric > minimum_floor</code>
+                  <p class="decision-outcome success">Example: Alert on anomaly AND at least 50 events (not 2 vs. baseline of 0)</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">5</div>
+                <div class="decision-content">
+                  <p><strong>Consider time-of-day and day-of-week variations</strong></p>
+                  <p>Business hours may have different baselines than nights/weekends</p>
+                  <code>| eval hour = strftime(_time, "%H") | eval dow = strftime(_time, "%w")
+| eval is_business_hours = if(hour>=9 AND hour<=17 AND dow>=1 AND dow<=5, 1, 0)</code>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-container" style="margin-top: 20px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Detection Type</th>
+                    <th>Recommended Method</th>
+                    <th>Example Threshold</th>
+                    <th>Minimum Floor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>WAF Block Volume</td>
+                    <td>Standard Deviation (2σ)</td>
+                    <td>mean + 2 * stdev</td>
+                    <td>50 events</td>
+                  </tr>
+                  <tr>
+                    <td>Single Source Flood</td>
+                    <td>Static + Ratio</td>
+                    <td>500 requests OR 80% block rate</td>
+                    <td>100 events</td>
+                  </tr>
+                  <tr>
+                    <td>MFA Fatigue</td>
+                    <td>Static (count)</td>
+                    <td>5 denials</td>
+                    <td>N/A (count-based)</td>
+                  </tr>
+                  <tr>
+                    <td>Geographic Anomaly</td>
+                    <td>Baseline comparison</td>
+                    <td>Country not in 90-day baseline</td>
+                    <td>3 events from country</td>
+                  </tr>
+                  <tr>
+                    <td>Impossible Travel</td>
+                    <td>Calculated (distance/time)</td>
+                    <td>Speed > 800 km/h</td>
+                    <td>N/A (physics-based)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- DT3: Alert Triage -->
+        <div class="section" id="alert-triage">
+          <div class="subsection">
+            <h3 class="subsection-title">DT-03: WAF Alert Triage Decision Tree</h3>
+
+            <div class="decision-tree">
+              <div class="decision-step">
+                <div class="decision-number">1</div>
+                <div class="decision-content">
+                  <p><strong>Is the source IP known/expected?</strong></p>
+                  <p>Check against allowlists: security scanners, partners, internal systems</p>
+                  <code>| lookup waf_allowlist.csv src OUTPUT is_allowlisted</code>
+                  <p class="decision-outcome success">✅ Allowlisted → Close as FP (document reason)</p>
+                  <p class="decision-outcome warning">⚠️ Unknown source → Continue to Step 2</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">2</div>
+                <div class="decision-content">
+                  <p><strong>What type of attack was detected?</strong></p>
+                  <div style="margin-top: 12px;">
+                    <span class="badge critical" style="margin-right: 8px;">SQLi/XSS → High priority, check for bypass</span>
+                    <span class="badge error" style="margin-right: 8px;">Brute force → Check account lockouts</span>
+                    <span class="badge warning">Scanning → Monitor, low urgency</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">3</div>
+                <div class="decision-content">
+                  <p><strong>Was the attack blocked or only detected?</strong></p>
+                  <code>| where action="deny" ``` Blocked
+| where action="alert" ``` Detected only (passed through)</code>
+                  <p class="decision-outcome success">✅ Blocked (deny) → Lower urgency, WAF did its job</p>
+                  <p class="decision-outcome error">❌ Alert only → Higher urgency, attack may have succeeded</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">4</div>
+                <div class="decision-content">
+                  <p><strong>Is the target endpoint sensitive?</strong></p>
+                  <code>| lookup sensitive_endpoints.csv endpoint OUTPUT is_sensitive</code>
+                  <p class="decision-outcome error">❌ Login/API/Admin endpoint → Escalate immediately</p>
+                  <p class="decision-outcome success">✅ Public content endpoint → Standard priority</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">5</div>
+                <div class="decision-content">
+                  <p><strong>Check IP reputation (if unknown)</strong></p>
+                  <p>Use AbuseIPDB, VirusTotal, or Akamai Client Reputation</p>
+                  <p class="decision-outcome error">❌ Bad reputation → TRUE POSITIVE, document and block</p>
+                  <p class="decision-outcome warning">⚠️ Clean reputation → May be compromised host, investigate further</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">6</div>
+                <div class="decision-content">
+                  <p><strong>Final Disposition</strong></p>
+                  <div class="grid grid-3" style="margin-top: 12px;">
+                    <div class="card bordered-left success">
+                      <h5 style="color: var(--success-600);">Close - False Positive</h5>
+                      <p style="font-size: 0.8125rem; color: var(--gray-600);">Known scanner, allowlisted, testing activity</p>
+                    </div>
+                    <div class="card bordered-left warning">
+                      <h5 style="color: var(--warning-600);">Monitor - Suspicious</h5>
+                      <p style="font-size: 0.8125rem; color: var(--gray-600);">Low confidence, add to watchlist</p>
+                    </div>
+                    <div class="card bordered-left error">
+                      <h5 style="color: var(--error-600);">Escalate - True Positive</h5>
+                      <p style="font-size: 0.8125rem; color: var(--gray-600);">Confirmed attack, create incident</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DT4: MFA Triage -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">DT-04: MFA Alert Triage Decision Tree</h3>
+
+            <div class="callout critical">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <div class="callout-content">
+                <div class="callout-title">MFA Fatigue Requires Urgent Response</div>
+                <div class="callout-body">If pattern shows denials followed by success, treat as <strong>account compromise until proven otherwise</strong>. Never close without user verification via out-of-band channel.</div>
+              </div>
+            </div>
+
+            <div class="decision-tree">
+              <div class="decision-step">
+                <div class="decision-number">1</div>
+                <div class="decision-content">
+                  <p><strong>Did the pattern include a successful MFA after multiple denials?</strong></p>
+                  <p class="decision-outcome error">❌ YES (denials + success) → CRITICAL: Assume compromised. Skip to emergency response.</p>
+                  <p class="decision-outcome warning">⚠️ NO (denials only) → Continue to Step 2</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">2</div>
+                <div class="decision-content">
+                  <p><strong>Is the user a privileged account?</strong></p>
+                  <code>| lookup privileged_users.csv user OUTPUT is_privileged role</code>
+                  <p class="decision-outcome error">❌ Privileged user (admin, IT, security) → Contact user immediately</p>
+                  <p class="decision-outcome warning">⚠️ Standard user → Still important, but lower urgency</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">3</div>
+                <div class="decision-content">
+                  <p><strong>Contact user via OUT-OF-BAND channel</strong></p>
+                  <p><strong>DO NOT</strong> use email, Teams, or Slack (attacker may have access)</p>
+                  <p><strong>DO</strong> call their phone directly</p>
+                  <div class="callout warning" style="margin-top: 12px;">
+                    <div class="callout-content">
+                      <div class="callout-body">Ask: "Did you receive unexpected MFA prompts? Did you approve any of them?" Document response verbatim.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">4</div>
+                <div class="decision-content">
+                  <p><strong>User confirms they DID NOT approve</strong></p>
+                  <p class="decision-outcome error">→ TRUE POSITIVE: Credentials are compromised</p>
+                  <ol style="margin-left: 20px; margin-top: 8px; font-size: 0.875rem;">
+                    <li>Force password reset</li>
+                    <li>Revoke all sessions</li>
+                    <li>Check for post-compromise activity</li>
+                    <li>Create incident ticket</li>
+                  </ol>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">5</div>
+                <div class="decision-content">
+                  <p><strong>User confirms they HAD issues (connectivity, confusion)</strong></p>
+                  <p class="decision-outcome success">→ FALSE POSITIVE: Legitimate user having issues</p>
+                  <ol style="margin-left: 20px; margin-top: 8px; font-size: 0.875rem;">
+                    <li>Document the FP reason</li>
+                    <li>Still recommend password change (credentials may be leaked)</li>
+                    <li>Provide security awareness reminder</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DT5: Go-Live Readiness -->
+        <div class="section" id="go-live">
+          <div class="subsection">
+            <h3 class="subsection-title">DT-05: Go-Live Readiness Checklist</h3>
+
+            <div class="checklist" data-checklist-id="go-live-readiness">
+              <div class="checklist-header">
+                <div class="checklist-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  Go-Live Readiness — All Items Required
+                </div>
+                <span class="checklist-count">0/15</span>
+              </div>
+              <div class="checklist-progress">
+                <div class="checklist-progress-bar" style="width: 0%"></div>
+              </div>
+              <div class="checklist-items">
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Detection Logic:</strong> All use cases have working SPL validated against live data</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Thresholds:</strong> Thresholds calculated from baseline data and documented</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Test Cases:</strong> All test cases executed and passed</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>False Positives:</strong> Known FP sources documented and mitigated (allowlists)</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Runbooks:</strong> SOC runbooks created and reviewed by SOC team</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Alert Actions:</strong> Email/ticketing actions configured and tested</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Suppression:</strong> Alert suppression rules configured to prevent flooding</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Performance:</strong> All searches complete in < 60 seconds</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Lookups:</strong> All lookup tables (privileged users, endpoints, allowlists) created and populated</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Data Validation:</strong> All data sources validated and recent</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Documentation:</strong> Technical documentation complete</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>KT:</strong> Knowledge transfer to SOC completed</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Client Approval:</strong> Client sign-off received</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Rollback Plan:</strong> Rollback procedure documented in case of issues</span>
+                </div>
+                <div class="checklist-item">
+                  <input type="checkbox" class="checklist-checkbox">
+                  <span class="checklist-text"><strong>Hypercare Plan:</strong> Post-go-live support plan established</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="callout success" style="margin-top: 20px;">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <div class="callout-content">
+                <div class="callout-title">Phased Enablement Recommended</div>
+                <div class="callout-body">
+                  <ol style="margin-left: 16px; margin-top: 8px;">
+                    <li><strong>Day 1:</strong> Enable Critical alerts only (MFA Fatigue with success)</li>
+                    <li><strong>Days 2-3:</strong> Add High severity alerts</li>
+                    <li><strong>Week 2:</strong> Enable remaining Medium/Low alerts</li>
+                    <li><strong>Week 3:</strong> Full production with all detections</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DT6: Detection Tuning -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">DT-06: Detection Tuning Decision Tree</h3>
+
+            <div class="decision-tree">
+              <div class="decision-step">
+                <div class="decision-number">1</div>
+                <div class="decision-content">
+                  <p><strong>What is the current false positive rate?</strong></p>
+                  <code>FP Rate = False Positives / Total Alerts × 100</code>
+                  <p class="decision-outcome success">✅ < 10% → Acceptable, minor tuning only</p>
+                  <p class="decision-outcome warning">⚠️ 10-30% → Needs tuning, continue to Step 2</p>
+                  <p class="decision-outcome error">❌ > 30% → Significant tuning required</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">2</div>
+                <div class="decision-content">
+                  <p><strong>Are FPs from identifiable sources?</strong></p>
+                  <p>Analyze FPs — do they share common characteristics?</p>
+                  <p class="decision-outcome success">✅ Yes, clear pattern → Add to allowlist</p>
+                  <p class="decision-outcome warning">⚠️ No clear pattern → Continue to Step 3</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">3</div>
+                <div class="decision-content">
+                  <p><strong>Is the threshold too low?</strong></p>
+                  <p>Compare current threshold to actual data distribution</p>
+                  <p class="decision-outcome success">✅ Threshold too aggressive → Increase threshold (2σ → 3σ)</p>
+                  <p class="decision-outcome warning">⚠️ Threshold seems reasonable → Continue to Step 4</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">4</div>
+                <div class="decision-content">
+                  <p><strong>Is the time window too narrow?</strong></p>
+                  <p>Narrow windows cause spiky data and more anomalies</p>
+                  <p class="decision-outcome success">✅ Try widening (5min → 10min, 10min → 15min)</p>
+                </div>
+              </div>
+
+              <div class="decision-step">
+                <div class="decision-number">5</div>
+                <div class="decision-content">
+                  <p><strong>Consider time-based filtering</strong></p>
+                  <p>Exclude known noisy time periods (maintenance windows, scanning schedules)</p>
+                  <code>| where NOT (strftime(_time, "%H:%M") >= "02:00" AND strftime(_time, "%H:%M") <= "04:00")</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

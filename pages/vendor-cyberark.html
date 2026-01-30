@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberArk Identity | Sobeys Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="sidebar-logo-text">
+            <h1>Sobeys Detection</h1>
+            <span>Engineering Command Center</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Vendor Deep Dives</div>
+          <a href="vendor-akamai.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Akamai WAF</span>
+          </a>
+          <a href="vendor-cyberark.html" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            <span>CyberArk Identity</span>
+          </a>
+          <a href="vendor-entra.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Microsoft Entra ID</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">CyberArk Identity</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <span class="badge critical">PRIMARY MFA</span>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <!-- Header -->
+        <div class="section">
+          <div class="section-header">
+            <h1 class="section-title">CyberArk Identity</h1>
+            <p class="section-subtitle">Primary MFA source for privileged users — field reference, event types, and SPL patterns</p>
+          </div>
+        </div>
+
+        <!-- Critical Notice -->
+        <div class="callout critical">
+          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div class="callout-content">
+            <div class="callout-title">CyberArk is PRIMARY for Privileged MFA</div>
+            <div class="callout-body">All MFA detections for privileged users (IT admins, DBAs, security team) should query CyberArk logs <strong>FIRST</strong>. Entra ID is secondary for standard corporate users.</div>
+          </div>
+        </div>
+
+        <!-- Day 1 Discovery Questions -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Day 1 Discovery Questions</h3>
+
+            <div class="callout warning">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+              <div class="callout-content">
+                <div class="callout-title">Ask These Questions on Day 1</div>
+                <div class="callout-body">The answers determine your detection architecture for MFA use cases.</div>
+              </div>
+            </div>
+
+            <div class="table-container" style="margin-top: 16px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Question</th>
+                    <th>Why It Matters</th>
+                    <th>Answer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">Which CyberArk product(s) are in use?</td>
+                    <td>Identity vs PAM have different log formats and event types</td>
+                    <td><input type="text" placeholder="Identity / PAM / Both" style="width: 100%; padding: 4px;"></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Is CyberArk the PRIMARY MFA for privileged users?</td>
+                    <td>Determines if CyberArk or Entra ID is source of truth for MFA events</td>
+                    <td><input type="text" placeholder="Yes / No / Federated" style="width: 100%; padding: 4px;"></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Are CyberArk logs already in Splunk?</td>
+                    <td>Determines onboarding effort</td>
+                    <td><input type="text" placeholder="Yes / No / Partial" style="width: 100%; padding: 4px;"></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">What index/sourcetype?</td>
+                    <td>Needed for all SPL queries</td>
+                    <td><input type="text" placeholder="index=cyberark sourcetype=..." style="width: 100%; padding: 4px;"></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Is CyberArk federated with Entra ID?</td>
+                    <td>If federated, need to correlate both log sources</td>
+                    <td><input type="text" placeholder="Standalone / Federated" style="width: 100%; padding: 4px;"></td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Who manages CyberArk?</td>
+                    <td>Your contact for questions and escalation</td>
+                    <td><input type="text" placeholder="Name / Team" style="width: 100%; padding: 4px;"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- CyberArk Products -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">CyberArk Product Portfolio</h3>
+
+            <div class="grid grid-2">
+              <div class="card bordered-left critical">
+                <h4 style="margin-bottom: 8px;">CyberArk Identity (Cloud IAM)</h4>
+                <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 12px;"><strong>Most likely for Sobeys MFA</strong></p>
+                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li>Workforce SSO and MFA</li>
+                  <li>Adaptive MFA based on risk</li>
+                  <li>Mobile Authenticator app</li>
+                  <li><strong>Sourcetype:</strong> <code>cyberark:identity:audit</code></li>
+                </ul>
+              </div>
+              <div class="card bordered-left info">
+                <h4 style="margin-bottom: 8px;">CyberArk PAM (Privileged Access Manager)</h4>
+                <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 12px;">For privileged session management</p>
+                <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
+                  <li>Vault for credential storage</li>
+                  <li>Session recording (PSM)</li>
+                  <li>Just-in-time access</li>
+                  <li><strong>Sourcetype:</strong> <code>cyberark:epv:cef</code></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Onboarding -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Data Onboarding</h3>
+
+            <div class="tabs">
+              <div class="tab-list">
+                <button class="tab-button active">Option A: HEC (Recommended)</button>
+                <button class="tab-button">Option B: Syslog/CEF</button>
+                <button class="tab-button">Verification Queries</button>
+              </div>
+
+              <div class="tab-panel active">
+                <div class="code-block">
+                  <div class="code-header">
+                    <span class="code-title">CyberArk Identity → Splunk HEC</span>
+                  </div>
+                  <div class="code-body">
+                    <pre><code>Step 1: Create HEC Token in Splunk Cloud
+────────────────────────────────────────
+Settings → Data Inputs → HTTP Event Collector → New Token
+• Name: cyberark-identity
+• Sourcetype: cyberark:identity:audit
+• Index: cyberark
+• Save token value
+
+Step 2: Configure CyberArk Identity Admin Portal
+─────────────────────────────────────────────────
+Settings → Integrations → SIEM
+• Enable Splunk integration
+• HEC Endpoint: https://&lt;your-splunk-cloud&gt;:8088/services/collector/event
+• HEC Token: &lt;from step 1&gt;
+• Select event types:
+  ✓ Cloud.Core.MfaAuthentication
+  ✓ Cloud.Core.MfaDenied
+  ✓ Cloud.Core.MfaTimeout
+  ✓ Cloud.Core.Login
+  ✓ Cloud.Core.LoginFailed
+  ✓ Cloud.Core.Logout
+  ✓ Cloud.Saml.Assertion (if SAML used)
+
+Step 3: Verify in Splunk
+─────────────────────────
+index=cyberark sourcetype=cyberark:identity:audit earliest=-1h | stats count</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-panel">
+                <div class="code-block">
+                  <div class="code-header">
+                    <span class="code-title">CyberArk → Syslog → Splunk</span>
+                  </div>
+                  <div class="code-body">
+                    <pre><code>Step 1: Configure CyberArk SIEM Export
+───────────────────────────────────────
+CyberArk PVWA → Administration → Options → SIEM Integration
+• Enable SIEM integration: Yes
+• Format: JSON (preferred) or CEF
+• Destination: Splunk syslog receiver IP:port
+• TLS: Enable if possible
+
+Step 2: Create Splunk TCP Input
+────────────────────────────────
+Settings → Data Inputs → TCP → New Local TCP
+• Port: 6514 (or your choice)
+• Sourcetype: cyberark:identity:audit
+• Index: cyberark
+• Connection Type: TLS (if available)
+
+Step 3: Verify Data
+────────────────────
+index=cyberark sourcetype=cyberark:identity:audit earliest=-1h | head 10</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-panel">
+                <div class="code-block">
+                  <div class="code-header">
+                    <span class="code-title">Data Verification Queries</span>
+                  </div>
+                  <div class="code-body">
+                    <pre><code>``` Check data is flowing
+index=cyberark sourcetype=cyberark:identity:audit earliest=-1h
+| stats count
+
+``` Check event types present
+index=cyberark sourcetype=cyberark:identity:audit earliest=-24h
+| stats count BY EventType
+| sort - count
+
+``` Check for MFA-specific events
+index=cyberark sourcetype=cyberark:identity:audit earliest=-24h
+    EventType IN ("Cloud.Core.MfaAuthentication", "Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout")
+| stats count BY EventType
+
+``` Check field extraction
+index=cyberark sourcetype=cyberark:identity:audit earliest=-1h
+| head 100
+| fieldsummary
+| where count > 0
+| table field count distinct_count
+
+``` Check data freshness
+index=cyberark sourcetype=cyberark:identity:audit
+| stats max(_time) as last_event
+| eval hours_ago = round((now() - last_event) / 3600, 1)
+| eval last_event_str = strftime(last_event, "%Y-%m-%d %H:%M:%S")
+| table last_event_str hours_ago</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Types -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">CyberArk Identity Event Types</h3>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>EventType</th>
+                    <th>Category</th>
+                    <th>Detection Relevance</th>
+                    <th>Use Case</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight"><code>Cloud.Core.MfaAuthentication</code></td>
+                    <td>MFA</td>
+                    <td><span class="badge success">Success</span></td>
+                    <td>MFA-UC1, UC2 (success after denials)</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>Cloud.Core.MfaDenied</code></td>
+                    <td>MFA</td>
+                    <td><span class="badge critical">Primary for Fatigue</span></td>
+                    <td>MFA-UC1 (fatigue detection)</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>Cloud.Core.MfaTimeout</code></td>
+                    <td>MFA</td>
+                    <td><span class="badge warning">Suspicious</span></td>
+                    <td>MFA-UC1 (may indicate fatigue)</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>Cloud.Core.Login</code></td>
+                    <td>Auth</td>
+                    <td><span class="badge success">Success</span></td>
+                    <td>UC3, UC4 (location/device)</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>Cloud.Core.LoginFailed</code></td>
+                    <td>Auth</td>
+                    <td><span class="badge warning">Failure</span></td>
+                    <td>Credential attacks</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>Cloud.Core.Logout</code></td>
+                    <td>Auth</td>
+                    <td><span class="badge info">Informational</span></td>
+                    <td>Session tracking</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>Cloud.Saml.Assertion</code></td>
+                    <td>SAML</td>
+                    <td><span class="badge info">SSO</span></td>
+                    <td>Federated login tracking</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Field Reference -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Field Reference</h3>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Field</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                    <th>CIM Mapping</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight"><code>EventType</code></td>
+                    <td>Type of event</td>
+                    <td>Cloud.Core.MfaDenied</td>
+                    <td>action</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>ActorId</code></td>
+                    <td>User identifier (email or UPN)</td>
+                    <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="78191c151116380b171a1d010b561b1715">[email&#160;protected]</a></td>
+                    <td>user</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>Result</code></td>
+                    <td>Event outcome</td>
+                    <td>Success, Failure, Denied</td>
+                    <td>action</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>ResultReason</code></td>
+                    <td>Reason for result</td>
+                    <td>User denied push notification</td>
+                    <td>reason</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>ClientIP</code></td>
+                    <td>Source IP address</td>
+                    <td>203.0.113.42</td>
+                    <td>src</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>City</code></td>
+                    <td>Geolocation city</td>
+                    <td>Toronto</td>
+                    <td>src_city</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>Country</code></td>
+                    <td>Geolocation country</td>
+                    <td>Canada</td>
+                    <td>src_country</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>AuthMethod</code></td>
+                    <td>MFA method used</td>
+                    <td>MobileAuthenticator, TOTP, SMS</td>
+                    <td>authentication_method</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>DeviceType</code></td>
+                    <td>Device type</td>
+                    <td>iOS, Android, Windows</td>
+                    <td>dest_type</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>TargetId</code></td>
+                    <td>Target application/resource</td>
+                    <td>CyberArk PAM, AWS Console</td>
+                    <td>app</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight"><code>EventTime</code></td>
+                    <td>Event timestamp (ISO 8601)</td>
+                    <td>2026-01-15T14:32:45.123Z</td>
+                    <td>_time</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- props.conf -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">props.conf Configuration</h3>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">props.conf for cyberark:identity:audit</span>
+              </div>
+              <div class="code-body">
+                <pre><code>[cyberark:identity:audit]
+# Timestamp Configuration
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%3N%Z
+TIME_PREFIX = "EventTime"\s*:\s*"
+MAX_TIMESTAMP_LOOKAHEAD = 50
+TZ = UTC
+
+# Parsing
+KV_MODE = json
+TRUNCATE = 0
+SHOULD_LINEMERGE = false
+
+# Field Aliases for CIM compliance
+FIELDALIAS-user = ActorId AS user
+FIELDALIAS-src = ClientIP AS src
+FIELDALIAS-app = TargetId AS app
+FIELDALIAS-src_city = City AS src_city
+FIELDALIAS-src_country = Country AS src_country
+FIELDALIAS-authentication_method = AuthMethod AS authentication_method
+
+# Calculated Fields
+EVAL-action = case(
+    Result=="Success", "success",
+    Result=="Failure", "failure",
+    Result=="Denied", "failure",
+    1=1, lower(Result)
+)
+EVAL-reason = ResultReason
+EVAL-vendor = "CyberArk"
+EVAL-product = "Identity"
+
+# MFA-specific calculated fields
+EVAL-mfa_result = case(
+    EventType=="Cloud.Core.MfaAuthentication" AND Result=="Success", "success",
+    EventType=="Cloud.Core.MfaDenied", "denied",
+    EventType=="Cloud.Core.MfaTimeout", "timeout",
+    1=1, "unknown"
+)</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MFA-UC1 SPL -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">MFA-UC1: MFA Fatigue Detection (CyberArk)</h3>
+
+            <div class="callout critical" style="margin-bottom: 16px;">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <div class="callout-content">
+                <div class="callout-title">Detection Logic</div>
+                <div class="callout-body">≥5 MFA denials within 10 minutes for a privileged user = MFA Fatigue attack. If followed by success = account compromised.</div>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Production SPL — CyberArk MFA Fatigue</span>
+              </div>
+              <div class="code-body">
+                <pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-15m
+    EventType IN ("Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout", "Cloud.Core.MfaAuthentication")
+| spath
+| eval user = ActorId
+| eval result = Result
+| eval mfa_event = case(
+    EventType=="Cloud.Core.MfaDenied", "denied",
+    EventType=="Cloud.Core.MfaTimeout", "timeout",
+    EventType=="Cloud.Core.MfaAuthentication" AND Result=="Success", "success",
+    1=1, "other"
+)
+
+``` Filter to privileged users only
+| lookup privileged_users.csv userPrincipalName AS user OUTPUT is_privileged role
+| where is_privileged="true"
+
+``` Aggregate by user within 10-minute window
+| bin _time span=10m
+| stats 
+    count(eval(mfa_event="denied")) as denial_count
+    count(eval(mfa_event="timeout")) as timeout_count
+    count(eval(mfa_event="success")) as success_count
+    earliest(_time) as first_event
+    latest(_time) as last_event
+    values(ClientIP) as source_ips
+    values(role) as user_role
+    BY user _time
+
+``` Apply thresholds
+| eval total_failures = denial_count + timeout_count
+| where total_failures >= 5
+
+``` Determine severity
+| eval has_success_after_denials = if(success_count > 0, "YES - COMPROMISED", "NO - Attack blocked by user")
+| eval severity = case(
+    success_count > 0, "CRITICAL",
+    total_failures >= 10, "HIGH",
+    total_failures >= 5, "HIGH",
+    1=1, "MEDIUM"
+)
+
+``` Format output
+| eval first_event = strftime(first_event, "%Y-%m-%d %H:%M:%S")
+| eval last_event = strftime(last_event, "%Y-%m-%d %H:%M:%S")
+| table user user_role denial_count timeout_count success_count has_success_after_denials severity source_ips first_event last_event</code></pre>
+              </div>
+            </div>
+
+            <div class="callout error" style="margin-top: 16px;">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <div class="callout-content">
+                <div class="callout-title">If has_success_after_denials = "YES"</div>
+                <div class="callout-body">
+                  <ol style="margin-left: 16px; font-size: 0.875rem;">
+                    <li><strong>Immediately disable</strong> the user account</li>
+                    <li>Revoke all active sessions</li>
+                    <li>Force password reset</li>
+                    <li>Re-enroll MFA device</li>
+                    <li>Contact user via phone (NOT email)</li>
+                    <li>Create IR ticket</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Events -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Sample Events</h3>
+
+            <div class="accordion">
+              <div class="accordion-item open">
+                <button class="accordion-header">
+                  <span>MFA Denied Event</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-body">
+                      <pre><code>{
+  "EventType": "Cloud.Core.MfaDenied",
+  "EventTime": "2026-01-15T14:32:45.123Z",
+  "ActorId": "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4b2a2f2622250b3824292e323865282426">[email&#160;protected]</a>",
+  "Result": "Denied",
+  "ResultReason": "User denied push notification",
+  "ClientIP": "203.0.113.42",
+  "City": "Toronto",
+  "Country": "Canada",
+  "AuthMethod": "MobileAuthenticator",
+  "DeviceType": "iOS",
+  "TargetId": "CyberArk PAM",
+  "SessionId": "sess_abc123"
+}</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>MFA Success Event</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-body">
+                      <pre><code>{
+  "EventType": "Cloud.Core.MfaAuthentication",
+  "EventTime": "2026-01-15T14:35:22.456Z",
+  "ActorId": "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="98f9fcf5f1f6d8ebf7fafde1ebb6fbf7f5">[email&#160;protected]</a>",
+  "Result": "Success",
+  "ResultReason": "MFA verification successful",
+  "ClientIP": "203.0.113.42",
+  "City": "Toronto",
+  "Country": "Canada",
+  "AuthMethod": "MobileAuthenticator",
+  "DeviceType": "iOS",
+  "TargetId": "CyberArk PAM",
+  "SessionId": "sess_abc123"
+}</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CyberArk + Entra Correlation -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">CyberArk + Entra ID Correlation</h3>
+
+            <p style="margin-bottom: 16px; color: var(--gray-600);">If CyberArk is federated with Entra ID, you may need to correlate events from both sources:</p>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Combined MFA Fatigue Detection (Both Sources)</span>
+              </div>
+              <div class="code-body">
+                <pre><code>``` Query both CyberArk and Entra ID, normalize, then combine
+(
+  index=cyberark sourcetype=cyberark:identity:audit earliest=-15m
+      EventType IN ("Cloud.Core.MfaDenied", "Cloud.Core.MfaAuthentication")
+  | eval user = ActorId
+  | eval src = ClientIP
+  | eval mfa_result = case(
+      EventType=="Cloud.Core.MfaDenied", "denied",
+      Result=="Success", "success",
+      1=1, "other"
+  )
+  | eval source_system = "CyberArk"
+)
+UNION
+(
+  index=azure sourcetype=azure:aad:signin earliest=-15m
+  | spath
+  | eval user = 'properties.userPrincipalName'
+  | eval src = 'properties.ipAddress'
+  | eval error_code = 'properties.status.errorCode'
+  | eval mfa_result = case(
+      error_code==500121, "denied",
+      error_code==0, "success",
+      1=1, "other"
+  )
+  | eval source_system = "EntraID"
+)
+| lookup privileged_users.csv userPrincipalName AS user OUTPUT is_privileged
+| where is_privileged="true"
+| bin _time span=10m
+| stats 
+    count(eval(mfa_result="denied")) as denials
+  

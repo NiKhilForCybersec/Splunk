@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glossary | Sobeys Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="sidebar-logo-text">
+            <h1>Sobeys Detection</h1>
+            <span>Engineering Command Center</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Reference</div>
+          <a href="spl-reference.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <span>SPL Reference</span>
+          </a>
+          <a href="glossary.html" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <span>Glossary</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Glossary</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <!-- Header -->
+        <div class="section">
+          <div class="section-header">
+            <h1 class="section-title">Glossary</h1>
+            <p class="section-subtitle">Terminology, acronyms, and definitions for detection engineering</p>
+          </div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" class="search-input" placeholder="Search glossary... (Ctrl+K)">
+        </div>
+
+        <!-- Quick Jump -->
+        <div class="section">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+            <a href="#section-a" class="btn secondary sm">A</a>
+            <a href="#section-b" class="btn secondary sm">B</a>
+            <a href="#section-c" class="btn secondary sm">C</a>
+            <a href="#section-d" class="btn secondary sm">D</a>
+            <a href="#section-e" class="btn secondary sm">E</a>
+            <a href="#section-f" class="btn secondary sm">F</a>
+            <a href="#section-h" class="btn secondary sm">H</a>
+            <a href="#section-i" class="btn secondary sm">I</a>
+            <a href="#section-k" class="btn secondary sm">K</a>
+            <a href="#section-l" class="btn secondary sm">L</a>
+            <a href="#section-m" class="btn secondary sm">M</a>
+            <a href="#section-o" class="btn secondary sm">O</a>
+            <a href="#section-p" class="btn secondary sm">P</a>
+            <a href="#section-r" class="btn secondary sm">R</a>
+            <a href="#section-s" class="btn secondary sm">S</a>
+            <a href="#section-t" class="btn secondary sm">T</a>
+            <a href="#section-w" class="btn secondary sm">W</a>
+          </div>
+        </div>
+
+        <!-- Glossary Terms -->
+        <div class="section">
+          <div id="section-a" class="subsection">
+            <h3 class="subsection-title">A</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">Akamai</td>
+                    <td>Content delivery network (CDN) and cloud security provider. Provides WAF (Kona Site Defender), Bot Manager, and DDoS protection services. The confirmed WAF vendor for Sobeys.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Alert</td>
+                    <td>A notification generated when a detection search finds events matching specified criteria. Can trigger email, ticket creation, or other actions.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Allowlist</td>
+                    <td>A list of known-good entities (IPs, users, applications) that should be excluded from detection logic to reduce false positives.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">ATO (Account Takeover)</td>
+                    <td>An attack where adversaries gain unauthorized access to a user account, typically through credential theft, phishing, or MFA bypass.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">ATT&CK (MITRE)</td>
+                    <td>Adversarial Tactics, Techniques, and Common Knowledge — a framework cataloging attacker behaviors. Used to map detections to known threat techniques.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-b" class="subsection">
+            <h3 class="subsection-title">B</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">Baseline</td>
+                    <td>A statistical measure of normal behavior (mean, standard deviation, percentile) calculated from historical data. Used to determine anomaly thresholds.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Bot</td>
+                    <td>Automated software that performs tasks over the internet. Can be legitimate (search crawlers) or malicious (scrapers, credential stuffers).</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Brute Force</td>
+                    <td>An attack that tries many passwords or passphrases hoping one is correct. MITRE ATT&CK T1110.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-c" class="subsection">
+            <h3 class="subsection-title">C</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">CIAM</td>
+                    <td>Customer Identity and Access Management — systems managing customer (not employee) authentication. SAP CDC (Gigya) is Sobeys' CIAM platform.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">CIM (Common Information Model)</td>
+                    <td>Splunk's data normalization framework. Maps vendor-specific fields to standard field names for cross-source analysis.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Credential Stuffing</td>
+                    <td>Attack using stolen username/password pairs from breaches to attempt logins. Relies on password reuse across sites.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">CyberArk</td>
+                    <td>Privileged access management (PAM) vendor. Provides MFA and session management for privileged users. Primary MFA source for privileged accounts at Sobeys.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-d" class="subsection">
+            <h3 class="subsection-title">D</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">DDoS</td>
+                    <td>Distributed Denial of Service — an attack using many sources to overwhelm a target with traffic, causing service disruption. MITRE ATT&CK T1498, T1499.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Detection</td>
+                    <td>A search or rule designed to identify security events of interest. In Splunk, typically a scheduled saved search with alert actions.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Detection Engineering</td>
+                    <td>The practice of designing, implementing, testing, and maintaining security detections in SIEM platforms.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-e" class="subsection">
+            <h3 class="subsection-title">E</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">Entra ID</td>
+                    <td>Microsoft's identity and access management service (formerly Azure Active Directory). Provides SSO, MFA, and conditional access for corporate users.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">ES (Enterprise Security)</td>
+                    <td>Splunk's security operations platform built on Splunk Enterprise. Provides Notable Events, Risk-Based Alerting, and MITRE mapping.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-f" class="subsection">
+            <h3 class="subsection-title">F</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">False Negative (FN)</td>
+                    <td>A missed detection — when malicious activity occurs but the detection fails to alert. Reduces detection coverage.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">False Positive (FP)</td>
+                    <td>A false alarm — when a detection fires on legitimate activity. Causes alert fatigue and wastes analyst time.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">FP Rate</td>
+                    <td>The percentage of alerts that are false positives. Target: &lt;10% for production detections.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-h" class="subsection">
+            <h3 class="subsection-title">H</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">HEC (HTTP Event Collector)</td>
+                    <td>Splunk's HTTP-based data ingestion endpoint. Allows sending events via HTTP/HTTPS without deploying a forwarder.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Hypercare</td>
+                    <td>The period immediately after go-live with elevated monitoring and support. Typically 1-2 weeks for rapid tuning.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-i" class="subsection">
+            <h3 class="subsection-title">I</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">Impossible Travel</td>
+                    <td>A detection pattern identifying logins from geographically distant locations in an impossible timeframe (e.g., 1000km in 5 minutes).</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Index</td>
+                    <td>A Splunk data repository. Events are stored in indexes with specific retention and access policies.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">IoC (Indicator of Compromise)</td>
+                    <td>Observable artifacts (IPs, domains, hashes) indicating potential malicious activity.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-k" class="subsection">
+            <h3 class="subsection-title">K</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">Kona Site Defender (KSD)</td>
+                    <td>Akamai's web application firewall product. Provides OWASP protection, custom rules, and rate limiting.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">KT (Knowledge Transfer)</td>
+                    <td>The process of documenting and transferring knowledge to the client team at project completion.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-l" class="subsection">
+            <h3 class="subsection-title">L</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">Latency</td>
+                    <td>The delay between when an event occurs and when it appears in Splunk. Affects detection timeliness.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">LFI (Local File Inclusion)</td>
+                    <td>A web attack exploiting vulnerable include mechanisms to read local files. Often targets /etc/passwd or config files.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Lookup</td>
+                    <td>A Splunk feature that enriches events with data from CSV or KV store tables. Used for allowlists, user enrichment, etc.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Low-and-Slow</td>
+                    <td>An attack technique using slow, distributed activity to evade detection thresholds.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-m" class="subsection">
+            <h3 class="subsection-title">M</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">MFA (Multi-Factor Authentication)</td>
+                    <td>Authentication requiring multiple factors (something you know, have, or are). Critical control against credential theft.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">MFA Fatigue</td>
+                    <td>An attack sending repeated MFA prompts to exhaust user patience, hoping they approve to stop notifications. MITRE ATT&CK T1621.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">MTTD (Mean Time to Detect)</td>
+                    <td>Average time between attack occurrence and detection. Key SOC metric.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">MTTR (Mean Time to Respond)</td>
+                    <td>Average time between detection and containment. Key SOC efficiency metric.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-o" class="subsection">
+            <h3 class="subsection-title">O</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">OWASP</td>
+                    <td>Open Web Application Security Project — a nonprofit producing security standards and tools. OWASP Top 10 lists common web vulnerabilities.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-p" class="subsection">
+            <h3 class="subsection-title">P</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">PAM (Privileged Access Management)</td>
+                    <td>Systems controlling access to privileged accounts. CyberArk is Sobeys' PAM solution.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">PIPEDA</td>
+                    <td>Personal Information Protection and Electronic Documents Act — Canada's federal privacy law. Governs how private sector handles personal information.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Props.conf</td>
+                    <td>Splunk configuration file defining how data is indexed and extracted. Controls timestamp, field extraction, and transforms.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Push Bombing</td>
+                    <td>See MFA Fatigue. Also called "prompt bombing."</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-r" class="subsection">
+            <h3 class="subsection-title">R</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">RCE (Remote Code Execution)</td>
+                    <td>A vulnerability allowing attackers to run arbitrary code on target systems. Critical severity.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Runbook</td>
+                    <td>A documented procedure for SOC analysts to follow when responding to a specific alert type.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-s" class="subsection">
+            <h3 class="subsection-title">S</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">SAP CDC (Gigya)</td>
+                    <td>SAP Customer Data Cloud (formerly Gigya) — Customer identity platform for consumer-facing applications.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">SIEM</td>
+                    <td>Security Information and Event Management — platform aggregating logs for security monitoring. Splunk is Sobeys' SIEM.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">SOC (Security Operations Center)</td>
+                    <td>The team responsible for monitoring and responding to security alerts.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Sourcetype</td>
+                    <td>Splunk's classification of data format. Determines parsing rules and field extractions.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">SPL (Search Processing Language)</td>
+                    <td>Splunk's query language for searching, filtering, and analyzing data.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">SQLi (SQL Injection)</td>
+                    <td>An attack injecting malicious SQL code to manipulate databases. OWASP Top 10 vulnerability.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Standard Deviation (σ)</td>
+                    <td>A statistical measure of variation from the mean. Used in threshold calculation: mean + 2σ catches ~95% of anomalies.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-t" class="subsection">
+            <h3 class="subsection-title">T</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">TA (Technology Add-on)</td>
+                    <td>A Splunk app providing data inputs, field extractions, and CIM mapping for specific technologies.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Threshold</td>
+                    <td>The boundary value that triggers an alert when exceeded. Can be static (fixed number) or dynamic (calculated from baseline).</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">TP Rate (True Positive Rate)</td>
+                    <td>The percentage of alerts that are genuine security events. Target: &gt;80% for production detections.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Tuning</td>
+                    <td>The process of adjusting detection logic, thresholds, or allowlists to improve accuracy.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="section-w" class="subsection">
+            <h3 class="subsection-title">W</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 200px;">Term</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">WAF (Web Application Firewall)</td>
+                    <td>A security control filtering HTTP traffic to protect web applications from attacks. Akamai KSD is Sobeys' WAF.</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">XSS (Cross-Site Scripting)</td>
+                    <td>An attack injecting malicious scripts into web pages viewed by other users. Can steal sessions or credentials.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAF Use Cases UC2-UC4 | Sobeys Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="sidebar-logo-text">
+            <h1>Sobeys Detection</h1>
+            <span>Engineering Command Center</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">WAF/DDoS Use Cases</div>
+          <a href="waf-uc1.html" class="nav-item">UC1: Block Volume Anomaly</a>
+          <a href="waf-uc2-4.html" class="nav-item active">UC2-UC4: Tier 1 Detections</a>
+          <a href="waf-uc5-8.html" class="nav-item">UC5-UC8: Tier 2 Detections</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="waf-overview.html" class="breadcrumb-item">WAF Project</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC2-UC4</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <span class="badge warning">Tier 1</span>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <div class="section-header">
+            <h1 class="section-title">WAF Tier 1 Use Cases (UC2-UC4)</h1>
+            <p class="section-subtitle">High-confidence detections for common attack patterns</p>
+          </div>
+        </div>
+
+        <!-- ==================== WAF-UC2 ==================== -->
+        <div class="section" id="waf-uc2">
+          <div class="subsection">
+            <h2 class="subsection-title">WAF-UC2: Single Source Flood Detection</h2>
+
+            <!-- Metadata Card -->
+            <div class="grid grid-4" style="margin-bottom: 16px;">
+              <div class="card bordered-left error">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">Severity</div>
+                <div style="font-weight: 600;">HIGH</div>
+              </div>
+              <div class="card bordered-left primary">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">MITRE ATT&CK</div>
+                <div style="font-weight: 600;">T1498, T1499</div>
+              </div>
+              <div class="card bordered-left info">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">Data Source</div>
+                <div style="font-weight: 600;">Akamai WAF</div>
+              </div>
+              <div class="card bordered-left warning">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">Tier</div>
+                <div style="font-weight: 600;">1 (Baseline)</div>
+              </div>
+            </div>
+
+            <!-- WHAT -->
+            <div class="accordion">
+              <div class="accordion-item open">
+                <button class="accordion-header">
+                  <span>❓ WHAT — Detection Description</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <p><strong>Single Source Flood Detection</strong> identifies when a single IP address generates an abnormally high volume of requests, indicating:</p>
+                  <ul style="margin-left: 20px; margin-top: 8px;">
+                    <li>Layer 7 (Application) DDoS attack</li>
+                    <li>Aggressive automated scanning</li>
+                    <li>Malicious bot activity</li>
+                    <li>Credential stuffing at scale</li>
+                  </ul>
+                  <div class="card" style="margin-top: 16px;">
+                    <div class="mermaid">
+flowchart LR
+    A[Attacker IP] -->|1000+ req/min| B{Akamai WAF}
+    B -->|Blocks| C[Logged Events]
+    B -->|Some Allowed| D[Backend]
+    C -->|Aggregated| E[Splunk Detection]
+    E -->|Threshold Exceeded| F[🔴 ALERT]
+    
+    style A fill:#dc2626,color:#fff
+    style F fill:#dc2626,color:#fff
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- WHY -->
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>🎯 WHY — Threat Intent & Business Impact</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="grid grid-2">
+                    <div>
+                      <h4 style="margin-bottom: 8px; color: var(--error-600);">Threat Intent</h4>
+                      <ul style="font-size: 0.875rem; margin-left: 16px;">
+                        <li>Overwhelm application resources</li>
+                        <li>Cause service degradation or outage</li>
+                        <li>Exhaust rate limits for legitimate users</li>
+                        <li>Distract from other attack vectors</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 style="margin-bottom: 8px; color: var(--primary-700);">Business Impact (Sobeys)</h4>
+                      <ul style="font-size: 0.875rem; margin-left: 16px;">
+                        <li>Voilà e-commerce unavailable</li>
+                        <li>Lost revenue during outage</li>
+                        <li>Customer frustration</li>
+                        <li>Brand reputation damage</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- WHEN -->
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>⏰ WHEN — Alert Conditions & Thresholds</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="table-container">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Condition</th>
+                          <th>Threshold</th>
+                          <th>Rationale</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="highlight">Total requests from single IP</td>
+                          <td>&gt;1000 per minute</td>
+                          <td>Normal user &lt;100 req/min typically</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight">Blocked requests from single IP</td>
+                          <td>&gt;100 per minute</td>
+                          <td>Indicates active attack being mitigated</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight">Block ratio</td>
+                          <td>&gt;50%</td>
+                          <td>Majority malicious = confirmed attack</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="callout warning" style="margin-top: 12px;">
+                    <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                    <div class="callout-content">
+                      <div class="callout-title">Tune for Your Environment</div>
+                      <div class="callout-body">These are starting thresholds. Analyze 14 days of baseline data to adjust for Sobeys' actual traffic patterns.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- WHERE -->
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>📍 WHERE — Data Sources & Fields</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="table-container">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Component</th>
+                          <th>Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="highlight">Index</td>
+                          <td><code>akamai</code></td>
+                        </tr>
+                        <tr>
+                          <td class="highlight">Sourcetype</td>
+                          <td><code>akamai:siem</code></td>
+                        </tr>
+                        <tr>
+                          <td class="highlight">Key Fields</td>
+                          <td><code>attackData.clientIP</code>, <code>attackData.rules{}.ruleAction</code>, <code>geo.country</code>, <code>geo.asn</code></td>
+                        </tr>
+                        <tr>
+                          <td class="highlight">CIM Model</td>
+                          <td>Web (src, action, status)</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- HOW -->
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>🔧 HOW — Detection SPL & Implementation</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">WAF-UC2: Single Source Flood Detection (Akamai)</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-5m
+| spath
+| eval src = 'attackData.clientIP'
+| eval action = 'attackData.rules{}.ruleAction'
+| eval country = 'geo.country'
+| eval asn = 'geo.asn'
+
+``` Aggregate by source IP in 1-minute windows
+| bin _time span=1m
+| stats 
+    count as total_requests 
+    count(eval(action="deny")) as blocked
+    count(eval(action="alert")) as alerted
+    dc(httpMessage.path) as unique_paths
+    values(httpMessage.path) as target_paths
+    latest(country) as country
+    latest(asn) as asn
+    BY _time src
+
+``` Apply thresholds
+| where total_requests > 1000 OR blocked > 100
+
+``` Calculate metrics
+| eval block_ratio = round(blocked / total_requests * 100, 1)
+| eval severity = case(
+    blocked > 500 AND block_ratio > 80, "CRITICAL",
+    blocked > 100, "HIGH",
+    total_requests > 1000, "MEDIUM",
+    1=1, "LOW"
+)
+
+``` Format output
+| table _time src country asn total_requests blocked block_ratio unique_paths severity target_paths
+| sort - blocked</code></pre>
+                    </div>
+                  </div>
+
+                  <h4 style="margin-top: 16px; margin-bottom: 8px;">Implementation Checklist</h4>
+                  <div class="checklist" data-checklist-id="uc2-impl">
+                    <div class="checklist-items">
+                      <div class="checklist-item"><input type="checkbox" class="checklist-checkbox"><span class="checklist-text">Validate attackData.clientIP field extracts correctly</span></div>
+                      <div class="checklist-item"><input type="checkbox" class="checklist-checkbox"><span class="checklist-text">Confirm action field maps deny/alert properly</span></div>
+                      <div class="checklist-item"><input type="checkbox" class="checklist-checkbox"><span class="checklist-text">Run against 14 days historical to tune thresholds</span></div>
+                      <div class="checklist-item"><input type="checkbox" class="checklist-checkbox"><span class="checklist-text">Create allowlist for known scanners/partners</span></div>
+                      <div class="checklist-item"><input type="checkbox" class="checklist-checkbox"><span class="checklist-text">Schedule as alert (every 5 min)</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== WAF-UC3 ==================== -->
+        <div class="section" id="waf-uc3">
+          <div class="subsection">
+            <h2 class="subsection-title">WAF-UC3: Authentication Endpoint Targeting</h2>
+
+            <!-- Metadata Card -->
+            <div class="grid grid-4" style="margin-bottom: 16px;">
+              <div class="card bordered-left error">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">Severity</div>
+                <div style="font-weight: 600;">HIGH</div>
+              </div>
+              <div class="card bordered-left primary">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">MITRE ATT&CK</div>
+                <div style="font-weight: 600;">T1110 (Brute Force)</div>
+              </div>
+              <div class="card bordered-left info">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">Data Source</div>
+                <div style="font-weight: 600;">Akamai WAF</div>
+              </div>
+              <div class="card bordered-left warning">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">Tier</div>
+                <div style="font-weight: 600;">1 (Baseline)</div>
+              </div>
+            </div>
+
+            <div class="accordion">
+              <!-- WHAT -->
+              <div class="accordion-item open">
+                <button class="accordion-header">
+                  <span>❓ WHAT — Detection Description</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <p><strong>Authentication Endpoint Targeting</strong> detects concentrated attacks against login and authentication endpoints, indicating:</p>
+                  <ul style="margin-left: 20px; margin-top: 8px;">
+                    <li>Credential stuffing attacks</li>
+                    <li>Brute force password guessing</li>
+                    <li>Account enumeration</li>
+                    <li>OAuth/SAML exploitation attempts</li>
+                  </ul>
+
+                  <div class="card" style="margin-top: 16px;">
+                    <h4 style="margin-bottom: 8px;">Sensitive Endpoints (Sobeys)</h4>
+                    <div class="code-block">
+                      <div class="code-body">
+                        <pre><code>/login, /signin, /auth, /authenticate, /oauth
+/api/v1/auth, /api/v1/login, /api/auth
+/voila/login, /scene/auth
+/checkout, /payment
+/admin, /wp-admin, /manager</code></pre>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card" style="margin-top: 16px;">
+                    <div class="mermaid">
+flowchart TD
+    A[Attacker] -->|Stolen Credentials| B[Login Endpoint]
+    B -->|WAF Blocks| C{Pattern Analysis}
+    C -->|Single IP, Many Attempts| D[Brute Force]
+    C -->|Many IPs, Same Creds| E[Credential Stuffing]
+    C -->|Enumeration Pattern| F[Account Discovery]
+    
+    D --> G[🔴 ALERT: Auth Targeting]
+    E --> G
+    F --> G
+    
+    style G fill:#dc2626,color:#fff
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- WHY -->
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>🎯 WHY — Threat Intent & Business Impact</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="callout critical">
+                    <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <div class="callout-content">
+                      <div class="callout-title">Why Auth Endpoints Are Critical</div>
+                      <div class="callout-body">Authentication is the gateway to everything. A successful attack here leads to account takeover, data theft, and potentially privileged access escalation.</div>
+                    </div>
+                  </div>
+                  <div class="grid grid-2" style="margin-top: 12px;">
+                    <div>
+                      <h4 style="margin-bottom: 8px; color: var(--error-600);">Attack Goals</h4>
+                      <ul style="font-size: 0.875rem; margin-left: 16px;">
+                        <li>Gain unauthorized access</li>
+                        <li>Harvest valid credentials</li>
+                        <li>Identify valid usernames</li>
+                        <li>Bypass MFA via volume</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 style="margin-bottom: 8px; color: var(--primary-700);">Sobeys Impact</h4>
+                      <ul style="font-size: 0.875rem; margin-left: 16px;">
+                        <li>Customer account takeover (Scene+)</li>
+                        <li>Employee credential compromise</li>
+                        <li>Loyalty point theft</li>
+                        <li>PCI compliance violation risk</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- HOW -->
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>🔧 HOW — Detection SPL</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">WAF-UC3: Authentication Endpoint Targeting (Akamai)</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
+| spath
+| eval path = 'httpMessage.path'
+| eval src = 'attackData.clientIP'
+| eval action = 'attackData.rules{}.ruleAction'
+
+``` Filter to authentication endpoints
+| where match(path, "(?i)(login|auth|signin|oauth|token|session|checkout|payment|admin)")
+
+``` Aggregate by endpoint
+| bin _time span=5m
+| stats 
+    count as total_requests
+    count(eval(action="deny")) as blocked
+    dc(src) as unique_sources
+    values(src) as source_ips
+    BY _time path
+
+``` Alert conditions
+| where blocked > 50 OR (blocked > 10 AND unique_sources > 5)
+
+``` Categorize attack pattern
+| eval attack_type = case(
+    unique_sources == 1 AND blocked > 50, "Brute Force (Single Source)",
+    unique_sources > 5 AND blocked > 20, "Credential Stuffing (Distributed)",
+    unique_sources > 10, "Coordinated Campaign",
+    1=1, "Suspicious Activity"
+)
+
+| eval severity = case(
+    match(path, "(?i)(admin|payment)"), "CRITICAL",
+    blocked > 100, "HIGH",
+    1=1, "MEDIUM"
+)
+
+| table _time path attack_type blocked unique_sources severity source_ips
+| sort - blocked</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== WAF-UC4 ==================== -->
+        <div class="section" id="waf-uc4">
+          <div class="subsection">
+            <h2 class="subsection-title">WAF-UC4: SQL Injection / XSS Campaign</h2>
+
+            <!-- Metadata Card -->
+            <div class="grid grid-4" style="margin-bottom: 16px;">
+              <div class="card bordered-left critical">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">Severity</div>
+                <div style="font-weight: 600;">CRITICAL</div>
+              </div>
+              <div class="card bordered-left primary">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">MITRE ATT&CK</div>
+                <div style="font-weight: 600;">T1190</div>
+              </div>
+              <div class="card bordered-left info">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">Data Source</div>
+                <div style="font-weight: 600;">Akamai WAF</div>
+              </div>
+              <div class="card bordered-left warning">
+                <div style="font-size: 0.75rem; color: var(--gray-500);">Tier</div>
+                <div style="font-weight: 600;">1 (Baseline)</div>
+              </div>
+            </div>
+
+            <div class="accordion">
+              <!-- WHAT -->
+              <div class="accordion-item open">
+                <button class="accordion-header">
+                  <span>❓ WHAT — Detection Description</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <p><strong>SQL Injection / XSS Campaign Detection</strong> identifies concentrated injection attacks from single or coordinated sources, indicating active exploitation attempts.</p>
+
+                  <div class="grid grid-2" style="margin-top: 16px;">
+                    <div class="card bordered-left error">
+                      <h4 style="margin-bottom: 8px;">SQL Injection (SQLi)</h4>
+                      <p style="font-size: 0.875rem; color: var(--gray-600);">Attacker injects malicious SQL to manipulate database queries</p>
+                      <code style="font-size: 0.75rem;">' OR 1=1 --, UNION SELECT, DROP TABLE</code>
+                    </div>
+                    <div class="card bordered-left warning">
+                      <h4 style="margin-bottom: 8px;">Cross-Site Scripting (XSS)</h4>
+                      <p style="font-size: 0.875rem; color: var(--gray-600);">Attacker injects malicious scripts into web pages</p>
+                      <code style="font-size: 0.75rem;">&lt;script&gt;, javascript:, onerror=</code>
+                    </div>
+                  </div>
+
+                  <div class="card" style="margin-top: 16px;">
+                    <div class="mermaid">
+flowchart TD
+    A[Attacker] -->|Injection Payload| B[Web Application]
+    B -->|WAF Inspects| C{Rule Match?}
+    C -->|SQLi Pattern| D[OWASP_CRS/SQL_INJECTION]
+    C -->|XSS Pattern| E[OWASP_CRS/XSS]
+    C -->|No Match| F[Request Continues]
+    
+    D --> G[Block + Log]
+    E --> G
+    G --> H{Count > 20 in 5min?}
+    H -->|Yes| I[🔴 CRITICAL ALERT]
+    H -->|No| J[Individual Event Log]
+    
+    style I fill:#dc2626,color:#fff
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- WHY -->
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>🎯 WHY — Threat Intent</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="callout critical">
+                    <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <div class="callout-content">
+                      <div class="callout-title">CRITICAL Severity — Data Breach Risk</div>
+                      <div class="callout-body">Successful SQLi can lead to complete database compromise. For Sobeys, this means customer PII, payment data, loyalty information.</div>
+                    </div>
+                  </div>
+                  <div class="table-container" style="margin-top: 12px;">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Attack Type</th>
+                          <th>Goal</th>
+                          <th>Impact</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="highlight">SQLi - Data Extraction</td>
+                          <td>Dump database contents</td>
+                          <td>Customer PII breach, PCI violation</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight">SQLi - Authentication Bypass</td>
+                          <td>Login without credentials</td>
+                          <td>Unauthorized access</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight">XSS - Stored</td>
+                          <td>Persistent malicious script</td>
+                          <td>Session hijacking, defacement</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight">XSS - Reflected</td>
+                          <td>One-time script execution</td>
+                          <td>Credential theft, phishing</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- HOW -->
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>🔧 HOW — Detection SPL</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-title">WAF-UC4: SQLi/XSS Campaign Detection (Akamai)</span>
+                    </div>
+                    <div class="code-body">
+                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
+| spath
+| eval src = 'attackData.clientIP'
+| eval action = 'attackData.rules{}.ruleAction'
+| eval rule_tag = 'attackData.rules{}.ruleTag'
+| eval rule_msg = 'attackData.rules{}.ruleMessage'
+
+``` Filter to SQLi and XSS rule matches
+| where match(rule_tag, "(?i)(SQL_INJECTION|XSS|SQLI|SCRIPTING)")
+    OR match(rule_msg, "(?i)(sql|injection|xss|cross-site|scripting)")
+
+``` Categorize attack type
+| eval attack_category = case(
+    match(rule_tag, "(?i)SQL"), "SQL Injection",
+    match(rule_tag, "(?i)XSS"), "Cross-Site Scripting",
+    match(rule_msg, "(?i)sql"), "SQL Injection",
+    match(rule_msg, "(?i)xss"), "Cross-Site Scripting",
+    1=1, "Injection Attack"
+)
+
+``` Aggregate
+| bin _time span=5m
+| stats 
+    count as attack_count
+    dc(src) as unique_attackers
+    values(src) as attacker_ips
+    values(attack_category) as attack_types
+    values(rule_msg) as rule_messages
+    BY _time
+
+``` Alert threshold
+| where attack_count > 20
+
+``` Severity assignment
+| eval severity = case(
+    attack_count > 100, "CRITICAL",
+    attack_count > 50, "HIGH",
+    unique_attackers > 5, "HIGH",
+    1=1, "MEDIUM"
+)
+
+| table _time attack_count unique_attackers attack_types severity attacker_ips rule_messages
+| sort - attack_count</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- False Positives Summary -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Common False Positives (All UC2-UC4)</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>FP Source</th>
+                    <th>Use Case</th>
+                    <th>Mitigation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="highlight">Vulnerability Scanners</td>
+                    <td>All</td>
+                    <td>Allowlist scanner IPs (Qualys, Tenable, etc.)</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Penetration Testing</td>
+                    <td>All</td>
+                    <td>Scheduled suppression during approved tests</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Partner APIs</td>
+                    <td>UC2</td>
+                    <td>Allowlist partner IP ranges</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">Health Checks</td>
+                    <td>UC2, UC3</td>
+                    <td>Exclude known health check paths</td>
+                  </tr>
+                  <tr>
+                    <td class="highlight">WAF Rule Tuning</td>
+                    <td>UC4</td>
+                    <td>Review after rule changes, adjust if needed</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

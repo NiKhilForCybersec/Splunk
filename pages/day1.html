@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 1 — Getting Started | Sobeys Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="sidebar-logo-text">
+            <h1>Sobeys Detection</h1>
+            <span>Engineering Command Center</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Overview</div>
+          <a href="../index.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <span>Command Center</span>
+          </a>
+          <a href="day1.html" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Day 1 — Getting Started</span>
+          </a>
+          <a href="client-meetings.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <span>Client Meeting Prep</span>
+          </a>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <p>Version 2.0 — January 2026</p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Day 1 — Getting Started</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <span class="badge info">First Day</span>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <!-- Header -->
+        <div class="section">
+          <div class="section-header">
+            <h1 class="section-title">Day 1 — Getting Started</h1>
+            <p class="section-subtitle">Your first day checklist, discovery guide, and critical questions for stakeholders</p>
+          </div>
+        </div>
+
+        <!-- Mission -->
+        <div class="callout info">
+          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div class="callout-content">
+            <div class="callout-title">Your Mission Today</div>
+            <div class="callout-body">By end of day: <strong>know what data exists</strong>, <strong>who to contact</strong>, and <strong>what blockers to escalate</strong>. Don't worry about building detections yet — focus on understanding the environment.</div>
+          </div>
+        </div>
+
+        <!-- Master Checklists -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">First Day Master Checklists</h3>
+
+            <div class="grid grid-2">
+              <!-- Access & Environment -->
+              <div class="checklist" data-checklist-id="day1-access">
+                <div class="checklist-header">
+                  <div class="checklist-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Access & Environment
+                  </div>
+                  <span class="checklist-count">0/7</span>
+                </div>
+                <div class="checklist-progress">
+                  <div class="checklist-progress-bar" style="width: 0%"></div>
+                </div>
+                <div class="checklist-items">
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Splunk Cloud access obtained</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Appropriate role/permissions confirmed (sc_admin or power user)</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Test search runs successfully (| search index=_internal | head 10)</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Can access relevant security indexes</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">VPN / network access working</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Email/Teams/Slack communication setup</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Meeting invites received for recurring syncs</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- People & Contacts -->
+              <div class="checklist" data-checklist-id="day1-contacts">
+                <div class="checklist-header">
+                  <div class="checklist-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    People & Contacts
+                  </div>
+                  <span class="checklist-count">0/7</span>
+                </div>
+                <div class="checklist-progress">
+                  <div class="checklist-progress-bar" style="width: 0%"></div>
+                </div>
+                <div class="checklist-items">
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Outgoing engineer contact obtained (if applicable)</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Client primary POC identified</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">SOC team contact obtained</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">IAM team contact obtained</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Splunk admin contact obtained</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Akamai admin contact obtained</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Escalation path documented</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Data Source Discovery -->
+              <div class="checklist" data-checklist-id="day1-data">
+                <div class="checklist-header">
+                  <div class="checklist-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    Data Source Discovery
+                  </div>
+                  <span class="checklist-count">0/8</span>
+                </div>
+                <div class="checklist-progress">
+                  <div class="checklist-progress-bar" style="width: 0%"></div>
+                </div>
+                <div class="checklist-items">
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Akamai WAF logs located (index/sourcetype)</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Akamai data volume validated (events flowing)</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Entra ID sign-in logs located</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Entra ID audit logs located</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">CyberArk logs located</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">SAP CDC logs located (if applicable)</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Sample events reviewed for each source</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Data gaps/issues documented</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Documentation & Timeline -->
+              <div class="checklist" data-checklist-id="day1-docs">
+                <div class="checklist-header">
+                  <div class="checklist-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Documentation & Timeline
+                  </div>
+                  <span class="checklist-count">0/6</span>
+                </div>
+                <div class="checklist-progress">
+                  <div class="checklist-progress-bar" style="width: 0%"></div>
+                </div>
+                <div class="checklist-items">
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Existing documentation collected</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Previous engineer's work reviewed (if any)</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Outstanding issues/blockers identified</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Project timeline/milestones confirmed</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Go-live date confirmed</span>
+                  </div>
+                  <div class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                    <span class="checklist-text">Weekly meeting cadence established</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Critical Questions -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Questions for Stakeholders</h3>
+
+            <div class="callout warning">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+              <div class="callout-content">
+                <div class="callout-title">Pro Tip: Document Everything</div>
+                <div class="callout-body">Write down answers to these questions in your notes immediately. You'll reference them throughout the engagement, and they're invaluable for handover documentation.</div>
+              </div>
+            </div>
+
+            <div class="accordion">
+              <div class="accordion-item open">
+                <button class="accordion-header">
+                  <span>🔴 Data & Infrastructure (Critical — Day 1)</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="table-container">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Question</th>
+                          <th>Why It Matters</th>
+                          <th>Answer</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td class="highlight">What is the Akamai index and sourcetype?</td>
+                          <td>Need correct search targets</td>
+                          <td><input type="text" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" placeholder="e.g., index=akamai"></td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td class="highlight">How is Akamai data ingested? (SIEM API / TA / HEC)</td>
+                          <td>Troubleshooting data flow</td>
+                          <td><input type="text" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" placeholder="e.g., Splunk TA-akamai"></td>
+                        </tr>
+                        <tr>
+                          <td>3</td>
+                          <td class="highlight">What Akamai products are in use? (KSD, Bot Manager, etc.)</td>
+                          <td>Determines available log types</td>
+                          <td><input type="text" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" placeholder="e.g., Kona Site Defender"></td>
+                        </tr>
+                        <tr>
+                          <td>4</td>
+                          <td class="highlight">What is the typical data latency?</td>
+                          <td>Detection window tuning</td>
+                          <td><input type="text" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" placeholder="e.g., 2-5 minutes"></td>
+                        </tr>
+                        <tr>
+                          <td>5</td>
+                          <td class="highlight">Are there known data gaps or outages?</td>
+                          <td>Baseline accuracy</td>
+                          <td><input type="text" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" placeholder="e.g., None known"></td>
+                        </tr>
+                        <tr>
+                          <td>6</td>
+                          <td class="highlight">Which CyberArk products are deployed? (Identity, PAM, both?)</td>
+                          <td>MFA detection design</td>
+                          <td><input type="text" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" placeholder="e.g., CyberArk Identity"></td>
+                        </tr>
+                        <tr>
+                          <td>7</td>
+                          <td class="highlight">Is CyberArk the PRIMARY MFA for privileged users?</td>
+                          <td>Critical for MFA detection</td>
+                          <td><input type="text" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" placeholder="e.g., Yes"></td>
+                        </tr>
+                        <tr>
+                          <td>8</td>
+                          <td class="highlight">Is CyberArk federated with Entra ID?</td>
+                          <td>Correlation possibilities</td>
+                          <td><input type="text" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" placeholder="e.g., Yes, SAML"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>🟡 Existing Detection & SOC (Week 1)</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="table-container">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Question</th>
+                          <th>Why It Matters</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>9</td>
+                          <td>Are there existing WAF or MFA detections in Splunk?</td>
+                          <td>Don't duplicate work</td>
+                        </tr>
+                        <tr>
+                          <td>10</td>
+                          <td>Are there existing dashboards to review?</td>
+                          <td>Understand current visibility</td>
+                        </tr>
+                        <tr>
+                          <td>11</td>
+                          <td>What are known false positive sources?</td>
+                          <td>Avoid repeating mistakes</td>
+                        </tr>
+                        <tr>
+                          <td>12</td>
+                          <td>Does a privileged user list exist? Where?</td>
+                          <td>Critical for MFA detections</td>
+                        </tr>
+                        <tr>
+                          <td>13</td>
+                          <td>What's the SOC workflow for WAF alerts?</td>
+                          <td>Runbook alignment</td>
+                        </tr>
+                        <tr>
+                          <td>14</td>
+                          <td>What ticketing system is used? (ServiceNow, etc.)</td>
+                          <td>Alert action configuration</td>
+                        </tr>
+                        <tr>
+                          <td>15</td>
+                          <td>Is Splunk Enterprise Security deployed?</td>
+                          <td>Notable events vs. standard alerts</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>🟢 Stakeholders & Process (Week 1-2)</span>
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="accordion-content">
+                  <div class="table-container">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Question</th>
+                          <th>Why It Matters</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>16</td>
+                          <td>Who is the primary client decision-maker?</td>
+                          <td>Approval authority</td>
+                        </tr>
+                        <tr>
+                          <td>17</td>
+                          <td>What's the change management process?</td>
+                          <td>Deployment workflow</td>
+                        </tr>
+                        <tr>
+                          <td>18</td>
+                          <td>Are there scheduled maintenance windows?</td>
+                          <td>Avoid false positive tuning issues</td>
+                        </tr>
+                        <tr>
+                          <td>19</td>
+                          <td>What are the top 3 security concerns for the client?</td>
+                          <td>Prioritization alignment</td>
+                        </tr>
+                        <tr>
+                          <td>20</td>
+                          <td>Are there compliance requirements (PCI, PIPEDA)?</td>
+                          <td>Data handling constraints</td>
+                        </tr>
+                        <tr>
+                          <td>21</td>
+                          <td>Is Splunk Cloud in a Canadian region?</td>
+                          <td>PIPEDA data residency</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Discovery Queries -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Day 1 Discovery Queries</h3>
+
+            <p style="margin-bottom: 16px; color: var(--gray-600);">Run these queries to understand what data exists in the Splunk environment.</p>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Master Discovery — Find All Data Sources</span>
+                <span class="code-lang">SPL</span>
+              </div>
+              <div class="code-body">
+                <pre><code>| tstats count WHERE index=* BY index sourcetype 
+| sort - count 
+| head 50</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Find Akamai WAF Data</span>
+                <span class="code-lang">SPL</span>
+              </div>
+              <div class="code-body">
+                <pre><code>index=* sourcetype=*akamai* earliest=-1h 
+| stats count by index sourcetype
+| sort - count</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Find Entra ID / Azure AD Data</span>
+                <span class="code-lang">SPL</span>
+              </div>
+              <div class="code-body">
+                <pre><code>index=* (sourcetype=*azure*signin* OR sourcetype=*azure*aad* OR sourcetype=*entra*) earliest=-1h 
+| stats count by index sourcetype
+| sort - count</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Find CyberArk Data</span>
+                <span class="code-lang">SPL</span>
+              </div>
+              <div class="code-body">
+                <pre><code>index=* sourcetype=*cyberark* earliest=-1h 
+| stats count by index sourcetype
+| sort - count</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Validate Data Freshness</span>
+                <span class="code-lang">SPL</span>
+              </div>
+              <div class="code-body">
+                <pre><code>| tstats latest(_time) as last_event WHERE index IN (akamai, azure, cyberark) BY index sourcetype
+| eval hours_ago = round((now() - last_event) / 3600, 1)
+| eval status = case(hours_ago < 1, "✅ Current", hours_ago < 4, "⚠️ Delayed", true(), "❌ Stale")
+| eval last_event = strftime(last_event, "%Y-%m-%d %H:%M:%S")
+| table index sourcetype last_event hours_ago status
+| sort status</code></pre>
+              </div>
+            </div>
+
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Document Findings Template</span>
+                <span class="code-lang">Markdown</span>
+              </div>
+              <div class="code-body">
+                <pre><code>## Data Source Discovery — [DATE]
+
+### Akamai WAF
+- Index: _______________
+- Sourcetype: _______________
+- Status: ☐ Found / ☐ Missing
+- Volume: _______________ events/hour
+- Notes: _______________
+
+### Entra ID (Azure AD)
+- Index: _______________
+- Sourcetype: _______________
+- Status: ☐ Found / ☐ Missing
+- Volume: _______________ events/hour
+- Notes: _______________
+
+### CyberArk
+- Index: _______________
+- Sourcetype: _______________
+- Status: ☐ Found / ☐ Missing
+- Volume: _______________ events/hour
+- Notes: _______________
+
+### Blockers Identified
+1. _______________
+2. _______________</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Red Flags -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">Red Flags to Watch For</h3>
+
+            <div class="grid grid-2">
+              <div class="callout error">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <div class="callout-content">
+                  <div class="callout-title">Data Not in Splunk</div>
+                  <div class="callout-body">Discovery queries return 0 results? <strong>Escalate immediately.</strong> Data may not be onboarded. This is a critical blocker.</div>
+                </div>
+              </div>
+
+              <div class="callout error">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <div class="callout-content">
+                  <div class="callout-title">No Privileged User List</div>
+                  <div class="callout-body">MFA detections require a privileged user lookup. If none exists, you'll need to build one with IAM team. Add to timeline.</div>
+                </div>
+              </div>
+
+              <div class="callout warning">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                <div class="callout-content">
+                  <div class="callout-title">Outgoing Engineer Unavailable</div>
+                  <div class="callout-body">No handover? Document everything independently. Run all discovery queries. Ask more questions in stakeholder meetings.</div>
+                </div>
+              </div>
+
+              <div class="callout warning">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                <div class="callout-content">
+                  <div class="callout-title">Scope Creep Signals</div>
+                  <div class="callout-body">"While you're at it..." — document and defer politely. Scope is WAF/DDoS + MFA only. New requests go through proper channels.</div>
+                </div>
+              </div>
+
+              <div class="callout warning">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                <div class="callout-content">
+                  <div class="callout-title">Significant Data Latency</div>
+                  <div class="callout-body">If Akamai data is > 15 minutes delayed, adjust detection time windows. Document and discuss with client.</div>
+                </div>
+              </div>
+
+              <div class="callout warning">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                <div class="callout-content">
+                  <div class="callout-title">Missing Field Extractions</div>
+                  <div class="callout-body">Critical fields not extracted? TA may be misconfigured or missing. Check props.conf and add-on installation.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- End of Day Summary -->
+        <div class="section">
+          <div class="subsection">
+            <h3 class="subsection-title">End of Day Summary Template</h3>
+
+            <div class="card" style="background: var(--gray-50);">
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-title">Day 1 Summary — Email/Slack to Manager</span>
+                </div>
+                <div class="code-body">
+                  <pre><code>Subject: Sobeys Detection Engineering — Day 1 Summary
+
+## Access Status
+- Splunk: [Obtained / Pending]
+- VPN: [Working / Issues]
+- Communication: [Setup Complete / Pending]
+
+## Data Source Status
+| Source | Status | Index | Notes |
+|--------|--------|-------|-------|
+| Akamai WAF | [✅/❌] | [index name] | [any issues] |
+| Entra ID | [✅/❌] | [index name] | [any issues] |
+| CyberArk | [✅/❌] | [index name] | [any issues] |
+
+## Key Contacts Identified
+- Client POC: [Name]
+- SOC Lead: [Name]
+- Splunk Admin: [Name]
+
+## Blockers/Risks
+1. [Blocker description]
+2. [Risk description]
+
+## Next Steps
+1. [Action item]
+2. [Action item]
+
+## Questions for Follow-up
+1. [Question]</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>
