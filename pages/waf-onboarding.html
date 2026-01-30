@@ -39,6 +39,7 @@
           <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101 (Start Here)</span></a>
           <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
           <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow & Event Hub</span></a>
+          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Data Sources</div>
@@ -139,18 +140,76 @@ flowchart TD
               </div>
             </div>
 
-            <!-- Akamai Checklist -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">Akamai Onboarding Checklist</h4>
+            <!-- Akamai Checklist with HOW-TO -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">Akamai Onboarding Checklist (with How-To)</h4>
             <div class="card bordered-left akamai" style="padding:20px;margin-bottom:24px;">
-              <div class="checklist">
+              
+              <!-- Step 1 -->
+              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
                 <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>akamai</code> exists</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Confirm HEC token created for Akamai</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Verify Akamai SIEM Integration enabled in Luna Control Center</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Splunk Add-on for Akamai installed</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Run data validation query (below)</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Verify field extraction working</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Confirm CIM mapping (Web datamodel)</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How to check:</strong> Run this SPL: <code>| eventcount index=akamai</code><br>
+                  <strong>If index doesn't exist:</strong> Ask Splunk admin to create it, OR <a href="splunk-howto.html#create-index">see How-To Guide → Create Index</a>
+                </div>
               </div>
+
+              <!-- Step 2 -->
+              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Confirm HEC token created for Akamai</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How to check:</strong> <code>Settings → Data inputs → HTTP Event Collector</code> — look for token named "akamai" or similar<br>
+                  <strong>If no token:</strong> <a href="splunk-howto.html#create-hec">See How-To Guide → Create HEC Token</a> — use sourcetype <code>akamai:siem</code>, index <code>akamai</code>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Verify Akamai SIEM Integration enabled</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How to check (in Akamai):</strong><br>
+                  1. Log into <strong>Akamai Control Center</strong> (Luna)<br>
+                  2. Go to <strong>Security Center → Security Configurations</strong><br>
+                  3. Select your WAF config → <strong>SIEM Integration</strong> tab<br>
+                  4. Should show: Enabled, with HEC URL and token configured<br>
+                  <strong>If not enabled:</strong> Ask Akamai admin to enable SIEM integration with Splunk HEC URL
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Splunk Add-on for Akamai installed</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How to check:</strong> Run: <code>| rest /services/apps/local | search title="*akamai*"</code><br>
+                  <strong>If not installed:</strong> <a href="splunk-howto.html#install-ta">See How-To Guide → Install TA</a> — search Splunkbase for "Splunk Add-on for Akamai"
+                </div>
+              </div>
+
+              <!-- Step 5 -->
+              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Run data validation query</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong> Copy and run each query in the "Validation Queries" section below
+                </div>
+              </div>
+
+              <!-- Step 6 -->
+              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Verify field extraction working</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How to check:</strong> Run: <code>index=akamai earliest=-1h | head 5 | table src_ip action http_uri</code><br>
+                  <strong>If fields are empty:</strong> TA may not be installed or sourcetype is wrong. Check sourcetype = <code>akamai:siem</code>
+                </div>
+              </div>
+
+              <!-- Step 7 -->
+              <div style="margin-bottom:0;">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Confirm CIM mapping (Web datamodel)</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How to check:</strong> Run: <code>| datamodel Web Web search | head 5</code><br>
+                  <strong>If no results:</strong> Data model may not be accelerated OR CIM Add-on not installed. Ask Splunk admin.
+                </div>
+              </div>
+
             </div>
 
             <!-- Akamai Validation Queries -->
@@ -264,19 +323,88 @@ flowchart TD
               </div>
             </div>
 
-            <!-- CyberArk Checklist -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">CyberArk Onboarding Checklist</h4>
+            <!-- CyberArk Checklist with HOW-TO -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">CyberArk Onboarding Checklist (with How-To)</h4>
             <div class="card bordered-left cyberark" style="padding:20px;margin-bottom:24px;">
-              <div class="checklist">
+              
+              <!-- Step 1 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
                 <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>cyberark</code> exists</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Create HEC token for CyberArk</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Configure SIEM webhook in CyberArk Admin Portal</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Enable all audit event types (especially MFA)</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Run data validation query</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Verify MFA events (approve/deny) present</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Confirm field extraction working</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 8:</strong> Verify privileged user events visible</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong> Run: <code>| eventcount index=cyberark</code> — if returns 0 or error, index doesn't exist
+                </div>
               </div>
+
+              <!-- Step 2 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Create HEC token for CyberArk</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong> <a href="splunk-howto.html#create-hec">See How-To Guide → Create HEC Token</a><br>
+                  Use: Name=<code>cyberark-prod</code>, Sourcetype=<code>cyberark:identity:audit</code>, Index=<code>cyberark</code><br>
+                  <strong>IMPORTANT:</strong> Copy the token value — you'll need it for CyberArk config
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Configure SIEM webhook in CyberArk Admin Portal</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How (in CyberArk Identity Admin Portal):</strong><br>
+                  1. Log into CyberArk Identity Admin Portal<br>
+                  2. Go to <strong>Settings → Customization → SIEM Integration</strong><br>
+                  3. Click <strong>"Add SIEM"</strong><br>
+                  4. Select <strong>Splunk</strong> as SIEM type<br>
+                  5. Enter HEC URL: <code>https://http-inputs-[stack].splunkcloud.com:443/services/collector</code><br>
+                  6. Enter the HEC token from Step 2<br>
+                  7. Test connection → Save
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Enable all audit event types (especially MFA)</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How (in CyberArk):</strong><br>
+                  1. In SIEM Integration settings, click <strong>"Configure Events"</strong><br>
+                  2. Check ALL boxes, especially: <strong>MFA Approve, MFA Deny, MFA Challenge, Login Success, Login Failure</strong><br>
+                  3. Save changes
+                </div>
+              </div>
+
+              <!-- Step 5 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Run data validation query</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong> Copy and run each query in the "Validation Queries" section below
+                </div>
+              </div>
+
+              <!-- Step 6 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Verify MFA events present</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong> Run: <code>index=cyberark *MFA* | stats count by EventType</code><br>
+                  <strong>Should see:</strong> MfaApprove, MfaDeny, MfaChallenge events
+                </div>
+              </div>
+
+              <!-- Step 7 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Confirm field extraction working</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong> Run: <code>index=cyberark | head 5 | table user src_ip EventType Result</code><br>
+                  <strong>If fields empty:</strong> JSON may not be parsing — check sourcetype has <code>KV_MODE=json</code>
+                </div>
+              </div>
+
+              <!-- Step 8 -->
+              <div style="margin-bottom:0;">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 8:</strong> Verify privileged user events visible</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong> Run: <code>index=cyberark user=*admin* OR user=*svc* | stats count by user</code>
+                </div>
+              </div>
+
             </div>
 
             <!-- CyberArk Validation Queries -->
@@ -397,21 +525,132 @@ flowchart TD
               </div>
             </div>
 
-            <!-- Entra Checklist -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">Entra ID Onboarding Checklist</h4>
+            <!-- Entra Checklist with HOW-TO -->
+            <h4 style="font-size:1rem;margin-bottom:12px;">Entra ID Onboarding Checklist (with How-To)</h4>
             <div class="card bordered-left info" style="padding:20px;margin-bottom:24px;border-left-color:#0078d4;">
-              <div class="checklist">
+              
+              <!-- Step 1 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
                 <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>azure</code> exists</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Create Azure Event Hub Namespace</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Create Event Hub within namespace</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Create Consumer Group for Splunk (e.g., "splunk-consumer")</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Create Shared Access Policy with Listen permission</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Configure Entra ID Diagnostic Settings → Event Hub</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Select log categories: SignInLogs, NonInteractiveSignInLogs, AuditLogs</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 8:</strong> Install Splunk Add-on for Microsoft Cloud Services</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 9:</strong> Configure input with Event Hub connection string</span></label>
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 10:</strong> Run data validation queries</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong> Run: <code>| eventcount index=azure</code>
+                </div>
               </div>
+
+              <!-- Step 2 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Create Azure Event Hub Namespace</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How (in Azure Portal):</strong><br>
+                  1. Search for <strong>"Event Hubs"</strong> → Create<br>
+                  2. Select Subscription and Resource Group<br>
+                  3. Enter Namespace name: <code>sobeys-splunk-eventhub</code><br>
+                  4. Select region (same as your Azure AD tenant if possible)<br>
+                  5. Pricing tier: <strong>Standard</strong> (needed for consumer groups)<br>
+                  6. Click Create
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Create Event Hub within namespace</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong><br>
+                  1. Open your Event Hub Namespace<br>
+                  2. Click <strong>"+ Event Hub"</strong><br>
+                  3. Name: <code>entra-logs</code><br>
+                  4. Partition count: 2 (default is fine)<br>
+                  5. Create
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Create Consumer Group for Splunk</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong><br>
+                  1. Open your Event Hub (entra-logs)<br>
+                  2. Click <strong>"Consumer groups"</strong> in left menu<br>
+                  3. Click <strong>"+ Consumer group"</strong><br>
+                  4. Name: <code>splunk-consumer</code><br>
+                  5. Create<br>
+                  <strong>⚠️ IMPORTANT:</strong> Don't use $Default — create a dedicated consumer group for Splunk
+                </div>
+              </div>
+
+              <!-- Step 5 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Create Shared Access Policy</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong><br>
+                  1. In Event Hub Namespace → <strong>"Shared access policies"</strong><br>
+                  2. Click <strong>"+ Add"</strong><br>
+                  3. Name: <code>splunk-listen</code><br>
+                  4. Check only <strong>"Listen"</strong> (Splunk only reads)<br>
+                  5. Create<br>
+                  6. <strong>COPY the Connection String</strong> — you'll need this for Splunk
+                </div>
+              </div>
+
+              <!-- Step 6 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Configure Entra ID Diagnostic Settings</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong><br>
+                  1. Go to <strong>Microsoft Entra ID</strong> (Azure AD)<br>
+                  2. <strong>Monitoring → Diagnostic settings</strong><br>
+                  3. Click <strong>"+ Add diagnostic setting"</strong><br>
+                  4. Name: <code>EntraToSplunk</code><br>
+                  5. Check <strong>"Stream to an event hub"</strong><br>
+                  6. Select your Event Hub namespace and hub
+                </div>
+              </div>
+
+              <!-- Step 7 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Select log categories</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>Required logs to check:</strong><br>
+                  ☑️ SignInLogs (interactive sign-ins — primary MFA data)<br>
+                  ☑️ NonInteractiveUserSignInLogs (service/app sign-ins)<br>
+                  ☑️ AuditLogs (changes to directory)<br>
+                  <strong>Optional:</strong> ManagedIdentitySignInLogs, ServicePrincipalSignInLogs, RiskyUsers
+                </div>
+              </div>
+
+              <!-- Step 8 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 8:</strong> Install Splunk Add-on</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong> <a href="splunk-howto.html#install-ta">See How-To Guide → Install TA</a><br>
+                  Search Splunkbase for: <strong>"Splunk Add-on for Microsoft Cloud Services"</strong>
+                </div>
+              </div>
+
+              <!-- Step 9 -->
+              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 9:</strong> Configure Splunk input</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How (in Splunk):</strong><br>
+                  1. Open <strong>Splunk Add-on for Microsoft Cloud Services</strong><br>
+                  2. Go to <strong>Inputs</strong> tab → <strong>Create New Input</strong><br>
+                  3. Select <strong>Azure Event Hub</strong><br>
+                  4. Enter: Event Hub Namespace, Event Hub Name, Consumer Group<br>
+                  5. Paste the <strong>Connection String</strong> from Step 5<br>
+                  6. Set Index: <code>azure</code><br>
+                  7. Save
+                </div>
+              </div>
+
+              <!-- Step 10 -->
+              <div style="margin-bottom:0;">
+                <label class="checklist-item"><input type="checkbox"><span><strong>Step 10:</strong> Run data validation queries</span></label>
+                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
+                  <strong>How:</strong> Run each query in the "Validation Queries" section below<br>
+                  <strong>Note:</strong> Data may take 5-15 minutes to appear (Event Hub latency is normal)
+                </div>
+              </div>
+
             </div>
 
             <!-- Entra Validation Queries -->

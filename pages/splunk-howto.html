@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Splunk How-To Guide | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>myfirstpro</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Fundamentals</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
+          <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow & Event Hub</span></a>
+          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
+          <a href="splunk-howto.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Splunk How-To Guide</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Operations</div>
+          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">WAF/DDoS Project</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-5)</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Response & Support</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Splunk How-To Guide</span>
+          </div>
+        </div>
+        <span class="badge critical">REFERENCE</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Splunk How-To Guide</h1>
+          <p class="section-subtitle">Step-by-step instructions for every common Splunk task — exact clicks, exact navigation</p>
+        </div>
+
+        <!-- Quick Jump Links -->
+        <div class="section">
+          <div class="card" style="padding:20px;background:var(--gray-50);">
+            <h3 style="font-size:1rem;margin-bottom:12px;">Quick Jump</h3>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;font-size:0.875rem;">
+              <a href="#install-ta" style="color:var(--primary-600);">→ Install a Technology Add-on (TA)</a>
+              <a href="#create-hec" style="color:var(--primary-600);">→ Create HEC Token</a>
+              <a href="#create-index" style="color:var(--primary-600);">→ Create an Index</a>
+              <a href="#create-lookup-file" style="color:var(--primary-600);">→ Create Lookup File</a>
+              <a href="#create-lookup-def" style="color:var(--primary-600);">→ Create Lookup Definition</a>
+              <a href="#save-report" style="color:var(--primary-600);">→ Save Search as Report</a>
+              <a href="#schedule-report" style="color:var(--primary-600);">→ Schedule a Report/Search</a>
+              <a href="#create-alert" style="color:var(--primary-600);">→ Create an Alert</a>
+              <a href="#alert-email" style="color:var(--primary-600);">→ Add Email Alert Action</a>
+              <a href="#alert-throttle" style="color:var(--primary-600);">→ Configure Alert Throttling</a>
+              <a href="#es-correlation" style="color:var(--primary-600);">→ Create ES Correlation Search</a>
+              <a href="#enable-disable" style="color:var(--primary-600);">→ Enable/Disable Saved Search</a>
+              <a href="#check-job" style="color:var(--primary-600);">→ Check Search Job History</a>
+              <a href="#edit-search" style="color:var(--primary-600);">→ Edit Existing Search/Alert</a>
+              <a href="#custom-app" style="color:var(--primary-600);">→ Create Custom App (for configs)</a>
+              <a href="#field-alias" style="color:var(--primary-600);">→ Add Field Aliases</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- INSTALL TA -->
+        <!-- ============================================================ -->
+        <div class="section" id="install-ta" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Install a Technology Add-on (TA)</h2>
+          
+          <div class="callout info" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">What is a TA?</div>
+              <div class="callout-body">A Technology Add-on (TA) provides field extractions, CIM mappings, and input configurations for a specific technology (e.g., Akamai, CyberArk). TAs handle parsing so you don't have to write custom regex.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Option A: Install from Splunkbase (Preferred)</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What You'll See</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td>Click <strong>Apps</strong> (top-left menu bar)</td><td>Dropdown menu appears</td></tr>
+                  <tr><td class="highlight">2</td><td>Click <strong>"Find More Apps"</strong></td><td>Splunkbase browser opens inside Splunk</td></tr>
+                  <tr><td class="highlight">3</td><td>In search box, type the TA name<br>(e.g., <code>Akamai</code> or <code>CyberArk</code>)</td><td>List of matching apps</td></tr>
+                  <tr><td class="highlight">4</td><td>Find the correct TA (usually "Splunk Add-on for [Vendor]")</td><td>Check it says "Add-on" not "App"</td></tr>
+                  <tr><td class="highlight">5</td><td>Click <strong>"Install"</strong></td><td>Login prompt if not authenticated to Splunk.com</td></tr>
+                  <tr><td class="highlight">6</td><td>Enter your Splunk.com credentials (or create account)</td><td>—</td></tr>
+                  <tr><td class="highlight">7</td><td>Check "I have read the terms" → Click <strong>"Login and Install"</strong></td><td>Installation progress</td></tr>
+                  <tr><td class="highlight">8</td><td>Click <strong>"Restart Now"</strong> (or restart may be automatic)</td><td>Splunk restarts</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Option B: Install from File (If Splunkbase Blocked)</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>Notes</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td>Go to <a href="https://splunkbase.splunk.com" target="_blank">splunkbase.splunk.com</a> in browser</td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Search for and download the TA (.tgz file)</td><td>Save to your computer</td></tr>
+                  <tr><td class="highlight">3</td><td>In Splunk: <strong>Apps → Manage Apps</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Click <strong>"Install app from file"</strong></td><td>Upload dialog opens</td></tr>
+                  <tr><td class="highlight">5</td><td>Click <strong>"Choose File"</strong> → Select the .tgz</td><td>—</td></tr>
+                  <tr><td class="highlight">6</td><td>Check <strong>"Upgrade app"</strong> if replacing existing</td><td>Only if updating</td></tr>
+                  <tr><td class="highlight">7</td><td>Click <strong>"Upload"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">8</td><td>Restart Splunk when prompted</td><td>Required for TA to work</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="callout warning" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Splunk Cloud Note</div>
+              <div class="callout-body">In Splunk Cloud, you may not have permission to install apps directly. If "Install" is grayed out, submit a support case to Splunk asking them to install the TA. Include the exact app name and Splunkbase URL.</div>
+            </div>
+          </div>
+
+          <h4 style="font-size:0.9375rem;margin:24px 0 12px;">Verify TA is Installed:</h4>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Check Installed TAs</span></div>
+            <div class="code-body">
+              <pre><code>| rest /services/apps/local | search disabled=0 | table title label version | sort title</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- CREATE HEC TOKEN -->
+        <!-- ============================================================ -->
+        <div class="section" id="create-hec" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Create an HEC Token</h2>
+          
+          <div class="callout info" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">What is HEC?</div>
+              <div class="callout-body">HTTP Event Collector (HEC) is an endpoint that receives data over HTTPS. External systems (Akamai, CyberArk, etc.) send logs to HEC using a token for authentication.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Step-by-Step: Create HEC Token</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td><strong>Settings</strong> (top menu)</td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td><strong>Data inputs</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Click <strong>"HTTP Event Collector"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Click <strong>"Global Settings"</strong> (top right)</td><td>First time only</td></tr>
+                  <tr><td class="highlight">5</td><td>Set <strong>"All Tokens"</strong> to <strong>Enabled</strong></td><td>Enables HEC globally</td></tr>
+                  <tr><td class="highlight">6</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">7</td><td>Click <strong>"New Token"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">8</td><td>Enter <strong>Name</strong></td><td>e.g., <code>akamai-waf-prod</code></td></tr>
+                  <tr><td class="highlight">9</td><td>(Optional) Enter Description</td><td>e.g., "Akamai WAF production logs"</td></tr>
+                  <tr><td class="highlight">10</td><td>Click <strong>"Next"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">11</td><td>Select <strong>Source type</strong> → Click "Select"</td><td>e.g., <code>akamai:siem</code></td></tr>
+                  <tr><td class="highlight">12</td><td>(Optional) Set App Context</td><td>Usually <code>search</code></td></tr>
+                  <tr><td class="highlight">13</td><td>Select <strong>Index</strong></td><td>e.g., <code>akamai</code></td></tr>
+                  <tr><td class="highlight">14</td><td>Click <strong>"Review"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">15</td><td>Click <strong>"Submit"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">16</td><td><strong>COPY THE TOKEN VALUE!</strong></td><td>You'll need this for the source system</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h4 style="font-size:0.9375rem;margin:24px 0 12px;">HEC Token Settings Explained:</h4>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Setting</th><th>What It Does</th><th>Recommendation</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">Name</td><td>Identifies the token</td><td>Use format: <code>[source]-[env]</code> e.g., akamai-prod</td></tr>
+                <tr><td class="highlight">Source type</td><td>Tells Splunk how to parse the data</td><td>Set explicitly to match TA (e.g., akamai:siem)</td></tr>
+                <tr><td class="highlight">Index</td><td>Where data is stored</td><td>Always set — never use "default"</td></tr>
+                <tr><td class="highlight">Enable indexer acknowledgment</td><td>Source waits for confirmation</td><td>Leave OFF unless source requires it</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 style="font-size:0.9375rem;margin:24px 0 12px;">Get HEC Endpoint URL:</h4>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Splunk Cloud HEC URL Format</span></div>
+            <div class="code-body">
+              <pre><code>https://http-inputs-&lt;your-stack&gt;.splunkcloud.com:443/services/collector
+
+Example:
+https://http-inputs-sobeys.splunkcloud.com:443/services/collector
+
+``` Test HEC with curl:
+curl -k "https://http-inputs-sobeys.splunkcloud.com:443/services/collector" \
+  -H "Authorization: Splunk YOUR-TOKEN-HERE" \
+  -d '{"event":"test","sourcetype":"manual"}'</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- CREATE INDEX -->
+        <!-- ============================================================ -->
+        <div class="section" id="create-index" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Create an Index</h2>
+
+          <div class="card" style="padding:24px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Step-by-Step: Create Index</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td><strong>Settings</strong> (top menu)</td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td><strong>Indexes</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Click <strong>"New Index"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Enter <strong>Index Name</strong></td><td>e.g., <code>akamai</code> (lowercase, no spaces)</td></tr>
+                  <tr><td class="highlight">5</td><td>Set <strong>Index Data Type</strong></td><td><code>Events</code> (default)</td></tr>
+                  <tr><td class="highlight">6</td><td>Set <strong>Max Size of Entire Index</strong></td><td>e.g., <code>500</code> GB (depends on retention needs)</td></tr>
+                  <tr><td class="highlight">7</td><td>Set <strong>Retention</strong> (Searchable time)</td><td>e.g., <code>90</code> days</td></tr>
+                  <tr><td class="highlight">8</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="callout warning" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Splunk Cloud Note</div>
+              <div class="callout-body">In Splunk Cloud, you may not have permission to create indexes. Submit a support case to Splunk with: index name, expected daily volume (GB), retention period (days), and purpose.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- CREATE LOOKUP FILE -->
+        <!-- ============================================================ -->
+        <div class="section" id="create-lookup-file" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Create a Lookup File</h2>
+
+          <div class="card" style="padding:24px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Option A: Upload CSV File</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>Notes</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td><strong>Settings → Lookups</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Click <strong>"Lookup table files"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Click <strong>"New Lookup Table File"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Select <strong>Destination app</strong></td><td><code>search</code> or your custom app</td></tr>
+                  <tr><td class="highlight">5</td><td>Click <strong>"Choose File"</strong></td><td>Select your CSV</td></tr>
+                  <tr><td class="highlight">6</td><td>Enter <strong>Destination filename</strong></td><td>e.g., <code>privileged_users.csv</code></td></tr>
+                  <tr><td class="highlight">7</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Option B: Create via Search (For Empty/New Lookups)</h3>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Create Lookup with SPL</span></div>
+              <div class="code-body">
+                <pre><code>``` Create empty lookup with headers
+| makeresults 
+| eval user="placeholder", department="placeholder", risk_level="placeholder"
+| table user department risk_level
+| outputlookup privileged_users.csv
+
+``` Verify it was created
+| inputlookup privileged_users.csv</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout info" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">CSV Requirements</div>
+              <div class="callout-body">
+                • First row must be column headers<br>
+                • Use lowercase column names (no spaces)<br>
+                • Save as UTF-8 (not UTF-8 with BOM)<br>
+                • Use comma delimiter (not semicolon)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- CREATE LOOKUP DEFINITION -->
+        <!-- ============================================================ -->
+        <div class="section" id="create-lookup-def" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Create a Lookup Definition</h2>
+          
+          <div class="callout info" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Why Need a Definition?</div>
+              <div class="callout-body">A lookup definition tells Splunk how to use the lookup file. Without it, you can't use the <code>| lookup</code> command easily. It also enables automatic lookups that enrich data without explicit commands.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Step-by-Step: Create Lookup Definition</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td><strong>Settings → Lookups</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Click <strong>"Lookup definitions"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Click <strong>"New Lookup Definition"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Select <strong>Destination app</strong></td><td><code>search</code></td></tr>
+                  <tr><td class="highlight">5</td><td>Enter <strong>Name</strong></td><td>e.g., <code>privileged_users</code></td></tr>
+                  <tr><td class="highlight">6</td><td>Select <strong>Type</strong></td><td><code>File-based</code></td></tr>
+                  <tr><td class="highlight">7</td><td>Select <strong>Lookup file</strong></td><td>e.g., <code>privileged_users.csv</code></td></tr>
+                  <tr><td class="highlight">8</td><td>(Optional) Check <strong>"Case sensitive match"</strong></td><td>Usually leave unchecked</td></tr>
+                  <tr><td class="highlight">9</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h4 style="font-size:0.9375rem;margin:24px 0 12px;">Using the Lookup:</h4>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Lookup Usage Examples</span></div>
+            <div class="code-body">
+              <pre><code>``` Basic lookup - add department based on user
+index=cyberark | lookup privileged_users user OUTPUT department
+
+``` Check if user is in lookup
+index=cyberark | lookup privileged_users user OUTPUT risk_level AS user_risk
+| where isnotnull(user_risk)
+
+``` Subsearch with lookup
+index=akamai [ | inputlookup malicious_ips.csv | fields ip | rename ip AS src_ip ]</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SAVE AS REPORT -->
+        <!-- ============================================================ -->
+        <div class="section" id="save-report" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Save Search as Report</h2>
+
+          <div class="card" style="padding:24px;">
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td>Run your search in the search bar</td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Click <strong>"Save As"</strong> (top right, above results)</td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Select <strong>"Report"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Enter <strong>Title</strong></td><td>e.g., <code>WAF-UC1 Block Volume Anomaly</code></td></tr>
+                  <tr><td class="highlight">5</td><td>Enter <strong>Description</strong></td><td>What it detects, thresholds used</td></tr>
+                  <tr><td class="highlight">6</td><td>Select <strong>Content</strong></td><td><code>Statistics Table</code> (if using stats)</td></tr>
+                  <tr><td class="highlight">7</td><td>Select <strong>Time Range Picker</strong></td><td><code>Yes</code> (allows changing time range)</td></tr>
+                  <tr><td class="highlight">8</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SCHEDULE REPORT -->
+        <!-- ============================================================ -->
+        <div class="section" id="schedule-report" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Schedule a Report/Search</h2>
+
+          <div class="card" style="padding:24px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Schedule an Existing Report</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td><strong>Settings → Searches, reports, and alerts</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Find your report in the list</td><td>Use search filter</td></tr>
+                  <tr><td class="highlight">3</td><td>Click <strong>"Edit"</strong> → <strong>"Edit Schedule"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Check <strong>"Schedule Report"</strong></td><td>Enables scheduling</td></tr>
+                  <tr><td class="highlight">5</td><td>Set <strong>Schedule</strong></td><td>See options below</td></tr>
+                  <tr><td class="highlight">6</td><td>Set <strong>Time Range</strong></td><td>Should match or slightly exceed schedule interval</td></tr>
+                  <tr><td class="highlight">7</td><td>Set <strong>Schedule Priority</strong></td><td>Default or Higher for critical detections</td></tr>
+                  <tr><td class="highlight">8</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h4 style="font-size:0.9375rem;margin:24px 0 12px;">Schedule Options:</h4>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Option</th><th>Meaning</th><th>Cron Equivalent</th><th>Use For</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">Run every 5 minutes</td><td>Runs at :00, :05, :10, etc.</td><td><code>*/5 * * * *</code></td><td>Near real-time detection</td></tr>
+                <tr><td class="highlight">Run every 15 minutes</td><td>Runs at :00, :15, :30, :45</td><td><code>*/15 * * * *</code></td><td>Standard detection</td></tr>
+                <tr><td class="highlight">Run every hour</td><td>Runs at the top of each hour</td><td><code>0 * * * *</code></td><td>Hourly aggregation</td></tr>
+                <tr><td class="highlight">Run every day at midnight</td><td>Runs once per day</td><td><code>0 0 * * *</code></td><td>Daily reports</td></tr>
+                <tr><td class="highlight">Cron Schedule</td><td>Custom schedule</td><td>You specify</td><td>Custom needs</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout warning" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Time Range Must Match Schedule</div>
+              <div class="callout-body">
+                If search runs every 5 minutes, time range should be <code>-5m</code> or <code>-6m</code> (slight overlap prevents gaps).<br>
+                If search runs every hour, time range should be <code>-1h</code> or <code>-65m</code>.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- CREATE ALERT -->
+        <!-- ============================================================ -->
+        <div class="section" id="create-alert" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Create an Alert</h2>
+
+          <div class="card" style="padding:24px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Create New Alert from Search</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td>Run your search</td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Click <strong>"Save As"</strong> → <strong>"Alert"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Enter <strong>Title</strong></td><td>e.g., <code>WAF-UC1 Block Volume Anomaly</code></td></tr>
+                  <tr><td class="highlight">4</td><td>Enter <strong>Description</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">5</td><td>Set <strong>Permissions</strong></td><td><code>Shared in App</code> (so others can see)</td></tr>
+                  <tr><td class="highlight">6</td><td>Set <strong>Alert type</strong></td><td><code>Scheduled</code></td></tr>
+                  <tr><td class="highlight">7</td><td>Set <strong>Schedule</strong></td><td>e.g., <code>Run every 5 minutes</code></td></tr>
+                  <tr><td class="highlight">8</td><td>Set <strong>Time Range</strong></td><td>e.g., <code>Last 5 minutes</code></td></tr>
+                  <tr><td class="highlight">9</td><td>Set <strong>Trigger condition</strong></td><td><code>Number of Results</code> is <code>greater than</code> <code>0</code></td></tr>
+                  <tr><td class="highlight">10</td><td>Configure <strong>Trigger Actions</strong></td><td>See Email and Throttling sections</td></tr>
+                  <tr><td class="highlight">11</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- EMAIL ALERT -->
+        <!-- ============================================================ -->
+        <div class="section" id="alert-email" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Add Email Alert Action</h2>
+
+          <div class="card" style="padding:24px;">
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td>In alert settings, find <strong>"Trigger Actions"</strong> section</td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Click <strong>"+ Add Actions"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Select <strong>"Send email"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Enter <strong>To</strong></td><td>Recipients, comma-separated</td></tr>
+                  <tr><td class="highlight">5</td><td>Enter <strong>CC</strong> (optional)</td><td>—</td></tr>
+                  <tr><td class="highlight">6</td><td>Enter <strong>Subject</strong></td><td>e.g., <code>[ALERT] WAF-UC1: $result.src_ip$</code></td></tr>
+                  <tr><td class="highlight">7</td><td>Select <strong>Priority</strong></td><td><code>Highest</code> for critical</td></tr>
+                  <tr><td class="highlight">8</td><td>Enter <strong>Message</strong></td><td>See template below</td></tr>
+                  <tr><td class="highlight">9</td><td>Check <strong>"Include results"</strong></td><td>Choose: Link to results, Inline, CSV, PDF</td></tr>
+                  <tr><td class="highlight">10</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h4 style="font-size:0.9375rem;margin:24px 0 12px;">Email Subject/Body Variables:</h4>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Variable</th><th>What It Contains</th><th>Example Output</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight"><code>$name$</code></td><td>Alert name</td><td>WAF-UC1 Block Volume Anomaly</td></tr>
+                <tr><td class="highlight"><code>$result.fieldname$</code></td><td>First result's field value</td><td><code>$result.src_ip$</code> → 1.2.3.4</td></tr>
+                <tr><td class="highlight"><code>$job.resultCount$</code></td><td>Number of results</td><td>5</td></tr>
+                <tr><td class="highlight"><code>$trigger_time$</code></td><td>When alert triggered</td><td>2024-01-15 10:30:00</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-block" style="margin-top:16px;">
+            <div class="code-header"><span class="code-title">Email Message Template</span></div>
+            <div class="code-body">
+              <pre><code>ALERT: $name$
+Triggered: $trigger_time$
+Results: $job.resultCount$
+
+Source IP: $result.src_ip$
+Count: $result.block_count$
+Severity: $result.severity$
+
+INVESTIGATION STEPS:
+1. Check if IP is legitimate (CDN, partner, scanner)
+2. Review attack details in Akamai console
+3. If malicious, consider permanent block
+
+SEARCH LINK: $results_link$</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- THROTTLE -->
+        <!-- ============================================================ -->
+        <div class="section" id="alert-throttle" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Configure Alert Throttling</h2>
+
+          <div class="callout info" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">What is Throttling?</div>
+              <div class="callout-body">Throttling prevents alert storms. If the same IP triggers every 5 minutes, without throttling you get 12 alerts/hour. With throttling set to 1 hour by src_ip, you get 1 alert then nothing for that IP for 1 hour.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;">
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td>In alert settings, find <strong>"Throttle"</strong> section</td><td>Below Trigger Actions</td></tr>
+                  <tr><td class="highlight">2</td><td>Check <strong>"Throttle"</strong> checkbox</td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Set <strong>"Suppress triggering for"</strong></td><td>e.g., <code>3600</code> seconds (1 hour)</td></tr>
+                  <tr><td class="highlight">4</td><td>Enter <strong>"Fields to group by"</strong></td><td>e.g., <code>src_ip</code> or <code>user</code></td></tr>
+                  <tr><td class="highlight">5</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h4 style="font-size:0.9375rem;margin:24px 0 12px;">Throttle Settings Guide:</h4>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Detection Type</th><th>Suppress For</th><th>Group By</th><th>Why</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">WAF Block Anomaly</td><td>1 hour (3600s)</td><td><code>src_ip</code></td><td>Same attacker IP shouldn't alert repeatedly</td></tr>
+                <tr><td class="highlight">MFA Fatigue</td><td>4 hours (14400s)</td><td><code>user</code></td><td>Give time to investigate before re-alerting</td></tr>
+                <tr><td class="highlight">Failed Logins</td><td>30 min (1800s)</td><td><code>user,src_ip</code></td><td>Same user from same IP</td></tr>
+                <tr><td class="highlight">Critical/High</td><td>15 min (900s)</td><td><code>src_ip</code></td><td>Shorter for high severity</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ES CORRELATION SEARCH -->
+        <!-- ============================================================ -->
+        <div class="section" id="es-correlation" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Create ES Correlation Search</h2>
+          
+          <div class="callout warning" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">ES Required</div>
+              <div class="callout-body">This only works if Sobeys has Splunk Enterprise Security (ES) licensed. Check on Day 1.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Step-by-Step: Create Correlation Search</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td>Go to <strong>Enterprise Security</strong> app</td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td><strong>Configure → Content → Content Management</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Click <strong>"Create New Content"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Select <strong>"Correlation Search"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">5</td><td>Enter <strong>Search Name</strong></td><td>e.g., <code>WAF - Block Volume Anomaly</code></td></tr>
+                  <tr><td class="highlight">6</td><td>Enter your <strong>SPL</strong></td><td>Your detection query</td></tr>
+                  <tr><td class="highlight">7</td><td>Set <strong>Start Time</strong></td><td><code>-5m@m</code></td></tr>
+                  <tr><td class="highlight">8</td><td>Set <strong>End Time</strong></td><td><code>now</code></td></tr>
+                  <tr><td class="highlight">9</td><td>Set <strong>Cron Schedule</strong></td><td><code>*/5 * * * *</code></td></tr>
+                  <tr><td class="highlight">10</td><td>Set <strong>Scheduling</strong></td><td><code>Real-time</code> (or Continuous)</td></tr>
+                  <tr><td class="highlight">11</td><td>In <strong>Adaptive Response Actions</strong>, click <strong>"Add New Response Action"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">12</td><td>Select <strong>"Notable"</strong></td><td>Creates Notable Event</td></tr>
+                  <tr><td class="highlight">13</td><td>Configure Notable settings (see below)</td><td>—</td></tr>
+                  <tr><td class="highlight">14</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h4 style="font-size:0.9375rem;margin:24px 0 12px;">Notable Event Settings:</h4>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Field</th><th>What to Enter</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">Title</td><td>Alert title (can use $result.field$)</td><td><code>WAF Block Anomaly: $result.src_ip$</code></td></tr>
+                <tr><td class="highlight">Description</td><td>Details for analyst</td><td><code>IP $result.src_ip$ blocked $result.count$ times</code></td></tr>
+                <tr><td class="highlight">Security Domain</td><td>Category</td><td><code>threat</code></td></tr>
+                <tr><td class="highlight">Severity</td><td>Static or from field</td><td><code>$result.severity$</code></td></tr>
+                <tr><td class="highlight">Default Owner</td><td>Who gets assigned</td><td><code>unassigned</code> (SOC assigns)</td></tr>
+                <tr><td class="highlight">Drilldown Name</td><td>Link text</td><td><code>View source IP activity</code></td></tr>
+                <tr><td class="highlight">Drilldown Search</td><td>Investigation search</td><td><code>index=akamai src_ip=$result.src_ip$</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ENABLE/DISABLE -->
+        <!-- ============================================================ -->
+        <div class="section" id="enable-disable" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Enable/Disable Saved Search</h2>
+
+          <div class="card" style="padding:24px;">
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>Notes</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td><strong>Settings → Searches, reports, and alerts</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Find the search/alert</td><td>Use filter</td></tr>
+                  <tr><td class="highlight">3</td><td>Click <strong>"Edit"</strong> → <strong>"Disable"</strong> (or "Enable")</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-top:16px;">
+            <div class="code-header"><span class="code-title">Check Status via SPL</span></div>
+            <div class="code-body">
+              <pre><code>``` List all scheduled searches and their status
+| rest /services/saved/searches | where is_scheduled=1
+| table title disabled next_scheduled_time cron_schedule</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- CHECK JOB HISTORY -->
+        <!-- ============================================================ -->
+        <div class="section" id="check-job" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Check Search Job History</h2>
+
+          <div class="card" style="padding:24px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Via UI</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What You'll See</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td><strong>Activity</strong> (top menu)</td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td><strong>Jobs</strong></td><td>List of all recent jobs</td></tr>
+                  <tr><td class="highlight">3</td><td>Filter by <strong>Owner</strong> or <strong>App</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Click job to see details</td><td>Run time, result count, any errors</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Check via SPL</span></div>
+            <div class="code-body">
+              <pre><code>``` Check scheduled search run history
+index=_internal sourcetype=scheduler 
+| search savedsearch_name="WAF*"
+| stats count by savedsearch_name status
+| sort - count
+
+``` Find failed/skipped searches
+index=_internal sourcetype=scheduler status!=success
+| stats count latest(_time) as last_failure by savedsearch_name status
+| sort - count
+
+``` Check search performance
+index=_internal sourcetype=scheduler savedsearch_name="WAF*"
+| stats avg(run_time) max(run_time) count by savedsearch_name</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- EDIT EXISTING SEARCH -->
+        <!-- ============================================================ -->
+        <div class="section" id="edit-search" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Edit Existing Search/Alert</h2>
+
+          <div class="card" style="padding:24px;">
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What You Can Edit</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td><strong>Settings → Searches, reports, and alerts</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Find the search</td><td>Use filter</td></tr>
+                  <tr><td class="highlight">3</td><td>Click <strong>"Edit"</strong> dropdown</td><td>Shows edit options</td></tr>
+                  <tr><td class="highlight">—</td><td><strong>Edit Search</strong></td><td>SPL query, name, description</td></tr>
+                  <tr><td class="highlight">—</td><td><strong>Edit Schedule</strong></td><td>Cron, time range, priority</td></tr>
+                  <tr><td class="highlight">—</td><td><strong>Edit Alert</strong></td><td>Trigger conditions, actions, throttle</td></tr>
+                  <tr><td class="highlight">—</td><td><strong>Edit Permissions</strong></td><td>Who can see/edit</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- CUSTOM APP -->
+        <!-- ============================================================ -->
+        <div class="section" id="custom-app" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Create Custom App (For Configs)</h2>
+          
+          <div class="callout info" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">Why a Custom App?</div>
+              <div class="callout-body">In Splunk Cloud, you can't edit system configs directly. You package your props.conf, transforms.conf, etc. in a custom app and deploy it. This is how you add field extractions, aliases, and lookups in Splunk Cloud.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Create App via UI</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td><strong>Apps → Manage Apps</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Click <strong>"Create app"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Enter <strong>Name</strong></td><td>e.g., <code>SA-sobeys-detection</code></td></tr>
+                  <tr><td class="highlight">4</td><td>Enter <strong>Folder name</strong></td><td>e.g., <code>SA-sobeys-detection</code></td></tr>
+                  <tr><td class="highlight">5</td><td>Select <strong>Template</strong></td><td><code>barebones</code></td></tr>
+                  <tr><td class="highlight">6</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-top:16px;">
+            <div class="code-header"><span class="code-title">App Directory Structure</span></div>
+            <div class="code-body">
+              <pre><code>SA-sobeys-detection/
+├── default/
+│   ├── app.conf           # App metadata
+│   ├── props.conf         # Field extractions, time parsing
+│   ├── transforms.conf    # Lookup definitions, field transforms
+│   └── savedsearches.conf # Saved searches (optional)
+├── lookups/
+│   └── privileged_users.csv
+└── metadata/
+    └── default.meta       # Permissions</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- FIELD ALIAS -->
+        <!-- ============================================================ -->
+        <div class="section" id="field-alias" style="scroll-margin-top:80px;">
+          <h2 class="subsection-title" style="border-left:4px solid var(--primary-500);padding-left:12px;">How to Add Field Aliases</h2>
+          
+          <div class="callout info" style="margin-bottom:16px;">
+            <div class="callout-content">
+              <div class="callout-title">What are Field Aliases?</div>
+              <div class="callout-body">Field aliases create alternate names for existing fields. Used for CIM compliance — e.g., if your data has <code>clientIP</code> but CIM uses <code>src_ip</code>, you create an alias.</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;margin-bottom:16px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Option A: Via UI (Field Aliases)</h3>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Click/Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td><strong>Settings → Fields</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Click <strong>"Field aliases"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Click <strong>"New Field Alias"</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Select <strong>Destination app</strong></td><td><code>search</code> or your app</td></tr>
+                  <tr><td class="highlight">5</td><td>Enter <strong>Name</strong></td><td>e.g., <code>akamai_src_ip_alias</code></td></tr>
+                  <tr><td class="highlight">6</td><td>Apply to sourcetype(s)</td><td>e.g., <code>akamai:siem</code></td></tr>
+                  <tr><td class="highlight">7</td><td>Enter <strong>Field alias</strong></td><td><code>clientIP AS src_ip</code></td></tr>
+                  <tr><td class="highlight">8</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;">
+            <h3 style="font-size:1rem;margin-bottom:16px;">Option B: Via props.conf (Bulk Aliases)</h3>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">props.conf Field Aliases</span></div>
+              <div class="code-body">
+                <pre><code>[akamai:siem]
+FIELDALIAS-src = attackData.clientIP AS src_ip
+FIELDALIAS-dest = httpMessage.host AS dest
+FIELDALIAS-action = attackData.action AS action
+FIELDALIAS-method = httpMessage.method AS http_method
+FIELDALIAS-uri = httpMessage.requestUrl AS uri_path</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
+          <h2 class="subsection-title">Where to Find Everything in Splunk</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Task</th><th>Navigation Path</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight">All saved searches/alerts</td><td><strong>Settings → Searches, reports, and alerts</strong></td></tr>
+                <tr><td class="highlight">Data inputs (HEC, etc.)</td><td><strong>Settings → Data inputs</strong></td></tr>
+                <tr><td class="highlight">Indexes</td><td><strong>Settings → Indexes</strong></td></tr>
+                <tr><td class="highlight">Lookups</td><td><strong>Settings → Lookups</strong></td></tr>
+                <tr><td class="highlight">Field aliases/extractions</td><td><strong>Settings → Fields</strong></td></tr>
+                <tr><td class="highlight">Apps</td><td><strong>Apps → Manage Apps</strong></td></tr>
+                <tr><td class="highlight">Job history</td><td><strong>Activity → Jobs</strong></td></tr>
+                <tr><td class="highlight">ES Correlation Searches</td><td><strong>ES → Configure → Content → Content Management</strong></td></tr>
+                <tr><td class="highlight">ES Incident Review</td><td><strong>ES → Incident Review</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

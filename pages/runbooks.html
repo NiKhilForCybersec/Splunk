@@ -437,6 +437,125 @@ flowchart LR
         </div>
 
       
+        <!-- HOW TO ADD EXCLUSIONS -->
+        <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
+          <h2 class="subsection-title">How to Add Exclusions/Whitelists</h2>
+          <p style="color:var(--gray-600);margin-bottom:24px;">When investigation reveals a false positive, you need to add an exclusion. Here's exactly how to do it.</p>
+          
+          <!-- Method 1: Lookup-based exclusion -->
+          <div class="card" style="padding:24px;margin-bottom:20px;">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:var(--primary-600);">Method 1: Add to Exclusion Lookup (Recommended)</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">Best for: IPs, users, or hostnames that should be permanently excluded</p>
+            
+            <h4 style="font-size:0.9375rem;margin-bottom:12px;">Step-by-Step:</h4>
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Action</th><th>What to Enter</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td>Go to <strong>Settings → Lookups → Lookup table files</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Find the exclusion lookup (e.g., <code>waf_exclusions.csv</code>)</td><td>—</td></tr>
+                  <tr><td class="highlight">3</td><td>Click the lookup name to edit</td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Add a new row with the exclusion details</td><td>See format below</td></tr>
+                  <tr><td class="highlight">5</td><td>Click <strong>"Save"</strong></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <h4 style="font-size:0.9375rem;margin:16px 0 8px;">Example Exclusion Lookup Format:</h4>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">waf_exclusions.csv</span></div>
+              <div class="code-body">
+                <pre><code>src_ip,reason,added_by,added_date,ticket,expiry_date
+10.1.50.100,Qualys scanner - scheduled scans,jsmith,2024-01-15,INC0012345,2025-01-15
+192.168.1.50,Internal load balancer health checks,jsmith,2024-01-15,CHG0067890,never</code></pre>
+              </div>
+            </div>
+            
+            <h4 style="font-size:0.9375rem;margin:16px 0 8px;">Alternative: Add via SPL (if you have write access)</h4>
+            <div class="code-block">
+              <div class="code-body">
+                <pre><code>| makeresults 
+| eval src_ip="10.1.50.100", reason="Qualys scanner", added_by="jsmith", added_date=strftime(now(),"%Y-%m-%d"), ticket="INC0012345", expiry_date="2025-01-15"
+| outputlookup append=t waf_exclusions.csv</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Method 2: Edit the SPL directly -->
+          <div class="card" style="padding:24px;margin-bottom:20px;">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:var(--warning-600);">Method 2: Edit Detection SPL Directly (Quick Fix)</h3>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">Use only if lookup method isn't set up. Not recommended for permanent exclusions.</p>
+            
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Action</th><th>Details</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td>Go to <strong>Settings → Searches, reports, and alerts</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Find the detection (e.g., "WAF-UC1 Block Volume")</td><td>Use search filter</td></tr>
+                  <tr><td class="highlight">3</td><td>Click <strong>Edit → Edit Search</strong></td><td>—</td></tr>
+                  <tr><td class="highlight">4</td><td>Add exclusion line to SPL</td><td>See example below</td></tr>
+                  <tr><td class="highlight">5</td><td>Save</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">Adding Exclusion to SPL</span></div>
+              <div class="code-body">
+                <pre><code>index=akamai action=deny earliest=-5m
+| where NOT src_ip IN ("10.1.50.100", "10.1.50.101")  ``` ADD THIS LINE
+| stats count as block_count by src_ip
+| where block_count > 100
+...</code></pre>
+              </div>
+            </div>
+            
+            <div class="callout warning" style="margin-top:12px;">
+              <div class="callout-content">
+                <div class="callout-title">⚠️ Always Document Exclusions</div>
+                <div class="callout-body">Add a comment in the SPL explaining WHY: <code>``` Excluded: 10.1.50.100 = Qualys scanner per INC0012345</code></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Method 3: ES Notable Suppression -->
+          <div class="card" style="padding:24px;margin-bottom:20px;">
+            <h3 style="font-size:1.125rem;margin-bottom:16px;color:var(--success-600);">Method 3: ES Notable Suppression (If Using Enterprise Security)</h3>
+            
+            <div class="table-container">
+              <table>
+                <thead><tr><th style="width:40px;">#</th><th>Action</th><th>Details</th></tr></thead>
+                <tbody>
+                  <tr><td class="highlight">1</td><td>Open the Notable Event in Incident Review</td><td>—</td></tr>
+                  <tr><td class="highlight">2</td><td>Click <strong>"Suppress"</strong> in the Notable actions</td><td>Top right of Notable panel</td></tr>
+                  <tr><td class="highlight">3</td><td>Set suppression criteria</td><td>e.g., src_ip=10.1.50.100</td></tr>
+                  <tr><td class="highlight">4</td><td>Set expiration (or "Never")</td><td>—</td></tr>
+                  <tr><td class="highlight">5</td><td>Enter reason</td><td>e.g., "Qualys scanner - INC0012345"</td></tr>
+                  <tr><td class="highlight">6</td><td>Save</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-top:12px;">
+              <strong>View existing suppressions:</strong> <code>Enterprise Security → Configure → Content → Notable Event Suppressions</code>
+            </p>
+          </div>
+
+          <!-- Best Practices -->
+          <div class="callout info">
+            <div class="callout-content">
+              <div class="callout-title">Exclusion Best Practices</div>
+              <div class="callout-body">
+                ✅ <strong>Always document:</strong> Who added it, why, ticket number, expiry date<br>
+                ✅ <strong>Use lookups:</strong> Easier to manage than editing SPL<br>
+                ✅ <strong>Set expiry dates:</strong> Scanner IPs change, temporary exclusions should expire<br>
+                ✅ <strong>Review quarterly:</strong> Remove stale exclusions<br>
+                ❌ <strong>Never exclude broadly:</strong> Don't exclude entire subnets without good reason
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- GO-LIVE CHECKLIST & HANDOFF RISKS -->
         <div class="section" style="margin-top:48px;border-top:2px solid var(--gray-200);padding-top:32px;">
           <h2 class="subsection-title" style="color:var(--warning-600);">⚠️ Go-Live Checklist & Handoff Risks</h2>
