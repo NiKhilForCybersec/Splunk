@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
 </head>
 <body>
   <div class="app-container">
@@ -25,19 +27,17 @@
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section">
-          <div class="nav-section-title">Vendor Deep Dives</div>
-          <a href="vendor-akamai.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Akamai WAF</span>
-          </a>
-          <a href="vendor-cyberark.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-            <span>CyberArk Identity</span>
-          </a>
-          <a href="vendor-entra.html" class="nav-item active">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Microsoft Entra ID</span>
-          </a>
+          <div class="nav-section-title">Vendors</div>
+          <a href="vendor-akamai.html" class="nav-item">Akamai WAF</a>
+          <a href="vendor-cyberark.html" class="nav-item">CyberArk <span class="badge critical" style="margin-left:auto;font-size:0.6rem">PRIMARY</span></a>
+          <a href="vendor-entra.html" class="nav-item active">Entra ID</a>
+          <a href="vendor-sapcdc.html" class="nav-item">SAP CDC</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item">Overview</a>
+          <a href="mfa-uc1.html" class="nav-item">UC1: MFA Fatigue</a>
+          <a href="mfa-uc2-5.html" class="nav-item">UC2-5</a>
         </div>
       </nav>
     </aside>
@@ -45,350 +45,131 @@
     <main class="main-content">
       <header class="header">
         <div class="header-left">
-          <button class="menu-toggle" aria-label="Toggle menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-item current">Microsoft Entra ID</span>
+            <span class="breadcrumb-item">Vendors</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Entra ID</span>
           </div>
         </div>
-        <div class="header-right">
-          <span class="badge microsoft">Corporate SSO</span>
-        </div>
+        <span class="badge microsoft">Corporate SSO</span>
       </header>
 
       <div class="page-content">
-        <!-- Header -->
         <div class="section">
-          <div class="section-header">
-            <h1 class="section-title">Microsoft Entra ID</h1>
-            <p class="section-subtitle">Corporate SSO and MFA for standard users — sign-in logs, error codes, and detection patterns</p>
-          </div>
+          <h1 class="section-title">Microsoft Entra ID</h1>
+          <p class="section-subtitle">Corporate SSO for all employees, secondary MFA for standard users</p>
         </div>
 
-        <!-- Role Clarification -->
         <div class="callout info">
-          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
           <div class="callout-content">
-            <div class="callout-title">Entra ID Role in This Project</div>
-            <div class="callout-body">
-              <ul style="margin-left: 16px; font-size: 0.875rem;">
-                <li><strong>Primary:</strong> Corporate SSO for all employees</li>
-                <li><strong>Secondary MFA:</strong> Standard users (non-privileged)</li>
-                <li><strong>Correlation:</strong> May federate with CyberArk for privileged accounts</li>
-                <li><strong>Location/Device data:</strong> Rich geolocation and device info for UC3, UC4</li>
-              </ul>
-            </div>
+            <div class="callout-title">Role at Sobeys</div>
+            <div class="callout-body">Primary SSO for 129,000 employees. For privileged users, Entra ID federates to CyberArk for MFA. Use Entra ID logs for: location data (UC3/UC4), standard employee MFA, and correlation with CyberArk.</div>
           </div>
         </div>
 
-        <!-- Data Sources -->
+        <!-- Log Types -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Entra ID Log Types</h3>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Log Type</th>
-                    <th>Sourcetype</th>
-                    <th>Detection Use</th>
-                    <th>Key Fields</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight">Sign-in Logs</td>
-                    <td><code>azure:aad:signin</code></td>
-                    <td><span class="badge critical">Primary</span> — All auth detections</td>
-                    <td>userPrincipalName, ipAddress, status, location</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Audit Logs</td>
-                    <td><code>azure:aad:audit</code></td>
-                    <td>User/role changes, app registrations</td>
-                    <td>activityDisplayName, targetResources</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Identity Protection</td>
-                    <td><code>azure:aad:identity</code></td>
-                    <td>Risk detections, risky users</td>
-                    <td>riskLevel, riskDetail, riskEventType</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Provisioning</td>
-                    <td><code>azure:aad:provisioning</code></td>
-                    <td>User lifecycle events</td>
-                    <td>provisioningAction, targetSystem</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <h2 class="subsection-title">Entra ID Log Types</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Log Type</th><th>Sourcetype</th><th>Detection Use</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Sign-in Logs</strong></td><td><code>azure:aad:signin</code></td><td>PRIMARY - Auth, MFA, location</td></tr>
+                <tr><td>Audit Logs</td><td><code>azure:aad:audit</code></td><td>User/role changes, app registration</td></tr>
+                <tr><td>Identity Protection</td><td><code>azure:aad:identity</code></td><td>Risk detections</td></tr>
+                <tr><td>Provisioning</td><td><code>azure:aad:provisioning</code></td><td>Lifecycle events</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <!-- Error Codes -->
+        <!-- Critical Error Codes -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Critical Sign-in Error Codes</h3>
-
-            <div class="callout warning" style="margin-bottom: 16px;">
-              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-              <div class="callout-content">
-                <div class="callout-title">Error Code 500121 = MFA Denied</div>
-                <div class="callout-body">This is the primary indicator for MFA fatigue attacks in Entra ID. User explicitly denied the push notification.</div>
-              </div>
-            </div>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Error Code</th>
-                    <th>Description</th>
-                    <th>Detection Relevance</th>
-                    <th>Use Case</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight"><code>0</code></td>
-                    <td>Success</td>
-                    <td><span class="badge success">Normal</span></td>
-                    <td>Track after failures for UC1, UC2</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>500121</code></td>
-                    <td>Authentication failed - MFA denied by user</td>
-                    <td><span class="badge critical">MFA Fatigue Primary</span></td>
-                    <td>MFA-UC1: Fatigue Detection</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>50074</code></td>
-                    <td>User did not pass the MFA challenge (strong auth required)</td>
-                    <td><span class="badge warning">MFA incomplete</span></td>
-                    <td>MFA-UC1, UC2</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>50076</code></td>
-                    <td>User did not pass the MFA challenge</td>
-                    <td><span class="badge warning">MFA failed</span></td>
-                    <td>MFA-UC1, UC2</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>50126</code></td>
-                    <td>Invalid username or password</td>
-                    <td><span class="badge error">Credential failure</span></td>
-                    <td>Brute force, credential stuffing</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>53003</code></td>
-                    <td>Blocked by Conditional Access</td>
-                    <td><span class="badge info">Policy block</span></td>
-                    <td>CA policy effectiveness</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>530032</code></td>
-                    <td>Compliant device required</td>
-                    <td><span class="badge info">Device compliance</span></td>
-                    <td>Device compliance monitoring</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>50053</code></td>
-                    <td>Account locked</td>
-                    <td><span class="badge error">Lockout</span></td>
-                    <td>Brute force indicator</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>50057</code></td>
-                    <td>User account disabled</td>
-                    <td><span class="badge warning">Account status</span></td>
-                    <td>Post-compromise activity</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <h2 class="subsection-title">Critical Error Codes</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Code</th><th>Meaning</th><th>Detection Use</th></tr></thead>
+              <tbody>
+                <tr><td class="highlight"><code>0</code></td><td>Success</td><td>Successful authentication</td></tr>
+                <tr><td class="highlight"><code>500121</code></td><td>MFA Denied by User</td><td><strong>PRIMARY for MFA fatigue</strong></td></tr>
+                <tr><td class="highlight"><code>50074</code></td><td>Strong auth required, incomplete</td><td>MFA challenge pending</td></tr>
+                <tr><td class="highlight"><code>50076</code></td><td>MFA required but failed</td><td>MFA failure tracking</td></tr>
+                <tr><td class="highlight"><code>50126</code></td><td>Invalid credentials</td><td>Password failures (credential stuffing)</td></tr>
+                <tr><td class="highlight"><code>53003</code></td><td>Blocked by Conditional Access</td><td>Policy enforcement</td></tr>
+                <tr><td class="highlight"><code>50053</code></td><td>Account locked</td><td>Lockout detection</td></tr>
+                <tr><td class="highlight"><code>50057</code></td><td>Account disabled</td><td>Disabled account access attempt</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
         <!-- Field Reference -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Sign-in Log Field Reference</h3>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>JSON Path</th>
-                    <th>Description</th>
-                    <th>Example</th>
-                    <th>SPL Extraction</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight"><code>properties.userPrincipalName</code></td>
-                    <td>User email/UPN</td>
-                    <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="621711071022110d00071b114c010d0f">[email&#160;protected]</a></td>
-                    <td><code>| spath path=properties.userPrincipalName output=user</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.userId</code></td>
-                    <td>User GUID</td>
-                    <td>abc123-def456-...</td>
-                    <td><code>| spath path=properties.userId output=user_id</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.ipAddress</code></td>
-                    <td>Source IP</td>
-                    <td>203.0.113.42</td>
-                    <td><code>| spath path=properties.ipAddress output=src</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.status.errorCode</code></td>
-                    <td>Result code (0=success)</td>
-                    <td>0, 500121, 50126</td>
-                    <td><code>| spath path=properties.status.errorCode output=error_code</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.status.failureReason</code></td>
-                    <td>Human-readable reason</td>
-                    <td>"User denied MFA"</td>
-                    <td><code>| spath path=properties.status.failureReason output=reason</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.location.city</code></td>
-                    <td>Geo city</td>
-                    <td>Toronto</td>
-                    <td><code>| spath path=properties.location.city output=city</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.location.countryOrRegion</code></td>
-                    <td>Country code</td>
-                    <td>CA</td>
-                    <td><code>| spath path=properties.location.countryOrRegion output=country</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.location.geoCoordinates.latitude</code></td>
-                    <td>Latitude</td>
-                    <td>43.6532</td>
-                    <td><code>| spath path=properties.location.geoCoordinates.latitude output=lat</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.location.geoCoordinates.longitude</code></td>
-                    <td>Longitude</td>
-                    <td>-79.3832</td>
-                    <td><code>| spath path=properties.location.geoCoordinates.longitude output=lon</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.deviceDetail.displayName</code></td>
-                    <td>Device name</td>
-                    <td>DESKTOP-ABC123</td>
-                    <td><code>| spath path=properties.deviceDetail.displayName output=device</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.deviceDetail.deviceId</code></td>
-                    <td>Device GUID</td>
-                    <td>device-guid-123</td>
-                    <td><code>| spath path=properties.deviceDetail.deviceId output=device_id</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.mfaDetail.authMethod</code></td>
-                    <td>MFA method used</td>
-                    <td>MicrosoftAuthenticator</td>
-                    <td><code>| spath path=properties.mfaDetail.authMethod output=mfa_method</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>properties.appDisplayName</code></td>
-                    <td>Application name</td>
-                    <td>Microsoft Teams</td>
-                    <td><code>| spath path=properties.appDisplayName output=app</code></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <h2 class="subsection-title">Field Reference (azure:aad:signin)</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>JSON Path</th><th>Description</th><th>SPL Extract</th></tr></thead>
+              <tbody>
+                <tr><td><code>properties.userPrincipalName</code></td><td>User email/UPN</td><td><code>spath path=properties.userPrincipalName output=user</code></td></tr>
+                <tr><td><code>properties.userId</code></td><td>User GUID</td><td><code>spath path=properties.userId</code></td></tr>
+                <tr><td><code>properties.ipAddress</code></td><td>Source IP</td><td><code>spath path=properties.ipAddress output=src</code></td></tr>
+                <tr><td><code>properties.status.errorCode</code></td><td>Result code (0=success)</td><td><code>spath path=properties.status.errorCode</code></td></tr>
+                <tr><td><code>properties.location.city</code></td><td>Geolocation city</td><td><code>spath path=properties.location.city</code></td></tr>
+                <tr><td><code>properties.location.countryOrRegion</code></td><td>Country code</td><td><code>spath path=properties.location.countryOrRegion</code></td></tr>
+                <tr><td><code>properties.location.geoCoordinates.latitude</code></td><td>Latitude</td><td>For impossible travel calculation</td></tr>
+                <tr><td><code>properties.location.geoCoordinates.longitude</code></td><td>Longitude</td><td>For impossible travel calculation</td></tr>
+                <tr><td><code>properties.deviceDetail.deviceId</code></td><td>Device GUID</td><td>New device detection</td></tr>
+                <tr><td><code>properties.mfaDetail.authMethod</code></td><td>MFA method used</td><td>Method downgrade detection</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <!-- MFA Detection SPL -->
+        <!-- MFA Fatigue SPL -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">MFA Fatigue Detection (Entra ID)</h3>
-
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-title">MFA-UC1: Entra ID MFA Fatigue (Secondary Source)</span>
-              </div>
-              <div class="code-body">
-                <pre><code>index=azure sourcetype=azure:aad:signin earliest=-15m
+          <h2 class="subsection-title">MFA Fatigue Detection (Entra ID - Secondary)</h2>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">MFA-UC1: Entra ID Version (for standard users)</span></div>
+            <div class="code-body"><pre><code>index=azure sourcetype=azure:aad:signin earliest=-15m
 | spath
 | eval user = 'properties.userPrincipalName'
-| eval src = 'properties.ipAddress'
 | eval error_code = 'properties.status.errorCode'
+| eval src = 'properties.ipAddress'
 | eval city = 'properties.location.city'
 | eval country = 'properties.location.countryOrRegion'
 
 ``` Categorize MFA events
-| eval mfa_result = case(
-    error_code==500121, "denied",   ``` User denied push
-    error_code==50074, "incomplete", ``` MFA required but not completed
-    error_code==50076, "failed",    ``` MFA challenge failed
-    error_code==0, "success",       ``` Successful auth
-    1=1, "other"
-)
+| eval mfa_denied = if(error_code=500121, 1, 0)
+| eval mfa_incomplete = if(error_code IN (50074, 50076), 1, 0)
+| eval success = if(error_code=0, 1, 0)
 
-``` Focus on MFA-relevant events
-| where mfa_result IN ("denied", "incomplete", "failed", "success")
-
-``` Optional: Filter to privileged users only
-| lookup privileged_users.csv userPrincipalName AS user OUTPUT is_privileged
-| where is_privileged="true"
-
-``` Aggregate by user in 10-min window
+``` Aggregate per user
 | bin _time span=10m
 | stats 
-    count(eval(mfa_result="denied")) as mfa_denied
-    count(eval(mfa_result="incomplete")) as mfa_incomplete
-    count(eval(mfa_result="failed")) as mfa_failed
-    count(eval(mfa_result="success")) as mfa_success
+    sum(mfa_denied) as denials
+    sum(mfa_incomplete) as incomplete
+    sum(success) as successes
     values(src) as source_ips
     values(city) as cities
     values(country) as countries
     BY user _time
 
-``` Calculate total failures
-| eval total_mfa_failures = mfa_denied + mfa_incomplete + mfa_failed
-| where total_mfa_failures >= 5
+``` Standard user threshold (higher than privileged)
+| where denials >= 10 OR (denials >= 5 AND successes >= 1)
 
-``` Determine severity
-| eval compromised = if(mfa_success > 0, "YES - CRITICAL", "NO")
-| eval severity = case(
-    mfa_success > 0, "CRITICAL",
-    total_mfa_failures >= 10, "HIGH",
-    1=1, "MEDIUM"
-)
-
-| table user total_mfa_failures mfa_denied mfa_success compromised severity source_ips cities countries</code></pre>
-              </div>
-            </div>
+| eval severity = if(denials >= 5 AND successes >= 1, "CRITICAL", "HIGH")
+| table _time user denials successes source_ips cities severity</code></pre></div>
           </div>
         </div>
 
         <!-- Impossible Travel -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">MFA-UC4: Impossible Travel Detection</h3>
-
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-title">Impossible Travel SPL</span>
-              </div>
-              <div class="code-body">
-                <pre><code>index=azure sourcetype=azure:aad:signin earliest=-24h
+          <h2 class="subsection-title">Impossible Travel Detection (MFA-UC4)</h2>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Impossible Travel with Haversine Formula</span></div>
+            <div class="code-body"><pre><code>index=azure sourcetype=azure:aad:signin earliest=-24h
 | spath
 | eval user = 'properties.userPrincipalName'
 | eval error_code = 'properties.status.errorCode'
@@ -400,127 +181,61 @@
 ``` Only successful logins with geo data
 | where error_code==0 AND isnotnull(lat) AND isnotnull(lon)
 
-``` Sort and get previous login info
+``` Get previous login
 | sort user _time
-| streamstats current=f 
-    last(lat) as prev_lat 
-    last(lon) as prev_lon
-    last(_time) as prev_time 
-    last(city) as prev_city
-    last(country) as prev_country
-    BY user
-
-``` Skip first login for each user (no previous)
+| streamstats current=f last(lat) as prev_lat last(lon) as prev_lon last(_time) as prev_time last(city) as prev_city BY user
 | where isnotnull(prev_lat)
 
-``` Haversine formula for distance (km)
+``` Haversine distance calculation
 | eval lat1_rad = lat * 3.14159265359 / 180
 | eval lat2_rad = prev_lat * 3.14159265359 / 180
-| eval dlon_rad = (lon - prev_lon) * 3.14159265359 / 180
-| eval dlat_rad = (lat - prev_lat) * 3.14159265359 / 180
-| eval a = pow(sin(dlat_rad/2), 2) + cos(lat1_rad) * cos(lat2_rad) * pow(sin(dlon_rad/2), 2)
+| eval dlon = (lon - prev_lon) * 3.14159265359 / 180
+| eval dlat = (lat - prev_lat) * 3.14159265359 / 180
+| eval a = pow(sin(dlat/2), 2) + cos(lat1_rad) * cos(lat2_rad) * pow(sin(dlon/2), 2)
 | eval distance_km = 6371 * 2 * asin(sqrt(a))
 
-``` Calculate time difference and speed
-| eval time_diff_hours = (_time - prev_time) / 3600
-| eval speed_kmh = if(time_diff_hours > 0, distance_km / time_diff_hours, 0)
+``` Calculate speed
+| eval time_hours = (_time - prev_time) / 3600
+| eval speed_kmh = if(time_hours > 0, distance_km / time_hours, 0)
 
-``` Flag impossible travel (faster than 800 km/h = commercial flight)
+``` Flag impossible travel (>800 km/h, >500km distance)
 | where speed_kmh > 800 AND distance_km > 500
 
-``` Lookup privileged users for higher priority
-| lookup privileged_users.csv userPrincipalName AS user OUTPUT is_privileged role
-| eval severity = if(is_privileged="true", "HIGH", "MEDIUM")
-
-| eval prev_time_str = strftime(prev_time, "%Y-%m-%d %H:%M:%S")
-| eval current_time_str = strftime(_time, "%Y-%m-%d %H:%M:%S")
 | eval distance_km = round(distance_km, 0)
 | eval speed_kmh = round(speed_kmh, 0)
-| eval time_diff_min = round(time_diff_hours * 60, 0)
-
-| table user prev_city prev_country prev_time_str city country current_time_str distance_km time_diff_min speed_kmh severity is_privileged</code></pre>
-              </div>
-            </div>
+| table user prev_city city country distance_km speed_kmh</code></pre></div>
           </div>
         </div>
 
-        <!-- props.conf -->
+        <!-- Validation Queries -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">props.conf Configuration</h3>
+          <h2 class="subsection-title">Data Validation</h2>
+          <div class="code-block">
+            <div class="code-body"><pre><code>``` Check data flow
+index=azure sourcetype=azure:aad:signin earliest=-24h | stats count
 
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-title">props.conf for azure:aad:signin</span>
-              </div>
-              <div class="code-body">
-                <pre><code>[azure:aad:signin]
-# Timestamp
-TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%6N%Z
-TIME_PREFIX = "createdDateTime"\s*:\s*"
-MAX_TIMESTAMP_LOOKAHEAD = 50
-TZ = UTC
-
-# Parsing
-KV_MODE = json
-TRUNCATE = 0
-SHOULD_LINEMERGE = false
-
-# Calculated Fields
-EVAL-user = 'properties.userPrincipalName'
-EVAL-src = 'properties.ipAddress'
-EVAL-app = 'properties.appDisplayName'
-EVAL-action = if('properties.status.errorCode'==0 OR 'properties.status.errorCode'=="0", "success", "failure")
-EVAL-reason = 'properties.status.failureReason'
-EVAL-authentication_method = 'properties.mfaDetail.authMethod'
-EVAL-src_city = 'properties.location.city'
-EVAL-src_country = 'properties.location.countryOrRegion'
-EVAL-dest = 'properties.deviceDetail.displayName'
-EVAL-vendor = "Microsoft"
-EVAL-product = "Entra ID"</code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Verification Queries -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Data Verification Queries</h3>
-
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-title">Entra ID Data Validation</span>
-              </div>
-              <div class="code-body">
-                <pre><code>``` Check data is flowing
-index=azure sourcetype=azure:aad:signin earliest=-1h | stats count
-
-``` Check error code distribution (should see 0 and various error codes)
+``` Error code distribution
 index=azure sourcetype=azure:aad:signin earliest=-24h
 | spath path=properties.status.errorCode output=error_code
+| stats count BY error_code | sort -count | head 20
+
+``` MFA events count
+index=azure sourcetype=azure:aad:signin earliest=-24h
+| spath path=properties.status.errorCode output=error_code
+| where error_code IN (0, 500121, 50074, 50076)
 | stats count BY error_code
-| sort - count
 
-``` Check for MFA-specific events (500121)
-index=azure sourcetype=azure:aad:signin earliest=-24h
-| spath path=properties.status.errorCode output=error_code
-| where error_code==500121
-| stats count as mfa_denials
-
-``` Check geolocation data availability
+``` Geo data availability
 index=azure sourcetype=azure:aad:signin earliest=-1h
-| spath path=properties.location.city output=city
-| spath path=properties.location.countryOrRegion output=country
-| stats count(city) as has_city count(country) as has_country count as total
-| eval city_pct = round(has_city/total*100, 1)
-| eval country_pct = round(has_country/total*100, 1)
+| spath path=properties.location.geoCoordinates.latitude output=lat
+| eval has_geo = if(isnotnull(lat), "yes", "no")
+| stats count BY has_geo</code></pre></div>
+          </div>
+        </div>
 
-``` Check MFA method data
-index=azure sourcetype=azure:aad:signin earliest=-24h
-| spath path=properties.mfaDetail.authMethod output=mfa_method
-| where isnotnull(mfa_method)
-| stats count BY mfa_method</code></pre>
-              </div>
-            </div>
-     
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

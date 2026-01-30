@@ -8,10 +8,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
 </head>
 <body>
   <div class="app-container">
-    <!-- Sidebar (abbreviated) -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
@@ -26,19 +27,33 @@
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section">
+          <div class="nav-section-title">Overview</div>
+          <a href="../index.html" class="nav-item">Command Center</a>
+          <a href="day1.html" class="nav-item">Day 1</a>
+        </div>
+        <div class="nav-section">
           <div class="nav-section-title">WAF/DDoS Project</div>
-          <a href="waf-overview.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Project Overview</span>
-          </a>
-          <a href="waf-uc1.html" class="nav-item active">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span>UC1: Block Volume Anomaly</span>
-          </a>
-          <a href="waf-uc2.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            <span>UC2: Single Source Flood</span>
-          </a>
+          <a href="waf-overview.html" class="nav-item">Overview</a>
+          <a href="waf-uc1.html" class="nav-item active">UC1: Block Volume</a>
+          <a href="waf-uc2-4.html" class="nav-item">UC2-4: Tier 1</a>
+          <a href="waf-uc5-8.html" class="nav-item">UC5-8: Tier 2</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item">Overview</a>
+          <a href="mfa-uc1.html" class="nav-item">UC1: MFA Fatigue</a>
+          <a href="mfa-uc2-5.html" class="nav-item">UC2-5</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-operations.html" class="nav-item">Splunk Ops</a>
+          <a href="notable-events.html" class="nav-item">Notable Events</a>
+          <a href="runbooks.html" class="nav-item">Runbooks</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Reference</div>
+          <a href="vendor-akamai.html" class="nav-item">Akamai Reference</a>
+          <a href="spl-reference.html" class="nav-item">SPL Library</a>
         </div>
       </nav>
     </aside>
@@ -46,527 +61,201 @@
     <main class="main-content">
       <header class="header">
         <div class="header-left">
-          <button class="menu-toggle" aria-label="Toggle menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-item">WAF/DDoS</span>
+            <a href="waf-overview.html" class="breadcrumb-item">WAF Project</a>
             <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-item current">UC1: Block Volume Anomaly</span>
+            <span class="breadcrumb-item current">UC1</span>
           </div>
         </div>
-        <div class="header-right">
-          <span class="badge default">Tier 1</span>
-          <span class="badge warning">Medium Severity</span>
-          <span class="badge success">Production Ready</span>
-        </div>
+        <span class="badge warning">Tier 1</span>
       </header>
 
       <div class="page-content">
-        <!-- Header Section -->
         <div class="section">
-          <div class="section-header">
-            <h1 class="section-title">WAF-UC1: WAF Block Volume Anomaly</h1>
-            <p class="section-subtitle">Detect sudden spikes in WAF block actions indicating active attacks, scanning, or coordinated assault</p>
-          </div>
+          <h1 class="section-title">WAF-UC1: Block Volume Anomaly</h1>
+          <p class="section-subtitle">Detect sudden spikes in WAF blocks indicating active attack campaigns</p>
+        </div>
 
-          <!-- Quick Info Cards -->
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-value">T1190</div>
-              <div class="stat-label">MITRE ATT&CK</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value warning">Medium</div>
-              <div class="stat-label">Severity</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">5 min</div>
-              <div class="stat-label">Detection Window</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">Akamai</div>
-              <div class="stat-label">Data Source</div>
+        <!-- Metadata -->
+        <div class="grid grid-4" style="margin-bottom:20px">
+          <div class="card bordered-left warning"><div style="font-size:0.7rem;color:var(--gray-500)">Severity</div><strong>MEDIUM</strong></div>
+          <div class="card bordered-left primary"><div style="font-size:0.7rem;color:var(--gray-500)">MITRE ATT&CK</div><strong>T1190</strong></div>
+          <div class="card bordered-left akamai"><div style="font-size:0.7rem;color:var(--gray-500)">Data Source</div><strong>Akamai SIEM</strong></div>
+          <div class="card bordered-left info"><div style="font-size:0.7rem;color:var(--gray-500)">Index</div><strong>akamai</strong></div>
+        </div>
+
+        <!-- WHAT -->
+        <div class="section">
+          <h2 class="subsection-title">❓ WHAT — Detection Description</h2>
+          <p>This detection identifies statistical anomalies in WAF block volume that exceed the normal baseline by more than 2 standard deviations, indicating potential attack activity.</p>
+          <div class="card" style="margin-top:16px">
+            <div class="mermaid">
+flowchart LR
+    A[Normal Traffic<br/>Baseline] --> B{Current Volume}
+    B -->|Within 2σ| C[Normal - No Alert]
+    B -->|Above 2σ| D[🟡 Anomaly Detected]
+    B -->|Above 3σ| E[🔴 HIGH Anomaly]
+    D --> F[Generate Alert]
+    E --> F
+    style E fill:#dc2626,color:#fff
             </div>
           </div>
         </div>
 
-        <!-- Threat Description -->
+        <!-- WHY -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Threat Intent</h3>
-            
+          <h2 class="subsection-title">🎯 WHY — Threat Intent</h2>
+          <div class="grid grid-2">
             <div class="card">
-              <p style="margin-bottom: 16px;">This detection identifies statistical anomalies in WAF block volume that indicate active security events. Sudden spikes in blocked requests typically indicate:</p>
-              <ul style="margin-left: 20px; color: var(--gray-600);">
-                <li><strong>Active exploitation attempts</strong> — Attacker probing for vulnerabilities</li>
-                <li><strong>Automated scanning</strong> — Vulnerability scanners or reconnaissance tools</li>
-                <li><strong>Coordinated attack campaigns</strong> — Distributed attacks from multiple sources</li>
-                <li><strong>DDoS reconnaissance</strong> — Pre-attack probing of defenses</li>
-                <li><strong>WAF rule triggering events</strong> — New attack patterns hitting existing rules</li>
+              <h4 style="color:var(--error-600)">Attack Indicators</h4>
+              <ul style="font-size:0.875rem;margin-left:16px">
+                <li>Scanning/reconnaissance activity</li>
+                <li>Exploitation attempts (SQLi, XSS)</li>
+                <li>Credential stuffing campaigns</li>
+                <li>DDoS application layer attacks</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4 style="color:var(--primary-700)">Sobeys Business Impact</h4>
+              <ul style="font-size:0.875rem;margin-left:16px">
+                <li>Voilà e-commerce degradation</li>
+                <li>Customer data exposure risk</li>
+                <li>Brand reputation damage</li>
+                <li>PCI compliance concerns</li>
               </ul>
             </div>
           </div>
         </div>
 
-        <!-- Detection Logic -->
+        <!-- WHEN -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Detection Logic</h3>
-
-            <div class="timeline">
-              <div class="timeline-item complete">
-                <div class="timeline-content">
-                  <h4 class="timeline-title">1. Aggregate blocked events</h4>
-                  <p class="timeline-body">Collect all Akamai events with ruleAction="deny" and aggregate by 5-minute window</p>
-                </div>
-              </div>
-              <div class="timeline-item complete">
-                <div class="timeline-content">
-                  <h4 class="timeline-title">2. Calculate baseline</h4>
-                  <p class="timeline-body">Compute historical average and standard deviation from rolling 24-hour baseline</p>
-                </div>
-              </div>
-              <div class="timeline-item complete">
-                <div class="timeline-content">
-                  <h4 class="timeline-title">3. Determine threshold</h4>
-                  <p class="timeline-body">Set dynamic threshold: baseline_mean + (2 × standard_deviation)</p>
-                </div>
-              </div>
-              <div class="timeline-item complete">
-                <div class="timeline-content">
-                  <h4 class="timeline-title">4. Apply minimum filter</h4>
-                  <p class="timeline-body">Require minimum 50 events to avoid alerting on low-volume noise</p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-content">
-                  <h4 class="timeline-title">5. Generate alert</h4>
-                  <p class="timeline-body">Fire alert with severity based on deviation magnitude</p>
-                </div>
-              </div>
-            </div>
+          <h2 class="subsection-title">⏰ WHEN — Thresholds & Timing</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Condition</th><th>Threshold</th><th>Rationale</th></tr></thead>
+              <tbody>
+                <tr><td>Time Window</td><td>5 minutes</td><td>Balance speed vs noise</td></tr>
+                <tr><td>Statistical Method</td><td>mean + 2σ</td><td>95th percentile anomaly</td></tr>
+                <tr><td>Minimum Floor</td><td>10 events</td><td>Avoid low-volume false positives</td></tr>
+                <tr><td>Baseline Period</td><td>14+ days</td><td>Capture weekly patterns</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <!-- SPL Implementation -->
+        <!-- WHERE -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">SPL Implementation</h3>
+          <h2 class="subsection-title">📍 WHERE — Data Sources</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Component</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Index</td><td><code>akamai</code></td></tr>
+                <tr><td>Sourcetype</td><td><code>akamai:siem</code></td></tr>
+                <tr><td>Key Field (Action)</td><td><code>attackData.rules{}.ruleAction</code></td></tr>
+                <tr><td>Key Field (Source)</td><td><code>attackData.clientIP</code></td></tr>
+                <tr><td>CIM Model</td><td>Web (src, action, status)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-            <div class="callout info">
-              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-              <div class="callout-content">
-                <div class="callout-title">Production-Ready Query</div>
-                <div class="callout-body">This SPL is optimized for Splunk Cloud performance and tested against Sobeys Akamai data patterns.</div>
-              </div>
-            </div>
-
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-title">WAF-UC1: Block Volume Anomaly Detection</span>
-                <span class="code-lang">SPL</span>
-              </div>
-              <div class="code-body">
-                <pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
+        <!-- HOW -->
+        <div class="section">
+          <h2 class="subsection-title">🔧 HOW — Detection SPL</h2>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">WAF-UC1: Block Volume Anomaly (Akamai)</span></div>
+            <div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
 | spath path=attackData.rules{}.ruleAction output=action
 | where action="deny"
-| spath path=clientIP output=src
-| spath path=geo.country output=country
-| spath path=httpMessage.host output=dest_host
-| spath path=attackData.rules{}.ruleTag output=attack_category
 | bin _time span=5m
 | stats count as block_count 
-        dc(src) as unique_sources
-        dc(country) as unique_countries
-        values(attack_category) as attack_types
-        values(dest_host) as targeted_hosts
-        BY _time
-| appendpipe 
-    [| stats avg(block_count) as baseline 
-             stdev(block_count) as stdev 
-             perc95(block_count) as p95]
-| eval threshold = round(baseline + (2 * stdev), 0)
-| eval threshold = if(threshold < 50, 50, threshold)  ``` Minimum threshold
-| where block_count > threshold AND block_count > 50
+    dc(attackData.clientIP) as unique_ips 
+    values(httpMessage.host) as hosts
+    BY _time
+| eventstats avg(block_count) as baseline stdev(block_count) as stdev
+| eval threshold = baseline + (2 * stdev)
+| eval min_floor = 10
+| where block_count > threshold AND block_count > min_floor
 | eval deviation = round((block_count - baseline) / stdev, 2)
 | eval severity = case(
-    deviation > 5, "Critical",
-    deviation > 3, "High", 
-    deviation > 2, "Medium",
-    true(), "Low"
+    deviation > 5, "CRITICAL",
+    deviation > 3, "HIGH",
+    1=1, "MEDIUM"
 )
-| eval alert_title = "WAF Block Volume Anomaly Detected"
-| eval alert_description = "Blocked requests (".block_count.") exceeded threshold (".threshold.") by ".deviation." standard deviations"
-| table _time block_count baseline threshold deviation severity unique_sources unique_countries attack_types targeted_hosts alert_title alert_description</code></pre>
-              </div>
-            </div>
+| table _time block_count baseline threshold deviation unique_ips severity hosts</code></pre></div>
+          </div>
+        </div>
 
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-title">Saved Search Configuration (savedsearches.conf)</span>
-                <span class="code-lang">CONF</span>
-              </div>
-              <div class="code-body">
-                <pre><code>[WAF-UC1 - Block Volume Anomaly]
-search = index=akamai sourcetype=akamai:siem earliest=-10m \
-| spath path=attackData.rules{}.ruleAction output=action \
-| where action="deny" \
-| bin _time span=5m \
-| stats count as block_count dc(clientIP) as unique_sources BY _time \
-| appendpipe [| stats avg(block_count) as baseline stdev(block_count) as stdev] \
-| eval threshold = round(baseline + (2 * stdev), 0) \
-| where block_count > threshold AND block_count > 50
+        <!-- False Positives -->
+        <div class="section">
+          <h2 class="subsection-title">⚠️ Known False Positives</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>FP Source</th><th>Mitigation</th></tr></thead>
+              <tbody>
+                <tr><td>Vulnerability Scanners (Qualys, Tenable)</td><td>Allowlist scanner IPs in lookup</td></tr>
+                <tr><td>Marketing Campaign Traffic Spikes</td><td>Coordinate with marketing, adjust during events</td></tr>
+                <tr><td>WAF Rule Updates</td><td>Monitor after rule changes, tune if needed</td></tr>
+                <tr><td>Partner API Integrations</td><td>Allowlist partner IP ranges</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
+        <!-- Notable Event Config -->
+        <div class="section">
+          <h2 class="subsection-title">📋 Notable Event Configuration (Splunk ES)</h2>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">savedsearches.conf</span></div>
+            <div class="code-body"><pre><code>[WAF-UC1 Block Volume Anomaly]
+search = index=akamai sourcetype=akamai:siem ... (SPL above)
 cron_schedule = */5 * * * *
 dispatch.earliest_time = -10m
 dispatch.latest_time = now
-enableSched = 1
-
 alert.severity = 3
 alert.suppress = 1
-alert.suppress.period = 30m
-alert.suppress.fields = _time
+alert.suppress.period = 15m
+alert.suppress.fields = hosts
+action.notable = 1
+action.notable.param.rule_title = WAF Block Volume Anomaly
+action.notable.param.rule_description = Detected statistical anomaly in WAF block volume
+action.notable.param.security_domain = network
+action.notable.param.severity = medium
+action.notable.param.drilldown_search = index=akamai sourcetype=akamai:siem earliest=-1h | stats count by attackData.clientIP</code></pre></div>
+          </div>
+        </div>
 
-action.email = 1
-action.email.to = <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5c2f333f1c2f333e39252f723f3331">[email&#160;protected]</a>
-action.email.subject = [ALERT] WAF Block Volume Anomaly - $result.severity$
-
-counttype = number of events
-relation = greater than
-quantity = 0</code></pre>
-              </div>
+        <!-- Response Actions -->
+        <div class="section">
+          <h2 class="subsection-title">🚨 Response Actions</h2>
+          <div class="grid grid-2">
+            <div class="card bordered-left warning">
+              <h4>Immediate (SOC Tier 1)</h4>
+              <ol style="font-size:0.875rem;margin-left:16px">
+                <li>Validate alert is not scanner/FP</li>
+                <li>Identify top source IPs</li>
+                <li>Check attack categories in logs</li>
+                <li>Escalate if coordinated attack</li>
+              </ol>
+            </div>
+            <div class="card bordered-left error">
+              <h4>Escalation (Tier 2/IR)</h4>
+              <ol style="font-size:0.875rem;margin-left:16px">
+                <li>Block malicious IPs at edge</li>
+                <li>Enable stricter rate limiting</li>
+                <li>Notify application owners</li>
+                <li>Document for threat intel</li>
+              </ol>
             </div>
           </div>
         </div>
 
-        <!-- Threshold Configuration -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Threshold Configuration</h3>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Parameter</th>
-                    <th>Value</th>
-                    <th>Rationale</th>
-                    <th>Tuning Guidance</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight">Time Window</td>
-                    <td><code>5 minutes</code></td>
-                    <td>Balances responsiveness vs. noise</td>
-                    <td>Increase to 10m if too noisy</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Deviation Multiplier</td>
-                    <td><code>2σ (2 sigma)</code></td>
-                    <td>Catches ~95% of anomalies</td>
-                    <td>Increase to 3σ if FP rate high</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Minimum Events</td>
-                    <td><code>50 blocks</code></td>
-                    <td>Prevents low-volume false positives</td>
-                    <td>Adjust based on normal volume</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Schedule</td>
-                    <td><code>Every 5 minutes</code></td>
-                    <td>Aligns with detection window</td>
-                    <td>Do not change</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Suppression</td>
-                    <td><code>30 minutes</code></td>
-                    <td>Prevents alert flooding</td>
-                    <td>Increase during active attacks</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- False Positive Mitigation -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">False Positive Analysis & Mitigation</h3>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>FP Source</th>
-                    <th>Characteristics</th>
-                    <th>Mitigation</th>
-                    <th>SPL Addition</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight">Security Scanners (Qualys, Nessus)</td>
-                    <td>Scheduled, known source IPs, high volume</td>
-                    <td>Allowlist scanner IPs</td>
-                    <td><code>| where NOT cidrmatch("10.1.1.0/24", src)</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Marketing Campaigns</td>
-                    <td>Correlates with events, legitimate UAs</td>
-                    <td>Time-based suppression</td>
-                    <td>Schedule suppression during known campaigns</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">WAF Rule Updates</td>
-                    <td>Sudden increase after deployment</td>
-                    <td>Correlate with change calendar</td>
-                    <td>Manual suppression post-change</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Bot Indexing (Googlebot)</td>
-                    <td>Known crawler UAs, specific paths</td>
-                    <td>Allowlist known crawlers</td>
-                    <td><code>| where NOT match(ua, "(?i)googlebot|bingbot")</code></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight">Partner/Vendor APIs</td>
-                    <td>Known IP ranges, API paths</td>
-                    <td>Allowlist partner IPs</td>
-                    <td>Add to allowlist lookup</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-title">False Positive Allowlist Implementation</span>
-                <span class="code-lang">SPL</span>
-              </div>
-              <div class="code-body">
-                <pre><code>``` Add after spath extractions
-| lookup waf_allowlist.csv src OUTPUT is_allowlisted allowlist_reason
-| where isnull(is_allowlisted) OR is_allowlisted != "true"
-
-``` waf_allowlist.csv format:
-``` src,is_allowlisted,allowlist_reason
-``` 10.1.1.100,true,Qualys Scanner
-``` 10.1.2.0/24,true,Partner API Range</code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Test Cases -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Test Cases</h3>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Test ID</th>
-                    <th>Scenario</th>
-                    <th>Input</th>
-                    <th>Expected Result</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>TC-UC1-001</td>
-                    <td>Normal traffic within baseline</td>
-                    <td>50 blocks/5min (baseline: 100)</td>
-                    <td>No alert</td>
-                    <td><span class="badge success">Pass</span></td>
-                  </tr>
-                  <tr>
-                    <td>TC-UC1-002</td>
-                    <td>Anomaly spike - 2σ above</td>
-                    <td>500 blocks/5min (baseline: 100, σ: 50)</td>
-                    <td>Alert fires (Medium)</td>
-                    <td><span class="badge success">Pass</span></td>
-                  </tr>
-                  <tr>
-                    <td>TC-UC1-003</td>
-                    <td>Major anomaly - 5σ above</td>
-                    <td>1000 blocks/5min</td>
-                    <td>Alert fires (Critical)</td>
-                    <td><span class="badge success">Pass</span></td>
-                  </tr>
-                  <tr>
-                    <td>TC-UC1-004</td>
-                    <td>Low volume anomaly</td>
-                    <td>30 blocks (above threshold but &lt;50)</td>
-                    <td>No alert (min not met)</td>
-                    <td><span class="badge success">Pass</span></td>
-                  </tr>
-                  <tr>
-                    <td>TC-UC1-005</td>
-                    <td>Allowlisted source</td>
-                    <td>500 blocks from scanner IP</td>
-                    <td>No alert (allowlisted)</td>
-                    <td><span class="badge success">Pass</span></td>
-                  </tr>
-                  <tr>
-                    <td>TC-UC1-006</td>
-                    <td>Suppression test</td>
-                    <td>Two anomalies within 30min</td>
-                    <td>Second alert suppressed</td>
-                    <td><span class="badge success">Pass</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- SOC Runbook -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">SOC Runbook: RB-WAF-01</h3>
-
-            <div class="card">
-              <div class="grid grid-2">
-                <div>
-                  <h4 style="margin-bottom: 12px; font-weight: 600;">Alert Information</h4>
-                  <ul style="font-size: 0.875rem; color: var(--gray-600);">
-                    <li><strong>Severity:</strong> Medium (dynamic based on deviation)</li>
-                    <li><strong>MITRE ATT&CK:</strong> T1190 - Exploit Public-Facing Application</li>
-                    <li><strong>Data Source:</strong> Akamai SIEM (index=akamai)</li>
-                    <li><strong>SLA:</strong> Acknowledge within 30 minutes</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 style="margin-bottom: 12px; font-weight: 600;">Escalation Path</h4>
-                  <ul style="font-size: 0.875rem; color: var(--gray-600);">
-                    <li><strong>Tier 1:</strong> Initial triage, false positive check</li>
-                    <li><strong>Tier 2:</strong> Deep analysis, rule review</li>
-                    <li><strong>Escalate to IR if:</strong> Confirmed attack campaign</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion" style="margin-top: 16px;">
-              <div class="accordion-item open">
-                <button class="accordion-header">
-                  <span>Step 1: Initial Triage</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <ol style="margin-left: 20px; color: var(--gray-600);">
-                    <li>Verify alert is not a known false positive (check allowlist)</li>
-                    <li>Review the block count and deviation — is this significant?</li>
-                    <li>Check <code>unique_sources</code> — single source vs. distributed?</li>
-                    <li>Review <code>attack_types</code> — what rules are triggering?</li>
-                  </ol>
-                  <div class="code-block" style="margin-top: 12px;">
-                    <div class="code-header">
-                      <span class="code-title">Pivot Query: Detailed Block Analysis</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
-| spath path=attackData.rules{}.ruleAction output=action
-| where action="deny"
-| spath path=clientIP output=src
-| spath path=attackData.rules{}.ruleTag output=category
-| spath path=httpMessage.path output=uri
-| stats count BY src category uri
-| sort - count</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Step 2: Source Analysis</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <ol style="margin-left: 20px; color: var(--gray-600);">
-                    <li>Identify top source IPs contributing to the spike</li>
-                    <li>Check IP reputation (AbuseIPDB, VirusTotal)</li>
-                    <li>Determine if sources are known (internal, partner, scanner)</li>
-                    <li>Check geographic distribution — expected countries?</li>
-                  </ol>
-                  <div class="code-block" style="margin-top: 12px;">
-                    <div class="code-header">
-                      <span class="code-title">Pivot Query: Top Sources</span>
-                    </div>
-                    <div class="code-body">
-                      <pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
-| spath path=attackData.rules{}.ruleAction output=action
-| where action="deny"
-| spath path=clientIP output=src
-| spath path=geo.country output=country
-| spath path=geo.asn output=asn
-| stats count as blocks BY src country asn
-| sort - blocks
-| head 20</code></pre>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <button class="accordion-header">
-                  <span>Step 3: Response Actions</span>
-                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-                <div class="accordion-content">
-                  <div class="grid grid-2">
-                    <div>
-                      <h5 style="font-weight: 600; margin-bottom: 8px; color: var(--success-600);">True Positive Actions</h5>
-                      <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
-                        <li>Document source IPs, attack types, targets</li>
-                        <li>Consider temporary IP block in Akamai</li>
-                        <li>Notify application owners if targeted</li>
-                        <li>Escalate to IR if coordinated campaign</li>
-                        <li>Create incident ticket</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 style="font-weight: 600; margin-bottom: 8px; color: var(--warning-600);">False Positive Actions</h5>
-                      <ul style="font-size: 0.875rem; color: var(--gray-600); margin-left: 16px;">
-                        <li>Document FP reason</li>
-                        <li>Add to allowlist if recurring</li>
-                        <li>Adjust threshold if systematic</li>
-                        <li>Close alert with FP disposition</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Related Detections -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Related Detections</h3>
-
-            <div class="grid grid-3">
-              <a href="waf-uc2.html" class="card clickable">
-                <h4 style="font-size: 0.9375rem; margin-bottom: 4px;">WAF-UC2</h4>
-                <p style="font-size: 0.8125rem; color: var(--gray-500);">Single Source Flood</p>
-              </a>
-              <a href="waf-uc3.html" class="card clickable">
-                <h4 style="font-size: 0.9375rem; margin-bottom: 4px;">WAF-UC3</h4>
-                <p style="font-size: 0.8125rem; color: var(--gray-500);">Auth Endpoint Attack</p>
-              </a>
-              <a href="waf-uc4.html" class="card clickable">
-                <h4 style="font-size: 0.9375rem; margin-bottom: 4px;">WAF-UC4</h4>
-                <p style="font-size: 0.8125rem; color: var(--gray-500);">SQLi/XSS Campaign</p>
-              </a>
-            </div>
-      
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

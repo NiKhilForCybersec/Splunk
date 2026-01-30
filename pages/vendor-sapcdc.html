@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAP CDC (Gigya) | Sobeys Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="sidebar-logo-text">
+            <h1>Sobeys Detection</h1>
+            <span>Engineering Command Center</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Vendors</div>
+          <a href="vendor-akamai.html" class="nav-item">Akamai WAF</a>
+          <a href="vendor-cyberark.html" class="nav-item">CyberArk</a>
+          <a href="vendor-entra.html" class="nav-item">Entra ID</a>
+          <a href="vendor-sapcdc.html" class="nav-item active">SAP CDC</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item">Vendors</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">SAP CDC</span>
+          </div>
+        </div>
+        <span class="badge info">Customer IAM</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">SAP Customer Data Cloud (Gigya)</h1>
+          <p class="section-subtitle">Customer identity and access management for Scene+, Voilà, and retail customers</p>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-content">
+            <div class="callout-title">Role at Sobeys</div>
+            <div class="callout-body">SAP CDC (formerly Gigya) manages customer identities for Sobeys' digital properties including Scene+ loyalty integration, Voilà online grocery, and retail account management.</div>
+          </div>
+        </div>
+
+        <!-- Data Configuration -->
+        <div class="section">
+          <h2 class="subsection-title">Splunk Configuration</h2>
+          <div class="grid grid-2">
+            <div class="card bordered-left info">
+              <h4>Index & Sourcetype</h4>
+              <p style="font-size:0.875rem">
+                <strong>Index:</strong> <code>sap_cdc</code><br>
+                <strong>Sourcetype:</strong> <code>sap:cdc:events</code><br>
+                <strong>Format:</strong> JSON via Webhooks
+              </p>
+            </div>
+            <div class="card bordered-left warning">
+              <h4>Onboarding Method</h4>
+              <p style="font-size:0.875rem">
+                <strong>Method:</strong> Webhooks to HEC<br>
+                <strong>Console:</strong> SAP CDC → Settings → Webhooks<br>
+                <strong>Events:</strong> Configure per event type
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Types -->
+        <div class="section">
+          <h2 class="subsection-title">Event Types</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Event Type</th><th>Description</th><th>Detection Use</th></tr></thead>
+              <tbody>
+                <tr><td><code>accountRegistered</code></td><td>New account created</td><td>Mass registration (bot) detection</td></tr>
+                <tr><td><code>accountLoggedIn</code></td><td>Successful login</td><td>Success tracking, ATO correlation</td></tr>
+                <tr><td><code>accountLoggedOut</code></td><td>User logged out</td><td>Session tracking</td></tr>
+                <tr><td><code>loginFailed</code></td><td>Login failure</td><td>Credential stuffing detection</td></tr>
+                <tr><td><code>passwordReset</code></td><td>Password reset requested</td><td>ATO indicator if unexpected</td></tr>
+                <tr><td><code>passwordChanged</code></td><td>Password changed</td><td>Post-ATO persistence</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sample Event -->
+        <div class="section">
+          <h2 class="subsection-title">Sample Event</h2>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">loginFailed Event</span></div>
+            <div class="code-body"><pre><code>{
+  "callID": "abc123def456",
+  "UID": "user123456789",
+  "eventType": "loginFailed",
+  "timestamp": "2024-01-15T14:36:10.789Z",
+  "source": "web",
+  "IP": "203.0.113.200",
+  "country": "RU",
+  "errorCode": 403042,
+  "errorMessage": "Invalid login or password"
+}</code></pre></div>
+          </div>
+        </div>
+
+        <!-- Field Reference -->
+        <div class="section">
+          <h2 class="subsection-title">Field Reference</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Field</th><th>Description</th><th>CIM Mapping</th></tr></thead>
+              <tbody>
+                <tr><td><code>UID</code></td><td>User identifier</td><td>user</td></tr>
+                <tr><td><code>eventType</code></td><td>Type of event</td><td>signature</td></tr>
+                <tr><td><code>IP</code></td><td>Source IP address</td><td>src</td></tr>
+                <tr><td><code>country</code></td><td>Geolocation country</td><td>src_country</td></tr>
+                <tr><td><code>errorCode</code></td><td>Error code if failed</td><td>result_id</td></tr>
+                <tr><td><code>source</code></td><td>Channel (web/mobile)</td><td>app</td></tr>
+                <tr><td><code>timestamp</code></td><td>Event time (ISO8601)</td><td>_time</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Detection Use Cases -->
+        <div class="section">
+          <h2 class="subsection-title">Customer Identity Detection Use Cases</h2>
+          <div class="grid grid-2">
+            <div class="card bordered-left error">
+              <h4>Credential Stuffing</h4>
+              <p style="font-size:0.875rem">High volume of loginFailed events from distributed IPs targeting multiple accounts</p>
+              <div class="code-block" style="margin-top:8px">
+                <div class="code-body"><pre><code>index=sap_cdc eventType=loginFailed
+| bin _time span=5m
+| stats dc(UID) as unique_users dc(IP) as unique_ips count BY _time
+| where unique_users > 100 AND unique_ips > 50</code></pre></div>
+              </div>
+            </div>
+            <div class="card bordered-left warning">
+              <h4>Account Takeover (ATO)</h4>
+              <p style="font-size:0.875rem">Multiple failures followed by success + password change</p>
+              <div class="code-block" style="margin-top:8px">
+                <div class="code-body"><pre><code>index=sap_cdc UID=*
+| sort UID _time
+| streamstats count(eval(eventType="loginFailed")) as failures BY UID
+| where eventType="passwordChanged" AND failures > 3</code></pre></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Correlation with WAF -->
+        <div class="section">
+          <h2 class="subsection-title">Correlation with WAF</h2>
+          <div class="callout warning">
+            <div class="callout-content">
+              <div class="callout-title">Bot Traffic + Account Creation</div>
+              <div class="callout-body">Correlate Akamai challenge failures with SAP CDC mass registrations to detect bot-driven account creation campaigns.</div>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">WAF + SAP CDC Correlation</span></div>
+            <div class="code-body"><pre><code>``` WAF challenge failures
+index=akamai sourcetype=akamai:siem earliest=-1h
+| spath path=attackData.rules{}.ruleAction output=action
+| where action IN ("challenge", "jschallenge")
+| spath path=attackData.clientIP output=src
+| stats count as waf_challenges BY src
+
+| append
+    [search index=sap_cdc eventType=accountRegistered earliest=-1h
+    | rename IP as src
+    | stats count as registrations BY src]
+
+| stats sum(waf_challenges) as waf_challenges sum(registrations) as registrations BY src
+| where waf_challenges > 10 AND registrations > 5
+| eval alert = "Bot registration campaign from " . src</code></pre></div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

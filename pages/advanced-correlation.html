@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Correlation | Sobeys Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="sidebar-logo-text">
+            <h1>Sobeys Detection</h1>
+            <span>Engineering Command Center</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Project</div>
+          <a href="mfa-overview.html" class="nav-item">Overview</a>
+          <a href="mfa-uc1.html" class="nav-item">UC1: MFA Fatigue</a>
+          <a href="mfa-uc2-5.html" class="nav-item">UC2-5</a>
+          <a href="advanced-correlation.html" class="nav-item active">Advanced</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Advanced Correlation</span>
+          </div>
+        </div>
+        <span class="badge critical">Flagship</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Advanced Cross-Domain Correlation</h1>
+          <p class="section-subtitle">Flagship detections that elevate this project from good to excellent</p>
+        </div>
+
+        <div class="callout success">
+          <div class="callout-content">
+            <div class="callout-title">Why Cross-Domain Matters</div>
+            <div class="callout-body">Single-domain detections are good. Cross-domain correlation catches sophisticated attackers who leave traces across multiple systems. This is what differentiates advanced detection engineering.</div>
+          </div>
+        </div>
+
+        <!-- ADV-UC1 -->
+        <div class="section" id="adv-uc1">
+          <h2 class="subsection-title">ADV-UC1: Web Exploit → MFA Success → New Device</h2>
+          
+          <div class="card" style="margin-bottom:16px">
+            <div class="mermaid">
+sequenceDiagram
+    participant A as Attacker
+    participant W as WAF (Akamai)
+    participant I as IdP (CyberArk/Entra)
+    participant V as Victim
+    
+    A->>W: Exploitation attempts (SQLi, auth bypass)
+    W-->>A: Some blocked, some succeed
+    Note over A: Obtains valid credentials
+    A->>I: Login with stolen creds
+    I->>V: MFA Push
+    V-->>I: Approves (fatigue/social eng)
+    I-->>A: Access granted from NEW device
+    Note over A: 🔴 ACCOUNT TAKEOVER COMPLETE
+            </div>
+          </div>
+
+          <div class="grid grid-3" style="margin-bottom:16px">
+            <div class="card bordered-left critical"><strong>Severity:</strong> Critical</div>
+            <div class="card bordered-left primary"><strong>Sources:</strong> Akamai + CyberArk/Entra</div>
+            <div class="card bordered-left info"><strong>Window:</strong> 30 minutes</div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">ADV-UC1: Complete SPL</span></div>
+            <div class="code-body"><pre><code>``` Cross-domain: WAF suspicious → MFA success → New device
+
+``` Step 1: Get WAF suspicious activity
+index=akamai sourcetype=akamai:siem earliest=-1h
+| spath path=attackData.rules{}.ruleAction output=action
+| spath path=attackData.clientIP output=src_ip
+| spath path=attackData.rules{}.ruleTag output=rule_tag
+| where action IN ("deny", "alert") 
+    OR match(rule_tag, "(?i)(sqli|xss|auth|injection)")
+| stats count as waf_events values(httpMessage.path) as paths BY src_ip
+| where waf_events >= 5
+| fields src_ip waf_events paths
+
+``` Step 2: Append auth successes from same IPs
+| append 
+    [search index=azure sourcetype=azure:aad:signin earliest=-1h
+    | spath
+    | eval error_code = 'properties.status.errorCode'
+    | where error_code=0
+    | eval src_ip = 'properties.ipAddress'
+    | eval user = 'properties.userPrincipalName'
+    | eval device_id = 'properties.deviceDetail.deviceId'
+    | lookup user_device_baseline.csv user device_id OUTPUT is_known_device
+    | where isnull(is_known_device) OR is_known_device!="true"
+    | stats count as auth_success values(user) as users values(device_id) as devices BY src_ip]
+
+``` Step 3: Correlate
+| stats values(*) as * BY src_ip
+| where waf_events >= 5 AND auth_success >= 1
+
+``` Alert
+| eval alert = "CRITICAL: Account Takeover Chain Detected"
+| eval attack_chain = waf_events . " WAF events → Auth success → New device"
+| table src_ip waf_events paths auth_success users devices attack_chain alert</code></pre></div>
+          </div>
+        </div>
+
+        <!-- ADV-UC2 -->
+        <div class="section" id="adv-uc2">
+          <h2 class="subsection-title">ADV-UC2: Credential Stuffing → MFA Fatigue → Success</h2>
+          
+          <div class="card" style="margin-bottom:16px">
+            <div class="mermaid">
+flowchart LR
+    A[Password Failures<br/>50126 errors] --> B[Valid Password Found<br/>from breach]
+    B --> C[MFA Prompts<br/>500121 denials]
+    C --> D[User Fatigued<br/>Approves]
+    D --> E[🔴 Account<br/>Compromised]
+    
+    style E fill:#dc2626,color:#fff
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">ADV-UC2: Credential Stuffing + MFA Fatigue</span></div>
+            <div class="code-body"><pre><code>index=azure sourcetype=azure:aad:signin earliest=-2h
+| spath
+| eval user = 'properties.userPrincipalName'
+| eval error_code = 'properties.status.errorCode'
+| eval src_ip = 'properties.ipAddress'
+
+``` Track event sequence per user
+| sort 0 user _time
+| streamstats window=50 time_window=2h
+    count(eval(error_code=50126)) as password_failures
+    count(eval(error_code=500121)) as mfa_denials
+    count(eval(error_code=0)) as successes
+    BY user
+
+``` Alert condition: All three phases present
+| where password_failures >= 5 AND mfa_denials >= 3 AND successes >= 1
+
+| lookup privileged_users.csv userPrincipalName as user OUTPUT is_privileged role
+| eval severity = if(is_privileged="true", "CRITICAL", "HIGH")
+| eval attack_chain = password_failures." password fails → ".mfa_denials." MFA denials → Success"
+
+| stats latest(_time) as attack_time values(src_ip) as sources values(attack_chain) as chain BY user severity
+| table attack_time user severity sources chain</code></pre></div>
+          </div>
+        </div>
+
+        <!-- ADV-UC3 -->
+        <div class="section" id="adv-uc3">
+          <h2 class="subsection-title">ADV-UC3: Geographic Anomaly + Privileged Action</h2>
+          
+          <p>Detects when a privileged user logs in from an unusual location and immediately performs sensitive actions (role changes, app registration).</p>
+
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">ADV-UC3: Geo Anomaly + Sensitive Action</span></div>
+            <div class="code-body"><pre><code>``` Step 1: Sign-ins from unusual locations (privileged users)
+index=azure sourcetype=azure:aad:signin earliest=-4h
+| spath
+| eval user = 'properties.userPrincipalName'
+| eval country = 'properties.location.countryOrRegion'
+| eval error_code = 'properties.status.errorCode'
+| where error_code = 0
+| lookup user_country_baseline.csv user country OUTPUT is_normal
+| where isnull(is_normal) OR is_normal != "true"
+| lookup privileged_users.csv userPrincipalName as user OUTPUT is_privileged role
+| where is_privileged = "true"
+| table _time user role country
+
+``` Step 2: Append sensitive audit actions
+| append
+    [search index=azure sourcetype=azure:aad:audit earliest=-4h
+    | spath
+    | eval category = 'properties.category'
+    | where category IN ("RoleManagement", "ApplicationManagement", "UserManagement")
+    | eval user = 'properties.initiatedBy.user.userPrincipalName'
+    | eval action = 'properties.activityDisplayName'
+    | table _time user action]
+
+``` Step 3: Correlate
+| stats values(country) as unusual_countries values(action) as sensitive_actions BY user
+| where isnotnull(unusual_countries) AND isnotnull(sensitive_actions)
+| eval alert = "CRITICAL: Privileged user from unusual location performed sensitive actions"
+| table user unusual_countries sensitive_actions alert</code></pre></div>
+          </div>
+        </div>
+
+        <!-- Correlation Summary -->
+        <div class="section">
+          <h2 class="subsection-title">Correlation Framework Summary</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Correlation</th><th>Sources</th><th>Condition</th><th>Severity</th></tr></thead>
+              <tbody>
+                <tr><td>WAF → MFA → New Device</td><td>Akamai + Entra</td><td>WAF suspicious + MFA success + first device</td><td><span class="badge critical">Critical</span></td></tr>
+                <tr><td>Cred Stuffing → MFA Fatigue → Success</td><td>Entra</td><td>Password fails + MFA denials + success</td><td><span class="badge critical">Critical</span></td></tr>
+                <tr><td>Geo Anomaly + Privileged Action</td><td>Entra signin + audit</td><td>Unusual location + sensitive admin action</td><td><span class="badge critical">Critical</span></td></tr>
+                <tr><td>Bot Traffic + Account Creation</td><td>Akamai + SAP CDC</td><td>Challenge failures + mass registration</td><td><span class="badge error">High</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

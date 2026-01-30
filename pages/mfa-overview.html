@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MFA Detection Project Overview | Sobeys Detection Engineering</title>
+  <title>MFA Project Overview | Sobeys Detection Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
 </head>
 <body>
   <div class="app-container">
@@ -25,15 +27,35 @@
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section">
+          <div class="nav-section-title">Overview</div>
+          <a href="../index.html" class="nav-item">Command Center</a>
+          <a href="day1.html" class="nav-item">Day 1 — Getting Started</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Vendors</div>
+          <a href="vendor-akamai.html" class="nav-item">Akamai WAF</a>
+          <a href="vendor-cyberark.html" class="nav-item">CyberArk <span class="badge critical" style="margin-left:auto;font-size:0.6rem">PRIMARY</span></a>
+          <a href="vendor-entra.html" class="nav-item">Entra ID</a>
+          <a href="vendor-sapcdc.html" class="nav-item">SAP CDC</a>
+        </div>
+        <div class="nav-section">
           <div class="nav-section-title">MFA Project</div>
-          <a href="mfa-overview.html" class="nav-item active">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Project Overview</span>
-          </a>
-          <a href="mfa-uc1.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-            <span>UC1: MFA Fatigue</span>
-          </a>
+          <a href="mfa-overview.html" class="nav-item active">Overview</a>
+          <a href="mfa-uc1.html" class="nav-item">UC1: MFA Fatigue</a>
+          <a href="mfa-uc2-5.html" class="nav-item">UC2-5: Detections</a>
+          <a href="advanced-correlation.html" class="nav-item">Advanced</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-operations.html" class="nav-item">Splunk Ops</a>
+          <a href="notable-events.html" class="nav-item">Notable Events</a>
+          <a href="troubleshooting.html" class="nav-item">Troubleshooting</a>
+          <a href="runbooks.html" class="nav-item">Runbooks</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Reference</div>
+          <a href="spl-reference.html" class="nav-item">SPL Library</a>
+          <a href="glossary.html" class="nav-item">Glossary</a>
         </div>
       </nav>
     </aside>
@@ -41,371 +63,139 @@
     <main class="main-content">
       <header class="header">
         <div class="header-left">
-          <button class="menu-toggle" aria-label="Toggle menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
             <span class="breadcrumb-item current">MFA Project</span>
           </div>
         </div>
-        <div class="header-right">
-          <span class="badge cyberark">CyberArk Primary</span>
-          <span class="badge microsoft">Entra ID</span>
-          <span class="badge info">5 Use Cases</span>
-        </div>
       </header>
 
       <div class="page-content">
-        <!-- Header -->
         <div class="section">
-          <div class="section-header">
-            <h1 class="section-title">MFA Detection Project</h1>
-            <p class="section-subtitle">5 use cases for MFA attack detection across CyberArk and Microsoft Entra ID</p>
-          </div>
-
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-value">5</div>
-              <div class="stat-label">Use Cases</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value critical">Critical</div>
-              <div class="stat-label">Max Severity</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">CyberArk</div>
-              <div class="stat-label">Primary MFA</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">Entra ID</div>
-              <div class="stat-label">Secondary MFA</div>
-            </div>
-          </div>
+          <h1 class="section-title">MFA Detection Engineering Project</h1>
+          <p class="section-subtitle">5 production-ready detections for privileged identity protection</p>
         </div>
 
-        <!-- Critical Notice -->
         <div class="callout critical">
-          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           <div class="callout-content">
-            <div class="callout-title">CyberArk is PRIMARY for Privileged MFA</div>
-            <div class="callout-body">Query CyberArk logs FIRST for privileged user MFA events. Entra ID is secondary for standard corporate users. This ensures highest-risk accounts are prioritized in all MFA detections.</div>
+            <div class="callout-title">⚠️ CyberArk is PRIMARY for Privileged MFA</div>
+            <div class="callout-body">Query CyberArk logs FIRST for privileged users. Index: <code>cyberark</code>, Sourcetype: <code>cyberark:identity:audit</code></div>
           </div>
         </div>
 
-        <!-- Project Scope -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Project Scope</h3>
-
-            <div class="card">
-              <p style="margin-bottom: 16px;">The MFA detection project delivers 5 use cases focused on detecting authentication bypass attempts:</p>
-              <ul style="margin-left: 20px; color: var(--gray-600);">
-                <li><strong>MFA Fatigue Attacks</strong> — Push bombing/prompt spam to exhaust user patience</li>
-                <li><strong>MFA Bypass Patterns</strong> — Failure burst followed by success indicating compromise</li>
-                <li><strong>Location Anomalies</strong> — Logins from unexpected locations or impossible travel</li>
-                <li><strong>Device Changes</strong> — New device logins for privileged accounts</li>
-                <li><strong>Method Downgrade</strong> — Attackers switching to weaker MFA methods</li>
-              </ul>
+          <h2 class="subsection-title">Identity Architecture</h2>
+          <div class="card">
+            <div class="mermaid">
+flowchart TB
+    subgraph Users
+        PU[Privileged Users<br/>IT, DBAs, Security]
+        SU[Standard Employees<br/>129,000 staff]
+        CU[Customers<br/>Scene+, Voilà]
+    end
+    subgraph IdP[Identity Providers]
+        CA[CyberArk Identity<br/>Mobile Authenticator]
+        EA[Microsoft Entra ID<br/>Corporate SSO]
+        SAP[SAP CDC / Gigya]
+    end
+    subgraph Splunk[Splunk Cloud]
+        I1[cyberark index]
+        I2[azure index]
+        I3[sap_cdc index]
+    end
+    PU -->|PRIMARY MFA| CA
+    PU -->|Federated| EA
+    SU --> EA
+    CU --> SAP
+    CA --> I1
+    EA --> I2
+    SAP --> I3
+    style CA fill:#5c2d91,color:#fff
+    style EA fill:#00a4ef,color:#fff
             </div>
           </div>
         </div>
 
-        <!-- Data Sources -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Data Sources</h3>
+          <h2 class="subsection-title">Use Cases Summary</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>ID</th><th>Name</th><th>Severity</th><th>MITRE</th><th>Primary Source</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>MFA-UC1</td><td>MFA Fatigue / Push Bombing</td><td><span class="badge critical">Critical</span></td><td>T1621</td><td>CyberArk</td></tr>
+                <tr><td>MFA-UC2</td><td>MFA Failure Burst → Success</td><td><span class="badge error">High</span></td><td>T1110, T1621</td><td>CyberArk</td></tr>
+                <tr><td>MFA-UC3</td><td>New Location/Device</td><td><span class="badge warning">Medium</span></td><td>T1078</td><td>Entra + CyberArk</td></tr>
+                <tr><td>MFA-UC4</td><td>Impossible Travel</td><td><span class="badge error">High</span></td><td>T1078</td><td>Entra ID</td></tr>
+                <tr><td>MFA-UC5</td><td>MFA Method Downgrade</td><td><span class="badge error">High</span></td><td>T1556</td><td>Entra ID</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-            <div class="grid grid-2">
-              <div class="card bordered-left critical vendor-cyberark">
-                <div class="card-header">
-                  <div class="card-icon cyberark">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-                  </div>
-                  <h3 class="card-title">CyberArk Identity</h3>
-                </div>
-                <div class="card-body">
-                  <p><strong>Role:</strong> Primary MFA for privileged users</p>
-                  <p><strong>Index:</strong> <code>cyberark</code></p>
-                  <p><strong>Sourcetype:</strong> <code>cyberark:identity:audit</code></p>
-                  <p><strong>Coverage:</strong> IT admins, security team, database admins, infrastructure</p>
-                </div>
-              </div>
+        <div class="section">
+          <h2 class="subsection-title">Threshold Matrix (Privileged vs Standard)</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>Use Case</th><th>Privileged</th><th>Standard</th><th>Why Different</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>MFA-UC1: Fatigue</td><td>≥5 denials/10min</td><td>≥10 denials/10min</td><td>Lower tolerance for high-value targets</td></tr>
+                <tr><td>MFA-UC2: Burst→Success</td><td>≥3 failures + success</td><td>≥5 failures + success</td><td>Higher scrutiny on privileged</td></tr>
+                <tr><td>MFA-UC3: New Location</td><td>Any new country</td><td>High-risk countries only</td><td>Privileged rarely travel unexpectedly</td></tr>
+                <tr><td>MFA-UC4: Impossible Travel</td><td>&gt;500km, &gt;800km/h</td><td>&gt;1000km, &gt;800km/h</td><td>Tighter geo constraints</td></tr>
+                <tr><td>MFA-UC5: Downgrade</td><td>Any downgrade</td><td>≥2 level drop</td><td>Privileged must use strongest MFA</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-              <div class="card bordered-left info vendor-microsoft">
-                <div class="card-header">
-                  <div class="card-icon microsoft">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  </div>
-                  <h3 class="card-title">Microsoft Entra ID</h3>
-                </div>
-                <div class="card-body">
-                  <p><strong>Role:</strong> Corporate SSO, standard user MFA</p>
-                  <p><strong>Index:</strong> <code>azure</code></p>
-                  <p><strong>Sourcetype:</strong> <code>azure:aad:signin</code></p>
-                  <p><strong>Coverage:</strong> All corporate users via Azure AD federation</p>
-                </div>
-              </div>
+        <div class="section">
+          <h2 class="subsection-title">Data Dependencies</h2>
+          <div class="grid grid-3">
+            <div class="card bordered-left cyberark">
+              <h4>CyberArk Identity</h4>
+              <p style="font-size:0.8rem;color:var(--gray-600)">
+                <strong>Index:</strong> cyberark<br>
+                <strong>Sourcetype:</strong> cyberark:identity:audit<br>
+                <strong>Events:</strong> Cloud.Core.MfaDenied, MfaAuthentication, MfaTimeout
+              </p>
+            </div>
+            <div class="card bordered-left microsoft">
+              <h4>Entra ID</h4>
+              <p style="font-size:0.8rem;color:var(--gray-600)">
+                <strong>Index:</strong> azure<br>
+                <strong>Sourcetype:</strong> azure:aad:signin<br>
+                <strong>Key Codes:</strong> 0=Success, 500121=MFA Denied
+              </p>
+            </div>
+            <div class="card bordered-left info">
+              <h4>Lookup Files</h4>
+              <p style="font-size:0.8rem;color:var(--gray-600)">
+                <strong>privileged_users.csv</strong><br>
+                userPrincipalName, is_privileged, role<br><br>
+                <strong>user_baseline_locations.csv</strong>
+              </p>
             </div>
           </div>
         </div>
 
-        <!-- Use Case Matrix -->
         <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Use Case Matrix</h3>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Use Case Name</th>
-                    <th>Severity</th>
-                    <th>Primary Source</th>
-                    <th>MITRE</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight"><a href="mfa-uc1.html">MFA-UC1</a></td>
-                    <td>MFA Fatigue / Push Bombing</td>
-                    <td><span class="badge critical">Critical</span></td>
-                    <td>CyberArk → Entra</td>
-                    <td><code>T1621</code></td>
-                    <td>Detect repeated MFA prompts indicating push bombing</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><a href="mfa-uc2.html">MFA-UC2</a></td>
-                    <td>MFA Failure Burst → Success</td>
-                    <td><span class="badge error">High</span></td>
-                    <td>CyberArk → Entra</td>
-                    <td><code>T1110, T1621</code></td>
-                    <td>Detect success after multiple failures</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><a href="mfa-uc3.html">MFA-UC3</a></td>
-                    <td>Privileged Access New Location/Device</td>
-                    <td><span class="badge warning">Medium</span></td>
-                    <td>Entra ID</td>
-                    <td><code>T1078</code></td>
-                    <td>Detect first-time device or location for privileged users</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><a href="mfa-uc4.html">MFA-UC4</a></td>
-                    <td>Impossible Travel Detection</td>
-                    <td><span class="badge error">High</span></td>
-                    <td>Entra ID</td>
-                    <td><code>T1078</code></td>
-                    <td>Detect geographically impossible login patterns</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><a href="mfa-uc5.html">MFA-UC5</a></td>
-                    <td>MFA Method Downgrade</td>
-                    <td><span class="badge error">High</span></td>
-                    <td>Entra ID</td>
-                    <td><code>T1556</code></td>
-                    <td>Detect switch to weaker authentication methods</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <h2 class="subsection-title">Quick Navigation</h2>
+          <div class="grid grid-4">
+            <a href="mfa-uc1.html" class="card clickable"><span class="badge critical">Critical</span><h4 style="margin-top:8px">MFA-UC1</h4><p style="font-size:0.75rem">Push Bombing</p></a>
+            <a href="mfa-uc2-5.html#mfa-uc2" class="card clickable"><span class="badge error">High</span><h4 style="margin-top:8px">MFA-UC2</h4><p style="font-size:0.75rem">Burst→Success</p></a>
+            <a href="mfa-uc2-5.html#mfa-uc4" class="card clickable"><span class="badge error">High</span><h4 style="margin-top:8px">MFA-UC4</h4><p style="font-size:0.75rem">Impossible Travel</p></a>
+            <a href="advanced-correlation.html" class="card clickable"><span class="badge critical">Advanced</span><h4 style="margin-top:8px">Cross-Domain</h4><p style="font-size:0.75rem">WAF+MFA Correlation</p></a>
           </div>
         </div>
 
-        <!-- Required Lookups -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Required Lookup Tables</h3>
-
-            <div class="grid grid-2">
-              <div class="card">
-                <h4 style="margin-bottom: 12px;">privileged_users.csv</h4>
-                <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 12px;"><strong>Critical</strong> — Required for all MFA detections. Maintained by IAM team.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>userPrincipalName,is_privileged,role,department
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1c0c5ccc8cfe1d2cec3c4d8d28fc2cecc">[email&#160;protected]</a>,true,IT Admin,IT Operations
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="205345430e414e414c59535460534f424559530e434f4d">[email&#160;protected]</a>,true,Security,Security Operations
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ee8a8c8fc09e9c818aae9d818c8b979dc08d8183">[email&#160;protected]</a>,true,DBA,Data Services
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f2818491dc9387869d9f93869b9d9cb2819d90978b81dc919d9f">[email&#160;protected]</a>,true,Service Account,IT Operations</code></pre>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <h4 style="margin-bottom: 12px;">user_location_baseline.csv</h4>
-                <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 12px;">Expected login locations per user for anomaly detection.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>userPrincipalName,expected_countries,expected_cities
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="691c1a0c1b58291a060b0c101a470a0604">[email&#160;protected]</a>,"CA,US","Toronto,Mississauga"
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="05707660773745766a67607c762b666a68">[email&#160;protected]</a>,"CA","Montreal,Quebec City"
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d7b6b3babeb997a4b8b5b2aea4f9b4b8ba">[email&#160;protected]</a>,"CA","Calgary,Edmonton"</code></pre>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <h4 style="margin-bottom: 12px;">mfa_method_strength.csv</h4>
-                <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 12px;">MFA method ranking for downgrade detection.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>method,strength_score,strength_level
-FIDO2 Security Key,5,very_high
-Microsoft Authenticator (Passwordless),5,very_high
-Microsoft Authenticator (Push),4,high
-Hardware Token,4,high
-Software Token (TOTP),3,medium
-Phone (SMS),2,low
-Phone (Voice),1,very_low
-Email,1,very_low</code></pre>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <h4 style="margin-bottom: 12px;">device_baseline.csv</h4>
-                <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 12px;">Known devices per user for new device detection.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>userPrincipalName,deviceId,device_name,is_trusted
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="543530393d3a14273b36312d277a373b39">[email&#160;protected]</a>,device-123,Admin-Laptop,true
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3150555c585f71425e535448421f525e5c">[email&#160;protected]</a>,device-456,Admin-Mobile,true
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9eebedfbecafdeedf1fcfbe7edb0fdf1f3">[email&#160;protected]</a>,device-789,User1-Desktop,true</code></pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- MFA Error Codes -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Key MFA Error Codes (Entra ID)</h3>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Error Code</th>
-                    <th>Description</th>
-                    <th>Detection Relevance</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight"><code>0</code></td>
-                    <td>Success</td>
-                    <td>Successful MFA — track after denials</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>500121</code></td>
-                    <td>MFA Failed / User denied push</td>
-                    <td><strong>Primary indicator for MFA fatigue</strong></td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>50074</code></td>
-                    <td>Strong Authentication Required</td>
-                    <td>MFA challenged but not completed</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>50076</code></td>
-                    <td>User did not pass MFA</td>
-                    <td>MFA attempted and failed</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>50126</code></td>
-                    <td>Invalid username or password</td>
-                    <td>Pre-MFA failure (credential issue)</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>53003</code></td>
-                    <td>Blocked by Conditional Access</td>
-                    <td>Policy enforcement</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>530032</code></td>
-                    <td>Compliant device required</td>
-                    <td>Device compliance issue</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- MITRE Coverage -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">MITRE ATT&CK Coverage</h3>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Technique ID</th>
-                    <th>Technique Name</th>
-                    <th>Tactic</th>
-                    <th>Covered By</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="highlight"><code>T1621</code></td>
-                    <td>Multi-Factor Authentication Request Generation</td>
-                    <td>Credential Access</td>
-                    <td>UC1, UC2</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>T1078</code></td>
-                    <td>Valid Accounts</td>
-                    <td>Persistence, Initial Access</td>
-                    <td>UC3, UC4</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>T1110</code></td>
-                    <td>Brute Force</td>
-                    <td>Credential Access</td>
-                    <td>UC2</td>
-                  </tr>
-                  <tr>
-                    <td class="highlight"><code>T1556</code></td>
-                    <td>Modify Authentication Process</td>
-                    <td>Credential Access, Defense Evasion</td>
-                    <td>UC5</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Detection Priority -->
-        <div class="section">
-          <div class="subsection">
-            <h3 class="subsection-title">Detection Priority Matrix</h3>
-
-            <div class="callout warning">
-              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-              <div class="callout-content">
-                <div class="callout-title">Privilege-Aware Thresholds</div>
-                <div class="callout-body">All MFA detections use different thresholds for privileged vs. standard users. Privileged accounts have <strong>lower thresholds</strong> (more sensitive) because they're higher-value targets.</div>
-              </div>
-            </div>
-
-            <div class="table-container" style="margin-top: 16px;">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Use Case</th>
-                    <th>Privileged Threshold</th>
-                    <th>Standard Threshold</th>
-                    <th>Rationale</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <t
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>
