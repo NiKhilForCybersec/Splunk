@@ -3,12 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Log Onboarding | myfirstpro Detection Engineering</title>
+  <title>Akamai WAF Onboarding | myfirstpro Detection Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <style>
+    .phase-card{padding:24px;margin-bottom:24px;border-radius:12px;border-left:5px solid;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+    .phase-card.phase1{border-left-color:#ff9900;background:linear-gradient(135deg,#fff7ed 0%,#ffffff 100%);}
+    .phase-card.phase2{border-left-color:#3b82f6;background:linear-gradient(135deg,#eff6ff 0%,#ffffff 100%);}
+    .phase-card.phase3{border-left-color:#65a30d;background:linear-gradient(135deg,#f0fdf4 0%,#ffffff 100%);}
+    .phase-card.phase4{border-left-color:#8b5cf6;background:linear-gradient(135deg,#f5f3ff 0%,#ffffff 100%);}
+    .phase-card.phase5{border-left-color:#dc2626;background:linear-gradient(135deg,#fef2f2 0%,#ffffff 100%);}
+    .phase-card.phase6{border-left-color:#06b6d4;background:linear-gradient(135deg,#ecfeff 0%,#ffffff 100%);}
+    .phase-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+    .phase-number{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:1.1rem;}
+    .phase1 .phase-number{background:#ff9900;}
+    .phase2 .phase-number{background:#3b82f6;}
+    .phase3 .phase-number{background:#65a30d;}
+    .phase4 .phase-number{background:#8b5cf6;}
+    .phase5 .phase-number{background:#dc2626;}
+    .phase6 .phase-number{background:#06b6d4;}
+    .step-box{padding:16px;background:white;border-radius:8px;margin-bottom:16px;border:1px solid var(--gray-200);}
+    .step-box h5{margin-bottom:12px;color:var(--gray-800);}
+    .config-table{width:100%;font-size:0.875rem;border-collapse:collapse;}
+    .config-table td{padding:8px 12px;border-bottom:1px solid var(--gray-100);vertical-align:top;}
+    .config-table td:first-child{width:30%;font-weight:600;color:var(--gray-700);}
+    .ref-table{width:100%;font-size:0.85rem;border-collapse:collapse;}
+    .ref-table th{background:var(--gray-100);padding:12px;text-align:left;border:1px solid var(--gray-200);}
+    .ref-table td{padding:12px;border:1px solid var(--gray-200);}
+    .ref-table tr:nth-child(even){background:var(--gray-50);}
+    .cloud-note{background:#dbeafe;border:1px solid #93c5fd;border-radius:8px;padding:12px 16px;margin:16px 0;}
+    .cloud-note strong{color:#1d4ed8;}
+  </style>
 </head>
 <body>
   <div class="app-container">
@@ -50,7 +77,7 @@
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Splunk Operations</div>
-          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="waf-onboarding.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
           <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
           <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
           <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
@@ -83,759 +110,589 @@
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-item current">Log Onboarding</span>
+            <span class="breadcrumb-item current">Akamai WAF Onboarding</span>
           </div>
         </div>
-        <span class="badge info">3 Data Sources</span>
+        <span class="badge" style="background:#ff9900;color:white;">Splunk Cloud</span>
       </header>
 
       <div class="page-content">
+        <!-- Title Section -->
         <div class="section">
-          <h1 class="section-title">Log Onboarding & Validation</h1>
-          <p class="section-subtitle">Step-by-step onboarding process for each data source — select your source below</p>
+          <h1 class="section-title">Akamai WAF Onboarding for Splunk Cloud</h1>
+          <p class="section-subtitle">Complete guide: TA Installation → Data Configuration → Validation → ESCU Detections → Tuning</p>
         </div>
 
-        <!-- TABS -->
-        <div class="tabs-container">
-          <div class="tabs-nav">
-            <button class="tab-btn akamai active" data-tab="akamai-tab">🛡️ Akamai WAF</button>
-            <button class="tab-btn cyberark" data-tab="cyberark-tab">🔐 CyberArk Identity</button>
-            <button class="tab-btn entra" data-tab="entra-tab">☁️ Entra ID</button>
+        <!-- Key Architecture Note -->
+        <div class="callout info" style="margin-bottom:32px;">
+          <div class="callout-content">
+            <div class="callout-title">🏗️ Understanding Detection Sources in Splunk ES</div>
+            <div class="callout-body">
+              <p>Splunk ES has <strong>two sources</strong> of OOTB detections:</p>
+              <ol style="margin:12px 0 0 20px;line-height:2;">
+                <li><strong>ES Native Correlation Searches</strong> — Built into Enterprise Security (e.g., "Brute Force Access Behavior Detected")</li>
+                <li><strong>ESCU (Enterprise Security Content Update)</strong> — 1,900+ detections maintained by Splunk Threat Research Team, organized into "Analytic Stories"</li>
+              </ol>
+              <p style="margin-top:12px;"><strong>Key insight:</strong> There is no published list of all OOTB searches — you must <strong>discover them via SPL queries</strong> in your environment.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== PHASE 1: INSTALL TA ON SPLUNK CLOUD ==================== -->
+        <div class="phase-card phase1">
+          <div class="phase-header">
+            <div class="phase-number">1</div>
+            <div>
+              <h3 style="margin:0;font-size:1.25rem;">Install Splunk Add-on for Akamai (Splunk Cloud)</h3>
+              <p style="margin:4px 0 0;color:var(--gray-600);font-size:0.9rem;">Self-service or support case depending on your Cloud tier</p>
+            </div>
           </div>
 
-          <!-- ==================== AKAMAI TAB ==================== -->
-          <div id="akamai-tab" class="tab-content akamai-content active">
-            <div class="tab-header">
-              <h3>Akamai WAF Log Onboarding</h3>
-              <span class="badge akamai">WAF/DDoS Project</span>
-            </div>
+          <div class="cloud-note">
+            <strong>☁️ Splunk Cloud Note:</strong> App installation in Splunk Cloud varies by your deployment type (Victoria Experience vs Classic Experience). Check via: <code>Support & Services → About</code>
+          </div>
 
-            <!-- Akamai Decision Tree -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">Akamai Onboarding Decision Tree</h4>
-            <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
-              <div class="mermaid">
-flowchart TD
-    A[Start: Akamai<br/>Onboarding] --> B{Index exists?<br/>index=akamai}
-    B -->|No| C[Request index creation<br/>from Splunk Admin]
-    B -->|Yes| D{Data flowing?<br/>Run validation query}
-    C --> D
-    D -->|No| E{HEC token<br/>configured?}
-    D -->|Yes| F{Correct<br/>sourcetype?}
-    E -->|No| G[Create HEC token<br/>Configure in Akamai]
-    E -->|Yes| H[Check Akamai SIEM<br/>integration status]
-    G --> D
-    H --> I{SIEM API<br/>enabled?}
-    I -->|No| J[Enable Akamai<br/>SIEM Integration]
-    I -->|Yes| K[Check network<br/>connectivity]
-    J --> D
-    K --> D
-    F -->|No| L[Install Splunk<br/>Add-on for Akamai]
-    F -->|Yes| M{Fields<br/>extracting?}
-    L --> M
-    M -->|No| N[Check TA config<br/>props.conf]
-    M -->|Yes| O[✅ Akamai<br/>Ready]
-    N --> M
-    
-    style A fill:#ff9900,stroke:#ff6600
-    style O fill:#d4edda,stroke:#28a745
-              </div>
-            </div>
+          <div class="step-box" style="border-left:3px solid #22c55e;">
+            <h5 style="color:#16a34a;">Option A: Self-Service via Splunk Web (Most Deployments)</h5>
+            <p style="margin-bottom:12px;color:var(--gray-600);">Available for most Splunk Cloud tiers with sc_admin role:</p>
+            <ol style="margin-left:20px;line-height:2.2;color:var(--gray-700);">
+              <li>In Splunk Web, click <strong>Apps → Find More Apps</strong></li>
+              <li>Search for <code>Splunk Add-on for Akamai</code></li>
+              <li>Verify publisher is <strong>Splunk Inc.</strong> (App ID: <code>Splunk_TA_Akamai</code>)</li>
+              <li>Click <strong>Install</strong></li>
+              <li>Enter your <strong>Splunk.com credentials</strong></li>
+              <li>Accept license terms and install</li>
+            </ol>
+          </div>
 
-            <!-- Akamai Checklist with HOW-TO -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">Akamai Onboarding Checklist (with How-To)</h4>
-            <div class="card bordered-left akamai" style="padding:20px;margin-bottom:24px;">
-              
-              <!-- Step 1 with FULL INDEX DETAILS -->
-              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>akamai</code> exists</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How to check:</strong> Run this SPL: <code>| eventcount index=akamai</code><br>
-                  <strong>If returns 0 or error:</strong> Index doesn't exist — see "How to Create an Index" below
-                </div>
-                
-                <!-- DETAILED INDEX CREATION SECTION -->
-                <div style="margin-left:28px;margin-top:16px;padding:16px;background:var(--gray-50);border-radius:8px;border:1px solid var(--gray-200);">
-                  <h5 style="font-size:0.9375rem;margin-bottom:12px;color:var(--gray-800);">📁 How to Create an Index</h5>
-                  
-                  <!-- What is an Index -->
-                  <div style="margin-bottom:12px;">
-                    <strong style="color:var(--gray-700);">What is an Index?</strong>
-                    <p style="margin-top:4px;color:var(--gray-600);">An index is where Splunk stores your data. Think of it like a folder or database. Each data source should have its own index (e.g., <code>akamai</code>, <code>cyberark</code>, <code>azure</code>) for organization, access control, and retention management.</p>
-                  </div>
-                  
-                  <!-- Option A: Self-Service -->
-                  <div style="margin-bottom:16px;padding:12px;background:white;border-radius:6px;border-left:3px solid var(--success-500);">
-                    <strong style="color:var(--success-700);">Option A: Create It Yourself (If You Have Permissions)</strong>
-                    <ol style="margin:8px 0 0 16px;color:var(--gray-600);">
-                      <li>Go to <strong>Settings</strong> (top menu bar)</li>
-                      <li>Click <strong>Indexes</strong></li>
-                      <li>Click <strong>"New Index"</strong> button (top right)</li>
-                      <li>Fill in:
-                        <ul style="margin:4px 0 4px 16px;">
-                          <li><strong>Index Name:</strong> <code>akamai</code> (lowercase, no spaces)</li>
-                          <li><strong>Index Data Type:</strong> Events</li>
-                          <li><strong>Max Size:</strong> Ask Splunk admin for guidance (e.g., 100GB)</li>
-                          <li><strong>Searchable retention:</strong> e.g., 90 days</li>
-                        </ul>
-                      </li>
-                      <li>Click <strong>Save</strong></li>
-                    </ol>
-                    <p style="margin-top:8px;color:var(--gray-500);font-size:0.8125rem;">⚠️ If "New Index" is grayed out or you get permission error → Use Option B</p>
-                  </div>
-                  
-                  <!-- Option B: Request from Admin -->
-                  <div style="margin-bottom:16px;padding:12px;background:white;border-radius:6px;border-left:3px solid var(--primary-500);">
-                    <strong style="color:var(--primary-700);">Option B: Request from Splunk Admin (Splunk Cloud)</strong>
-                    <p style="margin:8px 0;color:var(--gray-600);">In Splunk Cloud, index creation is often restricted. You need to request it:</p>
-                    
-                    <div style="margin-top:12px;">
-                      <strong style="font-size:0.8125rem;color:var(--gray-700);">Who to Contact:</strong>
-                      <ul style="margin:4px 0 8px 16px;color:var(--gray-600);">
-                        <li>Internal Splunk admin team at Sobeys</li>
-                        <li>OR submit Splunk Cloud support case (if no internal admin)</li>
-                      </ul>
-                    </div>
-                    
-                    <div style="margin-top:8px;">
-                      <strong style="font-size:0.8125rem;color:var(--gray-700);">Information to Include in Request:</strong>
-                      <div style="background:var(--gray-100);padding:12px;border-radius:4px;margin-top:8px;font-family:monospace;font-size:0.8125rem;">
-                        <strong>Subject:</strong> Request: New Index Creation - Akamai WAF Logs<br><br>
-                        <strong>Index Name:</strong> akamai<br>
-                        <strong>Purpose:</strong> Store Akamai WAF security events for detection engineering<br>
-                        <strong>Data Source:</strong> Akamai SIEM Integration API<br>
-                        <strong>Expected Daily Volume:</strong> ~5-10 GB/day (estimate)<br>
-                        <strong>Retention Required:</strong> 90 days searchable<br>
-                        <strong>Sourcetype:</strong> akamai:siem<br>
-                        <strong>Project:</strong> WAF/DDoS Detection Engineering<br>
-                        <strong>Requested By:</strong> [Your Name]<br>
-                        <strong>Business Justification:</strong> Required for security monitoring and threat detection
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <!-- Option C: Splunk Cloud Support -->
-                  <div style="padding:12px;background:white;border-radius:6px;border-left:3px solid var(--warning-500);">
-                    <strong style="color:var(--warning-700);">Option C: Splunk Cloud Support Case</strong>
-                    <p style="margin:8px 0;color:var(--gray-600);">If there's no internal Splunk admin:</p>
-                    <ol style="margin:8px 0 0 16px;color:var(--gray-600);">
-                      <li>Go to <a href="https://splunk.com/support" target="_blank">splunk.com/support</a></li>
-                      <li>Log in with your Splunk Cloud credentials</li>
-                      <li>Create new case → "Cloud Operations"</li>
-                      <li>Use the information template above</li>
-                      <li>Typical turnaround: 1-3 business days</li>
-                    </ol>
-                  </div>
-                  
-                  <!-- Verify Index Created -->
-                  <div style="margin-top:16px;padding:8px 12px;background:var(--success-50);border-radius:4px;">
-                    <strong style="color:var(--success-700);font-size:0.8125rem;">✅ Verify Index Was Created:</strong>
-                    <code style="display:block;margin-top:4px;color:var(--gray-700);">| eventcount summarize=false index=akamai | table index count</code>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Step 2 -->
-              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Confirm HEC token created for Akamai</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How to check:</strong> <code>Settings → Data inputs → HTTP Event Collector</code> — look for token named "akamai" or similar<br>
-                  <strong>If no token:</strong> <a href="splunk-howto.html#create-hec">See How-To Guide → Create HEC Token</a> — use sourcetype <code>akamai:siem</code>, index <code>akamai</code>
-                </div>
-              </div>
-
-              <!-- Step 3 -->
-              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Verify Akamai SIEM Integration enabled</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How to check (in Akamai):</strong><br>
-                  1. Log into <strong>Akamai Control Center</strong> (Luna)<br>
-                  2. Go to <strong>Security Center → Security Configurations</strong><br>
-                  3. Select your WAF config → <strong>SIEM Integration</strong> tab<br>
-                  4. Should show: Enabled, with HEC URL and token configured<br>
-                  <strong>If not enabled:</strong> Ask Akamai admin to enable SIEM integration with Splunk HEC URL
-                </div>
-              </div>
-
-              <!-- Step 4 -->
-              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Splunk Add-on for Akamai installed</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How to check:</strong> Run: <code>| rest /services/apps/local | search title="*akamai*"</code><br>
-                  <strong>If not installed:</strong> <a href="splunk-howto.html#install-ta">See How-To Guide → Install TA</a> — search Splunkbase for "Splunk Add-on for Akamai"
-                </div>
-              </div>
-
-              <!-- Step 5 -->
-              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Run data validation query</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> Copy and run each query in the "Validation Queries" section below
-                </div>
-              </div>
-
-              <!-- Step 6 -->
-              <div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Verify field extraction working</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How to check:</strong> Run: <code>index=akamai earliest=-1h | head 5 | table src_ip action http_uri</code><br>
-                  <strong>If fields are empty:</strong> TA may not be installed or sourcetype is wrong. Check sourcetype = <code>akamai:siem</code>
-                </div>
-              </div>
-
-              <!-- Step 7 -->
-              <div style="margin-bottom:0;">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Confirm CIM mapping (Web datamodel)</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How to check:</strong> Run: <code>| datamodel Web Web search | head 5</code><br>
-                  <strong>If no results:</strong> Data model may not be accelerated OR CIM Add-on not installed. Ask Splunk admin.
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Akamai Validation Queries -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">Akamai Validation Queries</h4>
-            <div class="code-block" style="margin-bottom:24px;">
-              <div class="code-header"><span class="code-title">Akamai Data Validation</span></div>
+          <div class="step-box" style="border-left:3px solid #3b82f6;">
+            <h5 style="color:#2563eb;">Option B: Admin Config Service (ACS) API</h5>
+            <p style="margin-bottom:12px;color:var(--gray-600);">For programmatic/CI-CD installation:</p>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Install via ACS API</span></div>
               <div class="code-body">
-                <pre><code>``` 1. Check if data is flowing
-index=akamai earliest=-1h | stats count
-| eval status = if(count > 0, "✅ Data flowing", "❌ No data")
+                <pre><code>``` 1. Get your Splunkbase session ID (from browser dev tools after login)
+``` 2. Get JWT token from Splunk Cloud (Settings → Tokens)
+``` 3. Install via curl:
 
-``` 2. Check sourcetype
+curl -X POST 'https://admin.splunk.com/{stack}/adminconfig/v2/apps/victoria?splunkbase=true' \
+  --header 'X-Splunkbase-Authorization: {splunkbase_session_id}' \
+  --header 'Authorization: Bearer {jwt_token}' \
+  --header 'ACS-Licensing-Ack: {license_url}' \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --data-urlencode 'splunkbaseID=1552' \
+  --data-urlencode 'version=2.0.0'</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-box" style="border-left:3px solid #f59e0b;">
+            <h5 style="color:#d97706;">Option C: Support Case (Restricted Apps)</h5>
+            <p style="margin-bottom:12px;color:var(--gray-600);">If self-service unavailable:</p>
+            <ol style="margin-left:20px;line-height:2.2;color:var(--gray-700);">
+              <li>Open a <strong>Splunk Support Case</strong> via support portal</li>
+              <li>Subject: "App Installation Request - Splunk Add-on for Akamai"</li>
+              <li>Include: Stack name, App ID (<code>Splunk_TA_Akamai</code>), Splunkbase link, business justification</li>
+              <li>Typical turnaround: 1-2 business days</li>
+            </ol>
+          </div>
+
+          <div class="step-box">
+            <h5>Verify Installation</h5>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Confirm TA is installed and enabled</span></div>
+              <div class="code-body">
+                <pre><code>| rest /services/apps/local 
+| search title="*Akamai*" OR title="*akamai*"
+| table title, version, disabled, label
+
+``` Expected: Splunk_TA_Akamai with disabled=0
+``` If disabled=1: Apps → Manage Apps → Enable</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== PHASE 2: CONFIGURE DATA INPUT ==================== -->
+        <div class="phase-card phase2">
+          <div class="phase-header">
+            <div class="phase-number">2</div>
+            <div>
+              <h3 style="margin:0;font-size:1.25rem;">Configure Data Input (HEC)</h3>
+              <p style="margin:4px 0 0;color:var(--gray-600);font-size:0.9rem;">Create index and HTTP Event Collector token</p>
+            </div>
+          </div>
+
+          <div class="step-box">
+            <h5>Step 2.1: Create Dedicated Index</h5>
+            <table class="config-table">
+              <tr><td>Location:</td><td><strong>Settings → Indexes → New Index</strong></td></tr>
+              <tr><td>Index Name:</td><td><code>akamai</code> (lowercase, no spaces)</td></tr>
+              <tr><td>Index Data Type:</td><td>Events</td></tr>
+              <tr><td>Max Size:</td><td>Based on retention policy and volume estimate</td></tr>
+            </table>
+            <p style="margin-top:12px;font-size:0.875rem;color:var(--gray-600);">💡 Volume estimate: Medium traffic site ≈ 5-10 GB/day. High traffic ≈ 50+ GB/day.</p>
+          </div>
+
+          <div class="step-box">
+            <h5>Step 2.2: Create HEC Token</h5>
+            <table class="config-table">
+              <tr><td>Location:</td><td><strong>Settings → Data inputs → HTTP Event Collector → New Token</strong></td></tr>
+              <tr><td>Name:</td><td><code>akamai-waf-hec</code></td></tr>
+              <tr><td style="color:#dc2626;font-weight:700;">Source type:</td><td><code style="background:#fef2f2;color:#dc2626;font-weight:600;">akamai:siem</code> <strong>← CRITICAL!</strong></td></tr>
+              <tr><td>App Context:</td><td><code>Splunk_TA_Akamai</code></td></tr>
+              <tr><td>Index:</td><td><code>akamai</code></td></tr>
+              <tr><td>Enable indexer acknowledgment:</td><td>Optional (recommended for reliability)</td></tr>
+            </table>
+            <div style="margin-top:16px;padding:12px;background:#fef2f2;border-radius:6px;border:1px solid #fecaca;">
+              <strong style="color:#dc2626;">⚠️ SAVE THE TOKEN!</strong> Copy the token value immediately after creation — you cannot view it again.
+            </div>
+          </div>
+
+          <div class="step-box">
+            <h5>Step 2.3: Get HEC Endpoint URL</h5>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Splunk Cloud HEC URL Format</span></div>
+              <div class="code-body">
+                <pre><code>``` Standard format:
+https://http-inputs-{stack-name}.splunkcloud.com:443/services/collector/event
+
+``` Example:
+https://http-inputs-acme.splunkcloud.com:443/services/collector/event
+
+``` Find your stack name: Support & Services → About</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-box">
+            <h5>Step 2.4: Configure Akamai SIEM Integration</h5>
+            <p style="margin-bottom:12px;">In Akamai Control Center (Luna Portal):</p>
+            <table class="config-table">
+              <tr><td>Location:</td><td><strong>Security Center → SIEM Integration</strong> (or per security config)</td></tr>
+              <tr><td>SIEM Type:</td><td>Splunk / HTTP</td></tr>
+              <tr><td>Endpoint URL:</td><td>Your HEC URL from Step 2.3</td></tr>
+              <tr><td>Authorization Header:</td><td><code>Splunk {your-hec-token}</code></td></tr>
+              <tr><td>Format:</td><td>JSON</td></tr>
+              <tr><td>TLS Verification:</td><td>Enabled</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- ==================== PHASE 3: VALIDATE DATA ==================== -->
+        <div class="phase-card phase3">
+          <div class="phase-header">
+            <div class="phase-number">3</div>
+            <div>
+              <h3 style="margin:0;font-size:1.25rem;">Validate Data Flow & Field Extraction</h3>
+              <p style="margin:4px 0 0;color:var(--gray-600);font-size:0.9rem;">Confirm data arrives and TA parses correctly</p>
+            </div>
+          </div>
+
+          <div class="code-block" style="margin-bottom:20px;">
+            <div class="code-header"><span class="code-title">Validation Queries — Run Each One</span></div>
+            <div class="code-body">
+              <pre><code>``` ========== TEST 1: Data Arriving? ==========
+index=akamai earliest=-1h | stats count
+| eval status=if(count>0, "✅ PASS", "❌ FAIL - Check HEC config")
+| table count status
+
+``` ========== TEST 2: Correct Sourcetype? ==========
 index=akamai earliest=-1h | stats count by sourcetype
 ``` Expected: akamai:siem
+``` If you see "httpevent" → Wrong sourcetype in HEC token config
 
-``` 3. Check data freshness (latency)
-index=akamai earliest=-1h 
-| stats max(_time) as latest 
-| eval lag_min = round((now() - latest) / 60, 1)
-| eval status = if(lag_min < 15, "✅ OK", "⚠️ Delayed")
-
-``` 4. Check field extraction
+``` ========== TEST 3: Fields Extracting? (TA Working?) ==========
 index=akamai earliest=-1h | head 10
-| table _time src_ip dest_ip action http_method http_uri rule_id
-``` All fields should have values
+| table _time, src_ip, action, http_uri, http_method, rule_id, http_user_agent
+``` All columns should have values
+``` Empty fields → TA not installed or wrong sourcetype
 
-``` 5. Check event volume (baseline)
-index=akamai earliest=-24h 
-| timechart span=1h count
-``` Look for consistent pattern, no gaps
+``` ========== TEST 4: Data Freshness / Latency ==========
+index=akamai earliest=-1h 
+| stats max(_time) as latest_event 
+| eval lag_minutes=round((now()-latest_event)/60,1)
+| eval status=case(lag_minutes<5,"✅ Excellent",lag_minutes<15,"✅ Good",lag_minutes<60,"⚠️ Acceptable",true(),"❌ Check Akamai config")
+| table latest_event, lag_minutes, status
 
-``` 6. Check action distribution
-index=akamai earliest=-24h 
-| stats count by action
-``` Expected: alert, deny, allow</code></pre>
-              </div>
-            </div>
+``` ========== TEST 5: CIM Normalization (Web Data Model) ==========
+| tstats count from datamodel=Web by sourcetype, index | head 10
+``` If akamai data appears → CIM mapping working
+``` If empty → Data model not accelerated or CIM Add-on missing
 
-            <!-- Akamai Troubleshooting -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">Akamai Troubleshooting</h4>
-            <div class="table-container">
-              <table>
-                <thead><tr><th>Issue</th><th>Possible Cause</th><th>Solution</th></tr></thead>
-                <tbody>
-                  <tr><td class="highlight">No data at all</td><td>SIEM integration not enabled</td><td>Enable in Akamai Luna Control Center → Security Configuration → SIEM Integration</td></tr>
-                  <tr><td class="highlight">No data at all</td><td>HEC token invalid</td><td>Regenerate HEC token, update in Akamai config</td></tr>
-                  <tr><td class="highlight">Wrong sourcetype</td><td>TA not installed</td><td>Install "Splunk Add-on for Akamai" from Splunkbase</td></tr>
-                  <tr><td class="highlight">Fields not extracting</td><td>props.conf misconfigured</td><td>Check TA is enabled for the index, verify sourcetype</td></tr>
-                  <tr><td class="highlight">Data gaps</td><td>Akamai API rate limiting</td><td>Check Akamai SIEM API status, may need to increase limits</td></tr>
-                  <tr><td class="highlight">High latency</td><td>Large event backlog</td><td>Check Akamai queue, may need to increase pull frequency</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Akamai Key Fields -->
-            <h4 style="font-size:1rem;margin:24px 0 12px;">Akamai Key Fields for Detection</h4>
-            <div class="table-container">
-              <table>
-                <thead><tr><th>Field</th><th>Description</th><th>Example Values</th><th>Used For</th></tr></thead>
-                <tbody>
-                  <tr><td class="highlight">action</td><td>WAF action taken</td><td>alert, deny, allow</td><td>Detection logic</td></tr>
-                  <tr><td class="highlight">src_ip</td><td>Attacker IP</td><td>192.168.1.100</td><td>Source tracking</td></tr>
-                  <tr><td class="highlight">http_uri</td><td>Requested path</td><td>/api/login</td><td>Endpoint targeting</td></tr>
-                  <tr><td class="highlight">rule_id</td><td>WAF rule triggered</td><td>950001 (SQLi)</td><td>Attack classification</td></tr>
-                  <tr><td class="highlight">http_method</td><td>HTTP verb</td><td>POST, GET</td><td>Request analysis</td></tr>
-                  <tr><td class="highlight">user_agent</td><td>Client identifier</td><td>Mozilla/5.0...</td><td>Bot detection</td></tr>
-                  <tr><td class="highlight">geo_country</td><td>Source country</td><td>US, CN, RU</td><td>Geo analysis</td></tr>
-                </tbody>
-              </table>
+``` ========== TEST 6: Volume Check (24h) ==========
+index=akamai earliest=-24h | timechart span=1h count
+``` Look for consistent pattern - gaps indicate connectivity issues</code></pre>
             </div>
           </div>
 
-          <!-- ==================== CYBERARK TAB ==================== -->
-          <div id="cyberark-tab" class="tab-content cyberark-content">
-            <div class="tab-header">
-              <h3>CyberArk Identity Log Onboarding</h3>
-              <span class="badge cyberark">MFA Project - Primary</span>
-            </div>
+          <div class="step-box">
+            <h5>Field Extraction Reference (Akamai SIEM API v2)</h5>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Raw JSON Field</th><th>Extracted Field</th><th>CIM Field</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>attackData.clientIP</code></td><td><code>src_ip</code></td><td><code>src</code></td></tr>
+                <tr><td><code>httpMessage.requestUri</code></td><td><code>http_uri</code></td><td><code>url</code></td></tr>
+                <tr><td><code>attackData.rules[].ruleAction</code></td><td><code>action</code></td><td><code>action</code></td></tr>
+                <tr><td><code>httpMessage.requestHeaders.Host</code></td><td><code>http_host</code></td><td><code>dest</code></td></tr>
+                <tr><td><code>attackData.rules[].ruleTag</code></td><td><code>rule_id</code></td><td><code>signature</code></td></tr>
+                <tr><td><code>httpMessage.method</code></td><td><code>http_method</code></td><td><code>http_method</code></td></tr>
+                <tr><td><code>httpMessage.status</code></td><td><code>status</code></td><td><code>status</code></td></tr>
+                <tr><td><code>geo.country</code></td><td><code>src_country</code></td><td><code>src_country</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-            <!-- CyberArk Decision Tree -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">CyberArk Onboarding Decision Tree</h4>
-            <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
-              <div class="mermaid">
-flowchart TD
-    A[Start: CyberArk<br/>Onboarding] --> B{Index exists?<br/>index=cyberark}
-    B -->|No| C[Request index creation<br/>from Splunk Admin]
-    B -->|Yes| D{Data flowing?<br/>Run validation query}
-    C --> D
-    D -->|No| E{SIEM webhook<br/>configured?}
-    D -->|Yes| F{Correct<br/>sourcetype?}
-    E -->|No| G[Configure SIEM webhook<br/>in CyberArk Admin Portal]
-    E -->|Yes| H{HEC endpoint<br/>reachable?}
-    G --> I[Set HEC URL<br/>and token]
-    I --> D
-    H -->|No| J[Check firewall<br/>rules for HTTPS]
-    H -->|Yes| K[Check CyberArk<br/>audit settings]
-    J --> D
-    K --> D
-    F -->|No| L[Configure sourcetype<br/>in HEC token settings]
-    F -->|Yes| M{MFA events<br/>present?}
-    L --> M
-    M -->|No| N[Enable MFA audit<br/>in CyberArk]
-    M -->|Yes| O{Fields<br/>extracting?}
-    N --> M
-    O -->|No| P[Install/configure<br/>CyberArk TA]
-    O -->|Yes| Q[✅ CyberArk<br/>Ready]
-    P --> O
-    
-    style A fill:#00a3e0,stroke:#0077b3
-    style Q fill:#d4edda,stroke:#28a745
+        <!-- ==================== PHASE 4: DISCOVER AVAILABLE DETECTIONS ==================== -->
+        <div class="phase-card phase4">
+          <div class="phase-header">
+            <div class="phase-number">4</div>
+            <div>
+              <h3 style="margin:0;font-size:1.25rem;">Discover Available Detections</h3>
+              <p style="margin:4px 0 0;color:var(--gray-600);font-size:0.9rem;">Find ES native and ESCU detections relevant to WAF data</p>
+            </div>
+          </div>
+
+          <div class="callout warning" style="margin-bottom:20px;">
+            <div class="callout-content">
+              <div class="callout-title">⚠️ Important: No Published List Exists</div>
+              <div class="callout-body">
+                <p>Splunk does not publish a complete list of OOTB correlation searches. You must <strong>query your environment</strong> to discover available detections. The searches below help you find what's available.</p>
               </div>
             </div>
+          </div>
 
-            <!-- CyberArk Checklist with HOW-TO -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">CyberArk Onboarding Checklist (with How-To)</h4>
-            <div class="card bordered-left cyberark" style="padding:20px;margin-bottom:24px;">
-              
-              <!-- Step 1 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>cyberark</code> exists</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> Run: <code>| eventcount index=cyberark</code> — if returns 0 or error, index doesn't exist<br>
-                  <strong>If index doesn't exist:</strong> See the <strong>Akamai tab → Step 1</strong> for detailed index creation instructions (same process, just use index name <code>cyberark</code>)
-                </div>
-              </div>
-
-              <!-- Step 2 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Create HEC token for CyberArk</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> <a href="splunk-howto.html#create-hec">See How-To Guide → Create HEC Token</a><br>
-                  Use: Name=<code>cyberark-prod</code>, Sourcetype=<code>cyberark:identity:audit</code>, Index=<code>cyberark</code><br>
-                  <strong>IMPORTANT:</strong> Copy the token value — you'll need it for CyberArk config
-                </div>
-              </div>
-
-              <!-- Step 3 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Configure SIEM webhook in CyberArk Admin Portal</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How (in CyberArk Identity Admin Portal):</strong><br>
-                  1. Log into CyberArk Identity Admin Portal<br>
-                  2. Go to <strong>Settings → Customization → SIEM Integration</strong><br>
-                  3. Click <strong>"Add SIEM"</strong><br>
-                  4. Select <strong>Splunk</strong> as SIEM type<br>
-                  5. Enter HEC URL: <code>https://http-inputs-[stack].splunkcloud.com:443/services/collector</code><br>
-                  6. Enter the HEC token from Step 2<br>
-                  7. Test connection → Save
-                </div>
-              </div>
-
-              <!-- Step 4 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Enable all audit event types (especially MFA)</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How (in CyberArk):</strong><br>
-                  1. In SIEM Integration settings, click <strong>"Configure Events"</strong><br>
-                  2. Check ALL boxes, especially: <strong>MFA Approve, MFA Deny, MFA Challenge, Login Success, Login Failure</strong><br>
-                  3. Save changes
-                </div>
-              </div>
-
-              <!-- Step 5 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Run data validation query</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> Copy and run each query in the "Validation Queries" section below
-                </div>
-              </div>
-
-              <!-- Step 6 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Verify MFA events present</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> Run: <code>index=cyberark *MFA* | stats count by EventType</code><br>
-                  <strong>Should see:</strong> MfaApprove, MfaDeny, MfaChallenge events
-                </div>
-              </div>
-
-              <!-- Step 7 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Confirm field extraction working</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> Run: <code>index=cyberark | head 5 | table user src_ip EventType Result</code><br>
-                  <strong>If fields empty:</strong> JSON may not be parsing — check sourcetype has <code>KV_MODE=json</code>
-                </div>
-              </div>
-
-              <!-- Step 8 -->
-              <div style="margin-bottom:0;">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 8:</strong> Verify privileged user events visible</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> Run: <code>index=cyberark user=*admin* OR user=*svc* | stats count by user</code>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- CyberArk Validation Queries -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">CyberArk Validation Queries</h4>
-            <div class="code-block" style="margin-bottom:24px;">
-              <div class="code-header"><span class="code-title">CyberArk Data Validation</span></div>
+          <div class="step-box">
+            <h5>Step 4.1: Find ES Native Correlation Searches</h5>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">List all ES correlation searches (excluding ESCU)</span></div>
               <div class="code-body">
-                <pre><code>``` 1. Check if data is flowing
-index=cyberark earliest=-1h | stats count
-| eval status = if(count > 0, "✅ Data flowing", "❌ No data")
-
-``` 2. Check sourcetype
-index=cyberark earliest=-1h | stats count by sourcetype
-``` Expected: cyberark:identity:audit or similar
-
-``` 3. Check MFA events specifically
-index=cyberark earliest=-24h 
-| search "MFA" OR "mfa" OR "authentication" OR "factor"
-| stats count by event_type
-``` Must have MFA approve/deny events
-
-``` 4. Check data freshness
-index=cyberark earliest=-1h 
-| stats max(_time) as latest 
-| eval lag_min = round((now() - latest) / 60, 1)
-
-``` 5. Check event types distribution
-index=cyberark earliest=-24h 
-| stats count by event_type
-``` Should see: LoginSuccess, LoginFailure, MFAApprove, MFADeny
-
-``` 6. Verify user field extraction
-index=cyberark earliest=-24h 
-| stats count by user
-| head 20
-``` Should see actual usernames
-
-``` 7. Check for privileged user events
-index=cyberark earliest=-24h 
-| search user=*admin* OR user=*svc* OR user=*service*
-| stats count by user</code></pre>
+                <pre><code>| rest splunk_server=local count=0 /services/saved/searches 
+| where match('action.correlationsearch.enabled', "1|[Tt]|[Tt][Rr][Uu][Ee]") 
+| where NOT match(title, "^ESCU") 
+| rename title as "Detection Name", 
+         action.notable.param.security_domain as "Domain",
+         disabled as "Disabled"
+| table "Detection Name", "Domain", "Disabled", description
+| sort "Detection Name"</code></pre>
               </div>
             </div>
-
-            <!-- CyberArk Troubleshooting -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">CyberArk Troubleshooting</h4>
-            <div class="table-container">
-              <table>
-                <thead><tr><th>Issue</th><th>Possible Cause</th><th>Solution</th></tr></thead>
-                <tbody>
-                  <tr><td class="highlight">No data at all</td><td>SIEM webhook not configured</td><td>CyberArk Admin Portal → Settings → SIEM → Add webhook with HEC URL</td></tr>
-                  <tr><td class="highlight">No data at all</td><td>Firewall blocking</td><td>Open outbound HTTPS (443) to Splunk HEC endpoint</td></tr>
-                  <tr><td class="highlight">No MFA events</td><td>MFA audit not enabled</td><td>Enable MFA audit logging in CyberArk Identity settings</td></tr>
-                  <tr><td class="highlight">Missing users</td><td>User filter in webhook</td><td>Check webhook config for any user/group filters</td></tr>
-                  <tr><td class="highlight">Wrong sourcetype</td><td>HEC token default</td><td>Set explicit sourcetype in HEC token config</td></tr>
-                  <tr><td class="highlight">Fields not parsing</td><td>JSON not parsed</td><td>Verify sourcetype has JSON parsing enabled (KV_MODE=json)</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- CyberArk Key Fields -->
-            <h4 style="font-size:1rem;margin:24px 0 12px;">CyberArk Key Fields for MFA Detection</h4>
-            <div class="table-container">
-              <table>
-                <thead><tr><th>Field</th><th>Description</th><th>Example Values</th><th>Used For</th></tr></thead>
-                <tbody>
-                  <tr><td class="highlight">event_type</td><td>Type of audit event</td><td>MFAApprove, MFADeny, LoginSuccess</td><td>Detection logic</td></tr>
-                  <tr><td class="highlight">user</td><td>Username</td><td>jsmith@sobeys.com</td><td>User tracking</td></tr>
-                  <tr><td class="highlight">src_ip</td><td>Source IP of request</td><td>192.168.1.100</td><td>Impossible travel</td></tr>
-                  <tr><td class="highlight">mfa_method</td><td>MFA type used</td><td>push, sms, totp</td><td>Method analysis</td></tr>
-                  <tr><td class="highlight">result</td><td>Action result</td><td>success, failure, denied</td><td>Detection logic</td></tr>
-                  <tr><td class="highlight">application</td><td>App being accessed</td><td>VPN, Email, SAP</td><td>App targeting</td></tr>
-                  <tr><td class="highlight">device_id</td><td>MFA device identifier</td><td>device_abc123</td><td>Device tracking</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <p style="margin-top:12px;font-size:0.875rem;color:var(--gray-600);">Common ES native searches for web/network: "Brute Force Access Behavior Detected", "Concurrent Login Attempts Detected", "High Volume of Traffic from Single Source"</p>
           </div>
 
-          <!-- ==================== ENTRA ID TAB ==================== -->
-          <div id="entra-tab" class="tab-content entra-content">
-            <div class="tab-header">
-              <h3>Entra ID (Azure AD) Log Onboarding</h3>
-              <span class="badge" style="background:#0078d4;color:white;">MFA Project - Secondary</span>
-            </div>
-
-            <!-- Entra Decision Tree -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">Entra ID Onboarding Decision Tree</h4>
-            <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
-              <div class="mermaid">
-flowchart TD
-    A[Start: Entra ID<br/>Onboarding] --> B{Index exists?<br/>index=azure}
-    B -->|No| C[Request index creation<br/>from Splunk Admin]
-    B -->|Yes| D{Data flowing?<br/>Run validation query}
-    C --> D
-    D -->|No| E{Event Hub<br/>exists?}
-    D -->|Yes| F{SignIn logs<br/>present?}
-    E -->|No| G[Create Event Hub<br/>Namespace & Hub]
-    E -->|Yes| H{Diagnostic Settings<br/>configured?}
-    G --> I[Create Consumer Group<br/>for Splunk]
-    I --> H
-    H -->|No| J[Configure Entra ID<br/>Diagnostic Settings]
-    H -->|Yes| K{Splunk Add-on<br/>configured?}
-    J --> L[Select SignInLogs,<br/>AuditLogs, etc.]
-    L --> K
-    K -->|No| M[Install & configure<br/>MS Cloud Services Add-on]
-    K -->|Yes| N[Check Event Hub<br/>connection string]
-    M --> N
-    N --> D
-    F -->|No| O[Check Diagnostic Settings<br/>log categories]
-    F -->|Yes| P{MFA fields<br/>present?}
-    O --> D
-    P -->|No| Q[Verify SignInLogs<br/>includes MFA status]
-    P -->|Yes| R[✅ Entra ID<br/>Ready]
-    Q --> P
-    
-    style A fill:#0078d4,stroke:#005a9e
-    style R fill:#d4edda,stroke:#28a745
-              </div>
-            </div>
-
-            <!-- Entra Checklist with HOW-TO -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">Entra ID Onboarding Checklist (with How-To)</h4>
-            <div class="card bordered-left info" style="padding:20px;margin-bottom:24px;border-left-color:#0078d4;">
-              
-              <!-- Step 1 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 1:</strong> Verify index <code>azure</code> exists</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> Run: <code>| eventcount index=azure</code><br>
-                  <strong>If index doesn't exist:</strong> See the <strong>Akamai tab → Step 1</strong> for detailed index creation instructions (same process, just use index name <code>azure</code>)
-                </div>
-              </div>
-
-              <!-- Step 2 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 2:</strong> Create Azure Event Hub Namespace</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How (in Azure Portal):</strong><br>
-                  1. Search for <strong>"Event Hubs"</strong> → Create<br>
-                  2. Select Subscription and Resource Group<br>
-                  3. Enter Namespace name: <code>sobeys-splunk-eventhub</code><br>
-                  4. Select region (same as your Azure AD tenant if possible)<br>
-                  5. Pricing tier: <strong>Standard</strong> (needed for consumer groups)<br>
-                  6. Click Create
-                </div>
-              </div>
-
-              <!-- Step 3 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 3:</strong> Create Event Hub within namespace</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong><br>
-                  1. Open your Event Hub Namespace<br>
-                  2. Click <strong>"+ Event Hub"</strong><br>
-                  3. Name: <code>entra-logs</code><br>
-                  4. Partition count: 2 (default is fine)<br>
-                  5. Create
-                </div>
-              </div>
-
-              <!-- Step 4 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 4:</strong> Create Consumer Group for Splunk</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong><br>
-                  1. Open your Event Hub (entra-logs)<br>
-                  2. Click <strong>"Consumer groups"</strong> in left menu<br>
-                  3. Click <strong>"+ Consumer group"</strong><br>
-                  4. Name: <code>splunk-consumer</code><br>
-                  5. Create<br>
-                  <strong>⚠️ IMPORTANT:</strong> Don't use $Default — create a dedicated consumer group for Splunk
-                </div>
-              </div>
-
-              <!-- Step 5 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 5:</strong> Create Shared Access Policy</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong><br>
-                  1. In Event Hub Namespace → <strong>"Shared access policies"</strong><br>
-                  2. Click <strong>"+ Add"</strong><br>
-                  3. Name: <code>splunk-listen</code><br>
-                  4. Check only <strong>"Listen"</strong> (Splunk only reads)<br>
-                  5. Create<br>
-                  6. <strong>COPY the Connection String</strong> — you'll need this for Splunk
-                </div>
-              </div>
-
-              <!-- Step 6 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 6:</strong> Configure Entra ID Diagnostic Settings</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong><br>
-                  1. Go to <strong>Microsoft Entra ID</strong> (Azure AD)<br>
-                  2. <strong>Monitoring → Diagnostic settings</strong><br>
-                  3. Click <strong>"+ Add diagnostic setting"</strong><br>
-                  4. Name: <code>EntraToSplunk</code><br>
-                  5. Check <strong>"Stream to an event hub"</strong><br>
-                  6. Select your Event Hub namespace and hub
-                </div>
-              </div>
-
-              <!-- Step 7 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 7:</strong> Select log categories</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>Required logs to check:</strong><br>
-                  ☑️ SignInLogs (interactive sign-ins — primary MFA data)<br>
-                  ☑️ NonInteractiveUserSignInLogs (service/app sign-ins)<br>
-                  ☑️ AuditLogs (changes to directory)<br>
-                  <strong>Optional:</strong> ManagedIdentitySignInLogs, ServicePrincipalSignInLogs, RiskyUsers
-                </div>
-              </div>
-
-              <!-- Step 8 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 8:</strong> Install Splunk Add-on</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> <a href="splunk-howto.html#install-ta">See How-To Guide → Install TA</a><br>
-                  Search Splunkbase for: <strong>"Splunk Add-on for Microsoft Cloud Services"</strong>
-                </div>
-              </div>
-
-              <!-- Step 9 -->
-              <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 9:</strong> Configure Splunk input</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How (in Splunk):</strong><br>
-                  1. Open <strong>Splunk Add-on for Microsoft Cloud Services</strong><br>
-                  2. Go to <strong>Inputs</strong> tab → <strong>Create New Input</strong><br>
-                  3. Select <strong>Azure Event Hub</strong><br>
-                  4. Enter: Event Hub Namespace, Event Hub Name, Consumer Group<br>
-                  5. Paste the <strong>Connection String</strong> from Step 5<br>
-                  6. Set Index: <code>azure</code><br>
-                  7. Save
-                </div>
-              </div>
-
-              <!-- Step 10 -->
-              <div style="margin-bottom:0;">
-                <label class="checklist-item"><input type="checkbox"><span><strong>Step 10:</strong> Run data validation queries</span></label>
-                <div style="margin-left:28px;margin-top:8px;font-size:0.875rem;color:var(--gray-600);">
-                  <strong>How:</strong> Run each query in the "Validation Queries" section below<br>
-                  <strong>Note:</strong> Data may take 5-15 minutes to appear (Event Hub latency is normal)
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Entra Validation Queries -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">Entra ID Validation Queries</h4>
-            <div class="code-block" style="margin-bottom:24px;">
-              <div class="code-header"><span class="code-title">Entra ID Data Validation</span></div>
+          <div class="step-box">
+            <h5>Step 4.2: Find ESCU Detections (Web/Network Category)</h5>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">List ESCU detections relevant to web attacks</span></div>
               <div class="code-body">
-                <pre><code>``` 1. Check if data is flowing
-index=azure sourcetype=azure:aad:* earliest=-1h | stats count
-| eval status = if(count > 0, "✅ Data flowing", "❌ No data")
-
-``` 2. Check sourcetypes present
-index=azure earliest=-1h | stats count by sourcetype
-``` Expected: azure:aad:signin, azure:aad:audit
-
-``` 3. Check SignIn logs specifically
-index=azure sourcetype=azure:aad:signin earliest=-24h 
-| stats count
-``` This is your primary MFA data source
-
-``` 4. Check MFA status field
-index=azure sourcetype=azure:aad:signin earliest=-24h 
-| stats count by properties.authenticationRequirement
-``` Should see: multiFactorAuthentication, singleFactorAuthentication
-
-``` 5. Check MFA result in authentication details
-index=azure sourcetype=azure:aad:signin earliest=-24h 
-| spath properties.authenticationDetails{} 
-| stats count by properties.authenticationDetails{}.authenticationMethod
-
-``` 6. Verify user field extraction
-index=azure sourcetype=azure:aad:signin earliest=-24h 
-| stats count by properties.userPrincipalName
-| head 20
-
-``` 7. Check data freshness / latency
-index=azure sourcetype=azure:aad:signin earliest=-1h 
-| stats max(_time) as latest 
-| eval lag_min = round((now() - latest) / 60, 1)
-| eval status = if(lag_min < 30, "✅ OK", "⚠️ Delayed (Event Hub lag)")
-
-``` 8. Check for failed logins
-index=azure sourcetype=azure:aad:signin earliest=-24h 
-| stats count by properties.status.errorCode
-| where 'properties.status.errorCode' != 0</code></pre>
-              </div>
-            </div>
-
-            <!-- Entra Troubleshooting -->
-            <h4 style="font-size:1rem;margin-bottom:12px;">Entra ID Troubleshooting</h4>
-            <div class="table-container">
-              <table>
-                <thead><tr><th>Issue</th><th>Possible Cause</th><th>Solution</th></tr></thead>
-                <tbody>
-                  <tr><td class="highlight">No data at all</td><td>Diagnostic Settings not configured</td><td>Azure Portal → Entra ID → Diagnostic Settings → Add → Select Event Hub</td></tr>
-                  <tr><td class="highlight">No data at all</td><td>Event Hub connection string wrong</td><td>Verify connection string in Splunk input includes SharedAccessKey</td></tr>
-                  <tr><td class="highlight">No data at all</td><td>Consumer group conflict</td><td>Create dedicated consumer group for Splunk, don't use $Default</td></tr>
-                  <tr><td class="highlight">Missing SignIn logs</td><td>Category not selected</td><td>Edit Diagnostic Settings, ensure SignInLogs checked</td></tr>
-                  <tr><td class="highlight">No MFA data</td><td>MFA not enforced</td><td>SignIn logs only show MFA if MFA is triggered - check Conditional Access</td></tr>
-                  <tr><td class="highlight">High latency (30+ min)</td><td>Event Hub backlog</td><td>Check Event Hub metrics in Azure, increase throughput units if needed</td></tr>
-                  <tr><td class="highlight">Partial data</td><td>Polling interval too long</td><td>Reduce polling interval in Splunk input config (e.g., 60 seconds)</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Entra Key Fields -->
-            <h4 style="font-size:1rem;margin:24px 0 12px;">Entra ID Key Fields for MFA Detection</h4>
-            <div class="table-container">
-              <table>
-                <thead><tr><th>Field</th><th>Description</th><th>Example Values</th><th>Used For</th></tr></thead>
-                <tbody>
-                  <tr><td class="highlight">properties.userPrincipalName</td><td>User email/UPN</td><td>jsmith@sobeys.com</td><td>User tracking</td></tr>
-                  <tr><td class="highlight">properties.ipAddress</td><td>Source IP</td><td>192.168.1.100</td><td>Impossible travel</td></tr>
-                  <tr><td class="highlight">properties.location.city</td><td>Geo location</td><td>Toronto</td><td>Geo analysis</td></tr>
-                  <tr><td class="highlight">properties.status.errorCode</td><td>Login result code</td><td>0 (success), 50074 (MFA required)</td><td>Result analysis</td></tr>
-                  <tr><td class="highlight">properties.authenticationRequirement</td><td>Auth level required</td><td>multiFactorAuthentication</td><td>MFA detection</td></tr>
-                  <tr><td class="highlight">properties.authenticationDetails{}</td><td>Auth method details</td><td>Array of methods used</td><td>MFA method tracking</td></tr>
-                  <tr><td class="highlight">properties.conditionalAccessStatus</td><td>CA policy result</td><td>success, failure, notApplied</td><td>Policy analysis</td></tr>
-                  <tr><td class="highlight">properties.appDisplayName</td><td>Application accessed</td><td>Microsoft Teams, Outlook</td><td>App targeting</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Entra Special Notes -->
-            <div class="callout warning" style="margin-top:24px;">
-              <div class="callout-content">
-                <div class="callout-title">Entra ID Special Considerations</div>
-                <div class="callout-body">
-                  <strong>Nested JSON:</strong> Entra logs use deeply nested JSON. Use <code>spath</code> or configure props.conf for automatic extraction.<br><br>
-                  <strong>Event Hub Latency:</strong> Expect 5-15 minute latency vs. near real-time for HEC sources. This is normal for Event Hub architecture.<br><br>
-                  <strong>Azure AD vs Entra ID:</strong> Same thing - Microsoft rebranded in 2023. Sourcetypes still use <code>azure:aad:*</code> naming.
-                </div>
+                <pre><code>| rest splunk_server=local count=0 /services/saved/searches 
+| search title="ESCU*" OR eai:acl.app="*ESCU*" OR eai:acl.app="DA-ESS-ContentUpdate"
+| where match('action.correlationsearch.enabled', "1|[Tt]|[Tt][Rr][Uu][Ee]")
+| search title="*Web*" OR title="*HTTP*" OR title="*Request*" OR title="*Attack*" 
+         OR title="*Smuggling*" OR title="*Injection*" OR title="*XSS*"
+| rename title as "Detection Name", disabled as "Disabled"
+| table "Detection Name", "Disabled", description
+| sort "Detection Name"</code></pre>
               </div>
             </div>
           </div>
 
-        </div><!-- End tabs-container -->
+          <div class="step-box">
+            <h5>Step 4.3: Explore ESCU Analytic Stories (Use Case Library)</h5>
+            <p style="margin-bottom:12px;">Navigate to: <strong>ES → Security Content → Security Use Case Library</strong></p>
+            <p style="margin-bottom:12px;">Filter by relevant categories:</p>
+            <ul style="margin-left:20px;line-height:2;color:var(--gray-700);">
+              <li>✅ <strong>HTTP Request Smuggling</strong> — CL.TE, TE.TE, header manipulation attacks</li>
+              <li>✅ <strong>Suspicious User Agents</strong> — Malware, PUA, RMM tool user agents</li>
+              <li>✅ <strong>Web Attack Detection</strong> — SQLi, XSS, path traversal patterns</li>
+              <li>✅ <strong>Command and Control</strong> — C2 beaconing, suspicious network patterns</li>
+              <li>✅ <strong>Data Exfiltration</strong> — Large uploads, unusual destinations</li>
+            </ul>
+          </div>
+
+          <div class="step-box">
+            <h5>Key ESCU Analytic Stories for WAF Data</h5>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Analytic Story</th><th>Detection Count</th><th>Data Sources</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>HTTP Request Smuggling</strong></td><td>5+</td><td>Nginx, Suricata, Web logs</td></tr>
+                <tr><td><strong>Suspicious User Agents</strong></td><td>3+</td><td>Suricata, HTTP logs</td></tr>
+                <tr><td><strong>Web Attack</strong> (multiple stories)</td><td>10+</td><td>Web logs, IDS</td></tr>
+                <tr><td><strong>Cisco Secure Firewall Analytics</strong></td><td>30+</td><td>Firewall events</td></tr>
+              </tbody>
+            </table>
+            <p style="margin-top:12px;font-size:0.875rem;">📚 Browse all stories: <a href="https://research.splunk.com/stories/" target="_blank" style="color:var(--primary-600);">research.splunk.com/stories</a></p>
+          </div>
+        </div>
+
+        <!-- ==================== PHASE 5: ENABLE & TEST DETECTIONS ==================== -->
+        <div class="phase-card phase5">
+          <div class="phase-header">
+            <div class="phase-number">5</div>
+            <div>
+              <h3 style="margin:0;font-size:1.25rem;">Enable, Configure & Test Detections</h3>
+              <p style="margin:4px 0 0;color:var(--gray-600);font-size:0.9rem;">Proper workflow for enabling and validating detections</p>
+            </div>
+          </div>
+
+          <div class="step-box">
+            <h5>Step 5.1: Enable a Detection</h5>
+            <ol style="margin-left:20px;line-height:2.5;color:var(--gray-700);">
+              <li>Navigate to <strong>ES → Configure → Content → Content Management</strong></li>
+              <li>Find the detection (use search/filter)</li>
+              <li>Click detection name to open details</li>
+              <li>Click <strong>Edit</strong></li>
+              <li>Change <strong>Status</strong> from "Disabled" to <strong>"Enabled"</strong></li>
+              <li><strong>IMPORTANT:</strong> Review and modify the search (see Step 5.2)</li>
+              <li>Configure scheduling (cron or interval)</li>
+              <li>Click <strong>Save</strong></li>
+            </ol>
+          </div>
+
+          <div class="step-box">
+            <h5>Step 5.2: Modify Search for Your Data</h5>
+            <p style="margin-bottom:12px;color:var(--gray-600);">Most OOTB searches use generic index patterns. You <strong>must</strong> customize:</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Change From</th><th>Change To</th><th>Why</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>index=*</code></td><td><code>index=akamai</code></td><td>Performance & accuracy</td></tr>
+                <tr><td><code>`web_index`</code> macro</td><td>Verify macro definition</td><td>May need updating</td></tr>
+                <tr><td>Generic sourcetype</td><td><code>sourcetype=akamai:siem</code></td><td>Filter to your data</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="step-box">
+            <h5>Step 5.3: Test Detection BEFORE Enabling</h5>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Test search against historical data</span></div>
+              <div class="code-body">
+                <pre><code>``` 1. Copy the detection's SPL search
+``` 2. Paste into Search & Reporting
+``` 3. Modify time range to last 7 days
+``` 4. Run the search
+``` 5. Check:
+```    - Does it return results? (Validate logic works)
+```    - Are results true positives? (Check a sample)
+```    - Is volume acceptable? (Not thousands of results)
+
+``` Example test for HTTP suspicious user agent:
+index=akamai sourcetype=akamai:siem earliest=-7d
+| search http_user_agent IN ("curl*", "wget*", "python*", "Go-http-client*")
+| stats count by src_ip, http_user_agent, http_uri
+| where count > 10</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-box">
+            <h5>Step 5.4: Configure Throttling</h5>
+            <p style="margin-bottom:12px;">Prevent alert fatigue by throttling repeated alerts:</p>
+            <table class="config-table">
+              <tr><td>Location:</td><td>Detection Edit → Throttling section</td></tr>
+              <tr><td>Throttle by field:</td><td><code>src_ip</code> or <code>src</code> (group alerts by attacker IP)</td></tr>
+              <tr><td>Window duration:</td><td>30-60 minutes (typical)</td></tr>
+              <tr><td>Max notable events:</td><td>1 per window (recommended start)</td></tr>
+            </table>
+          </div>
+
+          <div class="step-box">
+            <h5>Step 5.5: Validate Detection is Firing</h5>
+            <div class="code-block">
+              <div class="code-header"><span class="code-title">Check if detection created notable events</span></div>
+              <div class="code-body">
+                <pre><code>``` Check notable events from a specific detection:
+index=notable search_name="*YourDetectionName*" earliest=-24h
+| stats count by search_name, urgency, status_label
+| sort -count
+
+``` Check all recent notable events:
+index=notable earliest=-24h
+| stats count by search_name
+| sort -count
+
+``` Check detection run history:
+| rest /services/saved/searches 
+| search title="*YourDetectionName*"
+| table title, next_scheduled_time, last_scheduled_time, 
+        action.correlationsearch.enabled, disabled</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== PHASE 6: TUNE & CREATE CUSTOM ==================== -->
+        <div class="phase-card phase6">
+          <div class="phase-header">
+            <div class="phase-number">6</div>
+            <div>
+              <h3 style="margin:0;font-size:1.25rem;">Tune Detections & Create Custom Rules</h3>
+              <p style="margin:4px 0 0;color:var(--gray-600);font-size:0.9rem;">Reduce false positives and fill detection gaps</p>
+            </div>
+          </div>
+
+          <div class="step-box">
+            <h5>Tuning Strategies</h5>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Issue</th><th>Solution</th><th>Example</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Too many alerts (FPs)</td>
+                  <td>Add exclusions / allowlist</td>
+                  <td><code>| search NOT src_ip IN ("10.0.0.*", "192.168.*")</code></td>
+                </tr>
+                <tr>
+                  <td>Known scanners triggering</td>
+                  <td>Exclude known scanner IPs via lookup</td>
+                  <td><code>| lookup allowed_scanners.csv src_ip OUTPUT allowed | where isnull(allowed)</code></td>
+                </tr>
+                <tr>
+                  <td>Threshold too sensitive</td>
+                  <td>Increase threshold based on baseline</td>
+                  <td>Change <code>count > 10</code> to <code>count > 100</code></td>
+                </tr>
+                <tr>
+                  <td>Missing context</td>
+                  <td>Enrich with asset/identity lookups</td>
+                  <td><code>| lookup asset_lookup.csv dest_ip OUTPUT asset_criticality</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="step-box">
+            <h5>When to Create Custom Detections</h5>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px;">
+              <div style="padding:16px;background:#dcfce7;border-radius:8px;border:1px solid #86efac;">
+                <h6 style="color:#16a34a;margin-bottom:8px;">✅ Use OOTB/ESCU For:</h6>
+                <ul style="margin-left:16px;color:var(--gray-700);font-size:0.875rem;line-height:1.8;">
+                  <li>Generic attack patterns (SQLi, XSS)</li>
+                  <li>Known malware user agents</li>
+                  <li>Standard brute force patterns</li>
+                  <li>Common C2 indicators</li>
+                </ul>
+              </div>
+              <div style="padding:16px;background:#dbeafe;border-radius:8px;border:1px solid #93c5fd;">
+                <h6 style="color:#2563eb;margin-bottom:8px;">🔧 Create Custom For:</h6>
+                <ul style="margin-left:16px;color:var(--gray-700);font-size:0.875rem;line-height:1.8;">
+                  <li>Client-specific endpoints</li>
+                  <li>Baseline anomaly detection</li>
+                  <li>Business logic abuse</li>
+                  <li>Geographic anomalies</li>
+                </ul>
+              </div>
+            </div>
+            <p style="margin-top:16px;"><a href="waf-usecases.html" style="color:var(--primary-600);font-weight:600;font-size:1.1rem;">→ See WAF Use Cases (UC1-12) for custom detection templates</a></p>
+          </div>
+        </div>
+
+        <!-- ==================== TROUBLESHOOTING ==================== -->
+        <div class="section">
+          <h2 class="section-title">Troubleshooting</h2>
+          
+          <table class="ref-table">
+            <thead>
+              <tr><th style="width:25%;">Problem</th><th style="width:30%;">Likely Cause</th><th style="width:45%;">Solution</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>No data arriving</strong></td>
+                <td>HEC token issue or Akamai config</td>
+                <td>Verify HEC token is enabled. Test with curl. Check Akamai SIEM integration status.</td>
+              </tr>
+              <tr>
+                <td><strong>Data arrives, fields empty</strong></td>
+                <td>Wrong sourcetype</td>
+                <td>Edit HEC token → set Source type = <code>akamai:siem</code></td>
+              </tr>
+              <tr>
+                <td><strong>TA not parsing</strong></td>
+                <td>TA not installed or disabled</td>
+                <td>Apps → Manage Apps → verify Splunk_TA_Akamai is enabled</td>
+              </tr>
+              <tr>
+                <td><strong>Detection not firing</strong></td>
+                <td>Search uses wrong index or disabled</td>
+                <td>Check search uses <code>index=akamai</code>. Verify detection is enabled.</td>
+              </tr>
+              <tr>
+                <td><strong>Too many false positives</strong></td>
+                <td>Thresholds too low</td>
+                <td>Baseline normal traffic, tune thresholds, add allowlists</td>
+              </tr>
+              <tr>
+                <td><strong>Web data model empty</strong></td>
+                <td>Acceleration not enabled</td>
+                <td>Settings → Data Models → Web → Edit Acceleration → Enable</td>
+              </tr>
+              <tr>
+                <td><strong>ESCU detections missing</strong></td>
+                <td>ESCU app not installed/updated</td>
+                <td>Install/update DA-ESS-ContentUpdate from Splunkbase</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ==================== FINAL CHECKLIST ==================== -->
+        <div class="callout success" style="margin-top:32px;">
+          <div class="callout-content">
+            <div class="callout-title">✅ Akamai WAF Onboarding Checklist</div>
+            <div class="callout-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+                <div>
+                  <h6 style="margin-bottom:8px;">Setup</h6>
+                  <ul style="margin-left:20px;line-height:2;">
+                    <li>☐ Splunk_TA_Akamai installed & enabled</li>
+                    <li>☐ Index created (<code>akamai</code>)</li>
+                    <li>☐ HEC token with <code>akamai:siem</code> sourcetype</li>
+                    <li>☐ Akamai SIEM integration configured</li>
+                  </ul>
+                </div>
+                <div>
+                  <h6 style="margin-bottom:8px;">Validation</h6>
+                  <ul style="margin-left:20px;line-height:2;">
+                    <li>☐ Data flowing (validation queries pass)</li>
+                    <li>☐ Fields extracting correctly</li>
+                    <li>☐ CIM mapping working</li>
+                    <li>☐ Latency acceptable (&lt;15 min)</li>
+                  </ul>
+                </div>
+                <div>
+                  <h6 style="margin-bottom:8px;">Detections</h6>
+                  <ul style="margin-left:20px;line-height:2;">
+                    <li>☐ Discovered available ES/ESCU detections</li>
+                    <li>☐ Enabled relevant detections</li>
+                    <li>☐ Modified searches for <code>index=akamai</code></li>
+                    <li>☐ Tested searches before enabling</li>
+                  </ul>
+                </div>
+                <div>
+                  <h6 style="margin-bottom:8px;">Operations</h6>
+                  <ul style="margin-left:20px;line-height:2;">
+                    <li>☐ Throttling configured</li>
+                    <li>☐ Initial tuning complete</li>
+                    <li>☐ Monitoring for FPs (1-2 weeks)</li>
+                    <li>☐ Custom detections for gaps</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </main>
   </div>
   <script src="../js/app.js"></script>
-  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
 </body>
 </html>
