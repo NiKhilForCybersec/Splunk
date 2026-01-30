@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAF-UC4: SQLi/XSS Campaign | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    .impl-step{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .impl-step h4{color:var(--primary-700);margin-bottom:16px;font-size:1rem;display:flex;align-items:center;gap:8px;}
+    .impl-step h4 .step-letter{background:var(--primary-500);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:bold;}
+    .impl-step.warning{border-left-color:#f59e0b;}
+    .impl-step.critical{border-left-color:#dc2626;}
+    .impl-step.critical h4{color:#dc2626;}
+    .diagram-box{background:white;padding:20px;border-radius:8px;margin:12px 0;min-height:300px;overflow-x:auto;}
+    .es-config{display:grid;grid-template-columns:220px 1fr;gap:10px;font-size:0.85rem;background:white;padding:16px;border-radius:6px;margin-top:12px;}
+    .es-config dt{font-weight:600;color:var(--gray-700);}
+    .es-config dd{color:var(--gray-600);margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+    .tuning-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .tuning-table th{background:var(--gray-100);padding:10px;text-align:left;border:1px solid var(--gray-200);}
+    .tuning-table td{padding:10px;border:1px solid var(--gray-200);}
+    .where-box{background:#e0f2fe;padding:12px 16px;border-radius:6px;font-size:0.85rem;margin-bottom:16px;}
+    .where-box strong{color:#0369a1;}
+    .alert-box{background:#fef2f2;border:2px solid #dc2626;padding:16px;border-radius:8px;margin:16px 0;}
+    .alert-box h5{color:#dc2626;margin-bottom:12px;font-size:1rem;}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text"><h1>myfirstpro</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">WAF Use Cases</div>
+          <a href="uc1-volume.html" class="nav-item"><span>UC1: Volume Anomaly</span></a>
+          <a href="uc2-single-ip.html" class="nav-item"><span>UC2: Single IP Flood</span></a>
+          <a href="uc3-auth.html" class="nav-item"><span>UC3: Auth Attack</span></a>
+          <a href="uc4-sqli.html" class="nav-item active"><span>UC4: SQLi/XSS</span></a>
+          <a href="uc5-distributed.html" class="nav-item"><span>UC5: Distributed DDoS</span></a>
+          <a href="uc6-geo.html" class="nav-item"><span>UC6: Geo Anomaly</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Use Cases</div>
+          <a href="../mfa/uc1-fatigue.html" class="nav-item"><span>UC1: MFA Fatigue</span></a>
+          <a href="../mfa/uc2-breach.html" class="nav-item"><span>UC2: Breach Indicator</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../waf-overview.html" class="breadcrumb-item">WAF</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC4: SQLi/XSS</span>
+          </div>
+        </div>
+        <span class="badge" style="background:#dc2626;color:white;">CRITICAL</span>
+      </header>
+
+      <div class="page-content">
+        <!-- Header Card -->
+        <div class="card" style="padding:24px;margin-bottom:24px;background:#fef2f2;border:2px solid #dc2626;">
+          <h1 style="font-size:1.5rem;margin-bottom:12px;color:#dc2626;">WAF-UC4: SQL Injection / XSS Campaign Detection</h1>
+          <p style="font-size:1rem;color:var(--gray-700);margin-bottom:20px;"><strong>CRITICAL PRIORITY:</strong> A single successful SQLi can compromise your ENTIRE database. A successful XSS can steal admin sessions and credentials. Treat every alert from this detection seriously.</p>
+          
+          <div class="grid grid-4">
+            <div style="text-align:center;padding:16px;background:white;border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Severity</span>
+              <span class="badge" style="background:#dc2626;color:white;">CRITICAL</span>
+            </div>
+            <div style="text-align:center;padding:16px;background:white;border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">MITRE</span>
+              <code style="font-size:0.9rem;">T1190</code>
+            </div>
+            <div style="text-align:center;padding:16px;background:white;border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Schedule</span>
+              <strong>Every 5 min</strong>
+            </div>
+            <div style="text-align:center;padding:16px;background:white;border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Time Range</span>
+              <strong>Last 10 min</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 1: Decision Tree -->
+        <div class="section">
+          <h2 class="section-title">Step 1: Decision Tree (Detection Logic)</h2>
+          
+          <div class="impl-step critical">
+            <div class="diagram-box">
+              <pre class="mermaid">
+flowchart TD
+    START[WAF Block Event Received] --> A{Does signature match injection pattern}
+    A -->|No| OTHER[Route to different detection UC]
+    A -->|Yes| B{Classify attack type by WAF signature}
+    B --> C{Is signature SQLI or SQL_INJECTION}
+    C -->|Yes| DB[DATABASE ATTACK - Highest Priority]
+    C -->|No| D{Is signature XSS or CROSS_SITE_SCRIPTING}
+    D -->|Yes| SESSION[SESSION HIJACK RISK - High Priority]
+    D -->|No| E{Is signature CMDI or COMMAND_INJECTION}
+    E -->|Yes| RCE[REMOTE CODE EXECUTION - Highest Priority]
+    E -->|No| F{Is signature LFI or RFI}
+    F -->|Yes| FILE[FILE ACCESS RISK - High Priority]
+    F -->|No| G[Other injection type - Medium Priority]
+    DB --> COUNT[Count attacks in 5 minute window by vhost]
+    SESSION --> COUNT
+    RCE --> COUNT
+    FILE --> COUNT
+    G --> COUNT
+    COUNT --> H{Is attack count GT 15}
+    H -->|No| MONITOR[Low volume probe - monitor but no alert]
+    H -->|Yes| I{Are attack_vectors GT 3 different signature types}
+    I -->|Yes| MULTI[MULTI-VECTOR CAMPAIGN DETECTED]
+    I -->|No| J{Are unique_attackers GT 5 different IPs}
+    J -->|Yes| DIST[Distributed Injection Campaign]
+    J -->|No| FOCUSED[Focused Injection Attempt from single source]
+    MULTI --> CRIT_ALERT[CRITICAL - Page security team immediately]
+    DIST --> HIGH_ALERT[HIGH - Alert SOC lead within 15 minutes]
+    FOCUSED --> MED_ALERT[MEDIUM - Standard SOC triage queue]
+    CRIT_ALERT --> VERIFY[Run bypass verification check]
+    HIGH_ALERT --> VERIFY
+    MED_ALERT --> VERIFY
+
+    style DB fill:#fee2e2,stroke:#dc2626,stroke-width:2px
+    style RCE fill:#fee2e2,stroke:#dc2626,stroke-width:2px
+    style MULTI fill:#fee2e2,stroke:#dc2626,stroke-width:3px
+    style CRIT_ALERT fill:#fee2e2,stroke:#dc2626,stroke-width:2px
+    style SESSION fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style FILE fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Attack Signature Reference -->
+        <div class="section">
+          <h2 class="section-title">Attack Signature Priority Reference</h2>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">!</span> Know Your Signatures</h4>
+            <table class="tuning-table">
+              <thead>
+                <tr><th>WAF Signature</th><th>Attack Type</th><th>Impact if Successful</th><th>Priority</th></tr>
+              </thead>
+              <tbody>
+                <tr style="background:#fef2f2;">
+                  <td><code>SQLI / SQL_INJECTION</code></td>
+                  <td>SQL Injection</td>
+                  <td>Full database access, data theft, data destruction, privilege escalation</td>
+                  <td style="color:#dc2626;font-weight:bold;">🔴 CRITICAL</td>
+                </tr>
+                <tr style="background:#fef2f2;">
+                  <td><code>CMDI / COMMAND_INJECTION</code></td>
+                  <td>OS Command Injection</td>
+                  <td>Server command execution, full system compromise, lateral movement</td>
+                  <td style="color:#dc2626;font-weight:bold;">🔴 CRITICAL</td>
+                </tr>
+                <tr style="background:#fef2f2;">
+                  <td><code>RFI / REMOTE_FILE_INCLUSION</code></td>
+                  <td>Remote File Inclusion</td>
+                  <td>Execute attacker-controlled code on server</td>
+                  <td style="color:#dc2626;font-weight:bold;">🔴 CRITICAL</td>
+                </tr>
+                <tr style="background:#fff7ed;">
+                  <td><code>XSS / CROSS_SITE_SCRIPTING</code></td>
+                  <td>Cross-Site Scripting</td>
+                  <td>Session hijacking, credential theft, website defacement</td>
+                  <td style="color:#ea580c;font-weight:bold;">🟠 HIGH</td>
+                </tr>
+                <tr style="background:#fff7ed;">
+                  <td><code>LFI / LOCAL_FILE_INCLUSION</code></td>
+                  <td>Local File Inclusion</td>
+                  <td>Read sensitive files (/etc/passwd, config files, source code)</td>
+                  <td style="color:#ea580c;font-weight:bold;">🟠 HIGH</td>
+                </tr>
+                <tr>
+                  <td><code>SSTI</code></td>
+                  <td>Server-Side Template Injection</td>
+                  <td>Code execution via template engine vulnerabilities</td>
+                  <td style="color:#ea580c;font-weight:bold;">🟠 HIGH</td>
+                </tr>
+                <tr>
+                  <td><code>XXE</code></td>
+                  <td>XML External Entity</td>
+                  <td>File read, SSRF, denial of service</td>
+                  <td style="font-weight:bold;">🟡 MEDIUM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- STEP A: Build SPL -->
+        <div class="section">
+          <h2 class="section-title">Step A: Build SPL in Search First</h2>
+          <div class="where-box">
+            <strong>Where:</strong> Splunk Search → Build and test SPL
+          </div>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">A</span> Injection Campaign Detection SPL</h4>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| where waf_action="deny" OR waf_action="block"
+| where signature IN ("SQLI","SQL_INJECTION","XSS","CROSS_SITE_SCRIPTING","CMDI","COMMAND_INJECTION","LFI","LOCAL_FILE_INCLUSION","RFI","REMOTE_FILE_INCLUSION","SSTI","XXE")
+| bin _time span=5m
+| stats count as attacks 
+        dc(src_ip) as unique_attackers 
+        dc(signature) as attack_vectors
+        values(signature) as attack_types
+        values(src_ip) as attacker_ips
+        values(uri) as target_uris
+        BY _time, vhost
+| where attacks > 15
+| eval campaign_type = case(
+    attack_vectors > 3, "Multi-Vector Campaign",
+    unique_attackers > 5, "Distributed Injection Campaign",
+    1=1, "Focused Injection Attempt"
+)
+| eval severity = case(
+    attack_vectors > 3, "critical",
+    attacks > 100, "critical",
+    attacks > 50, "high",
+    1=1, "medium"
+)
+| eval has_sqli = if(match(mvjoin(attack_types,","), "(?i)sql"), "YES", "NO")
+| eval has_rce = if(match(mvjoin(attack_types,","), "(?i)(cmd|command|rfi)"), "YES", "NO")
+| table _time vhost attacks unique_attackers attack_vectors attack_types has_sqli has_rce campaign_type attacker_ips target_uris severity</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP B: ES Config -->
+        <div class="section">
+          <h2 class="section-title">Step B: ES Correlation Search Settings</h2>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">B</span> ES Configuration</h4>
+            <dl class="es-config">
+              <dt>Search Name</dt>
+              <dd>WAF-UC4: SQL Injection XSS Campaign</dd>
+              
+              <dt>Cron Schedule</dt>
+              <dd>*/5 * * * *</dd>
+              
+              <dt>Earliest Time</dt>
+              <dd>-10m</dd>
+              
+              <dt>Notable Title</dt>
+              <dd>WAF: $campaign_type$ on $vhost$ - $attacks$ injection attempts ($attack_types$)</dd>
+              
+              <dt>Notable Description</dt>
+              <dd>Injection campaign detected on $vhost$. Total attacks: $attacks$. Unique attackers: $unique_attackers$. Attack vectors: $attack_vectors$ ($attack_types$). Contains SQLi: $has_sqli$. Contains RCE risk: $has_rce$. Attackers: $attacker_ips$. Target URIs: $target_uris$</dd>
+              
+              <dt>Default Severity</dt>
+              <dd>Critical</dd>
+              
+              <dt>Throttle Duration</dt>
+              <dd>1800 seconds</dd>
+              
+              <dt>Throttle Fields</dt>
+              <dd>vhost</dd>
+              
+              <dt>MITRE ATT&CK</dt>
+              <dd>T1190 - Exploit Public-Facing Application</dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- CRITICAL: Bypass Verification -->
+        <div class="section">
+          <h2 class="section-title">CRITICAL: Backend Bypass Verification</h2>
+          
+          <div class="alert-box">
+            <h5>⚠️ WAF blocks don't guarantee protection!</h5>
+            <p style="font-size:0.9rem;margin-bottom:16px;">Always verify if ANY requests got through the WAF and caused backend errors. A successful bypass means the attacker may have already compromised your database.</p>
+          </div>
+          
+          <div class="impl-step critical">
+            <h4><span class="step-letter">!</span> Run This Check Immediately When You See Injection Alerts</h4>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-1h vhost="$vhost$"
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval status=coalesce(status,'httpMessage.status')
+| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| where signature IN ("SQLI","SQL_INJECTION","XSS","CMDI","LFI","RFI")
+| stats count as total 
+        count(eval(waf_action="allow" OR waf_action="none" OR waf_action="pass")) as allowed_through
+        count(eval(status>=500)) as backend_errors
+        values(uri) as affected_uris
+        values(src_ip) as source_ips
+        BY signature
+| where allowed_through > 0 OR backend_errors > 0
+| eval BYPASS_DETECTED = if(allowed_through > 0, "YES - ESCALATE IMMEDIATELY", "No")
+| table signature total allowed_through backend_errors BYPASS_DETECTED affected_uris source_ips</code></pre></div></div>
+            
+            <div class="alert-box" style="margin-top:16px;">
+              <h5>If BYPASS_DETECTED = YES or backend_errors > 0:</h5>
+              <ol style="font-size:0.9rem;line-height:1.8;margin-left:20px;">
+                <li><strong>Escalate immediately</strong> to security lead and IR team</li>
+                <li><strong>Block the source IPs</strong> at network level (firewall, not just WAF)</li>
+                <li><strong>Check database logs</strong> for unauthorized queries or data access</li>
+                <li><strong>Review affected application logs</strong> for successful exploitation</li>
+                <li><strong>Consider taking application offline</strong> if active exploitation confirmed</li>
+                <li><strong>Engage incident response</strong> for full investigation</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section">
+          <div class="grid grid-2">
+            <div>
+              <a href="uc3-auth.html" class="btn btn-secondary">← Previous: UC3 Auth Attack</a>
+            </div>
+            <div style="text-align:right;">
+              <a href="uc5-distributed.html" class="btn btn-primary">Next: UC5 Distributed DDoS →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/app.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{nodeSpacing:25,rankSpacing:30,curve:'basis'}});
+  </script>
+</body>
+</html>

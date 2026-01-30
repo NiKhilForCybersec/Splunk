@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAF-UC1: Block Volume Anomaly | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    .impl-step{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .impl-step h4{color:var(--primary-700);margin-bottom:16px;font-size:1rem;display:flex;align-items:center;gap:8px;}
+    .impl-step h4 .step-letter{background:var(--primary-500);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:bold;}
+    .impl-step.warning{border-left-color:#f59e0b;}
+    .impl-step.critical{border-left-color:#dc2626;}
+    .diagram-box{background:white;padding:20px;border-radius:8px;margin:12px 0;min-height:300px;overflow-x:auto;}
+    .es-config{display:grid;grid-template-columns:220px 1fr;gap:10px;font-size:0.85rem;background:white;padding:16px;border-radius:6px;margin-top:12px;}
+    .es-config dt{font-weight:600;color:var(--gray-700);}
+    .es-config dd{color:var(--gray-600);margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+    .tuning-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .tuning-table th{background:var(--gray-100);padding:10px;text-align:left;border:1px solid var(--gray-200);}
+    .tuning-table td{padding:10px;border:1px solid var(--gray-200);}
+    .fp-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .fp-table th{background:#fef3c7;padding:10px;text-align:left;border:1px solid #fde68a;}
+    .fp-table td{padding:10px;border:1px solid var(--gray-200);}
+    .validation-list{font-size:0.85rem;line-height:2;}
+    .where-box{background:#e0f2fe;padding:12px 16px;border-radius:6px;font-size:0.85rem;margin-bottom:16px;}
+    .where-box strong{color:#0369a1;}
+    .uc-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+    .uc-nav a{padding:6px 12px;background:var(--gray-100);border-radius:4px;font-size:0.75rem;text-decoration:none;color:var(--gray-600);}
+    .uc-nav a:hover{background:var(--gray-200);}
+    .uc-nav a.current{background:var(--primary-500);color:white;}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text"><h1>myfirstpro</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">WAF Use Cases</div>
+          <a href="uc1-volume.html" class="nav-item active"><span>UC1: Volume Anomaly</span></a>
+          <a href="uc2-single-ip.html" class="nav-item"><span>UC2: Single IP Flood</span></a>
+          <a href="uc3-auth.html" class="nav-item"><span>UC3: Auth Attack</span></a>
+          <a href="uc4-sqli.html" class="nav-item"><span>UC4: SQLi/XSS</span></a>
+          <a href="uc5-distributed.html" class="nav-item"><span>UC5: Distributed DDoS</span></a>
+          <a href="uc6-geo.html" class="nav-item"><span>UC6: Geo Anomaly</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Use Cases</div>
+          <a href="../mfa/uc1-fatigue.html" class="nav-item"><span>UC1: MFA Fatigue</span></a>
+          <a href="../mfa/uc2-breach.html" class="nav-item"><span>UC2: Breach Indicator</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../waf-overview.html" class="breadcrumb-item">WAF</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC1: Volume Anomaly</span>
+          </div>
+        </div>
+        <span class="badge warning">MEDIUM</span>
+      </header>
+
+      <div class="page-content">
+        <!-- Header Card -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+          <h1 style="font-size:1.5rem;margin-bottom:12px;">WAF-UC1: Block Volume Anomaly Detection</h1>
+          <p style="font-size:1rem;color:var(--gray-600);margin-bottom:20px;">Detect significant spikes in deny/block volume indicating scanning, exploit attempts, or DDoS activity. Uses statistical baseline to identify anomalous traffic patterns.</p>
+          
+          <div class="grid grid-4">
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Default Severity</span>
+              <span class="badge warning">MEDIUM</span>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">MITRE ATT&CK</span>
+              <code style="font-size:0.9rem;">T1190</code>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Schedule</span>
+              <strong>Every 5 min</strong>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Time Range</span>
+              <strong>Last 10 min</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 1: Decision Tree -->
+        <div class="section">
+          <h2 class="section-title">Step 1: Decision Tree (Detection Logic)</h2>
+          <p class="section-subtitle">Visual representation of the detection logic flow</p>
+          
+          <div class="impl-step">
+            <div class="diagram-box">
+              <pre class="mermaid">
+flowchart TD
+    START[WAF Event Received] --> A{Is waf_action = deny OR block}
+    A -->|No| IGNORE[Ignore event - not a block]
+    A -->|Yes| B[Aggregate events into 5-minute time buckets]
+    B --> C[Count block_count per bucket]
+    C --> D[Calculate 24h baseline using eventstats]
+    D --> D1[baseline = avg of block_count]
+    D1 --> D2[stdev = standard deviation of block_count]
+    D2 --> E[Calculate dynamic threshold]
+    E --> E1[threshold = baseline + 2 x stdev]
+    E1 --> F{Is threshold LT 50}
+    F -->|Yes| G[Set threshold = 50 as minimum floor]
+    F -->|No| H[Keep calculated threshold]
+    G --> I{Is block_count GT threshold}
+    H --> I
+    I -->|No| NORMAL[Normal traffic volume - no alert]
+    I -->|Yes| J{Is block_count GT 10 absolute minimum}
+    J -->|No| NORMAL
+    J -->|Yes| K[Calculate deviation in sigma units]
+    K --> K1[deviation = block_count minus baseline divided by stdev]
+    K1 --> L{Is deviation GTE 5 sigma}
+    L -->|Yes| CRIT[Set severity = CRITICAL]
+    L -->|No| M{Is deviation GTE 3 sigma}
+    M -->|Yes| HIGH[Set severity = HIGH]
+    M -->|No| MED[Set severity = MEDIUM]
+    CRIT --> CREATE[Create Notable Event in ES]
+    HIGH --> CREATE
+    MED --> CREATE
+    CREATE --> THROTTLE{Was Notable created for same condition in last 30 min}
+    THROTTLE -->|Yes| SUPPRESS[Suppress duplicate - do not create new Notable]
+    THROTTLE -->|No| ALERT[Notable sent to Incident Review queue]
+    ALERT --> ENRICH[Enrich with unique_ips and affected hosts]
+
+    style CRIT fill:#fee2e2,stroke:#dc2626,stroke-width:2px
+    style HIGH fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style MED fill:#fefce8,stroke:#ca8a04,stroke-width:2px
+    style NORMAL fill:#dcfce7,stroke:#16a34a,stroke-width:2px
+    style IGNORE fill:#f3f4f6,stroke:#9ca3af
+    style SUPPRESS fill:#f3f4f6,stroke:#9ca3af
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP A: Build SPL -->
+        <div class="section">
+          <h2 class="section-title">Step A: Build SPL in Search First</h2>
+          <div class="where-box">
+            <strong>Where:</strong> Splunk Search → Build and test SPL until results are stable and accurate before creating correlation search
+          </div>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">A1</span> Variant A: Global Spike (Recommended Start)</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> You want a single "something big is happening" alert without per-application granularity. Produces 1 notable per time bucket when threshold exceeded. Best for initial deployment.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| where waf_action="deny" OR waf_action="block"
+| bin _time span=5m
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| stats count as block_count 
+        dc(src_ip) as unique_ips 
+        values(vhost) as hosts 
+        by _time
+| eventstats avg(block_count) as baseline stdev(block_count) as stdev
+| eval stdev=if(stdev=0,1,stdev)
+| eval threshold = baseline + (2*stdev)
+| eval threshold = if(threshold < 50, 50, threshold)
+| where block_count > threshold AND block_count > 10
+| eval deviation=round((block_count-baseline)/stdev,2)
+| eval severity=case(deviation>=5,"critical", deviation>=3,"high", 1=1,"medium")
+| table _time block_count baseline threshold deviation unique_ips hosts severity</code></pre></div></div>
+          </div>
+
+          <div class="impl-step">
+            <h4><span class="step-letter">A2</span> Variant B: Per-Host Spike (More Actionable)</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> You want to know "which application is under attack" - more actionable for triage. Produces separate notables per vhost. Better for mature deployments.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| where waf_action="deny" OR waf_action="block"
+| bin _time span=5m
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| stats count as block_count dc(src_ip) as unique_ips by _time vhost
+| eventstats avg(block_count) as baseline stdev(block_count) as stdev by vhost
+| eval stdev=if(stdev=0,1,stdev)
+| eval threshold = baseline + (2*stdev)
+| eval threshold = if(threshold < 25, 25, threshold)
+| where block_count > threshold AND block_count > 10
+| eval deviation=round((block_count-baseline)/stdev,2)
+| eval severity=case(deviation>=5,"critical", deviation>=3,"high", 1=1,"medium")
+| table _time vhost block_count baseline threshold deviation unique_ips severity</code></pre></div></div>
+          </div>
+
+          <div class="impl-step">
+            <h4><span class="step-letter">A3</span> Variant C: 7-Day Baseline (Stable Traffic)</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> Traffic has stable weekly patterns (e.g., lower on weekends). More accurate baseline but heavier on Splunk resources. Use after initial deployment is stable.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-7d
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| where waf_action="deny" OR waf_action="block"
+| bin _time span=5m
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| stats count as block_count dc(src_ip) as unique_ips values(vhost) as hosts by _time
+| eventstats avg(block_count) as baseline stdev(block_count) as stdev
+| eval stdev=if(stdev=0,1,stdev)
+| eval threshold = baseline + (2*stdev)
+| eval threshold = if(threshold < 50, 50, threshold)
+| where block_count > threshold AND block_count > 10
+| eval deviation=round((block_count-baseline)/stdev,2)
+| eval severity=case(deviation>=5,"critical", deviation>=3,"high", 1=1,"medium")
+| table _time block_count baseline threshold deviation unique_ips hosts severity</code></pre></div></div>
+            <p style="font-size:0.85rem;color:var(--gray-500);margin-top:12px;"><strong>Best practice:</strong> Start with 24h baseline (Variant A). Once detection is stable for 2 weeks, move to 7d baseline for better accuracy.</p>
+          </div>
+        </div>
+
+        <!-- STEP B: ES Correlation Search -->
+        <div class="section">
+          <h2 class="section-title">Step B: Create ES Correlation Search</h2>
+          <div class="where-box">
+            <strong>Where:</strong> ES → Content Management → Correlation Searches → Create New
+          </div>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">B</span> ES Correlation Search Configuration</h4>
+            <dl class="es-config">
+              <dt>Search Name</dt>
+              <dd>WAF-UC1: Block Volume Anomaly</dd>
+              
+              <dt>App Context</dt>
+              <dd>SplunkEnterpriseSecuritySuite</dd>
+              
+              <dt>Cron Schedule</dt>
+              <dd>*/5 * * * *</dd>
+              
+              <dt>Earliest Time</dt>
+              <dd>-10m</dd>
+              
+              <dt>Latest Time</dt>
+              <dd>now</dd>
+              
+              <dt>Scheduling Priority</dt>
+              <dd>Default</dd>
+              
+              <dt>Create Notable Event</dt>
+              <dd>✅ Enabled</dd>
+              
+              <dt>Notable Title</dt>
+              <dd>WAF: Block volume spike detected ($block_count$ blocks, $deviation$σ deviation)</dd>
+              
+              <dt>Notable Description</dt>
+              <dd>Block count $block_count$ exceeded threshold $threshold$ (baseline: $baseline$). Unique attackers: $unique_ips$. Affected hosts: $hosts$. Severity determined by statistical deviation from 24h baseline.</dd>
+              
+              <dt>Default Severity</dt>
+              <dd>Medium (or map dynamically from $severity$ field if ES version supports)</dd>
+              
+              <dt>Security Domain</dt>
+              <dd>network</dd>
+              
+              <dt>Throttle Duration</dt>
+              <dd>1800 seconds (30 minutes)</dd>
+              
+              <dt>Throttle Fields</dt>
+              <dd><em>(empty for global throttle)</em> OR <code>vhost</code> for per-host variant</dd>
+              
+              <dt>Group By Fields</dt>
+              <dd>_time (for global) OR _time, vhost (for per-host)</dd>
+              
+              <dt>MITRE ATT&CK Technique</dt>
+              <dd>T1190 - Exploit Public-Facing Application</dd>
+              
+              <dt>MITRE ATT&CK Tactic</dt>
+              <dd>Initial Access</dd>
+              
+              <dt>Kill Chain Phase</dt>
+              <dd>Exploitation</dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- STEP C: Drilldown -->
+        <div class="section">
+          <h2 class="section-title">Step C: Add Drilldown Search</h2>
+          <div class="where-box">
+            <strong>Where:</strong> Add as Adaptive Response Action OR linked search in Notable Event settings
+          </div>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">C</span> Drilldown: Show Top Attackers and Targets</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;">This search runs when an analyst clicks into the notable to see who is attacking and what they're targeting:</p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| where waf_action="deny" OR waf_action="block"
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
+| stats count as blocked_requests
+        dc(uri) as unique_uris 
+        values(uri) as sample_uris 
+        values(signature) as attack_types
+        by vhost src_ip
+| sort - blocked_requests
+| head 20</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP D: Validate -->
+        <div class="section">
+          <h2 class="section-title">Step D: Validate Notables</h2>
+          <div class="where-box">
+            <strong>Where:</strong> ES → Incident Review → Filter by "WAF-UC1"
+          </div>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">D</span> Validation Checklist</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;">Check ALL of these before marking detection as "production ready":</p>
+            <ul class="validation-list">
+              <li>✅ <strong>Notable appears</strong> within 10 minutes of enabling rule (if traffic exists)</li>
+              <li>✅ <strong>All expected fields visible:</strong> vhost, block_count, baseline, threshold, deviation, unique_ips, hosts</li>
+              <li>✅ <strong>Severity is correct:</strong> deviation ≥5 = critical, ≥3 = high, else medium</li>
+              <li>✅ <strong>Notable is NOT spamming:</strong> if >10/hour for same condition, increase throttle or threshold</li>
+              <li>✅ <strong>Drilldown search works:</strong> click into notable and verify drilldown returns relevant data</li>
+              <li>✅ <strong>MITRE tagging visible:</strong> T1190 shows in Notable details</li>
+              <li>✅ <strong>Historical validation:</strong> run search over known attack period to verify it would have detected</li>
+              <li>✅ <strong>False positive check:</strong> run over 7 days of normal traffic to estimate FP rate</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- STEP E: Tune -->
+        <div class="section">
+          <h2 class="section-title">Step E: Tune Detection</h2>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">E1</span> Tuning Parameter Reference</h4>
+            <table class="tuning-table">
+              <thead>
+                <tr><th>Parameter</th><th>Default</th><th>Fewer Alerts</th><th>More Coverage</th><th>What It Controls</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Minimum floor</strong></td>
+                  <td>50</td>
+                  <td>100-200</td>
+                  <td>20-30</td>
+                  <td>Prevents alerts on statistically significant but low-volume spikes</td>
+                </tr>
+                <tr>
+                  <td><strong>Sigma multiplier</strong></td>
+                  <td>2σ</td>
+                  <td>3σ</td>
+                  <td>1.5σ</td>
+                  <td>How many standard deviations above baseline triggers alert</td>
+                </tr>
+                <tr>
+                  <td><strong>Baseline window</strong></td>
+                  <td>24h</td>
+                  <td>7d</td>
+                  <td>12h</td>
+                  <td>Longer = more stable baseline, shorter = adapts faster to changes</td>
+                </tr>
+                <tr>
+                  <td><strong>Time bucket span</strong></td>
+                  <td>5m</td>
+                  <td>10m</td>
+                  <td>2m</td>
+                  <td>Smaller = faster detection but more noise, larger = smoother</td>
+                </tr>
+                <tr>
+                  <td><strong>Throttle duration</strong></td>
+                  <td>30m</td>
+                  <td>60m</td>
+                  <td>15m</td>
+                  <td>How long to suppress duplicate alerts for same condition</td>
+                </tr>
+                <tr>
+                  <td><strong>Schedule frequency</strong></td>
+                  <td>5m</td>
+                  <td>10m</td>
+                  <td>2m</td>
+                  <td>How often correlation search runs (affects detection latency)</td>
+                </tr>
+                <tr>
+                  <td><strong>Absolute minimum</strong></td>
+                  <td>10</td>
+                  <td>25</td>
+                  <td>5</td>
+                  <td>Minimum blocks required regardless of statistics</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="impl-step">
+            <h4><span class="step-letter">E2</span> Additional Tuning SPL Snippets</h4>
+            
+            <p style="font-size:0.9rem;font-weight:600;margin-bottom:8px;">Allowlist internal/test IPs:</p>
+            <div class="code-block" style="margin-bottom:16px;"><div class="code-body"><pre><code>| where NOT cidrmatch("10.0.0.0/8", src_ip) 
+        AND NOT cidrmatch("192.168.0.0/16", src_ip)
+        AND NOT cidrmatch("172.16.0.0/12", src_ip)</code></pre></div></div>
+            
+            <p style="font-size:0.9rem;font-weight:600;margin-bottom:8px;">Exclude non-production environments:</p>
+            <div class="code-block" style="margin-bottom:16px;"><div class="code-body"><pre><code>| where NOT match(vhost, "(?i)(dev|test|staging|uat|qa|sandbox)")</code></pre></div></div>
+            
+            <p style="font-size:0.9rem;font-weight:600;margin-bottom:8px;">Business hours only detection:</p>
+            <div class="code-block" style="margin-bottom:16px;"><div class="code-body"><pre><code>| eval hour=strftime(_time,"%H") 
+| where hour >= 6 AND hour <= 22</code></pre></div></div>
+            
+            <p style="font-size:0.9rem;font-weight:600;margin-bottom:8px;">Exclude known scanner IPs (using lookup):</p>
+            <div class="code-block" style="margin-bottom:16px;"><div class="code-body"><pre><code>| lookup scanner_allowlist.csv src_ip OUTPUT is_scanner 
+| where is_scanner!="true" OR isnull(is_scanner)</code></pre></div></div>
+            
+            <p style="font-size:0.9rem;font-weight:600;margin-bottom:8px;">Separate production vs non-production alerting:</p>
+            <div class="code-block"><div class="code-body"><pre><code>| eval environment = case(
+    match(vhost, "(?i)(prod|www\.|api\.)"), "production",
+    match(vhost, "(?i)(dev|test|staging)"), "non-production",
+    1=1, "unknown"
+)
+| where environment="production"</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP F: False Positives -->
+        <div class="section">
+          <h2 class="section-title">Step F: Handle False Positives</h2>
+          
+          <div class="impl-step warning">
+            <h4><span class="step-letter">F</span> Common False Positives & Solutions</h4>
+            <table class="fp-table">
+              <thead>
+                <tr><th>FP Source</th><th>How to Identify</th><th>Solution</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Internal vulnerability scans</strong></td>
+                  <td>Same source IPs every Tuesday night, Nessus/Qualys/Rapid7 user agents in logs</td>
+                  <td>Create scanner_allowlist.csv lookup with scanner source IPs, exclude in query</td>
+                </tr>
+                <tr>
+                  <td><strong>Marketing campaigns / sales events</strong></td>
+                  <td>Spike correlates with known event (Black Friday, product launch, email blast)</td>
+                  <td>Temporarily adjust baseline during known events OR add scheduled suppression</td>
+                </tr>
+                <tr>
+                  <td><strong>New WAF rule deployment</strong></td>
+                  <td>Spike starts exactly when new WAF rule was enabled, affects all traffic uniformly</td>
+                  <td>Monitor for 48h after any WAF rule change before trusting alerts; recalculate baseline</td>
+                </tr>
+                <tr>
+                  <td><strong>Partner API misconfiguration</strong></td>
+                  <td>Single known partner IP, legitimate business traffic, not malicious request patterns</td>
+                  <td>Add partner IPs to known_partners lookup, potentially create separate "partner anomaly" detection</td>
+                </tr>
+                <tr>
+                  <td><strong>CDN health checks / edge probes</strong></td>
+                  <td>Akamai/Cloudflare/Fastly source IP ranges, regular interval patterns</td>
+                  <td>Exclude CDN probe IP ranges using cidrmatch against published ranges</td>
+                </tr>
+                <tr>
+                  <td><strong>Load testing / performance testing</strong></td>
+                  <td>Spike during QA testing windows, JMeter/Gatling/Locust user agents</td>
+                  <td>Coordinate with QA team for test schedules, suppress during known test windows</td>
+                </tr>
+                <tr>
+                  <td><strong>Bot traffic spikes</strong></td>
+                  <td>Search engine crawlers, legitimate bots with proper identification</td>
+                  <td>Verify User-Agent, allowlist Googlebot/Bingbot verified IPs</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section">
+          <div class="grid grid-2">
+            <div></div>
+            <div style="text-align:right;">
+              <a href="uc2-single-ip.html" class="btn btn-primary">Next: UC2 Single IP Flood →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/app.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{nodeSpacing:25,rankSpacing:30,curve:'basis'}});
+  </script>
+</body>
+</html>

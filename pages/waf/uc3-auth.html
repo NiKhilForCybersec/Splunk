@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAF-UC3: Authentication Endpoint Attack | myfirstpro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    .impl-step{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .impl-step h4{color:var(--primary-700);margin-bottom:16px;font-size:1rem;}
+    .impl-step.warning{border-left-color:#f59e0b;}
+    .diagram-box{background:white;padding:20px;border-radius:8px;margin:12px 0;min-height:300px;overflow-x:auto;}
+    .es-config{display:grid;grid-template-columns:220px 1fr;gap:10px;font-size:0.85rem;background:white;padding:16px;border-radius:6px;margin-top:12px;}
+    .es-config dt{font-weight:600;color:var(--gray-700);}
+    .es-config dd{color:var(--gray-600);margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+    .tuning-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .tuning-table th{background:var(--gray-100);padding:10px;text-align:left;border:1px solid var(--gray-200);}
+    .tuning-table td{padding:10px;border:1px solid var(--gray-200);}
+    .fp-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .fp-table th{background:#fef3c7;padding:10px;text-align:left;border:1px solid #fde68a;}
+    .fp-table td{padding:10px;border:1px solid var(--gray-200);}
+    .where-box{background:#e0f2fe;padding:12px 16px;border-radius:6px;font-size:0.85rem;margin-bottom:16px;}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text"><h1>myfirstpro</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">WAF Use Cases</div>
+          <a href="uc1-volume.html" class="nav-item"><span>UC1: Volume Anomaly</span></a>
+          <a href="uc2-single-ip.html" class="nav-item"><span>UC2: Single IP Flood</span></a>
+          <a href="uc3-auth.html" class="nav-item active"><span>UC3: Auth Attack</span></a>
+          <a href="uc4-sqli.html" class="nav-item"><span>UC4: SQLi/XSS</span></a>
+          <a href="uc5-distributed.html" class="nav-item"><span>UC5: Distributed DDoS</span></a>
+          <a href="uc6-geo.html" class="nav-item"><span>UC6: Geo Anomaly</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Use Cases</div>
+          <a href="../mfa/uc1-fatigue.html" class="nav-item"><span>UC1: MFA Fatigue</span></a>
+          <a href="../mfa/uc2-breach.html" class="nav-item"><span>UC2: Breach Indicator</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../waf-overview.html" class="breadcrumb-item">WAF</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC3: Auth Attack</span>
+          </div>
+        </div>
+        <span class="badge error">HIGH</span>
+      </header>
+
+      <div class="page-content">
+        <!-- Header Card -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+          <h1 style="font-size:1.5rem;margin-bottom:12px;">WAF-UC3: Authentication Endpoint Attack</h1>
+          <p style="font-size:1rem;color:var(--gray-600);margin-bottom:20px;">Attacks specifically targeting login, authentication, and password reset endpoints. Indicates brute force attempts or credential stuffing campaigns.</p>
+          
+          <div class="grid grid-4">
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Severity</span>
+              <span class="badge error">HIGH</span>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">MITRE</span>
+              <code style="font-size:0.9rem;">T1110</code>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Schedule</span>
+              <strong>Every 5 min</strong>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Time Range</span>
+              <strong>Last 10 min</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 1: Decision Tree -->
+        <div class="section">
+          <h2 class="section-title">Step 1: Decision Tree (Detection Logic)</h2>
+          
+          <div class="impl-step">
+            <div class="diagram-box">
+              <pre class="mermaid">
+flowchart TD
+    START[WAF Block Event Received] --> A{Does URI match auth endpoint pattern}
+    A -->|No| OTHER[Route to other detection - not auth related]
+    A -->|Yes| B[Event targets authentication endpoint]
+    B --> C[Aggregate blocked requests by URI and time bucket]
+    C --> D[Count total blocked requests]
+    D --> E[Count unique attacker IPs]
+    E --> F{Is blocked count GT 20}
+    F -->|No| G{Is blocked GT 10 AND unique attackers GT 3}
+    G -->|No| BELOW[Below threshold - continue monitoring]
+    G -->|Yes| DISTRIBUTED[Distributed Attack Pattern - multiple sources]
+    F -->|Yes| H{Is unique_attackers GT 10}
+    H -->|Yes| STUFFING[Distributed Credential Stuffing Campaign]
+    H -->|No| I{Is unique_attackers GT 3}
+    I -->|Yes| COORDINATED[Coordinated Attack from multiple IPs]
+    I -->|No| BRUTE[Single Source Brute Force Attack]
+    STUFFING --> J{Is blocked count GT 100}
+    J -->|Yes| CRIT[CRITICAL - Large scale credential stuffing]
+    J -->|No| HIGH1[HIGH severity]
+    COORDINATED --> HIGH1
+    BRUTE --> HIGH1
+    DISTRIBUTED --> MED[MEDIUM severity]
+    CRIT --> CREATE[Create Notable with uri and vhost as key fields]
+    HIGH1 --> CREATE
+    MED --> CREATE
+    CREATE --> ENRICH[Enrich with list of attacker IPs]
+    ENRICH --> THROTTLE[Throttle by uri plus vhost for 30 min]
+
+    style CRIT fill:#fee2e2,stroke:#dc2626,stroke-width:2px
+    style HIGH1 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style MED fill:#fefce8,stroke:#ca8a04,stroke-width:2px
+    style BELOW fill:#dcfce7,stroke:#16a34a
+    style STUFFING fill:#fef2f2,stroke:#dc2626
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prerequisite: Find Your Auth Endpoints -->
+        <div class="section">
+          <h2 class="section-title">Prerequisite: Discover YOUR Auth Endpoints</h2>
+          
+          <div class="impl-step">
+            <h4>Run This First to Find Authentication URIs in Your Data</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;">Every environment has different auth endpoint paths. Run this discovery query to see what exists in YOUR data:</p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-7d
+| spath
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| stats count by uri
+| search uri=*login* OR uri=*auth* OR uri=*sign* OR uri=*token* OR uri=*password* OR uri=*session* OR uri=*oauth*
+| sort - count
+| head 50</code></pre></div></div>
+            <p style="font-size:0.85rem;color:var(--gray-500);margin-top:12px;"><strong>Output:</strong> List of URIs that look like auth endpoints with their request counts. Use this to customize the regex pattern in Step A.</p>
+          </div>
+        </div>
+
+        <!-- STEP A: Build SPL -->
+        <div class="section">
+          <h2 class="section-title">Step A: Build SPL in Search First</h2>
+          <div class="where-box">
+            <strong>Where:</strong> Splunk Search → Build and test SPL
+          </div>
+          
+          <div class="impl-step">
+            <h4>Variant A: Standard Web Application Auth Endpoints</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> Standard web app login pages like /login, /signin, /auth. Customize the regex for YOUR endpoints.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| where waf_action="deny" OR waf_action="block"
+```CUSTOMIZE THIS REGEX FOR YOUR AUTH ENDPOINTS:
+| where match(uri, "(?i)(login|signin|sign-in|auth|oauth|token|session|password|forgot|reset|register|api/v[0-9]+/auth)")
+| bin _time span=5m
+| stats count as blocked 
+        dc(src_ip) as unique_attackers 
+        values(src_ip) as attacker_ips
+        values(uri) as targeted_uris
+        BY _time, uri, vhost
+| where blocked > 20 OR (blocked > 10 AND unique_attackers > 3)
+| eval attack_style = case(
+    unique_attackers > 10, "Distributed Credential Stuffing",
+    unique_attackers > 3, "Coordinated Attack",
+    1=1, "Single Source Brute Force"
+)
+| eval severity = case(
+    blocked > 100, "critical",
+    blocked > 50, "high",
+    1=1, "medium"
+)
+| table _time vhost uri blocked unique_attackers attacker_ips attack_style severity</code></pre></div></div>
+          </div>
+
+          <div class="impl-step">
+            <h4>Variant B: API-Based Authentication (OAuth, JWT, REST)</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> Modern API authentication endpoints like /api/v1/auth, /oauth/token, /jwt/refresh.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| eval method=coalesce(method,'httpMessage.requestMethod')
+| where waf_action="deny" OR waf_action="block"
+| where match(uri, "(?i)(/api/.*/auth|/oauth/|/token|/jwt/|/v[0-9]+/login|/v[0-9]+/authenticate|/api/login)")
+| where method="POST"
+| bin _time span=5m
+| stats count as blocked 
+        dc(src_ip) as unique_attackers 
+        values(src_ip) as attacker_ips
+        BY _time, uri, vhost
+| where blocked > 20 OR (blocked > 10 AND unique_attackers > 3)
+| eval attack_style = case(
+    unique_attackers > 10, "Distributed API Auth Attack",
+    unique_attackers > 3, "Coordinated API Attack",
+    1=1, "Single Source API Brute Force"
+)
+| eval severity = case(blocked > 100, "critical", blocked > 50, "high", 1=1, "medium")
+| table _time vhost uri blocked unique_attackers attacker_ips attack_style severity</code></pre></div></div>
+          </div>
+
+          <div class="impl-step">
+            <h4>Variant C: E-commerce / Shopping Cart Auth</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> Retail/e-commerce sites with checkout authentication, account creation, gift card validation.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| where waf_action="deny" OR waf_action="block"
+| where match(uri, "(?i)(login|signin|checkout|account/create|register|giftcard|coupon|promo|cart/auth|my-account)")
+| bin _time span=5m
+| stats count as blocked 
+        dc(src_ip) as unique_attackers 
+        values(src_ip) as attacker_ips
+        BY _time, uri, vhost
+| where blocked > 20 OR (blocked > 10 AND unique_attackers > 3)
+| eval attack_style = case(
+    unique_attackers > 10, "Distributed Credential Stuffing",
+    match(uri, "(?i)(giftcard|coupon|promo)"), "Gift Card / Promo Abuse",
+    unique_attackers > 3, "Coordinated Attack",
+    1=1, "Single Source Brute Force"
+)
+| eval severity = case(blocked > 100, "critical", blocked > 50, "high", 1=1, "medium")
+| table _time vhost uri blocked unique_attackers attacker_ips attack_style severity</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP B: ES Correlation Search -->
+        <div class="section">
+          <h2 class="section-title">Step B: ES Correlation Search Settings</h2>
+          <div class="where-box">
+            <strong>Where:</strong> ES → Content Management → Correlation Searches → Create New
+          </div>
+          
+          <div class="impl-step">
+            <h4>ES Configuration</h4>
+            <dl class="es-config">
+              <dt>Search Name</dt>
+              <dd>WAF-UC3: Authentication Endpoint Attack</dd>
+              
+              <dt>Cron Schedule</dt>
+              <dd>*/5 * * * *</dd>
+              
+              <dt>Earliest Time</dt>
+              <dd>-10m</dd>
+              
+              <dt>Latest Time</dt>
+              <dd>now</dd>
+              
+              <dt>Notable Title</dt>
+              <dd>WAF: Auth endpoint attack on $vhost$$uri$ ($blocked$ blocks from $unique_attackers$ sources)</dd>
+              
+              <dt>Notable Description</dt>
+              <dd>Authentication endpoint $uri$ on $vhost$ received $blocked$ blocked requests from $unique_attackers$ unique IP addresses. Attack style: $attack_style$. Attacker IPs: $attacker_ips$. This may indicate brute force or credential stuffing attempts.</dd>
+              
+              <dt>Default Severity</dt>
+              <dd>High</dd>
+              
+              <dt>Throttle Duration</dt>
+              <dd>1800 seconds (30 min)</dd>
+              
+              <dt>Throttle Fields</dt>
+              <dd>uri, vhost</dd>
+              
+              <dt>MITRE ATT&CK</dt>
+              <dd>T1110 - Brute Force, T1110.004 - Credential Stuffing</dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- STEP C: Drilldown -->
+        <div class="section">
+          <h2 class="section-title">Step C: Drilldown Search</h2>
+          
+          <div class="impl-step">
+            <h4>Show Attacker Details and Patterns</h4>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-30m uri="$uri$" vhost="$vhost$"
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval status=coalesce(status,'httpMessage.status')
+| eval user_agent=coalesce(http_user_agent,'httpMessage.requestHeaders.User-Agent')
+| where waf_action="deny" OR waf_action="block"
+| stats count as attempts 
+        values(status) as http_codes
+        values(user_agent) as user_agents
+        latest(_time) as last_seen
+        earliest(_time) as first_seen
+        BY src_ip
+| eval attack_duration_min = round((last_seen - first_seen) / 60, 1)
+| eval attempts_per_min = round(attempts / if(attack_duration_min > 0, attack_duration_min, 1), 1)
+| sort - attempts
+| head 25</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP D: Tuning -->
+        <div class="section">
+          <h2 class="section-title">Step D: Tuning Parameters</h2>
+          
+          <div class="impl-step">
+            <h4>Threshold Recommendations</h4>
+            <table class="tuning-table">
+              <thead>
+                <tr><th>Parameter</th><th>Default</th><th>Fewer Alerts</th><th>More Coverage</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Blocked threshold</strong></td>
+                  <td>20</td>
+                  <td>50</td>
+                  <td>10</td>
+                  <td>Minimum blocked requests to trigger</td>
+                </tr>
+                <tr>
+                  <td><strong>Distributed attack threshold</strong></td>
+                  <td>3 unique IPs</td>
+                  <td>5</td>
+                  <td>2</td>
+                  <td>When to flag as distributed vs single source</td>
+                </tr>
+                <tr>
+                  <td><strong>Credential stuffing threshold</strong></td>
+                  <td>10 unique IPs</td>
+                  <td>20</td>
+                  <td>5</td>
+                  <td>Many IPs = likely botnet/stuffing campaign</td>
+                </tr>
+                <tr>
+                  <td><strong>Critical threshold</strong></td>
+                  <td>100 blocks</td>
+                  <td>200</td>
+                  <td>50</td>
+                  <td>When to escalate to critical severity</td>
+                </tr>
+                <tr>
+                  <td><strong>Time window</strong></td>
+                  <td>10 min</td>
+                  <td>15 min</td>
+                  <td>5 min</td>
+                  <td>Aggregation window for counting</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- STEP E: False Positives -->
+        <div class="section">
+          <h2 class="section-title">Step E: Handle False Positives</h2>
+          
+          <div class="impl-step warning">
+            <h4>Common False Positives & Solutions</h4>
+            <table class="fp-table">
+              <thead>
+                <tr><th>FP Source</th><th>How to Identify</th><th>Solution</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Legitimate password reset campaigns</strong></td>
+                  <td>Spike correlates with IT communication about password expiry</td>
+                  <td>Coordinate with IT; suppress during known reset campaigns</td>
+                </tr>
+                <tr>
+                  <td><strong>SSO health checks</strong></td>
+                  <td>SSO provider IPs (Okta, Azure AD, Ping) at regular intervals</td>
+                  <td>Allowlist SSO provider probe IP ranges</td>
+                </tr>
+                <tr>
+                  <td><strong>Mobile app background auth</strong></td>
+                  <td>Mobile user agents, low but consistent volume</td>
+                  <td>Identify mobile app patterns; may need separate threshold</td>
+                </tr>
+                <tr>
+                  <td><strong>Service account automation</strong></td>
+                  <td>Known service account IPs, programmatic patterns</td>
+                  <td>Allowlist known service account source IPs</td>
+                </tr>
+                <tr>
+                  <td><strong>Session timeout floods</strong></td>
+                  <td>Spike in /session endpoints after maintenance window</td>
+                  <td>Correlate with maintenance calendar; temporary suppression</td>
+                </tr>
+                <tr>
+                  <td><strong>WAF rule too aggressive</strong></td>
+                  <td>Many different users from diverse IPs getting blocked</td>
+                  <td>Review WAF rule tuning; may be blocking legitimate traffic</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section">
+          <div class="grid grid-2">
+            <div>
+              <a href="uc2-single-ip.html" class="btn btn-secondary">← Previous: UC2 Single IP Flood</a>
+            </div>
+            <div style="text-align:right;">
+              <a href="uc4-sqli.html" class="btn btn-primary">Next: UC4 SQLi/XSS →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/app.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{nodeSpacing:25,rankSpacing:30,curve:'basis'}});
+  </script>
+</body>
+</html>

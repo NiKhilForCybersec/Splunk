@@ -5,38 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WAF Use Cases | myfirstpro Detection Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   <style>
-    .uc-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;border-bottom:2px solid var(--gray-200);padding-bottom:12px;}
-    .uc-tab{padding:6px 12px;border-radius:4px 4px 0 0;cursor:pointer;font-size:0.75rem;font-weight:500;background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);border-bottom:none;transition:all 0.2s;}
-    .uc-tab:hover{background:var(--gray-200);}
-    .uc-tab.active{background:var(--primary-500);color:white;border-color:var(--primary-500);}
-    .uc-tab.critical{border-left:3px solid #dc2626;}
-    .uc-tab.high{border-left:3px solid #ea580c;}
-    .uc-tab.medium{border-left:3px solid #ca8a04;}
-    .uc-content{display:none;}
-    .uc-content.active{display:block;}
-    .step-box{margin:20px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
-    .step-box h4{color:var(--primary-700);margin-bottom:12px;font-size:0.95rem;}
-    .step-box.warning{border-left-color:var(--warning-500);}
-    .step-box.warning h4{color:var(--warning-700);}
-    .step-box.error{border-left-color:var(--error-500);}
-    .step-box.error h4{color:var(--error-700);}
-    .var-tabs{display:flex;gap:6px;margin-bottom:12px;}
-    .var-tab{padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.7rem;background:white;border:1px solid var(--gray-300);}
-    .var-tab.active{background:var(--primary-100);border-color:var(--primary-500);color:var(--primary-700);}
-    .var-content{display:none;}
-    .var-content.active{display:block;}
-    .cfg-grid{display:grid;grid-template-columns:180px 1fr;gap:8px;font-size:0.8rem;background:white;padding:12px;border-radius:6px;}
-    .cfg-grid dt{font-weight:600;color:var(--gray-700);}
-    .cfg-grid dd{color:var(--gray-600);margin:0;}
-    .check-list{list-style:none;padding:0;margin:0;}
-    .check-list li{padding:6px 0;padding-left:24px;position:relative;font-size:0.8rem;border-bottom:1px solid var(--gray-100);}
-    .check-list li:before{content:"☐";position:absolute;left:0;color:var(--primary-500);font-weight:bold;}
-    .tree-box{background:white;padding:16px;border-radius:8px;margin:12px 0;min-height:200px;}
+    .uc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:20px;margin-top:20px;}
+    .uc-card{background:white;border:1px solid var(--gray-200);border-radius:12px;padding:24px;transition:all 0.2s;text-decoration:none;color:inherit;display:block;}
+    .uc-card:hover{border-color:var(--primary-500);box-shadow:0 4px 12px rgba(0,0,0,0.1);transform:translateY(-2px);}
+    .uc-card.critical{border-left:4px solid #dc2626;}
+    .uc-card.high{border-left:4px solid #ea580c;}
+    .uc-card.medium{border-left:4px solid #ca8a04;}
+    .uc-card h3{font-size:1.1rem;margin-bottom:8px;color:var(--gray-900);}
+    .uc-card p{font-size:0.85rem;color:var(--gray-600);margin-bottom:12px;line-height:1.6;}
+    .uc-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:0.75rem;}
+    .uc-meta span{background:var(--gray-100);padding:4px 8px;border-radius:4px;}
   </style>
 </head>
 <body>
@@ -48,10 +29,7 @@
             <div class="sidebar-logo-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <div class="sidebar-logo-text">
-              <h1>myfirstpro</h1>
-              <span>Detection Engineering</span>
-            </div>
+            <div class="sidebar-logo-text"><h1>myfirstpro</h1><span>Detection Engineering</span></div>
           </a>
         </div>
       </div>
@@ -59,64 +37,27 @@
         <div class="nav-section">
           <div class="nav-section-title">Getting Started</div>
           <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
-          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
-          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
-          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Splunk Fundamentals</div>
-          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
-          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
-          <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow & Event Hub</span></a>
-          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
-          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Splunk How-To Guide</span></a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Data Sources</div>
-          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
-          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
-          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Splunk Operations</div>
-          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
-          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
-          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
-          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
-          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">WAF/DDoS Project</div>
-          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="waf-usecases.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-12)</span></a>
+          <a href="waf-overview.html" class="nav-item"><span>Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item active"><span>Use Cases Index</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">MFA Project</div>
-          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Response & Support</div>
-          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
-          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
-          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+          <a href="mfa-overview.html" class="nav-item"><span>Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><span>Use Cases Index</span></a>
         </div>
       </nav>
-      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
     </aside>
 
     <main class="main-content">
       <header class="header">
         <div class="header-left">
-          <button class="menu-toggle" aria-label="Toggle menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-item">WAF Project</span>
-            <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-item current">Use Cases</span>
+            <span class="breadcrumb-item current">WAF Use Cases</span>
           </div>
         </div>
         <span class="badge akamai">12 Detections</span>
@@ -125,862 +66,148 @@
       <div class="page-content">
         <div class="section">
           <h1 class="section-title">WAF/DDoS Detection Use Cases</h1>
-          <p class="section-subtitle">Complete implementation guide — field normalization, query variants, ES settings, drilldowns, tuning</p>
+          <p class="section-subtitle">Click any use case for full implementation details: Decision Tree → SPL Variants → ES Config → Drilldown → Tuning → False Positives</p>
         </div>
 
-        <!-- ========== STEP 0: PREREQUISITES ========== -->
         <div class="section">
-          <h2 class="subsection-title">Step 0: Before You Build ANY Detection</h2>
-          
-          <div class="callout critical">
-            <div class="callout-content">
-              <div class="callout-title">⚠️ Your onboarding is NOT complete until you prove data quality</div>
-              <div class="callout-body">Run these health checks first. If they fail, fix onboarding before building detections.</div>
-            </div>
-          </div>
-
-          <div class="grid grid-2" style="margin-top:16px;">
-            <div class="card" style="padding:16px;">
-              <h4 style="font-size:0.9rem;margin-bottom:12px;">📊 Health Check #1: Freshness + Volume</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>index=akamai sourcetype=akamai:siem earliest=-60m
-| stats count as events 
-        min(_time) as first_event 
-        max(_time) as last_event
-| eval first_event=strftime(first_event,"%Y-%m-%d %H:%M:%S")
-| eval last_event=strftime(last_event,"%Y-%m-%d %H:%M:%S")
-| eval status=if(events>0,"✅ Data flowing","❌ NO DATA")</code></pre>
-                </div>
+          <h2 class="subsection-title">Volume & Traffic Anomalies</h2>
+          <div class="uc-grid">
+            <a href="waf/uc1-volume.html" class="uc-card">
+              <h3>UC1: Block Volume Anomaly</h3>
+              <p>Detect statistical spikes in deny/block volume using baseline comparison. Indicates scanning, exploit attempts, or DDoS activity.</p>
+              <div class="uc-meta">
+                <span class="badge warning">MEDIUM</span>
+                <span>T1190</span>
+                <span>Every 5 min</span>
               </div>
-              <p style="font-size:0.75rem;color:var(--gray-500);margin-top:8px;"><strong>Expected:</strong> events > 0, last_event within last few minutes</p>
-            </div>
-
-            <div class="card" style="padding:16px;">
-              <h4 style="font-size:0.9rem;margin-bottom:12px;">📊 Health Check #2: Field Presence</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>index=akamai sourcetype=akamai:siem earliest=-60m
-| spath
-| stats count
-  dc(attackData.clientIP) as uniq_src
-  dc(httpMessage.requestHeaders.Host) as uniq_host
-  values(attackData.rules{}.ruleAction) as sample_actions
-| eval src_ok=if(uniq_src>0,"✅","❌")
-| eval host_ok=if(uniq_host>0,"✅","❌")
-| eval action_ok=if(isnotnull(sample_actions),"✅","❌")</code></pre>
-                </div>
+            </a>
+            
+            <a href="waf/uc2-single-ip.html" class="uc-card high">
+              <h3>UC2: Single Source Flood</h3>
+              <p>Single IP generating excessive requests. Indicates brute force, credential stuffing, or DoS from single attacker.</p>
+              <div class="uc-meta">
+                <span class="badge error">HIGH</span>
+                <span>T1498.001</span>
+                <span>Every 5 min</span>
               </div>
-              <p style="font-size:0.75rem;color:var(--gray-500);margin-top:8px;"><strong>If any ❌:</strong> Fix parsing before building detections!</p>
-            </div>
+            </a>
+            
+            <a href="waf/uc5-distributed.html" class="uc-card high">
+              <h3>UC5: Distributed Low-and-Slow DDoS</h3>
+              <p>Many IPs each sending few requests. Classic botnet pattern that evades single-source detection.</p>
+              <div class="uc-meta">
+                <span class="badge error">HIGH</span>
+                <span>T1498</span>
+                <span>Every 5 min</span>
+              </div>
+            </a>
           </div>
         </div>
 
-        <!-- ========== STEP 1: FIELD NORMALIZATION ========== -->
         <div class="section">
-          <h2 class="subsection-title">Step 1: Field Normalization (Critical — Don't Skip)</h2>
-          
-          <div class="card" style="padding:20px;">
-            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">
-              <strong>Why:</strong> Your WAF vendor fields are nested JSON. Writing detections with raw vendor paths like 
-              <code>attackData.rules{}.ruleAction</code> makes every use case brittle. Normalize first!
-            </p>
-
-            <h4 style="margin-bottom:12px;font-size:0.9rem;">Standard Normalization Block (add to EVERY detection)</h4>
-            <div class="code-block">
-              <div class="code-header"><span class="code-title">Field Normalization</span></div>
-              <div class="code-body">
-                <pre><code>| spath
-| eval waf_action = coalesce(action, mvindex('attackData.rules{}.ruleAction', 0), "unknown")
-| eval src_ip = coalesce(src_ip, 'attackData.clientIP', 'clientIP')
-| eval vhost = coalesce(vhost, 'httpMessage.requestHeaders.Host', dest, host)
-| eval uri = coalesce(uri_path, 'httpMessage.requestUri', 'httpMessage.requestLine')
-| eval method = coalesce(http_method, 'httpMessage.requestMethod')
-| eval status_code = coalesce(status, 'httpMessage.status')
-| eval country = coalesce(src_country, 'geo.country')
-| eval signature = coalesce(signature, 'attackData.rules{}.ruleTag')</code></pre>
+          <h2 class="subsection-title">Application Attacks</h2>
+          <div class="uc-grid">
+            <a href="waf/uc3-auth.html" class="uc-card high">
+              <h3>UC3: Authentication Endpoint Attack</h3>
+              <p>Attacks targeting login/auth endpoints. Brute force and credential stuffing campaigns.</p>
+              <div class="uc-meta">
+                <span class="badge error">HIGH</span>
+                <span>T1110</span>
+                <span>Every 5 min</span>
               </div>
-            </div>
-
-            <div class="callout warning" style="margin-top:16px;">
-              <div class="callout-content">
-                <div class="callout-title">Handling the "action" Field</div>
-                <div class="callout-body" style="font-size:0.8rem;">
-                  <strong>You might have:</strong><br>
-                  • <code>action=deny</code> already (best case — TA is working)<br>
-                  • <code>attackData.rules{}.ruleAction</code> nested array (common in raw Akamai)<br>
-                  • Both exist but differ (bad vendor mapping — investigate!)<br><br>
-                  <strong>Solution:</strong> <code>coalesce()</code> tries each field in order, uses first non-null value.
-                </div>
+            </a>
+            
+            <a href="waf/uc4-sqli.html" class="uc-card critical">
+              <h3>UC4: SQL Injection / XSS Campaign</h3>
+              <p>CRITICAL: Database and session compromise risk. A single successful SQLi can compromise your entire database.</p>
+              <div class="uc-meta">
+                <span class="badge" style="background:#dc2626;color:white;">CRITICAL</span>
+                <span>T1190</span>
+                <span>Every 5 min</span>
               </div>
-            </div>
+            </a>
+            
+            <a href="waf/uc9-api.html" class="uc-card critical">
+              <h3>UC9: API Endpoint Abuse</h3>
+              <p>Excessive API requests indicating data scraping, enumeration, or abuse of API endpoints.</p>
+              <div class="uc-meta">
+                <span class="badge" style="background:#dc2626;color:white;">CRITICAL</span>
+                <span>T1190</span>
+                <span>Every 5 min</span>
+              </div>
+            </a>
+            
+            <a href="waf/uc10-path.html" class="uc-card high">
+              <h3>UC10: Path Traversal Attempts</h3>
+              <p>Directory traversal attacks using ../ patterns to access sensitive files.</p>
+              <div class="uc-meta">
+                <span class="badge error">HIGH</span>
+                <span>T1083</span>
+                <span>Every 5 min</span>
+              </div>
+            </a>
           </div>
         </div>
 
-        <!-- ========== USE CASE TABS ========== -->
         <div class="section">
-          <h2 class="subsection-title">Detection Use Cases (Click Tab for Full Implementation)</h2>
-          
-          <div class="uc-tabs">
-            <div class="uc-tab medium active" onclick="showUC('uc1')">UC1: Volume</div>
-            <div class="uc-tab high" onclick="showUC('uc2')">UC2: Single IP</div>
-            <div class="uc-tab high" onclick="showUC('uc3')">UC3: Auth</div>
-            <div class="uc-tab critical" onclick="showUC('uc4')">UC4: SQLi/XSS</div>
-            <div class="uc-tab high" onclick="showUC('uc5')">UC5: Distributed</div>
-            <div class="uc-tab medium" onclick="showUC('uc6')">UC6: Geo</div>
-            <div class="uc-tab high" onclick="showUC('uc7')">UC7: Bypass</div>
-            <div class="uc-tab medium" onclick="showUC('uc8')">UC8: Bot</div>
-            <div class="uc-tab critical" onclick="showUC('uc9')">UC9: API</div>
-            <div class="uc-tab high" onclick="showUC('uc10')">UC10: Path</div>
-            <div class="uc-tab medium" onclick="showUC('uc11')">UC11: Scanner</div>
-            <div class="uc-tab high" onclick="showUC('uc12')">UC12: Rate</div>
+          <h2 class="subsection-title">Reconnaissance & Evasion</h2>
+          <div class="uc-grid">
+            <a href="waf/uc6-geo.html" class="uc-card medium">
+              <h3>UC6: Geographic Anomaly</h3>
+              <p>Spike from countries that rarely access your services. Requires country baseline lookup.</p>
+              <div class="uc-meta">
+                <span class="badge warning">MEDIUM</span>
+                <span>T1190</span>
+                <span>Every 15 min</span>
+              </div>
+            </a>
+            
+            <a href="waf/uc7-bypass.html" class="uc-card high">
+              <h3>UC7: WAF Bypass Detection</h3>
+              <p>WAF allows request but backend returns 500 error. May indicate successful WAF evasion.</p>
+              <div class="uc-meta">
+                <span class="badge error">HIGH</span>
+                <span>T1190</span>
+                <span>Every 5 min</span>
+              </div>
+            </a>
+            
+            <a href="waf/uc8-bot.html" class="uc-card medium">
+              <h3>UC8: Bot/Scraper Detection</h3>
+              <p>Automated scrapers detected by behavior patterns and user agent analysis.</p>
+              <div class="uc-meta">
+                <span class="badge warning">MEDIUM</span>
+                <span>T1595</span>
+                <span>Every 15 min</span>
+              </div>
+            </a>
+            
+            <a href="waf/uc11-scanner.html" class="uc-card medium">
+              <h3>UC11: Security Scanner Detection</h3>
+              <p>Known vulnerability scanner user agents (Nessus, Nikto, sqlmap, etc.).</p>
+              <div class="uc-meta">
+                <span class="badge warning">MEDIUM</span>
+                <span>T1595</span>
+                <span>Every 15 min</span>
+              </div>
+            </a>
+            
+            <a href="waf/uc12-rate.html" class="uc-card high">
+              <h3>UC12: Rate Limit Trigger Analysis</h3>
+              <p>Patterns when rate limiting is triggered repeatedly, indicating persistent attack attempts.</p>
+              <div class="uc-meta">
+                <span class="badge error">HIGH</span>
+                <span>T1498</span>
+                <span>Every 5 min</span>
+              </div>
+            </a>
           </div>
-
-          <!-- ==================== UC1 ==================== -->
-          <div id="uc1" class="uc-content active">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <div class="grid grid-4" style="margin-bottom:16px;">
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Severity</span><span class="badge warning">MEDIUM</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">MITRE</span><code>T1190</code></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Schedule</span><span style="font-weight:600;">5 min</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Time Range</span><span style="font-weight:600;">-10m</span></div>
-              </div>
-              <h3 style="font-size:1rem;">WAF-UC1: Block Volume Anomaly Detection</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Detect significant spikes in deny/block volume indicating scanning, exploit attempts, or DDoS recon.</p>
-            </div>
-
-            <!-- Decision Tree -->
-            <div class="step-box">
-              <h4>📊 Decision Tree</h4>
-              <div class="tree-box">
-                <div class="mermaid">
-flowchart TD
-    A[WAF Block Event] --> B{action = deny/block?}
-    B -->|No| C[Ignore]
-    B -->|Yes| D[Count in 5m window]
-    D --> E{count > threshold?}
-    E -->|No| F[Normal - no alert]
-    E -->|Yes| G{count > min floor?}
-    G -->|No| F
-    G -->|Yes| H[Calculate σ deviation]
-    H --> I{σ >= 5?}
-    I -->|Yes| J[🔴 CRITICAL]
-    I -->|No| K{σ >= 3?}
-    K -->|Yes| L[🟠 HIGH]
-    K -->|No| M[🟡 MEDIUM]
-    style J fill:#fef2f2,stroke:#dc2626
-    style L fill:#fff7ed,stroke:#ea580c
-    style M fill:#fefce8,stroke:#ca8a04
-                </div>
-              </div>
-            </div>
-
-            <!-- Query Variants -->
-            <div class="step-box">
-              <h4>📝 Step A: Build SPL (Choose Variant)</h4>
-              <div class="var-tabs">
-                <div class="var-tab active" onclick="showVar('uc1','a')">A: Global Spike</div>
-                <div class="var-tab" onclick="showVar('uc1','b')">B: Per-Host Spike</div>
-                <div class="var-tab" onclick="showVar('uc1','c')">C: 7-Day Baseline</div>
-              </div>
-
-              <div id="uc1-a" class="var-content active">
-                <p style="font-size:0.75rem;color:var(--gray-500);margin-bottom:8px;"><strong>Use when:</strong> You want "something big is happening" without per-app granularity.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| where waf_action="deny" OR waf_action="block"
-| bin _time span=5m
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| stats count as block_count dc(src_ip) as unique_ips values(vhost) as hosts by _time
-| eventstats avg(block_count) as baseline stdev(block_count) as stdev
-| eval stdev=if(stdev=0,1,stdev)
-| eval threshold = baseline + (2*stdev)
-| eval threshold = if(threshold < 50, 50, threshold)
-| where block_count > threshold AND block_count > 10
-| eval deviation=round((block_count-baseline)/stdev,2)
-| eval severity=case(deviation>=5,"critical", deviation>=3,"high", 1=1,"medium")
-| table _time block_count baseline threshold deviation unique_ips hosts severity</code></pre>
-                  </div>
-                </div>
-              </div>
-
-              <div id="uc1-b" class="var-content">
-                <p style="font-size:0.75rem;color:var(--gray-500);margin-bottom:8px;"><strong>Use when:</strong> You want "which application is under attack" — more actionable.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| where waf_action="deny" OR waf_action="block"
-| bin _time span=5m
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| stats count as block_count dc(src_ip) as unique_ips by _time vhost
-| eventstats avg(block_count) as baseline stdev(block_count) as stdev by vhost
-| eval stdev=if(stdev=0,1,stdev)
-| eval threshold = baseline + (2*stdev)
-| eval threshold = if(threshold < 25, 25, threshold)
-| where block_count > threshold AND block_count > 10
-| eval deviation=round((block_count-baseline)/stdev,2)
-| eval severity=case(deviation>=5,"critical", deviation>=3,"high", 1=1,"medium")
-| table _time vhost block_count baseline threshold deviation unique_ips severity</code></pre>
-                  </div>
-                </div>
-              </div>
-
-              <div id="uc1-c" class="var-content">
-                <p style="font-size:0.75rem;color:var(--gray-500);margin-bottom:8px;"><strong>Use when:</strong> Traffic has stable weekly patterns. More accurate but heavier on resources.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>``` Same as Variant A, but change earliest to -7d for weekly baseline
-index=akamai sourcetype=akamai:siem earliest=-7d
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| where waf_action="deny" OR waf_action="block"
-| bin _time span=5m
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| stats count as block_count dc(src_ip) as unique_ips values(vhost) as hosts by _time
-| eventstats avg(block_count) as baseline stdev(block_count) as stdev
-| eval stdev=if(stdev=0,1,stdev)
-| eval threshold = baseline + (2*stdev)
-| eval threshold = if(threshold < 50, 50, threshold)
-| where block_count > threshold AND block_count > 10
-| eval deviation=round((block_count-baseline)/stdev,2)
-| eval severity=case(deviation>=5,"critical", deviation>=3,"high", 1=1,"medium")
-| table _time block_count baseline threshold deviation unique_ips hosts severity
-
-``` Best practice: Start with 24h, move to 7d once stable</code></pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- ES Settings -->
-            <div class="step-box">
-              <h4>⚙️ Step B: ES Correlation Search Settings (Exact Config)</h4>
-              <p style="font-size:0.75rem;color:var(--gray-500);margin-bottom:12px;"><strong>Where:</strong> ES → Configure → Content → Content Management → Correlation Searches → Create New</p>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>WAF-UC1: Block Volume Anomaly</code></dd>
-                <dt>App Context</dt><dd><code>SplunkEnterpriseSecuritySuite</code></dd>
-                <dt>Cron Schedule</dt><dd><code>*/5 * * * *</code> (every 5 min)</dd>
-                <dt>Earliest Time</dt><dd><code>-10m</code> (overlap reduces missed events)</dd>
-                <dt>Latest Time</dt><dd><code>now</code></dd>
-                <dt>Create Notable</dt><dd><code>✅ Enabled</code></dd>
-                <dt>Notable Title</dt><dd><code>WAF: Block volume spike ($block_count$ blocks, $deviation$σ)</code></dd>
-                <dt>Notable Description</dt><dd><code>Detected $block_count$ blocks (baseline: $baseline$). Unique IPs: $unique_ips$. Hosts: $hosts$</code></dd>
-                <dt>Default Severity</dt><dd><code>Medium</code> (or map from $severity$ field)</dd>
-                <dt>Security Domain</dt><dd><code>Network</code></dd>
-              </div>
-
-              <h5 style="margin:16px 0 8px;font-size:0.85rem;">🔇 Throttling (MANDATORY)</h5>
-              <div class="callout warning" style="margin-bottom:12px;padding:12px;">
-                <div class="callout-content"><div class="callout-body" style="font-size:0.75rem;">Without throttling, you'll get a Notable EVERY 5 minutes during an attack!</div></div>
-              </div>
-              <div class="cfg-grid">
-                <dt>Throttle</dt><dd><code>✅ Enabled</code></dd>
-                <dt>Suppress for</dt><dd><code>30 minutes</code> (adjust 15-60 based on SOC capacity)</dd>
-                <dt>Group By Fields</dt><dd><code>(empty)</code> for global, or <code>vhost</code> for per-host variant</dd>
-              </div>
-            </div>
-
-            <!-- Drilldown -->
-            <div class="step-box">
-              <h4>🔍 Step C: Drilldown Search (For Analyst Triage)</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| where waf_action="deny" OR waf_action="block"
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| stats count dc(uri) as uniq_uris values(uri) as sample_uris by vhost src_ip
-| sort - count
-| head 20</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <!-- Validation -->
-            <div class="step-box">
-              <h4>✅ Step D: Validate Detection</h4>
-              <ul class="check-list">
-                <li>Run SPL manually — returns results during known attack periods?</li>
-                <li>Enable correlation search in ES</li>
-                <li>Check Incident Review for new Notables within 10 minutes</li>
-                <li>Verify all fields appear in Notable (block_count, deviation, unique_ips)</li>
-                <li>Confirm throttling works (no duplicate Notables)</li>
-                <li>Test drilldown search links correctly from Notable</li>
-              </ul>
-            </div>
-
-            <!-- Tuning -->
-            <div class="step-box">
-              <h4>🎛️ Step E: Tuning Knobs</h4>
-              <div class="table-container">
-                <table style="font-size:0.75rem;">
-                  <thead><tr><th>Parameter</th><th>Default</th><th>Fewer Alerts</th><th>More Alerts</th></tr></thead>
-                  <tbody>
-                    <tr><td><code>minimum floor</code></td><td>50</td><td>↑ 100-200</td><td>↓ 20-30</td></tr>
-                    <tr><td><code>sigma multiplier</code></td><td>2σ</td><td>↑ 3σ</td><td>↓ 1.5σ</td></tr>
-                    <tr><td><code>baseline window</code></td><td>24h</td><td>↑ 7d</td><td>↓ 12h</td></tr>
-                    <tr><td><code>time bucket</code></td><td>5m</td><td>↑ 10m</td><td>↓ 1m</td></tr>
-                    <tr><td><code>throttle</code></td><td>30m</td><td>↑ 60m</td><td>↓ 15m</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <p style="font-size:0.75rem;color:var(--gray-500);margin-top:12px;"><strong>Additional tuning:</strong> Allowlist test IPs, separate prod/non-prod, business hours only</p>
-            </div>
-
-            <!-- False Positives -->
-            <div class="step-box warning">
-              <h4>⚠️ Common False Positives</h4>
-              <div class="table-container">
-                <table style="font-size:0.75rem;">
-                  <thead><tr><th>FP Source</th><th>Why</th><th>Solution</th></tr></thead>
-                  <tbody>
-                    <tr><td>Internal vuln scans</td><td>Security team runs Nessus/Qualys</td><td>Allowlist scanner IPs in lookup</td></tr>
-                    <tr><td>Marketing campaigns</td><td>Traffic spike from promotions</td><td>Adjust baseline during known events</td></tr>
-                    <tr><td>New WAF rules</td><td>Fresh rules block legitimate traffic</td><td>Monitor for 48h after rule deployment</td></tr>
-                    <tr><td>Partner misconfiguration</td><td>API partner hitting blocked endpoints</td><td>Investigate and whitelist if legit</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <!-- ==================== UC2 ==================== -->
-          <div id="uc2" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <div class="grid grid-4" style="margin-bottom:16px;">
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Severity</span><span class="badge error">HIGH</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">MITRE</span><code>T1498.001</code></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Schedule</span><span style="font-weight:600;">5 min</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Time Range</span><span style="font-weight:600;">-5m</span></div>
-              </div>
-              <h3 style="font-size:1rem;">WAF-UC2: Single Source Flood Attack</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Detect a single IP generating excessive requests — brute force, credential stuffing, scraping, or DoS.</p>
-            </div>
-
-            <div class="step-box">
-              <h4>📊 Decision Tree</h4>
-              <div class="tree-box">
-                <div class="mermaid">
-flowchart TD
-    A[Aggregate by src_ip] --> B{requests > 500?}
-    B -->|Yes| E[High Volume]
-    B -->|No| C{blocked > 100?}
-    C -->|Yes| E
-    C -->|No| D[Below threshold]
-    E --> F{block_ratio > 90%?}
-    F -->|Yes| G[Pure Attack]
-    F -->|No| H{ratio > 50%?}
-    H -->|Yes| I[Mixed Traffic]
-    H -->|No| J[Suspicious]
-    G --> K{blocked > 500?}
-    K -->|Yes| L[🔴 CRITICAL]
-    K -->|No| M[🟠 HIGH]
-    style L fill:#fef2f2,stroke:#dc2626
-    style M fill:#fff7ed,stroke:#ea580c
-                </div>
-              </div>
-            </div>
-
-            <div class="step-box">
-              <h4>📝 Step A: Detection SPL</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>index=akamai sourcetype=akamai:siem earliest=-5m
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| eval country=coalesce(src_country,'geo.country')
-| stats count as total_requests 
-        count(eval(waf_action="deny" OR waf_action="block")) as blocked_count
-        dc(uri) as unique_endpoints
-        dc(vhost) as unique_hosts
-        values(uri) as sample_paths
-        values(vhost) as targeted_hosts
-        latest(country) as src_country
-        BY src_ip
-| eval block_ratio = round(blocked_count / total_requests * 100, 1)
-| where total_requests > 500 OR blocked_count > 100
-| eval attack_type = case(
-    block_ratio > 90, "Pure Attack (90%+ blocked)",
-    block_ratio > 50, "Mixed Traffic (investigate)",
-    unique_endpoints > 50, "Scanning Many Endpoints",
-    unique_endpoints < 5, "Targeting Specific Endpoint",
-    1=1, "High Volume Suspicious"
-)
-| eval severity = case(blocked_count > 500, "critical", blocked_count > 200 OR block_ratio > 80, "high", 1=1, "medium")
-| sort - blocked_count
-| table src_ip src_country total_requests blocked_count block_ratio unique_endpoints attack_type targeted_hosts severity</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <div class="step-box">
-              <h4>⚙️ Step B: ES Correlation Search Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>WAF-UC2: Single Source Flood Attack</code></dd>
-                <dt>Cron Schedule</dt><dd><code>*/5 * * * *</code></dd>
-                <dt>Earliest/Latest</dt><dd><code>-5m / now</code></dd>
-                <dt>Notable Title</dt><dd><code>WAF: Single source flood from $src_ip$ ($blocked_count$ blocks)</code></dd>
-                <dt>Throttle Duration</dt><dd><code>30 minutes</code></dd>
-                <dt>Throttle Group By</dt><dd><code>src_ip</code> (one alert per attacker IP)</dd>
-              </div>
-            </div>
-
-            <div class="step-box">
-              <h4>🔍 Step C: Drilldown Search</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>index=akamai sourcetype=akamai:siem earliest=-15m src_ip="$src_ip$"
-| spath
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
-| eval status=coalesce(status,'httpMessage.status')
-| stats count BY uri, signature, status
-| sort - count | head 30</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <div class="step-box">
-              <h4>🎛️ Tuning Knobs</h4>
-              <div class="table-container">
-                <table style="font-size:0.75rem;">
-                  <thead><tr><th>Parameter</th><th>Small Site</th><th>Medium Site</th><th>Large Site</th></tr></thead>
-                  <tbody>
-                    <tr><td><code>total_requests threshold</code></td><td>100</td><td>500</td><td>2000</td></tr>
-                    <tr><td><code>blocked_count threshold</code></td><td>20</td><td>100</td><td>500</td></tr>
-                    <tr><td><code>time window</code></td><td>10m</td><td>5m</td><td>2m</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div class="step-box warning">
-              <h4>⚠️ Common False Positives</h4>
-              <div class="table-container">
-                <table style="font-size:0.75rem;">
-                  <thead><tr><th>FP Source</th><th>Why</th><th>Solution</th></tr></thead>
-                  <tbody>
-                    <tr><td>NAT/Proxy IPs</td><td>Many users behind one IP (corporate proxy)</td><td>Whitelist known NAT ranges</td></tr>
-                    <tr><td>CDN/Load balancer</td><td>X-Forwarded-For not extracted</td><td>Verify src_ip extraction</td></tr>
-                    <tr><td>Monitoring tools</td><td>Uptime monitors hitting health endpoints</td><td>Whitelist monitoring IPs</td></tr>
-                    <tr><td>Search crawlers</td><td>Googlebot, Bingbot</td><td>Check user agent or whitelist</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <!-- ==================== UC3 ==================== -->
-          <div id="uc3" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <div class="grid grid-4" style="margin-bottom:16px;">
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Severity</span><span class="badge error">HIGH</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">MITRE</span><code>T1110</code></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Schedule</span><span style="font-weight:600;">5 min</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Time Range</span><span style="font-weight:600;">-10m</span></div>
-              </div>
-              <h3 style="font-size:1rem;">WAF-UC3: Authentication Endpoint Attack</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Detect attacks on login/auth endpoints — brute force, credential stuffing, password spraying.</p>
-            </div>
-
-            <div class="step-box">
-              <h4>📊 Decision Tree</h4>
-              <div class="tree-box">
-                <div class="mermaid">
-flowchart TD
-    A[WAF Block] --> B{URI matches auth pattern?}
-    B -->|No| C[Use other UC]
-    B -->|Yes| D[Count blocks per endpoint]
-    D --> E{blocks > 20?}
-    E -->|No| F{blocks > 10 AND attackers > 3?}
-    F -->|No| G[Below threshold]
-    F -->|Yes| H[Distributed Attack]
-    E -->|Yes| I{attackers > 10?}
-    I -->|Yes| J[Distributed Credential]
-    I -->|No| K[Single-Source Brute]
-    J --> L[🔴 CRITICAL if >100]
-    K --> M[🟠 HIGH]
-    H --> N[🟡 MEDIUM]
-    style L fill:#fef2f2,stroke:#dc2626
-    style M fill:#fff7ed,stroke:#ea580c
-    style N fill:#fefce8,stroke:#ca8a04
-                </div>
-              </div>
-            </div>
-
-            <div class="step-box">
-              <h4>📝 Step A: Detection SPL</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
-| where waf_action="deny" OR waf_action="block"
-``` CRITICAL: Match auth endpoints — CUSTOMIZE FOR YOUR APP!
-| where match(uri, "(?i)(login|signin|sign-in|auth|oauth|token|session|password|passwd|pwd|register|signup|sign-up|sso|saml|callback|verify|authenticate|2fa|mfa|otp)")
-| bin _time span=5m
-| stats count as blocked 
-        dc(src_ip) as unique_attackers
-        values(src_ip) as attacker_ips
-        values(signature) as attack_signatures
-        BY _time, uri, vhost
-| where blocked > 20 OR (blocked > 10 AND unique_attackers > 3)
-| eval attack_style = case(
-    unique_attackers > 10 AND blocked > 50, "Distributed Credential Attack",
-    unique_attackers == 1 AND blocked > 50, "Single-Source Brute Force",
-    unique_attackers > 3, "Coordinated Attack",
-    1=1, "Targeted Probing"
-)
-| eval severity = case(blocked > 100, "critical", blocked > 50 OR unique_attackers > 10, "high", 1=1, "medium")
-| table _time vhost uri blocked unique_attackers attack_signatures attack_style severity</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <div class="step-box">
-              <h4>🔧 CRITICAL: Customize Auth Endpoint Pattern</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>``` Default patterns (adjust for YOUR app):
-login, signin, sign-in, auth, oauth, token, session, 
-password, passwd, pwd, register, signup, sign-up, 
-sso, saml, callback, verify, authenticate, 2fa, mfa, otp
-
-``` Find YOUR auth endpoints:
-index=akamai sourcetype=akamai:siem earliest=-24h
-| spath | eval uri=coalesce(uri,'httpMessage.requestUri')
-| where match(uri, "(?i)(login|auth|sign|token|session)")
-| stats count BY uri | sort - count</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <div class="step-box">
-              <h4>⚙️ Step B: ES Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>WAF-UC3: Auth Endpoint Attack</code></dd>
-                <dt>Notable Title</dt><dd><code>WAF: Auth attack on $uri$ ($blocked$ blocks from $unique_attackers$ IPs)</code></dd>
-                <dt>Throttle Group By</dt><dd><code>uri, vhost</code></dd>
-              </div>
-            </div>
-          </div>
-
-          <!-- ==================== UC4 ==================== -->
-          <div id="uc4" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;background:#fef2f2;">
-              <div class="grid grid-4" style="margin-bottom:16px;">
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Severity</span><span class="badge" style="background:#dc2626;color:white;">CRITICAL</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">MITRE</span><code>T1190</code></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Schedule</span><span style="font-weight:600;">5 min</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Time Range</span><span style="font-weight:600;">-10m</span></div>
-              </div>
-              <h3 style="font-size:1rem;color:#dc2626;">WAF-UC4: SQL Injection / XSS Campaign</h3>
-              <p style="font-size:0.8rem;color:var(--gray-700);"><strong>⚠️ CRITICAL:</strong> A single successful SQLi can compromise your ENTIRE database. Even though WAF is blocking, the attacker is actively probing for bypasses.</p>
-            </div>
-
-            <div class="step-box">
-              <h4>📝 Step A: Detection SPL</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
-| where waf_action="deny" OR waf_action="block"
-``` Filter to injection signatures — ADJUST TO YOUR WAF's NAMING
-| where signature IN ("SQLI","SQL_INJECTION","sql-injection","XSS","CROSS_SITE_SCRIPTING","xss-attack","CMDI","COMMAND_INJECTION","cmd-injection","LFI","LOCAL_FILE_INCLUSION","path-traversal","RFI","REMOTE_FILE_INCLUSION","PROTOCOL_ATTACK")
-| bin _time span=5m
-| stats count as attacks 
-        dc(src_ip) as unique_attackers
-        dc(uri) as targeted_endpoints
-        values(signature) as attack_types
-        values(src_ip) as attacker_ips
-        BY _time
-| where attacks > 15
-| eval attack_vectors = mvcount(attack_types)
-| eval severity = case(attacks > 100 OR attack_vectors > 3, "critical", attacks > 50, "high", 1=1, "medium")
-| eval campaign_type = case(
-    attack_vectors > 3, "⚠️ MULTI-VECTOR CAMPAIGN",
-    unique_attackers > 5, "Distributed Injection Attack",
-    targeted_endpoints > 10, "Endpoint Scanning with Injection",
-    1=1, "Focused Injection Attempt"
-)
-| table _time attacks unique_attackers targeted_endpoints attack_types campaign_type severity</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <div class="step-box">
-              <h4>📚 Signature Reference</h4>
-              <div class="table-container">
-                <table style="font-size:0.75rem;">
-                  <thead><tr><th>Signature</th><th>Attack</th><th>Impact</th><th>What Attacker Wants</th></tr></thead>
-                  <tbody>
-                    <tr><td><code>SQLI</code></td><td>SQL Injection</td><td style="color:#dc2626;font-weight:700;">CRITICAL</td><td>Database access — steal/modify/delete all data</td></tr>
-                    <tr><td><code>XSS</code></td><td>Cross-Site Scripting</td><td style="color:#dc2626;font-weight:700;">CRITICAL</td><td>Session hijacking, credential theft, malware</td></tr>
-                    <tr><td><code>CMDI</code></td><td>Command Injection</td><td style="color:#dc2626;font-weight:700;">CRITICAL</td><td>Execute OS commands — full server compromise</td></tr>
-                    <tr><td><code>LFI</code></td><td>Local File Inclusion</td><td style="color:#ea580c;font-weight:700;">HIGH</td><td>Read sensitive files (/etc/passwd, configs)</td></tr>
-                    <tr><td><code>RFI</code></td><td>Remote File Inclusion</td><td style="color:#dc2626;font-weight:700;">CRITICAL</td><td>Execute attacker-controlled code</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div class="step-box">
-              <h4>⚙️ Step B: ES Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>WAF-UC4: SQL Injection / XSS Campaign</code></dd>
-                <dt>Default Severity</dt><dd><code>High</code> (critical for multi-vector)</dd>
-                <dt>Throttle Duration</dt><dd><code>15 minutes</code> (shorter — these are serious)</dd>
-              </div>
-            </div>
-          </div>
-
-          <!-- ==================== UC5-12 (Compact but complete) ==================== -->
-          <div id="uc5" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">WAF-UC5: Distributed Low-and-Slow DDoS</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Many IPs, each sending few requests — designed to evade single-source detection.</p>
-              <div class="grid grid-4" style="margin-top:12px;">
-                <div><span style="font-size:0.65rem;color:var(--gray-500);">Severity:</span> <span class="badge error">HIGH</span></div>
-                <div><span style="font-size:0.65rem;color:var(--gray-500);">MITRE:</span> <code>T1498</code></div>
-                <div><span style="font-size:0.65rem;color:var(--gray-500);">Schedule:</span> 5 min</div>
-                <div><span style="font-size:0.65rem;color:var(--gray-500);">Range:</span> -15m</div>
-              </div>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| where waf_action="deny" OR waf_action="block"
-| stats count as total_blocks dc(src_ip) as unique_attackers BY vhost
-| where unique_attackers > 50 AND total_blocks > 200
-| eval avg_per_ip = round(total_blocks / unique_attackers, 1)
-| where avg_per_ip < 10
-| eval severity = case(unique_attackers > 200, "critical", unique_attackers > 100, "high", 1=1, "medium")
-| eval alert = "Distributed: ".unique_attackers." IPs avg ".avg_per_ip." req each"
-| table vhost total_blocks unique_attackers avg_per_ip severity alert</code></pre></div></div>
-            </div>
-            <div class="step-box"><h4>⚙️ ES Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>WAF-UC5: Distributed Low-Slow DDoS</code></dd>
-                <dt>Notable Title</dt><dd><code>WAF: Distributed attack on $vhost$ ($unique_attackers$ IPs)</code></dd>
-                <dt>Throttle Group By</dt><dd><code>vhost</code></dd>
-              </div>
-            </div>
-            <div class="step-box"><h4>🎛️ Tuning</h4>
-              <p style="font-size:0.8rem;color:var(--gray-600);"><code>avg_per_ip < 10</code> = distributed attack signature. Higher avg = fewer attackers hitting harder.</p>
-            </div>
-          </div>
-
-          <div id="uc6" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">WAF-UC6: Geographic Anomaly</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Sudden spike from countries that rarely access your services.</p>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval country=coalesce(src_country,'geo.country')
-| where waf_action="deny" OR waf_action="block"
-| stats count as attacks dc(src_ip) as attackers BY country
-| sort - attacks
-| lookup country_baseline.csv country OUTPUT expected_attacks is_high_risk
-| eval deviation = if(expected_attacks > 0, round((attacks - expected_attacks) / expected_attacks * 100, 0), 999)
-| where (deviation > 200 OR is_high_risk="true") AND attacks > 50
-| eval severity = case(is_high_risk="true" AND attacks > 200, "critical", deviation > 500, "high", 1=1, "medium")
-| table country attacks expected_attacks deviation attackers is_high_risk severity</code></pre></div></div>
-            </div>
-            <div class="callout info" style="margin-top:12px;padding:12px;"><div class="callout-content"><div class="callout-body" style="font-size:0.75rem;"><strong>Requires:</strong> Create <code>country_baseline.csv</code> with columns: country, expected_attacks, is_high_risk. Build from 30 days of data.</div></div></div>
-          </div>
-
-          <div id="uc7" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">WAF-UC7: WAF Bypass Detection</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">WAF allows request but backend returns 500 error — may indicate successful bypass.</p>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| eval status=coalesce(status,'httpMessage.status')
-| where (waf_action="allow" OR waf_action="none") AND status >= 500
-| stats count as server_errors dc(src_ip) as unique_ips values(uri) as error_paths values(status) as status_codes BY vhost
-| where server_errors > 10
-| eval severity = case(server_errors > 50, "critical", server_errors > 25, "high", 1=1, "medium")
-| eval concern = "WAF allowed ".server_errors." requests causing backend errors"
-| table vhost server_errors unique_ips status_codes error_paths severity concern</code></pre></div></div>
-            </div>
-          </div>
-
-          <div id="uc8" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">WAF-UC8: Bot/Scraper Detection</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Detect automated scrapers and crawlers by behavior and user agent.</p>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-30m
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| eval user_agent=coalesce(http_user_agent,'httpMessage.requestHeaders.User-Agent')
-| where waf_action="deny" OR waf_action="block"
-| stats count as requests dc(uri) as pages values(user_agent) as agents BY src_ip
-| where requests > 100 AND pages > 20
-| eval bot_indicator = case(
-    match(agents, "(?i)(bot|crawler|spider|scraper)"), "Known Bot UA",
-    match(agents, "(?i)(curl|wget|python|java|go-http|httpclient)"), "Script/Tool UA",
-    match(agents, "(?i)(headless|phantom|selenium)"), "Headless Browser",
-    1=1, "Behavioral Bot"
-)
-| eval severity = case(requests > 500, "high", requests > 200, "medium", 1=1, "low")
-| table src_ip requests pages bot_indicator agents severity</code></pre></div></div>
-            </div>
-          </div>
-
-          <div id="uc9" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;background:#fef2f2;">
-              <h3 style="font-size:1rem;color:#dc2626;">WAF-UC9: API Endpoint Abuse</h3>
-              <p style="font-size:0.8rem;color:var(--gray-700);">Excessive requests to API endpoints — may indicate data scraping or abuse.</p>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-10m
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| where match(uri, "(?i)/api/")
-| stats count as api_calls 
-        count(eval(waf_action="deny" OR waf_action="block")) as blocked 
-        dc(src_ip) as unique_callers 
-        BY uri
-| eval block_rate = round(blocked / api_calls * 100, 1)
-| where api_calls > 500 OR blocked > 100
-| eval severity = case(block_rate > 50 AND blocked > 100, "critical", blocked > 200, "high", 1=1, "medium")
-| table uri api_calls blocked block_rate unique_callers severity</code></pre></div></div>
-            </div>
-          </div>
-
-          <div id="uc10" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">WAF-UC10: Path Traversal Attempts</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Detect directory traversal attacks (../ patterns).</p>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
-| where waf_action="deny" OR waf_action="block"
-| where match(uri, "(\.\.\/|\.\.\\\\|%2e%2e|%252e%252e|%c0%ae)") OR signature="LFI"
-| stats count as attempts dc(src_ip) as attackers values(uri) as paths BY vhost
-| where attempts > 5
-| eval severity = case(attempts > 50, "critical", attempts > 20, "high", 1=1, "medium")
-| table vhost attempts attackers paths severity</code></pre></div></div>
-            </div>
-          </div>
-
-          <div id="uc11" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">WAF-UC11: Security Scanner Detection</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Detect known vulnerability scanners by user agent.</p>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
-| spath
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| eval user_agent=coalesce(http_user_agent,'httpMessage.requestHeaders.User-Agent')
-| where match(user_agent, "(?i)(nikto|nmap|nessus|openvas|qualys|acunetix|burp|sqlmap|dirbuster|gobuster|wpscan|nuclei|zap|arachni|w3af)")
-| stats count as scans dc(uri) as pages values(user_agent) as tools BY src_ip
-| where scans > 10
-| eval scanner_type = case(
-    match(tools, "(?i)sqlmap"), "SQL Injection Scanner",
-    match(tools, "(?i)nikto|nessus|qualys|openvas"), "Vulnerability Scanner",
-    match(tools, "(?i)dirbuster|gobuster"), "Directory Bruteforcer",
-    match(tools, "(?i)wpscan"), "WordPress Scanner",
-    match(tools, "(?i)burp|zap"), "Web Proxy/Scanner",
-    1=1, "General Scanner"
-)
-| eval severity = case(scans > 100, "high", 1=1, "medium")
-| table src_ip scans pages scanner_type tools severity</code></pre></div></div>
-            </div>
-          </div>
-
-          <div id="uc12" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">WAF-UC12: Rate Limit Trigger Analysis</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Analyze patterns when rate limiting is triggered.</p>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
-| spath
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
-| where match(signature, "(?i)rate") OR signature="RATE_LIMIT"
-| stats count as triggers dc(src_ip) as unique_ips values(uri) as paths BY vhost
-| where triggers > 20
-| eval severity = case(triggers > 100, "critical", triggers > 50, "high", 1=1, "medium")
-| eval alert = "Rate limiting triggered ".triggers." times by ".unique_ips." IPs"
-| table vhost triggers unique_ips paths severity alert</code></pre></div></div>
-            </div>
-          </div>
-
         </div>
+
       </div>
     </main>
   </div>
 
   <script src="../js/app.js"></script>
-  <script>
-    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{curve:'basis'}});
-    function showUC(id){
-      document.querySelectorAll('.uc-content').forEach(e=>e.classList.remove('active'));
-      document.querySelectorAll('.uc-tab').forEach(e=>e.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelector(`[onclick="showUC('${id}')"]`).classList.add('active');
-      setTimeout(()=>mermaid.init(undefined,document.querySelectorAll('.mermaid')),100);
-    }
-    function showVar(uc,v){
-      const c=document.getElementById(uc);
-      c.querySelectorAll('.var-content').forEach(e=>e.classList.remove('active'));
-      c.querySelectorAll('.var-tab').forEach(e=>e.classList.remove('active'));
-      document.getElementById(`${uc}-${v}`).classList.add('active');
-      event.target.classList.add('active');
-    }
-  </script>
 </body>
 </html>

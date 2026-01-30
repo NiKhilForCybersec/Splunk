@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAF-UC5: Distributed DDoS | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    .impl-step{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .impl-step h4{color:var(--primary-700);margin-bottom:16px;font-size:1rem;}
+    .impl-step.warning{border-left-color:#f59e0b;}
+    .diagram-box{background:white;padding:20px;border-radius:8px;margin:12px 0;min-height:300px;overflow-x:auto;}
+    .es-config{display:grid;grid-template-columns:220px 1fr;gap:10px;font-size:0.85rem;background:white;padding:16px;border-radius:6px;margin-top:12px;}
+    .es-config dt{font-weight:600;color:var(--gray-700);}
+    .es-config dd{color:var(--gray-600);margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+    .tuning-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .tuning-table th{background:var(--gray-100);padding:10px;text-align:left;border:1px solid var(--gray-200);}
+    .tuning-table td{padding:10px;border:1px solid var(--gray-200);}
+    .fp-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .fp-table th{background:#fef3c7;padding:10px;text-align:left;border:1px solid #fde68a;}
+    .fp-table td{padding:10px;border:1px solid var(--gray-200);}
+    .where-box{background:#e0f2fe;padding:12px 16px;border-radius:6px;font-size:0.85rem;margin-bottom:16px;}
+    .compare-box{background:#f0fdf4;border:1px solid #86efac;padding:16px;border-radius:8px;margin:16px 0;}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text"><h1>myfirstpro</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">WAF Use Cases</div>
+          <a href="uc1-volume.html" class="nav-item"><span>UC1: Volume Anomaly</span></a>
+          <a href="uc2-single-ip.html" class="nav-item"><span>UC2: Single IP Flood</span></a>
+          <a href="uc3-auth.html" class="nav-item"><span>UC3: Auth Attack</span></a>
+          <a href="uc4-sqli.html" class="nav-item"><span>UC4: SQLi/XSS</span></a>
+          <a href="uc5-distributed.html" class="nav-item active"><span>UC5: Distributed DDoS</span></a>
+          <a href="uc6-geo.html" class="nav-item"><span>UC6: Geo Anomaly</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Use Cases</div>
+          <a href="../mfa/uc1-fatigue.html" class="nav-item"><span>UC1: MFA Fatigue</span></a>
+          <a href="../mfa/uc2-breach.html" class="nav-item"><span>UC2: Breach Indicator</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../waf-usecases.html" class="breadcrumb-item">WAF</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC5: Distributed DDoS</span>
+          </div>
+        </div>
+        <span class="badge error">HIGH</span>
+      </header>
+
+      <div class="page-content">
+        <!-- Header Card -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+          <h1 style="font-size:1.5rem;margin-bottom:12px;">WAF-UC5: Distributed Low-and-Slow DDoS Detection</h1>
+          <p style="font-size:1rem;color:var(--gray-600);margin-bottom:20px;">Detect when MANY different IPs each send FEW requests - classic botnet pattern that evades single-source detection. Each individual IP looks innocent, but together they form a coordinated attack.</p>
+          
+          <div class="grid grid-4">
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Severity</span>
+              <span class="badge error">HIGH</span>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">MITRE</span>
+              <code style="font-size:0.9rem;">T1498</code>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Schedule</span>
+              <strong>Every 5 min</strong>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Time Range</span>
+              <strong>Last 15 min</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- How This Differs from UC2 -->
+        <div class="section">
+          <h2 class="section-title">How This Differs from UC2 (Single Source)</h2>
+          <div class="compare-box">
+            <div class="grid grid-2">
+              <div>
+                <h4 style="color:#ea580c;margin-bottom:8px;">UC2: Single Source Flood</h4>
+                <ul style="font-size:0.9rem;line-height:1.8;">
+                  <li><strong>Pattern:</strong> 1 IP sends 1000+ requests</li>
+                  <li><strong>Detection:</strong> High volume per IP</li>
+                  <li><strong>Attacker:</strong> Single compromised machine or script</li>
+                  <li><strong>Evasion:</strong> Easy to detect and block</li>
+                </ul>
+              </div>
+              <div>
+                <h4 style="color:#dc2626;margin-bottom:8px;">UC5: Distributed Low-and-Slow</h4>
+                <ul style="font-size:0.9rem;line-height:1.8;">
+                  <li><strong>Pattern:</strong> 500 IPs each send 5 requests</li>
+                  <li><strong>Detection:</strong> Many IPs, low per-IP volume</li>
+                  <li><strong>Attacker:</strong> Botnet, coordinated attack</li>
+                  <li><strong>Evasion:</strong> Evades per-IP rate limits</li>
+                </ul>
+              </div>
+            </div>
+            <p style="margin-top:16px;font-size:0.9rem;color:var(--gray-700);"><strong>Key insight:</strong> If avg_requests_per_ip is LOW but total_blocks is HIGH, you have a distributed attack.</p>
+          </div>
+        </div>
+
+        <!-- STEP 1: Decision Tree -->
+        <div class="section">
+          <h2 class="section-title">Step 1: Decision Tree (Detection Logic)</h2>
+          
+          <div class="impl-step">
+            <div class="diagram-box">
+              <pre class="mermaid">
+flowchart TD
+    START[Aggregate all blocked events by vhost over 15 min window] --> A[Count total_blocks]
+    A --> B[Count unique_attacker IPs]
+    B --> C{Is unique_attackers GT 50}
+    C -->|No| LOW_DIST[Not enough distribution - check UC2 for single source]
+    C -->|Yes| D{Is total_blocks GT 200}
+    D -->|No| LOWVOL[Low volume despite distribution - continue monitoring]
+    D -->|Yes| E[Calculate avg_requests_per_ip]
+    E --> E1[avg_per_ip = total_blocks divided by unique_attackers]
+    E1 --> F{Is avg_per_ip LT 10}
+    F -->|No| HIGHPER[High per-IP volume - route to UC2 instead]
+    F -->|Yes| CONFIRMED[CONFIRMED: Distributed Low-and-Slow Attack Pattern]
+    CONFIRMED --> G[Classify botnet size]
+    G --> H{Is unique_attackers GT 500}
+    H -->|Yes| MASSIVE[Massive Botnet - 500 plus IPs]
+    H -->|No| I{Is unique_attackers GT 200}
+    I -->|Yes| LARGE[Large Botnet - 200 to 500 IPs]
+    I -->|No| J{Is unique_attackers GT 100}
+    J -->|Yes| MEDIUM[Medium Botnet - 100 to 200 IPs]
+    J -->|No| SMALL[Small Distributed - 50 to 100 IPs]
+    MASSIVE --> CRIT[CRITICAL severity]
+    LARGE --> HIGH1[HIGH severity]
+    MEDIUM --> HIGH1
+    SMALL --> MED[MEDIUM severity]
+    CRIT --> CREATE[Create Notable Event]
+    HIGH1 --> CREATE
+    MED --> CREATE
+    CREATE --> GEO[Enrich with geographic distribution]
+    GEO --> ASN[Analyze ASN clustering]
+    ASN --> THROTTLE[Throttle by vhost for 30 min]
+
+    style CRIT fill:#fee2e2,stroke:#dc2626,stroke-width:2px
+    style HIGH1 fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style MED fill:#fefce8,stroke:#ca8a04,stroke-width:2px
+    style CONFIRMED fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    style LOW_DIST fill:#dcfce7,stroke:#16a34a
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP A: Build SPL -->
+        <div class="section">
+          <h2 class="section-title">Step A: Build SPL in Search First</h2>
+          <div class="where-box">
+            <strong>Where:</strong> Splunk Search → Build and test SPL
+          </div>
+          
+          <div class="impl-step">
+            <h4>Variant A: Basic Distributed Detection</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> Starting out. Detects the distributed pattern based on IP count and per-IP average.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| where waf_action="deny" OR waf_action="block"
+| stats count as total_blocks 
+        dc(src_ip) as unique_attackers
+        values(src_ip) as sample_ips
+        BY vhost
+| where unique_attackers > 50 AND total_blocks > 200
+| eval avg_per_ip = round(total_blocks / unique_attackers, 1)
+| where avg_per_ip < 10
+| eval botnet_size = case(
+    unique_attackers > 500, "Massive Botnet (500+ IPs)",
+    unique_attackers > 200, "Large Botnet (200-500 IPs)",
+    unique_attackers > 100, "Medium Botnet (100-200 IPs)",
+    1=1, "Small Distributed (50-100 IPs)"
+)
+| eval severity = case(
+    unique_attackers > 500, "critical",
+    unique_attackers > 100, "high",
+    1=1, "medium"
+)
+| table vhost total_blocks unique_attackers avg_per_ip botnet_size sample_ips severity</code></pre></div></div>
+          </div>
+
+          <div class="impl-step">
+            <h4>Variant B: With Geographic Distribution Analysis</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> You want to understand WHERE the botnet is coming from geographically.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| eval country=coalesce(src_country,'geo.country')
+| where waf_action="deny" OR waf_action="block"
+| iplocation src_ip
+| stats count as total_blocks 
+        dc(src_ip) as unique_attackers
+        dc(Country) as unique_countries
+        values(Country) as attack_countries
+        BY vhost
+| where unique_attackers > 50 AND total_blocks > 200
+| eval avg_per_ip = round(total_blocks / unique_attackers, 1)
+| where avg_per_ip < 10
+| eval geo_spread = case(
+    unique_countries > 20, "Global Botnet (20+ countries)",
+    unique_countries > 10, "Multi-Region (10-20 countries)",
+    unique_countries > 3, "Regional Cluster (3-10 countries)",
+    1=1, "Single Region (1-3 countries)"
+)
+| eval severity = case(
+    unique_attackers > 500, "critical",
+    unique_attackers > 100 AND unique_countries > 10, "critical",
+    unique_attackers > 100, "high",
+    1=1, "medium"
+)
+| table vhost total_blocks unique_attackers avg_per_ip unique_countries geo_spread attack_countries severity</code></pre></div></div>
+          </div>
+
+          <div class="impl-step">
+            <h4>Variant C: With ASN/Network Analysis</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> You want to identify if attacks come from specific hosting providers, residential ISPs, or cloud providers.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| eval asn=coalesce(src_asn,'attackData.asn','geo.asn')
+| where waf_action="deny" OR waf_action="block"
+| stats count as total_blocks 
+        dc(src_ip) as unique_attackers
+        dc(asn) as unique_asns
+        values(asn) as top_asns
+        BY vhost
+| where unique_attackers > 50 AND total_blocks > 200
+| eval avg_per_ip = round(total_blocks / unique_attackers, 1)
+| where avg_per_ip < 10
+| eval network_analysis = case(
+    unique_asns < 5 AND unique_attackers > 100, "Concentrated in few networks - possible VPS/hosting abuse",
+    unique_asns > 50, "Highly distributed across networks - likely residential botnet",
+    1=1, "Mixed network distribution"
+)
+| eval severity = case(unique_attackers > 500, "critical", unique_attackers > 100, "high", 1=1, "medium")
+| table vhost total_blocks unique_attackers avg_per_ip unique_asns network_analysis top_asns severity</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP B: ES Correlation Search -->
+        <div class="section">
+          <h2 class="section-title">Step B: ES Correlation Search Settings</h2>
+          <div class="where-box">
+            <strong>Where:</strong> ES → Content Management → Correlation Searches → Create New
+          </div>
+          
+          <div class="impl-step">
+            <h4>ES Configuration</h4>
+            <dl class="es-config">
+              <dt>Search Name</dt>
+              <dd>WAF-UC5: Distributed Low-and-Slow DDoS</dd>
+              
+              <dt>Cron Schedule</dt>
+              <dd>*/5 * * * *</dd>
+              
+              <dt>Earliest Time</dt>
+              <dd>-15m</dd>
+              
+              <dt>Latest Time</dt>
+              <dd>now</dd>
+              
+              <dt>Notable Title</dt>
+              <dd>WAF: $botnet_size$ attacking $vhost$ ($unique_attackers$ unique IPs, $total_blocks$ total blocks)</dd>
+              
+              <dt>Notable Description</dt>
+              <dd>Distributed low-and-slow attack detected on $vhost$. Total blocked requests: $total_blocks$ from $unique_attackers$ unique IP addresses. Average requests per IP: $avg_per_ip$ (low per-IP volume indicates botnet). Geographic spread: $geo_spread$. Source countries: $attack_countries$. This pattern evades per-IP rate limits and indicates coordinated botnet activity.</dd>
+              
+              <dt>Default Severity</dt>
+              <dd>High</dd>
+              
+              <dt>Throttle Duration</dt>
+              <dd>1800 seconds (30 min)</dd>
+              
+              <dt>Throttle Fields</dt>
+              <dd>vhost</dd>
+              
+              <dt>MITRE ATT&CK</dt>
+              <dd>T1498 - Network Denial of Service</dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- STEP C: Drilldown -->
+        <div class="section">
+          <h2 class="section-title">Step C: Drilldown Search</h2>
+          
+          <div class="impl-step">
+            <h4>Show Top Attacker IPs and Their Patterns</h4>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-30m vhost="$vhost$"
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
+| where waf_action="deny" OR waf_action="block"
+| iplocation src_ip
+| stats count as requests
+        dc(uri) as unique_uris
+        values(uri) as sample_uris
+        values(signature) as signatures
+        values(Country) as country
+        BY src_ip
+| sort - requests
+| head 50
+| eval request_pattern = case(
+    unique_uris > 20, "Scanner (hitting many endpoints)",
+    unique_uris < 3, "Focused (same endpoints)",
+    1=1, "Mixed"
+)</code></pre></div></div>
+          </div>
+
+          <div class="impl-step">
+            <h4>Country Distribution Breakdown</h4>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-30m vhost="$vhost$"
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| where waf_action="deny" OR waf_action="block"
+| iplocation src_ip
+| stats count as blocks dc(src_ip) as unique_ips BY Country
+| sort - unique_ips
+| head 20
+| eval percentage = round(unique_ips / sum(unique_ips) * 100, 1)</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP D: Tuning -->
+        <div class="section">
+          <h2 class="section-title">Step D: Tuning Parameters</h2>
+          
+          <div class="impl-step">
+            <h4>Threshold Recommendations by Site Type</h4>
+            <table class="tuning-table">
+              <thead>
+                <tr><th>Parameter</th><th>Small B2B Site</th><th>Medium Site</th><th>Large Consumer</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Min unique attackers</strong></td>
+                  <td>20</td>
+                  <td>50</td>
+                  <td>100</td>
+                  <td>Number of distinct IPs to consider "distributed"</td>
+                </tr>
+                <tr>
+                  <td><strong>Min total blocks</strong></td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>500</td>
+                  <td>Total blocked requests to trigger</td>
+                </tr>
+                <tr>
+                  <td><strong>Max avg per IP</strong></td>
+                  <td>5</td>
+                  <td>10</td>
+                  <td>15</td>
+                  <td>If higher, route to UC2 instead</td>
+                </tr>
+                <tr>
+                  <td><strong>Large botnet threshold</strong></td>
+                  <td>100 IPs</td>
+                  <td>200 IPs</td>
+                  <td>500 IPs</td>
+                  <td>When to escalate to critical</td>
+                </tr>
+                <tr>
+                  <td><strong>Time window</strong></td>
+                  <td>15 min</td>
+                  <td>15 min</td>
+                  <td>15 min</td>
+                  <td>Longer window catches slow attacks</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- STEP E: False Positives -->
+        <div class="section">
+          <h2 class="section-title">Step E: Handle False Positives</h2>
+          
+          <div class="impl-step warning">
+            <h4>Common False Positives & Solutions</h4>
+            <table class="fp-table">
+              <thead>
+                <tr><th>FP Source</th><th>How to Identify</th><th>Solution</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Mobile carrier NAT</strong></td>
+                  <td>Many IPs from same mobile carrier ASN, legitimate user agents</td>
+                  <td>Check ASN concentration; mobile carriers share IPs across many users</td>
+                </tr>
+                <tr>
+                  <td><strong>CDN/Proxy traffic</strong></td>
+                  <td>IPs belong to CDN ranges (Cloudflare, Akamai edge)</td>
+                  <td>Exclude known CDN IP ranges; use X-Forwarded-For for real client</td>
+                </tr>
+                <tr>
+                  <td><strong>Corporate egress clusters</strong></td>
+                  <td>Multiple IPs but same user agent pattern, same /24 subnet</td>
+                  <td>Check subnet clustering; corporate networks often have IP pools</td>
+                </tr>
+                <tr>
+                  <td><strong>Search engine crawlers</strong></td>
+                  <td>Googlebot/Bingbot from many IPs, hitting many URIs</td>
+                  <td>Verify UA and reverse DNS; allowlist legitimate crawler ranges</td>
+                </tr>
+                <tr>
+                  <td><strong>Legitimate traffic spike</strong></td>
+                  <td>Corresponds to marketing campaign, product launch</td>
+                  <td>Correlate with business events; may be WAF rules too aggressive</td>
+                </tr>
+                <tr>
+                  <td><strong>Security research/bug bounty</strong></td>
+                  <td>Diverse IPs but from known security research ASNs</td>
+                  <td>Allowlist known bug bounty platform IPs if you have a program</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section">
+          <div class="grid grid-2">
+            <div>
+              <a href="uc4-sqli.html" class="btn btn-secondary">← Previous: UC4 SQLi/XSS</a>
+            </div>
+            <div style="text-align:right;">
+              <a href="uc6-geo.html" class="btn btn-primary">Next: UC6 Geo Anomaly →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/app.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{nodeSpacing:25,rankSpacing:30,curve:'basis'}});
+  </script>
+</body>
+</html>

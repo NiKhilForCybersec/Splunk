@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAF-UC8: Bot/Scraper Detection | myfirstpro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    .impl-step{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .impl-step h4{color:var(--primary-700);margin-bottom:16px;font-size:1rem;}
+    .impl-step.warning{border-left-color:#f59e0b;}
+    .diagram-box{background:white;padding:20px;border-radius:8px;margin:12px 0;min-height:300px;overflow-x:auto;}
+    .es-config{display:grid;grid-template-columns:220px 1fr;gap:10px;font-size:0.85rem;background:white;padding:16px;border-radius:6px;margin-top:12px;}
+    .es-config dt{font-weight:600;color:var(--gray-700);}
+    .es-config dd{color:var(--gray-600);margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+    .tuning-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .tuning-table th{background:var(--gray-100);padding:10px;text-align:left;border:1px solid var(--gray-200);}
+    .tuning-table td{padding:10px;border:1px solid var(--gray-200);}
+    .fp-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .fp-table th{background:#fef3c7;padding:10px;text-align:left;border:1px solid #fde68a;}
+    .fp-table td{padding:10px;border:1px solid var(--gray-200);}
+    .where-box{background:#e0f2fe;padding:12px 16px;border-radius:6px;font-size:0.85rem;margin-bottom:16px;}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text"><h1>myfirstpro</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">WAF Use Cases</div>
+          <a href="uc1-volume.html" class="nav-item"><span>UC1: Volume Anomaly</span></a>
+          <a href="uc4-sqli.html" class="nav-item"><span>UC4: SQLi/XSS</span></a>
+          <a href="uc7-bypass.html" class="nav-item"><span>UC7: WAF Bypass</span></a>
+          <a href="uc8-bot.html" class="nav-item active"><span>UC8: Bot Detection</span></a>
+          <a href="uc9-api.html" class="nav-item"><span>UC9: API Abuse</span></a>
+          <a href="uc10-path.html" class="nav-item"><span>UC10: Path Traversal</span></a>
+          <a href="uc11-scanner.html" class="nav-item"><span>UC11: Scanner Detection</span></a>
+          <a href="uc12-rate.html" class="nav-item"><span>UC12: Rate Limit</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../waf-usecases.html" class="breadcrumb-item">WAF</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC8: Bot Detection</span>
+          </div>
+        </div>
+        <span class="badge warning">MEDIUM</span>
+      </header>
+
+      <div class="page-content">
+        <!-- Header Card -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+          <h1 style="font-size:1.5rem;margin-bottom:12px;">WAF-UC8: Bot/Scraper Detection</h1>
+          <p style="font-size:1rem;color:var(--gray-600);margin-bottom:20px;">Detect automated scrapers and bots by analyzing behavioral patterns: high request rates, sequential URL access, lack of JavaScript execution, suspicious user agents, and missing typical browser headers.</p>
+          
+          <div class="grid grid-4">
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Severity</span>
+              <span class="badge warning">MEDIUM</span>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">MITRE</span>
+              <code style="font-size:0.9rem;">T1595</code>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Schedule</span>
+              <strong>Every 15 min</strong>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Time Range</span>
+              <strong>Last 30 min</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 1: Decision Tree -->
+        <div class="section">
+          <h2 class="section-title">Step 1: Decision Tree (Detection Logic)</h2>
+          
+          <div class="impl-step">
+            <div class="diagram-box">
+              <pre class="mermaid">
+flowchart TD
+    START[Aggregate requests by source IP over 30 min] --> A[Calculate behavioral indicators]
+    A --> B[Count total requests]
+    B --> C[Count unique URIs accessed]
+    C --> D[Check user agent patterns]
+    D --> E{Is request count GT 500}
+    E -->|No| F{Is request count GT 100 with suspicious UA}
+    F -->|No| LOW[Below bot threshold - normal traffic]
+    F -->|Yes| SUSPICIOUS[Suspicious - low volume but bot UA]
+    E -->|Yes| G{Calculate URI diversity ratio}
+    G --> G1[ratio = unique_uris divided by total_requests]
+    G1 --> H{Is ratio GT 0.8 - accessing many unique pages}
+    H -->|Yes| SCRAPER[SCRAPER PATTERN - Crawling many pages]
+    H -->|No| I{Is ratio LT 0.1 - hitting same pages repeatedly}
+    I -->|Yes| HAMMER[HAMMERING - Same endpoint repeatedly]
+    I -->|No| MIXED[Mixed pattern - needs investigation]
+    SCRAPER --> J{Is user agent a known bot}
+    J -->|Yes| KNOWN_BOT[Known Bot - check if legitimate]
+    J -->|No| STEALTH[Stealth Scraper - hiding identity]
+    HAMMER --> HIGH1[HIGH - Possible attack or abuse]
+    STEALTH --> HIGH1
+    KNOWN_BOT --> K{Is bot in legitimate bots list}
+    K -->|Yes| LEGIT[Legitimate bot - Googlebot etc]
+    K -->|No| BAD_BOT[Bad Bot - unknown automated access]
+    BAD_BOT --> MED[MEDIUM severity]
+    SUSPICIOUS --> MED
+    MIXED --> MED
+    HIGH1 --> CREATE[Create Notable Event]
+    MED --> CREATE
+
+    style SCRAPER fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    style HAMMER fill:#fee2e2,stroke:#dc2626,stroke-width:2px
+    style STEALTH fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style LEGIT fill:#dcfce7,stroke:#16a34a
+    style LOW fill:#dcfce7,stroke:#16a34a
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bot Classification -->
+        <div class="section">
+          <h2 class="section-title">Bot Classification Reference</h2>
+          
+          <div class="impl-step">
+            <h4>Know Your Bots</h4>
+            <table class="tuning-table">
+              <thead>
+                <tr><th>Bot Type</th><th>User Agent Pattern</th><th>Behavior</th><th>Action</th></tr>
+              </thead>
+              <tbody>
+                <tr style="background:#dcfce7;">
+                  <td><strong>Search Engine Crawlers</strong></td>
+                  <td>Googlebot, Bingbot, Slurp, DuckDuckBot</td>
+                  <td>Respects robots.txt, moderate rate</td>
+                  <td>✅ Allow - verify via reverse DNS</td>
+                </tr>
+                <tr style="background:#dcfce7;">
+                  <td><strong>Monitoring Services</strong></td>
+                  <td>Pingdom, UptimeRobot, Site24x7</td>
+                  <td>Regular intervals, few URLs</td>
+                  <td>✅ Allow - known IPs</td>
+                </tr>
+                <tr style="background:#fefce8;">
+                  <td><strong>SEO Tools</strong></td>
+                  <td>Ahrefs, Semrush, Majestic</td>
+                  <td>High volume crawling</td>
+                  <td>⚠️ Rate limit if excessive</td>
+                </tr>
+                <tr style="background:#fef2f2;">
+                  <td><strong>Scrapers</strong></td>
+                  <td>Python-urllib, curl, wget, scrapy</td>
+                  <td>High volume, no JS, sequential access</td>
+                  <td>🔴 Block or rate limit</td>
+                </tr>
+                <tr style="background:#fef2f2;">
+                  <td><strong>Headless Browsers</strong></td>
+                  <td>HeadlessChrome, PhantomJS, Puppeteer</td>
+                  <td>Automated browsing, may bypass detection</td>
+                  <td>🔴 Investigate - likely scraping</td>
+                </tr>
+                <tr style="background:#fef2f2;">
+                  <td><strong>Empty/Suspicious UA</strong></td>
+                  <td>Empty, single character, or generic</td>
+                  <td>Trying to evade detection</td>
+                  <td>🔴 Block</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- STEP A: Build SPL -->
+        <div class="section">
+          <h2 class="section-title">Step A: Build SPL in Search First</h2>
+          <div class="where-box">
+            <strong>Where:</strong> Splunk Search → Build and test SPL
+          </div>
+          
+          <div class="impl-step">
+            <h4>Bot Detection with Behavioral Analysis</h4>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-30m
+| spath
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| eval user_agent=coalesce(http_user_agent,'httpMessage.requestHeaders.User-Agent')
+| stats count as total_requests
+        dc(uri) as unique_uris
+        values(user_agent) as user_agents
+        dc(user_agent) as ua_count
+        BY src_ip, vhost
+| where total_requests > 100
+| eval uri_diversity = round(unique_uris / total_requests, 2)
+| eval is_known_good_bot = if(match(mvjoin(user_agents,","), "(?i)(googlebot|bingbot|slurp|duckduckbot|facebookexternalhit|twitterbot|linkedinbot)"), "Yes", "No")
+| eval is_scraper_ua = if(match(mvjoin(user_agents,","), "(?i)(python|curl|wget|scrapy|httpclient|java\/|go-http|ruby|perl|php|libwww)"), "Yes", "No")
+| eval is_headless = if(match(mvjoin(user_agents,","), "(?i)(headless|phantom|puppeteer|selenium|playwright)"), "Yes", "No")
+| eval is_empty_ua = if(ua_count=0 OR match(mvjoin(user_agents,","), "^.{0,5}$"), "Yes", "No")
+| eval bot_type = case(
+    is_known_good_bot="Yes", "Legitimate Search Bot",
+    is_headless="Yes", "Headless Browser (Suspicious)",
+    is_scraper_ua="Yes", "Known Scraper Tool",
+    is_empty_ua="Yes", "Empty/Suspicious UA",
+    uri_diversity > 0.8 AND total_requests > 500, "Stealth Scraper (high diversity)",
+    uri_diversity < 0.1 AND total_requests > 500, "Endpoint Hammering",
+    1=1, "Unknown Automated"
+)
+| eval behavior = case(
+    uri_diversity > 0.8, "Crawling (many unique pages)",
+    uri_diversity < 0.1, "Hammering (same pages)",
+    1=1, "Mixed"
+)
+| eval severity = case(
+    is_known_good_bot="Yes", "info",
+    is_headless="Yes" AND total_requests > 500, "high",
+    is_scraper_ua="Yes" AND total_requests > 500, "high",
+    is_empty_ua="Yes", "high",
+    total_requests > 1000, "medium",
+    1=1, "low"
+)
+| where severity!="info" AND severity!="low"
+| table src_ip vhost total_requests unique_uris uri_diversity bot_type behavior user_agents severity</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP B: ES Config -->
+        <div class="section">
+          <h2 class="section-title">Step B: ES Correlation Search Settings</h2>
+          
+          <div class="impl-step">
+            <h4>ES Configuration</h4>
+            <dl class="es-config">
+              <dt>Search Name</dt>
+              <dd>WAF-UC8: Bot Scraper Detection</dd>
+              
+              <dt>Cron Schedule</dt>
+              <dd>*/15 * * * *</dd>
+              
+              <dt>Earliest Time</dt>
+              <dd>-30m</dd>
+              
+              <dt>Notable Title</dt>
+              <dd>Bot Detected: $bot_type$ on $vhost$ from $src_ip$ ($total_requests$ requests)</dd>
+              
+              <dt>Notable Description</dt>
+              <dd>Automated traffic detected from $src_ip$ to $vhost$. Type: $bot_type$. Requests: $total_requests$. Unique URIs: $unique_uris$ (diversity: $uri_diversity$). Behavior: $behavior$. User agents: $user_agents$</dd>
+              
+              <dt>Default Severity</dt>
+              <dd>Medium</dd>
+              
+              <dt>Throttle Duration</dt>
+              <dd>3600 seconds (1 hour)</dd>
+              
+              <dt>Throttle Fields</dt>
+              <dd>src_ip, vhost</dd>
+              
+              <dt>MITRE ATT&CK</dt>
+              <dd>T1595 - Active Scanning</dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- STEP C: False Positives -->
+        <div class="section">
+          <h2 class="section-title">Step C: Handle False Positives</h2>
+          
+          <div class="impl-step warning">
+            <h4>Common False Positives & Solutions</h4>
+            <table class="fp-table">
+              <thead>
+                <tr><th>FP Source</th><th>How to Identify</th><th>Solution</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Legitimate search bots</strong></td>
+                  <td>Googlebot, Bingbot UA strings</td>
+                  <td>Verify via reverse DNS; allowlist verified crawler IPs</td>
+                </tr>
+                <tr>
+                  <td><strong>Monitoring services</strong></td>
+                  <td>Pingdom, UptimeRobot, known monitoring IPs</td>
+                  <td>Create monitoring_services.csv lookup with known IPs</td>
+                </tr>
+                <tr>
+                  <td><strong>Partner API integrations</strong></td>
+                  <td>Known partner IPs, specific API endpoints</td>
+                  <td>Allowlist partner IPs; they may not use browser UAs</td>
+                </tr>
+                <tr>
+                  <td><strong>Internal tools</strong></td>
+                  <td>Corporate IP ranges, internal automation</td>
+                  <td>Exclude internal IP ranges from detection</td>
+                </tr>
+                <tr>
+                  <td><strong>Mobile apps</strong></td>
+                  <td>Custom mobile app user agents</td>
+                  <td>Identify your mobile app UA patterns; exclude from bot detection</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section">
+          <div class="grid grid-2">
+            <div>
+              <a href="uc7-bypass.html" class="btn btn-secondary">← Previous: UC7 WAF Bypass</a>
+            </div>
+            <div style="text-align:right;">
+              <a href="uc9-api.html" class="btn btn-primary">Next: UC9 API Abuse →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/app.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{nodeSpacing:25,rankSpacing:30,curve:'basis'}});
+  </script>
+</body>
+</html>

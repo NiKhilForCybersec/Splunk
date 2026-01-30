@@ -5,40 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MFA Use Cases | myfirstpro Detection Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   <style>
-    .uc-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;border-bottom:2px solid var(--gray-200);padding-bottom:12px;}
-    .uc-tab{padding:6px 12px;border-radius:4px 4px 0 0;cursor:pointer;font-size:0.75rem;font-weight:500;background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);border-bottom:none;transition:all 0.2s;}
-    .uc-tab:hover{background:var(--gray-200);}
-    .uc-tab.active{background:var(--primary-500);color:white;border-color:var(--primary-500);}
-    .uc-tab.critical{border-left:3px solid #dc2626;}
-    .uc-tab.high{border-left:3px solid #ea580c;}
-    .uc-tab.medium{border-left:3px solid #ca8a04;}
-    .uc-content{display:none;}
-    .uc-content.active{display:block;}
-    .step-box{margin:20px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
-    .step-box h4{color:var(--primary-700);margin-bottom:12px;font-size:0.95rem;}
-    .step-box.warning{border-left-color:var(--warning-500);}
-    .step-box.warning h4{color:var(--warning-700);}
-    .step-box.error{border-left-color:#dc2626;}
-    .step-box.error h4{color:#dc2626;}
-    .src-tabs{display:flex;gap:6px;margin-bottom:12px;}
-    .src-tab{padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.7rem;background:white;border:1px solid var(--gray-300);}
-    .src-tab.active{background:var(--primary-100);border-color:var(--primary-500);color:var(--primary-700);}
-    .src-tab.cyberark{border-left:3px solid #7c3aed;}
-    .src-tab.entra{border-left:3px solid #0078d4;}
-    .src-content{display:none;}
-    .src-content.active{display:block;}
-    .cfg-grid{display:grid;grid-template-columns:180px 1fr;gap:8px;font-size:0.8rem;background:white;padding:12px;border-radius:6px;}
-    .cfg-grid dt{font-weight:600;color:var(--gray-700);}
-    .cfg-grid dd{color:var(--gray-600);margin:0;}
-    .check-list{list-style:none;padding:0;margin:0;}
-    .check-list li{padding:6px 0;padding-left:24px;position:relative;font-size:0.8rem;border-bottom:1px solid var(--gray-100);}
-    .check-list li:before{content:"☐";position:absolute;left:0;color:var(--primary-500);font-weight:bold;}
-    .tree-box{background:white;padding:16px;border-radius:8px;margin:12px 0;min-height:200px;}
+    .uc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:20px;margin-top:20px;}
+    .uc-card{background:white;border:1px solid var(--gray-200);border-radius:12px;padding:24px;transition:all 0.2s;text-decoration:none;color:inherit;display:block;}
+    .uc-card:hover{border-color:var(--primary-500);box-shadow:0 4px 12px rgba(0,0,0,0.1);transform:translateY(-2px);}
+    .uc-card.critical{border-left:4px solid #dc2626;background:#fef2f2;}
+    .uc-card.high{border-left:4px solid #ea580c;}
+    .uc-card.medium{border-left:4px solid #ca8a04;}
+    .uc-card h3{font-size:1.1rem;margin-bottom:8px;color:var(--gray-900);}
+    .uc-card p{font-size:0.85rem;color:var(--gray-600);margin-bottom:12px;line-height:1.6;}
+    .uc-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:0.75rem;}
+    .uc-meta span{background:var(--gray-100);padding:4px 8px;border-radius:4px;}
+    .priority-note{background:#fef2f2;border:2px solid #dc2626;padding:16px;border-radius:8px;margin-bottom:24px;}
+    .priority-note h4{color:#dc2626;margin-bottom:8px;}
   </style>
 </head>
 <body>
@@ -50,10 +31,7 @@
             <div class="sidebar-logo-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <div class="sidebar-logo-text">
-              <h1>myfirstpro</h1>
-              <span>Detection Engineering</span>
-            </div>
+            <div class="sidebar-logo-text"><h1>myfirstpro</h1><span>Detection Engineering</span></div>
           </a>
         </div>
       </div>
@@ -61,64 +39,27 @@
         <div class="nav-section">
           <div class="nav-section-title">Getting Started</div>
           <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
-          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
-          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
-          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Splunk Fundamentals</div>
-          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
-          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
-          <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow & Event Hub</span></a>
-          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
-          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Splunk How-To Guide</span></a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Data Sources</div>
-          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
-          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
-          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Splunk Operations</div>
-          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
-          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
-          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
-          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
-          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">WAF/DDoS Project</div>
-          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-12)</span></a>
+          <a href="waf-overview.html" class="nav-item"><span>Overview</span></a>
+          <a href="waf-usecases.html" class="nav-item"><span>Use Cases Index</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">MFA Project</div>
-          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="mfa-usecases.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Response & Support</div>
-          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
-          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
-          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+          <a href="mfa-overview.html" class="nav-item"><span>Overview</span></a>
+          <a href="mfa-usecases.html" class="nav-item active"><span>Use Cases Index</span></a>
         </div>
       </nav>
-      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
     </aside>
 
     <main class="main-content">
       <header class="header">
         <div class="header-left">
-          <button class="menu-toggle" aria-label="Toggle menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-item">MFA Project</span>
-            <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-item current">Use Cases</span>
+            <span class="breadcrumb-item current">MFA Use Cases</span>
           </div>
         </div>
         <span class="badge cyberark">8 Detections</span>
@@ -127,669 +68,138 @@
       <div class="page-content">
         <div class="section">
           <h1 class="section-title">MFA Detection Use Cases</h1>
-          <p class="section-subtitle">Complete implementation guide — field normalization, query variants, ES settings, drilldowns, tuning</p>
+          <p class="section-subtitle">Click any use case for full implementation: Decision Tree → SPL (CyberArk + Entra) → ES Config → Response Procedures</p>
         </div>
 
-        <!-- ========== DATA SOURCE PRIORITY ========== -->
         <div class="section">
-          <div class="callout critical">
-            <div class="callout-content">
-              <div class="callout-title">🔐 Data Source Priority — CRITICAL to Understand</div>
-              <div class="callout-body">
-                <strong style="color:#7c3aed;">CyberArk Identity = PRIMARY</strong> for privileged users (admins, IT staff, executives)<br>
-                <strong style="color:#0078d4;">Entra ID = SECONDARY</strong> for standard employees and correlation<br><br>
-                <em>Why?</em> Privileged users bypass Entra MFA and authenticate through CyberArk.
-                <strong>If you only monitor Entra, you'll miss attacks on your most critical accounts!</strong>
-              </div>
-            </div>
+          <div class="priority-note">
+            <h4>🚨 Priority Order: UC2 → UC1 → UC3 → Rest</h4>
+            <p style="font-size:0.9rem;color:var(--gray-700);"><strong>UC2 (Breach Indicator)</strong> is your MOST IMPORTANT detection. It tells you an attack succeeded and the attacker is inside. Deploy UC2 first, then UC1, then the rest.</p>
           </div>
         </div>
 
-        <!-- ========== FIELD NORMALIZATION ========== -->
         <div class="section">
-          <h2 class="subsection-title">Step 0: Field Normalization by Source</h2>
-          
+          <h2 class="subsection-title">🔴 Critical - Deploy First</h2>
+          <div class="uc-grid">
+            <a href="mfa/uc2-breach.html" class="uc-card critical">
+              <h3>🚨 UC2: MFA Fatigue → Success (BREACH INDICATOR)</h3>
+              <p><strong>HIGHEST PRIORITY.</strong> Multiple MFA denials followed by SUCCESS = attacker likely got user to approve. This is active breach detection.</p>
+              <div class="uc-meta">
+                <span class="badge" style="background:#dc2626;color:white;">CRITICAL</span>
+                <span>T1621, T1078</span>
+                <span>Every 5 min</span>
+              </div>
+            </a>
+            
+            <a href="mfa/uc1-fatigue.html" class="uc-card critical">
+              <h3>UC1: MFA Fatigue / Push Bombing</h3>
+              <p>Attacker spams MFA push notifications hoping user accidentally approves. Used in Uber and Cisco breaches.</p>
+              <div class="uc-meta">
+                <span class="badge" style="background:#dc2626;color:white;">CRITICAL</span>
+                <span>T1621</span>
+                <span>Every 5 min</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="subsection-title">🟠 High Priority - Geographic & Travel</h2>
+          <div class="uc-grid">
+            <a href="mfa/uc3-travel.html" class="uc-card high">
+              <h3>UC3: Impossible Travel</h3>
+              <p>User logs in from Toronto then Moscow in 30 minutes. Unless they have a teleporter, this is credential theft.</p>
+              <div class="uc-meta">
+                <span class="badge error">HIGH</span>
+                <span>T1078</span>
+                <span>Every 15 min</span>
+              </div>
+            </a>
+            
+            <a href="mfa/uc4-location.html" class="uc-card high">
+              <h3>UC4: New Location Login</h3>
+              <p>First-time login from a country or city the user has never accessed from before.</p>
+              <div class="uc-meta">
+                <span class="badge error">HIGH</span>
+                <span>T1078</span>
+                <span>Every 15 min</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="subsection-title">🟠 High Priority - Account Anomalies</h2>
+          <div class="uc-grid">
+            <a href="mfa/uc6-brute.html" class="uc-card high">
+              <h3>UC6: Privileged User Brute Force</h3>
+              <p>Multiple failed login attempts specifically targeting admin and privileged accounts.</p>
+              <div class="uc-meta">
+                <span class="badge error">HIGH</span>
+                <span>T1110</span>
+                <span>Every 5 min</span>
+              </div>
+            </a>
+            
+            <a href="mfa/uc8-dormant.html" class="uc-card high">
+              <h3>UC8: Dormant Account Activation</h3>
+              <p>Account inactive for 90+ days suddenly becomes active. Possible compromise of forgotten account.</p>
+              <div class="uc-meta">
+                <span class="badge error">HIGH</span>
+                <span>T1078</span>
+                <span>Every 1 hour</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="subsection-title">🟡 Medium Priority - Behavioral</h2>
+          <div class="uc-grid">
+            <a href="mfa/uc5-hours.html" class="uc-card medium">
+              <h3>UC5: After-Hours Login</h3>
+              <p>Successful authentication outside normal business hours (nights, weekends).</p>
+              <div class="uc-meta">
+                <span class="badge warning">MEDIUM</span>
+                <span>T1078</span>
+                <span>Every 15 min</span>
+              </div>
+            </a>
+            
+            <a href="mfa/uc7-device.html" class="uc-card medium">
+              <h3>UC7: New MFA Device Registration</h3>
+              <p>Attacker with account access registers their own MFA device for persistence.</p>
+              <div class="uc-meta">
+                <span class="badge warning">MEDIUM</span>
+                <span>T1098</span>
+                <span>Every 15 min</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="subsection-title">Data Sources Reference</h2>
           <div class="grid grid-2">
-            <div class="card" style="padding:16px;border-left:4px solid #7c3aed;">
-              <h4 style="color:#7c3aed;margin-bottom:12px;font-size:0.9rem;">CyberArk Identity Fields</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>``` CyberArk = flat JSON (easy!)
-| eval user = Username
-| eval src_ip = FromIPAddress
-| eval city = City
-| eval country = Country
-| eval mfa_method = MfaMethod
-| eval result = Result
-| eval event_type = EventType</code></pre>
-                </div>
-              </div>
-              <p style="font-size:0.7rem;color:var(--gray-500);margin-top:8px;"><strong>Key Events:</strong> Cloud.Core.MfaDenied, Cloud.Core.MfaAuthentication, Cloud.Core.Login</p>
+            <div class="card" style="padding:20px;background:#f3e8ff;border-left:4px solid #7c3aed;">
+              <h4 style="color:#7c3aed;margin-bottom:8px;">🔐 CyberArk Identity = PRIMARY</h4>
+              <p style="font-size:0.85rem;color:var(--gray-700);margin-bottom:12px;">For privileged users, admins, IT staff, service accounts. Higher priority alerts.</p>
+              <p style="font-size:0.8rem;color:var(--gray-600);"><strong>Key EventTypes:</strong><br>
+              Cloud.Core.MfaDenied, Cloud.Core.MfaTimeout, Cloud.Core.MfaAuthentication, Cloud.Core.Login</p>
             </div>
-
-            <div class="card" style="padding:16px;border-left:4px solid #0078d4;">
-              <h4 style="color:#0078d4;margin-bottom:12px;font-size:0.9rem;">Entra ID Fields (Nested!)</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>``` Entra = deeply nested JSON
-| spath
-| eval user = 'properties.userPrincipalName'
-| eval src_ip = 'properties.ipAddress'
-| eval city = 'properties.location.city'
-| eval country = 'properties.location.countryOrRegion'
-| eval error_code = 'properties.status.errorCode'
-| eval app = 'properties.appDisplayName'</code></pre>
-                </div>
-              </div>
-              <p style="font-size:0.7rem;color:var(--gray-500);margin-top:8px;"><strong>Key Error:</strong> 500121 = MFA denied by user</p>
+            <div class="card" style="padding:20px;background:#dbeafe;border-left:4px solid #2563eb;">
+              <h4 style="color:#2563eb;margin-bottom:8px;">☁️ Entra ID (Azure AD) = SECONDARY</h4>
+              <p style="font-size:0.85rem;color:var(--gray-700);margin-bottom:12px;">For standard employees, general workforce. Broader coverage.</p>
+              <p style="font-size:0.8rem;color:var(--gray-600);"><strong>Key Error Codes:</strong><br>
+              500121 = MFA Denied, 50074 = MFA Required, 50053 = Account Locked</p>
             </div>
           </div>
         </div>
 
-        <!-- ========== ERROR CODES ========== -->
-        <div class="section">
-          <h2 class="subsection-title">Critical Error Codes Reference</h2>
-          <div class="card" style="padding:16px;">
-            <div class="table-container">
-              <table style="font-size:0.75rem;">
-                <thead><tr><th>Code</th><th>Meaning</th><th>Detection Use</th><th>Severity</th></tr></thead>
-                <tbody>
-                  <tr><td><code>0</code></td><td>Success</td><td>Use with denials for UC2</td><td>Info</td></tr>
-                  <tr style="background:#fef2f2;"><td><code>500121</code></td><td><strong>MFA DENIED by user</strong></td><td><strong>PRIMARY for MFA fatigue</strong></td><td style="color:#dc2626;font-weight:700;">CRITICAL</td></tr>
-                  <tr><td><code>50074</code></td><td>Strong auth required</td><td>MFA challenge triggered</td><td>Info</td></tr>
-                  <tr><td><code>50076</code></td><td>MFA not completed</td><td>User abandoned MFA</td><td>Medium</td></tr>
-                  <tr><td><code>50053</code></td><td>Account locked</td><td>Brute force indicator</td><td>High</td></tr>
-                  <tr><td><code>50126</code></td><td>Invalid credentials</td><td>Failed auth (pre-MFA)</td><td>Medium</td></tr>
-                  <tr><td><code>53003</code></td><td>Blocked by CA</td><td>Conditional Access block</td><td>Medium</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- ========== USE CASE TABS ========== -->
-        <div class="section">
-          <h2 class="subsection-title">Detection Use Cases (Click Tab for Full Implementation)</h2>
-          
-          <div class="uc-tabs">
-            <div class="uc-tab critical active" onclick="showUC('uc1')">UC1: MFA Fatigue</div>
-            <div class="uc-tab critical" onclick="showUC('uc2')">UC2: Fatigue+Success</div>
-            <div class="uc-tab high" onclick="showUC('uc3')">UC3: Impossible Travel</div>
-            <div class="uc-tab high" onclick="showUC('uc4')">UC4: New Location</div>
-            <div class="uc-tab medium" onclick="showUC('uc5')">UC5: After Hours</div>
-            <div class="uc-tab high" onclick="showUC('uc6')">UC6: Priv Brute Force</div>
-            <div class="uc-tab medium" onclick="showUC('uc7')">UC7: Device Change</div>
-            <div class="uc-tab high" onclick="showUC('uc8')">UC8: Dormant Account</div>
-          </div>
-
-          <!-- ==================== UC1: MFA FATIGUE ==================== -->
-          <div id="uc1" class="uc-content active">
-            <div class="card" style="padding:20px;margin-bottom:20px;background:#fef2f2;">
-              <div class="grid grid-4" style="margin-bottom:16px;">
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Severity</span><span class="badge" style="background:#dc2626;color:white;">CRITICAL</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">MITRE</span><code>T1621</code></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Schedule</span><span style="font-weight:600;">5 min</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Time Range</span><span style="font-weight:600;">-15m</span></div>
-              </div>
-              <h3 style="font-size:1rem;color:#dc2626;">MFA-UC1: MFA Fatigue / Push Bombing Detection</h3>
-              <p style="font-size:0.8rem;color:var(--gray-700);">Attacker has stolen credentials. They spam the user's phone with MFA pushes hoping for accidental approval. <strong>5+ denials in 10 min = active attack.</strong></p>
-            </div>
-
-            <!-- Decision Tree -->
-            <div class="step-box">
-              <h4>📊 Decision Tree</h4>
-              <div class="tree-box">
-                <div class="mermaid">
-flowchart TD
-    A[MFA Event] --> B{MfaDenied or MfaTimeout?}
-    B -->|No| C[Ignore for this UC]
-    B -->|Yes| D[Count per user in 10m]
-    D --> E{denials >= 5?}
-    E -->|No| F[Below threshold]
-    E -->|Yes| G{is_privileged?}
-    G -->|Yes| H{denials >= 10?}
-    H -->|Yes| I[🔴 CRITICAL]
-    H -->|No| J[🟠 HIGH]
-    G -->|No| K{denials >= 10?}
-    K -->|Yes| J
-    K -->|No| L[🟡 MEDIUM]
-    style I fill:#fef2f2,stroke:#dc2626
-    style J fill:#fff7ed,stroke:#ea580c
-    style L fill:#fefce8,stroke:#ca8a04
-                </div>
-              </div>
-            </div>
-
-            <!-- Query by Source -->
-            <div class="step-box">
-              <h4>📝 Step A: Detection SPL (Choose Data Source)</h4>
-              
-              <div class="src-tabs">
-                <div class="src-tab cyberark active" onclick="showSrc('uc1','cyberark')">CyberArk (PRIMARY)</div>
-                <div class="src-tab entra" onclick="showSrc('uc1','entra')">Entra ID (SECONDARY)</div>
-              </div>
-
-              <div id="uc1-cyberark" class="src-content active">
-                <p style="font-size:0.75rem;color:#7c3aed;margin-bottom:8px;"><strong>Use for:</strong> Privileged users, admins, IT staff, executives</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-15m
-``` Filter to MFA denial events
-| where EventType IN ("Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout")
-``` Normalize fields
-| eval user = Username
-| eval src_ip = FromIPAddress
-| eval city = City
-| eval country = Country
-| eval mfa_method = MfaMethod
-``` Bucket into 10-minute windows
-| bin _time span=10m
-``` Aggregate per user per window
-| stats count as denials 
-        dc(src_ip) as unique_ips 
-        values(src_ip) as attacker_ips
-        values(city) as cities
-        values(mfa_method) as methods_used
-        earliest(_time) as first_denial
-        latest(_time) as last_denial
-        BY _time, user
-``` Threshold: 5+ denials is attack
-| where denials >= 5
-``` Enrich with privileged user lookup
-| lookup privileged_users.csv userPrincipalName AS user OUTPUT is_privileged role department
-``` Calculate attack duration
-| eval attack_duration_min = round((last_denial - first_denial) / 60, 1)
-``` Assign severity
-| eval severity = case(
-    is_privileged="true" AND denials >= 10, "critical",
-    is_privileged="true", "high",
-    denials >= 10, "high",
-    1=1, "medium"
-)
-| eval alert = "🚨 MFA FATIGUE: ".user." denied ".denials." MFA requests in ".attack_duration_min." min"
-| table _time user role denials unique_ips attacker_ips cities methods_used attack_duration_min severity alert</code></pre>
-                  </div>
-                </div>
-              </div>
-
-              <div id="uc1-entra" class="src-content">
-                <p style="font-size:0.75rem;color:#0078d4;margin-bottom:8px;"><strong>Use for:</strong> Standard employees. Error code 500121 = MFA denied.</p>
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>index=azure sourcetype=azure:aad:signin earliest=-15m
-| spath
-| eval error_code = 'properties.status.errorCode'
-``` 500121 = MFA denied by user
-| where error_code=500121
-| eval user = 'properties.userPrincipalName'
-| eval src_ip = 'properties.ipAddress'
-| eval city = 'properties.location.city'
-| eval country = 'properties.location.countryOrRegion'
-| eval app = 'properties.appDisplayName'
-| bin _time span=10m
-| stats count as denials 
-        dc(src_ip) as unique_ips 
-        values(src_ip) as attacker_ips
-        values(city) as cities
-        values(app) as target_apps
-        BY _time, user
-| where denials >= 5
-| lookup privileged_users.csv userPrincipalName AS user OUTPUT is_privileged role
-| eval severity = case(
-    is_privileged="true" AND denials >= 10, "critical",
-    is_privileged="true", "high",
-    denials >= 10, "high",
-    1=1, "medium"
-)
-| table _time user role denials unique_ips attacker_ips cities target_apps severity</code></pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- ES Settings -->
-            <div class="step-box">
-              <h4>⚙️ Step B: ES Correlation Search Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>MFA-UC1: MFA Fatigue / Push Bombing</code></dd>
-                <dt>Cron Schedule</dt><dd><code>*/5 * * * *</code></dd>
-                <dt>Earliest/Latest</dt><dd><code>-15m / now</code></dd>
-                <dt>Notable Title</dt><dd><code>MFA Fatigue: $user$ denied $denials$ MFA requests</code></dd>
-                <dt>Notable Description</dt><dd><code>User $user$ ($role$) denied $denials$ MFA pushes in $attack_duration_min$ min. IPs: $attacker_ips$</code></dd>
-                <dt>Default Severity</dt><dd><code>High</code></dd>
-                <dt>Throttle Duration</dt><dd><code>30 minutes</code></dd>
-                <dt>Throttle Group By</dt><dd><code>user</code></dd>
-              </div>
-            </div>
-
-            <!-- Drilldown -->
-            <div class="step-box">
-              <h4>🔍 Step C: Drilldown Search</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-1h Username="$user$"
-| where EventType IN ("Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout", "Cloud.Core.MfaAuthentication", "Cloud.Core.Login")
-| eval status = case(
-    EventType="Cloud.Core.MfaDenied", "❌ Denied",
-    EventType="Cloud.Core.MfaTimeout", "⏰ Timeout",
-    EventType="Cloud.Core.MfaAuthentication" AND Result="Success", "✅ Success",
-    EventType="Cloud.Core.Login" AND Result="Success", "✅ Login",
-    1=1, "Other"
-)
-| table _time status FromIPAddress City Country MfaMethod
-| sort _time</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <!-- Validation -->
-            <div class="step-box">
-              <h4>✅ Step D: Validate</h4>
-              <ul class="check-list">
-                <li>Run SPL manually — returns results during test attack?</li>
-                <li>Enable correlation search in ES</li>
-                <li>Check Incident Review for Notables within 10 min</li>
-                <li>Verify all fields appear in Notable</li>
-                <li>Confirm throttling works (one alert per user per 30m)</li>
-                <li>Test drilldown links correctly</li>
-              </ul>
-            </div>
-
-            <!-- Tuning -->
-            <div class="step-box">
-              <h4>🎛️ Step E: Tuning Knobs</h4>
-              <div class="table-container">
-                <table style="font-size:0.75rem;">
-                  <thead><tr><th>Parameter</th><th>Default</th><th>Stricter</th><th>Looser</th></tr></thead>
-                  <tbody>
-                    <tr><td><code>denials threshold</code></td><td>5</td><td>↑ 7-10</td><td>↓ 3 (more FPs)</td></tr>
-                    <tr><td><code>time window</code></td><td>10m</td><td>↓ 5m</td><td>↑ 15m</td></tr>
-                    <tr><td><code>privileged check</code></td><td>Enabled</td><td>Alert ONLY for priv</td><td>Alert for all</td></tr>
-                    <tr><td><code>throttle</code></td><td>30m</td><td>↑ 60m</td><td>↓ 15m</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- False Positives -->
-            <div class="step-box warning">
-              <h4>⚠️ Common False Positives</h4>
-              <div class="table-container">
-                <table style="font-size:0.75rem;">
-                  <thead><tr><th>FP Source</th><th>Why</th><th>Solution</th></tr></thead>
-                  <tbody>
-                    <tr><td>User accidentally denying</td><td>New to MFA app</td><td>Set threshold at 5+ (not 2-3)</td></tr>
-                    <tr><td>MFA app glitch</td><td>Multiple prompts for same auth</td><td>Check if same device, same second</td></tr>
-                    <tr><td>Shared service accounts</td><td>Multiple people using one account</td><td>Exclude or tag separately</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <!-- ==================== UC2: FATIGUE + SUCCESS ==================== -->
-          <div id="uc2" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;background:#fef2f2;border:2px solid #dc2626;">
-              <div class="grid grid-4" style="margin-bottom:16px;">
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Severity</span><span class="badge" style="background:#dc2626;color:white;">CRITICAL</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">MITRE</span><code>T1621</code></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Schedule</span><span style="font-weight:600;">5 min</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Priority</span><span style="font-weight:600;color:#dc2626;">🚨 HIGHEST</span></div>
-              </div>
-              <h3 style="font-size:1rem;color:#dc2626;">MFA-UC2: MFA Fatigue Followed by Success (BREACH INDICATOR)</h3>
-              <p style="font-size:0.8rem;color:var(--gray-700);"><strong>⚠️ THIS IS YOUR HIGHEST PRIORITY ALERT.</strong> Multiple denials then SUCCESS = attacker likely got in. Requires IMMEDIATE investigation.</p>
-            </div>
-
-            <!-- Decision Tree -->
-            <div class="step-box">
-              <h4>📊 Decision Tree</h4>
-              <div class="tree-box">
-                <div class="mermaid">
-flowchart TD
-    A[Collect all MFA events 30m] --> B[Count denials AND successes]
-    B --> C{denials >= 3?}
-    C -->|No| D[Not enough denials - use UC1]
-    C -->|Yes| E{successes >= 1?}
-    E -->|No| F[Attack ongoing but not successful]
-    E -->|Yes| G[🔴 CRITICAL: Denial then Success!]
-    G --> H{is_privileged?}
-    H -->|Yes| I[🚨 IMMEDIATE ACTION REQUIRED]
-    H -->|No| J[🔴 Contact user NOW]
-    style G fill:#fef2f2,stroke:#dc2626
-    style I fill:#fef2f2,stroke:#dc2626,stroke-width:3px
-    style J fill:#fef2f2,stroke:#dc2626
-                </div>
-              </div>
-            </div>
-
-            <!-- Query -->
-            <div class="step-box">
-              <h4>📝 Step A: Detection SPL</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-30m
-    EventType IN ("Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout", "Cloud.Core.MfaAuthentication")
-``` Flag denials vs successes
-| eval is_denial = if(EventType IN ("Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout"), 1, 0)
-| eval is_success = if(EventType="Cloud.Core.MfaAuthentication" AND Result="Success", 1, 0)
-``` Aggregate per user
-| stats sum(is_denial) as total_denials 
-        sum(is_success) as total_successes 
-        earliest(_time) as first_event
-        latest(_time) as last_event
-        values(FromIPAddress) as all_ips
-        values(City) as all_cities
-        BY Username
-``` THE KEY: Denials followed by success
-| where total_denials >= 3 AND total_successes >= 1
-| eval attack_duration_min = round((last_event - first_event) / 60, 1)
-| lookup privileged_users.csv userPrincipalName AS Username OUTPUT is_privileged role
-``` Always CRITICAL for this detection
-| eval severity = "critical"
-| eval breach_indicator = "⚠️ POTENTIAL BREACH: ".total_denials." denials then SUCCESS"
-| eval action = "IMMEDIATE: Contact user via PHONE, check activity, consider disabling"
-| table Username role total_denials total_successes attack_duration_min all_ips all_cities breach_indicator action severity</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <!-- Immediate Response -->
-            <div class="step-box error">
-              <h4>🚨 IMMEDIATE Response Actions</h4>
-              <div class="grid grid-2">
-                <div class="card" style="padding:12px;border-left:4px solid #dc2626;">
-                  <h5 style="font-size:0.85rem;">Within 5 Minutes:</h5>
-                  <ol style="font-size:0.75rem;color:var(--gray-600);margin:8px 0 0 16px;line-height:1.7;">
-                    <li>Contact user via <strong>PHONE</strong> (not email!)</li>
-                    <li>Ask: "Did you approve MFA in last 30 min?"</li>
-                    <li>If NO → Disable account immediately</li>
-                    <li>If YES → Verify what they were doing</li>
-                  </ol>
-                </div>
-                <div class="card" style="padding:12px;border-left:4px solid #ea580c;">
-                  <h5 style="font-size:0.85rem;">If Confirmed Breach:</h5>
-                  <ol style="font-size:0.75rem;color:var(--gray-600);margin:8px 0 0 16px;line-height:1.7;">
-                    <li>Disable account</li>
-                    <li>Reset password and MFA</li>
-                    <li>Check for new mail rules</li>
-                    <li>Review recent activity</li>
-                    <li>Escalate to IR team</li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-
-            <!-- ES Settings -->
-            <div class="step-box">
-              <h4>⚙️ Step B: ES Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>MFA-UC2: MFA Fatigue Success (BREACH)</code></dd>
-                <dt>Notable Title</dt><dd><code>🚨 BREACH: $Username$ - MFA fatigue then SUCCESS</code></dd>
-                <dt>Default Severity</dt><dd><code>Critical</code> (ALWAYS)</dd>
-                <dt>Throttle Duration</dt><dd><code>15 minutes</code> (shorter — urgent)</dd>
-              </div>
-            </div>
-          </div>
-
-          <!-- ==================== UC3: IMPOSSIBLE TRAVEL ==================== -->
-          <div id="uc3" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <div class="grid grid-4" style="margin-bottom:16px;">
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Severity</span><span class="badge error">HIGH</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">MITRE</span><code>T1078</code></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Schedule</span><span style="font-weight:600;">15 min</span></div>
-                <div style="text-align:center;"><span style="font-size:0.65rem;color:var(--gray-500);display:block;">Time Range</span><span style="font-weight:600;">-24h</span></div>
-              </div>
-              <h3 style="font-size:1rem;">MFA-UC3: Impossible Travel Detection</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">User logs in from Toronto at 10am, then Moscow at 10:30am. That's 7,500km in 30min = 15,000 km/h. <strong>Unless they have a spaceship, this is credential theft.</strong></p>
-            </div>
-
-            <!-- Decision Tree -->
-            <div class="step-box">
-              <h4>📊 Decision Tree</h4>
-              <div class="tree-box">
-                <div class="mermaid">
-flowchart TD
-    A[Get consecutive logins per user] --> B[Calculate distance km]
-    B --> C[Calculate time diff hours]
-    C --> D[Calculate speed km/h]
-    D --> E{distance > 500km?}
-    E -->|No| F[Normal travel]
-    E -->|Yes| G{speed > 800 km/h?}
-    G -->|No| F
-    G -->|Yes| H{speed > 2000?}
-    H -->|Yes| I[🔴 CRITICAL]
-    H -->|No| J{speed > 1000?}
-    J -->|Yes| K[🟠 HIGH]
-    J -->|No| L[🟡 MEDIUM]
-    style I fill:#fef2f2,stroke:#dc2626
-    style K fill:#fff7ed,stroke:#ea580c
-    style L fill:#fefce8,stroke:#ca8a04
-                </div>
-              </div>
-            </div>
-
-            <!-- Query -->
-            <div class="step-box">
-              <h4>📝 Step A: Detection SPL</h4>
-              <div class="code-block">
-                <div class="code-body">
-                  <pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-24h
-    EventType IN ("Cloud.Core.MfaAuthentication", "Cloud.Core.Login") Result="Success"
-``` Get location from IP
-| iplocation FromIPAddress
-``` Sort by user and time
-| sort 0 Username _time
-``` Get previous login using streamstats
-| streamstats current=f 
-    last(_time) as prev_time 
-    last(City) as prev_city 
-    last(Country) as prev_country
-    last(lat) as prev_lat 
-    last(lon) as prev_lon 
-    BY Username
-``` Skip first login (no previous)
-| where isnotnull(prev_time)
-``` Calculate distance using Haversine formula
-| eval distance_km = round(3959 * 1.60934 * acos(
-    cos(lat*3.14159/180) * cos(prev_lat*3.14159/180) * cos((lon-prev_lon)*3.14159/180) +
-    sin(lat*3.14159/180) * sin(prev_lat*3.14159/180)), 0)
-| eval time_diff_hours = round((_time - prev_time) / 3600, 2)
-| eval speed_kmh = if(time_diff_hours > 0, round(distance_km / time_diff_hours, 0), 0)
-``` Filter: >500km AND >800 km/h (faster than jet cruise speed)
-| where distance_km > 500 AND speed_kmh > 800
-| eval severity = case(speed_kmh > 2000, "critical", speed_kmh > 1000, "high", 1=1, "medium")
-| eval alert = "🛫 IMPOSSIBLE: ".Username." ".prev_city." → ".City." (".distance_km."km) in ".time_diff_hours."h = ".speed_kmh." km/h"
-| table _time Username prev_city prev_country City Country distance_km time_diff_hours speed_kmh severity alert</code></pre>
-                </div>
-              </div>
-            </div>
-
-            <!-- ES Settings -->
-            <div class="step-box">
-              <h4>⚙️ Step B: ES Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>MFA-UC3: Impossible Travel</code></dd>
-                <dt>Notable Title</dt><dd><code>Impossible Travel: $Username$ $prev_city$ → $City$ at $speed_kmh$ km/h</code></dd>
-                <dt>Throttle Group By</dt><dd><code>Username</code></dd>
-              </div>
-            </div>
-
-            <!-- False Positives -->
-            <div class="step-box warning">
-              <h4>⚠️ Common False Positives</h4>
-              <div class="table-container">
-                <table style="font-size:0.75rem;">
-                  <thead><tr><th>FP Source</th><th>Why</th><th>Solution</th></tr></thead>
-                  <tbody>
-                    <tr><td>VPN usage</td><td>User connects to VPN in another country</td><td>Whitelist corporate VPN exit IPs</td></tr>
-                    <tr><td>Cloud service IPs</td><td>App routes through cloud infra</td><td>Verify with user before escalating</td></tr>
-                    <tr><td>Mobile roaming</td><td>Carrier IP may geo-locate to HQ</td><td>Check device info if available</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <!-- ==================== UC4-8 (Compact but complete) ==================== -->
-          <div id="uc4" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">MFA-UC4: New Location Login</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">User logs in from country/city they've never accessed before.</p>
-              <div class="grid grid-4" style="margin-top:12px;">
-                <div><span style="font-size:0.65rem;color:var(--gray-500);">Severity:</span> <span class="badge error">HIGH</span></div>
-                <div><span style="font-size:0.65rem;color:var(--gray-500);">MITRE:</span> <code>T1078</code></div>
-                <div><span style="font-size:0.65rem;color:var(--gray-500);">Schedule:</span> 15 min</div>
-                <div><span style="font-size:0.65rem;color:var(--gray-500);">Range:</span> -1h</div>
-              </div>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-1h
-    EventType="Cloud.Core.MfaAuthentication" Result="Success"
-| iplocation FromIPAddress
-| lookup user_locations.csv Username OUTPUT known_countries known_cities
-| eval is_new_country = if(isnull(mvfind(known_countries, Country)), 1, 0)
-| eval is_new_city = if(isnull(mvfind(known_cities, City)), 1, 0)
-| where is_new_country=1 OR is_new_city=1
-| lookup privileged_users.csv userPrincipalName AS Username OUTPUT is_privileged role
-| eval severity = if(is_privileged="true", "high", "medium")
-| eval alert = "New location: ".Username." from ".City.", ".Country
-| table _time Username role City Country is_new_country is_new_city is_privileged severity alert</code></pre></div></div>
-            </div>
-            <div class="step-box"><h4>⚙️ ES Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>MFA-UC4: New Location Login</code></dd>
-                <dt>Throttle Group By</dt><dd><code>Username, Country</code></dd>
-              </div>
-            </div>
-            <div class="callout info" style="margin-top:12px;padding:12px;"><div class="callout-content"><div class="callout-body" style="font-size:0.75rem;"><strong>Requires:</strong> Create <code>user_locations.csv</code> with columns: Username, known_countries, known_cities. Build from 90 days of login data.</div></div></div>
-          </div>
-
-          <div id="uc5" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">MFA-UC5: After-Hours Login</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Successful login outside normal business hours. Attackers often operate at night.</p>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-24h
-    EventType="Cloud.Core.MfaAuthentication" Result="Success"
-``` Extract hour and day
-| eval hour = strftime(_time, "%H")
-| eval day = strftime(_time, "%A")
-``` Define after hours (customize for your org)
-| eval is_after_hours = if((hour < 6 OR hour > 22) OR day IN ("Saturday", "Sunday"), 1, 0)
-| where is_after_hours=1
-| lookup privileged_users.csv userPrincipalName AS Username OUTPUT is_privileged role
-| stats count as logins values(hour) as hours values(day) as days BY Username role is_privileged
-| eval severity = if(is_privileged="true", "high", "medium")
-| table Username role logins hours days severity</code></pre></div></div>
-            </div>
-            <div class="step-box"><h4>⚙️ ES Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>MFA-UC5: After-Hours Login</code></dd>
-                <dt>Throttle Duration</dt><dd><code>8 hours</code> (once per night shift)</dd>
-              </div>
-            </div>
-          </div>
-
-          <div id="uc6" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">MFA-UC6: Privileged User Brute Force</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Multiple failed logins on admin accounts — attackers specifically target privileged accounts.</p>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-1h
-    EventType="Cloud.Core.Login" Result="Failure"
-``` Only privileged users
-| lookup privileged_users.csv userPrincipalName AS Username OUTPUT is_privileged role
-| where is_privileged="true"
-| stats count as failed_logins 
-        dc(FromIPAddress) as unique_ips 
-        values(FromIPAddress) as attacker_ips 
-        BY Username role
-| where failed_logins >= 5
-| eval severity = case(failed_logins >= 20, "critical", failed_logins >= 10, "high", 1=1, "medium")
-| eval alert = "🔓 Brute force on ".role.": ".Username." - ".failed_logins." failures from ".unique_ips." IPs"
-| table Username role failed_logins unique_ips attacker_ips severity alert</code></pre></div></div>
-            </div>
-            <div class="step-box"><h4>⚙️ ES Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>MFA-UC6: Privileged User Brute Force</code></dd>
-                <dt>Notable Title</dt><dd><code>Brute force on $role$: $Username$ ($failed_logins$ failures)</code></dd>
-                <dt>Throttle Group By</dt><dd><code>Username</code></dd>
-              </div>
-            </div>
-          </div>
-
-          <div id="uc7" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">MFA-UC7: New MFA Device Registration</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Attacker with access registers their own phone for MFA to maintain persistence.</p>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-24h
-    EventType IN ("Cloud.Core.MfaDeviceRegistered", "Cloud.Core.MfaMethodAdded")
-| iplocation FromIPAddress
-| lookup privileged_users.csv userPrincipalName AS Username OUTPUT is_privileged role
-| eval severity = if(is_privileged="true", "high", "medium")
-| eval alert = "📱 New MFA device for ".Username." from ".City.", ".Country
-| table _time Username role EventType City Country FromIPAddress severity alert</code></pre></div></div>
-            </div>
-            <div class="step-box"><h4>⚙️ ES Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>MFA-UC7: New MFA Device Registration</code></dd>
-                <dt>Notable Title</dt><dd><code>New MFA device: $Username$ from $City$, $Country$</code></dd>
-              </div>
-            </div>
-          </div>
-
-          <div id="uc8" class="uc-content">
-            <div class="card" style="padding:20px;margin-bottom:20px;">
-              <h3 style="font-size:1rem;">MFA-UC8: Dormant Account Activation</h3>
-              <p style="font-size:0.8rem;color:var(--gray-600);">Account inactive for 90+ days suddenly becomes active — common with compromised service accounts or former employees.</p>
-            </div>
-            <div class="step-box"><h4>📝 Detection SPL</h4>
-              <div class="code-block"><div class="code-body"><pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-1h
-    EventType="Cloud.Core.MfaAuthentication" Result="Success"
-| lookup last_login.csv Username OUTPUT last_login_time
-| eval days_since_login = round((now() - last_login_time) / 86400, 0)
-| where days_since_login > 90 OR isnull(last_login_time)
-| lookup privileged_users.csv userPrincipalName AS Username OUTPUT is_privileged role
-| eval severity = case(is_privileged="true", "critical", days_since_login > 180, "high", 1=1, "medium")
-| eval alert = "👻 DORMANT: ".Username." inactive ".days_since_login." days, now active"
-| table _time Username role days_since_login FromIPAddress severity alert</code></pre></div></div>
-            </div>
-            <div class="step-box"><h4>⚙️ ES Settings</h4>
-              <div class="cfg-grid">
-                <dt>Search Name</dt><dd><code>MFA-UC8: Dormant Account Activation</code></dd>
-                <dt>Notable Title</dt><dd><code>Dormant account active: $Username$ (inactive $days_since_login$ days)</code></dd>
-              </div>
-            </div>
-            <div class="callout info" style="margin-top:12px;padding:12px;"><div class="callout-content"><div class="callout-body" style="font-size:0.75rem;"><strong>Requires:</strong> Create <code>last_login.csv</code> updated daily with each user's last login timestamp.</div></div></div>
-          </div>
-
-        </div>
       </div>
     </main>
   </div>
 
   <script src="../js/app.js"></script>
-  <script>
-    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{curve:'basis'}});
-    function showUC(id){
-      document.querySelectorAll('.uc-content').forEach(e=>e.classList.remove('active'));
-      document.querySelectorAll('.uc-tab').forEach(e=>e.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelector(`[onclick="showUC('${id}')"]`).classList.add('active');
-      setTimeout(()=>mermaid.init(undefined,document.querySelectorAll('.mermaid')),100);
-    }
-    function showSrc(uc,src){
-      const c=document.getElementById(uc);
-      c.querySelectorAll('.src-content').forEach(e=>e.classList.remove('active'));
-      c.querySelectorAll('.src-tab').forEach(e=>e.classList.remove('active'));
-      document.getElementById(`${uc}-${src}`).classList.add('active');
-      event.target.classList.add('active');
-    }
-  </script>
 </body>
 </html>

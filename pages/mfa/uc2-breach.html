@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MFA-UC2: BREACH INDICATOR | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    .impl-step{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .impl-step h4{color:var(--primary-700);margin-bottom:16px;font-size:1rem;display:flex;align-items:center;gap:8px;}
+    .impl-step h4 .step-letter{background:var(--primary-500);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:bold;}
+    .impl-step.critical{border-left-color:#dc2626;background:#fef2f2;}
+    .impl-step.critical h4{color:#dc2626;}
+    .diagram-box{background:white;padding:20px;border-radius:8px;margin:12px 0;min-height:300px;overflow-x:auto;}
+    .es-config{display:grid;grid-template-columns:220px 1fr;gap:10px;font-size:0.85rem;background:white;padding:16px;border-radius:6px;margin-top:12px;}
+    .es-config dt{font-weight:600;color:var(--gray-700);}
+    .es-config dd{color:var(--gray-600);margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+    .where-box{background:#e0f2fe;padding:12px 16px;border-radius:6px;font-size:0.85rem;margin-bottom:16px;}
+    .where-box strong{color:#0369a1;}
+    .response-box{background:#fef2f2;border:3px solid #dc2626;padding:20px;border-radius:8px;margin:16px 0;}
+    .response-box h5{color:#dc2626;margin-bottom:12px;font-size:1.1rem;}
+    .response-box ol{font-size:0.95rem;line-height:2;margin-left:20px;}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text"><h1>myfirstpro</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">WAF Use Cases</div>
+          <a href="../waf/uc1-volume.html" class="nav-item"><span>UC1: Volume Anomaly</span></a>
+          <a href="../waf/uc4-sqli.html" class="nav-item"><span>UC4: SQLi/XSS</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Use Cases</div>
+          <a href="uc1-fatigue.html" class="nav-item"><span>UC1: MFA Fatigue</span></a>
+          <a href="uc2-breach.html" class="nav-item active"><span>UC2: Breach Indicator</span></a>
+          <a href="uc3-travel.html" class="nav-item"><span>UC3: Impossible Travel</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../mfa-overview.html" class="breadcrumb-item">MFA</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC2: Breach Indicator</span>
+          </div>
+        </div>
+        <span class="badge" style="background:#dc2626;color:white;font-size:0.9rem;">🚨 CRITICAL - BREACH</span>
+      </header>
+
+      <div class="page-content">
+        <!-- Header Card -->
+        <div class="card" style="padding:24px;margin-bottom:24px;background:#fef2f2;border:3px solid #dc2626;">
+          <h1 style="font-size:1.5rem;margin-bottom:12px;color:#dc2626;">🚨 MFA-UC2: MFA Fatigue FOLLOWED BY Success (BREACH INDICATOR)</h1>
+          <p style="font-size:1.1rem;color:var(--gray-800);margin-bottom:20px;"><strong>HIGHEST PRIORITY ALERT IN YOUR ENVIRONMENT.</strong> Multiple MFA denials followed by a SUCCESS means the attacker likely got the user to approve. This is an <u>active breach in progress</u>. Immediate action required.</p>
+          
+          <div class="grid grid-4">
+            <div style="text-align:center;padding:16px;background:white;border-radius:8px;border:2px solid #dc2626;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Severity</span>
+              <span class="badge" style="background:#dc2626;color:white;font-size:1rem;">🔴 CRITICAL</span>
+            </div>
+            <div style="text-align:center;padding:16px;background:white;border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">MITRE</span>
+              <code style="font-size:0.9rem;">T1621, T1078</code>
+            </div>
+            <div style="text-align:center;padding:16px;background:white;border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Schedule</span>
+              <strong>Every 5 min</strong>
+            </div>
+            <div style="text-align:center;padding:16px;background:white;border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Time Range</span>
+              <strong>Last 30 min</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Why This Matters -->
+        <div class="section">
+          <h2 class="section-title">Why This is Your Most Important Detection</h2>
+          <div class="callout critical">
+            <div class="callout-content">
+              <div class="callout-body" style="font-size:1rem;line-height:1.8;">
+                <p><strong>UC1 (MFA Fatigue)</strong> tells you an attack is in progress.</p>
+                <p><strong>UC2 (This detection)</strong> tells you the attack <u>succeeded</u> and the attacker is likely <u>inside your environment right now</u>.</p>
+                <p style="color:#dc2626;font-weight:bold;margin-top:12px;">The difference between catching this in 5 minutes vs 5 hours could be the difference between a contained incident and a full breach with data exfiltration.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 1: Decision Tree -->
+        <div class="section">
+          <h2 class="section-title">Step 1: Decision Tree (Detection Logic)</h2>
+          
+          <div class="impl-step critical">
+            <div class="diagram-box">
+              <pre class="mermaid">
+flowchart TD
+    START[Collect all MFA events for each user in 30 min window] --> A[Separate events into denials and successes]
+    A --> B[Count total denials per user]
+    B --> C[Count total successes per user]
+    C --> D{Is denial count GTE 3}
+    D -->|No| LOW[Not enough denials for fatigue pattern - monitor via UC1]
+    D -->|Yes| E{Is success count GTE 1}
+    E -->|No| ONGOING[Attack ongoing but user has not approved yet - alert via UC1]
+    E -->|Yes| BREACH[BREACH INDICATOR - Multiple denials THEN success]
+    BREACH --> F[This means attacker likely got user to approve]
+    F --> G[Lookup user privilege level]
+    G --> H{Is user privileged - admin or IT or sensitive role}
+    H -->|Yes| CRIT_PRIV[CRITICAL - Privileged account likely compromised]
+    H -->|No| CRIT_STD[CRITICAL - Account likely compromised]
+    CRIT_PRIV --> IMMEDIATE[IMMEDIATE ACTION - Contact user via phone NOW]
+    CRIT_STD --> CONTACT[Contact user via phone within 5 minutes]
+    IMMEDIATE --> PHONE[Call user on KNOWN phone number not from profile]
+    CONTACT --> PHONE
+    PHONE --> VERIFY{Ask user - Did YOU approve the MFA request}
+    VERIFY -->|Yes it was me| DOC[Document as legitimate - user was doing something unusual]
+    VERIFY -->|No or I dont know| DISABLE[DISABLE ACCOUNT IMMEDIATELY]
+    DISABLE --> SESSIONS[Terminate all active sessions]
+    SESSIONS --> RESET[Reset password via secure channel]
+    RESET --> MFA_RESET[Re-enroll MFA from scratch]
+    MFA_RESET --> MAIL[Check for new mail forwarding rules]
+    MAIL --> IR[Engage Incident Response team]
+    IR --> LATERAL[Check for lateral movement]
+
+    style BREACH fill:#fee2e2,stroke:#dc2626,stroke-width:3px
+    style CRIT_PRIV fill:#fee2e2,stroke:#dc2626,stroke-width:3px
+    style CRIT_STD fill:#fee2e2,stroke:#dc2626,stroke-width:2px
+    style DISABLE fill:#fee2e2,stroke:#dc2626,stroke-width:3px
+    style IMMEDIATE fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+    style DOC fill:#dcfce7,stroke:#16a34a
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP A: Build SPL -->
+        <div class="section">
+          <h2 class="section-title">Step A: Detection SPL</h2>
+          <div class="where-box">
+            <strong>Where:</strong> Splunk Search → Build and test SPL
+          </div>
+          
+          <div class="impl-step critical">
+            <h4><span class="step-letter">A</span> Detect Denials Followed By Success</h4>
+            <div class="code-block"><div class="code-body"><pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-30m
+    EventType IN ("Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout", "Cloud.Core.MfaRejected", "Cloud.Core.MfaAuthentication")
+| eval is_denial = if(EventType IN ("Cloud.Core.MfaDenied", "Cloud.Core.MfaTimeout", "Cloud.Core.MfaRejected"), 1, 0)
+| eval is_success = if(EventType="Cloud.Core.MfaAuthentication" AND Result="Success", 1, 0)
+| stats sum(is_denial) as total_denials 
+        sum(is_success) as total_successes 
+        earliest(_time) as first_event
+        latest(_time) as last_event
+        values(FromIPAddress) as all_ips
+        values(City) as all_cities
+        values(Country) as all_countries
+        values(DeviceName) as devices
+        BY Username
+| where total_denials >= 3 AND total_successes >= 1
+| eval attack_window_min = round((last_event - first_event) / 60, 1)
+| lookup privileged_users.csv userPrincipalName AS Username OUTPUT is_privileged role department manager manager_phone
+| eval severity = "critical"
+| eval breach_indicator = "POTENTIAL BREACH: Multiple MFA denials followed by SUCCESS"
+| eval response_action = "CALL USER IMMEDIATELY ON KNOWN PHONE NUMBER - NOT EMAIL"
+| eval escalation = if(is_privileged="true", "PAGE SECURITY LEAD IMMEDIATELY", "Alert SOC for immediate action")
+| table Username role department manager manager_phone total_denials total_successes attack_window_min all_ips all_cities all_countries devices breach_indicator response_action escalation severity</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP B: ES Config -->
+        <div class="section">
+          <h2 class="section-title">Step B: ES Correlation Search Settings</h2>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">B</span> ES Configuration</h4>
+            <dl class="es-config">
+              <dt>Search Name</dt>
+              <dd>MFA-UC2: MFA Fatigue Success BREACH INDICATOR</dd>
+              
+              <dt>Cron Schedule</dt>
+              <dd>*/5 * * * *</dd>
+              
+              <dt>Earliest Time</dt>
+              <dd>-30m</dd>
+              
+              <dt>Notable Title</dt>
+              <dd>🚨 BREACH: $Username$ - MFA fatigue attack SUCCEEDED ($total_denials$ denials then SUCCESS)</dd>
+              
+              <dt>Notable Description</dt>
+              <dd>$breach_indicator$. User $Username$ ($role$, $department$) had $total_denials$ MFA denials followed by $total_successes$ success(es) within $attack_window_min$ minutes. Source IPs: $all_ips$. Locations: $all_cities$, $all_countries$. Manager: $manager$ ($manager_phone$). $response_action$. $escalation$</dd>
+              
+              <dt>Default Severity</dt>
+              <dd>Critical (ALWAYS critical - never lower this)</dd>
+              
+              <dt>Throttle Duration</dt>
+              <dd>3600 seconds (1 hour)</dd>
+              
+              <dt>Throttle Fields</dt>
+              <dd>Username</dd>
+              
+              <dt>MITRE ATT&CK</dt>
+              <dd>T1621 - MFA Request Generation, T1078 - Valid Accounts</dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- IMMEDIATE RESPONSE -->
+        <div class="section">
+          <h2 class="section-title">IMMEDIATE Response Procedure</h2>
+          
+          <div class="response-box">
+            <h5>⚡ Within 5 Minutes of Alert - SOC Analyst Actions:</h5>
+            <ol>
+              <li><strong>Call user on KNOWN phone number</strong> (use HR records, NOT the number in their profile which attacker may have changed)</li>
+              <li>Ask: <em>"Did you approve an MFA request in the last 30 minutes? What were you doing?"</em></li>
+              <li>If user says <strong>NO</strong> or is <strong>unsure</strong> → Proceed to containment immediately</li>
+              <li>If user says <strong>YES</strong> and can explain legitimate activity → Document and close as verified legitimate</li>
+            </ol>
+          </div>
+          
+          <div class="response-box" style="border-color:#dc2626;background:#fef2f2;">
+            <h5>🔒 If Breach Confirmed - Containment Actions:</h5>
+            <ol>
+              <li><strong>DISABLE the account</strong> in BOTH CyberArk Identity AND Entra ID (Azure AD)</li>
+              <li><strong>Force terminate ALL active sessions</strong> - check all applications</li>
+              <li><strong>Reset password</strong> via secure out-of-band channel (phone call, not email)</li>
+              <li><strong>Re-enroll MFA from scratch</strong> on a known-good device the user has physically</li>
+              <li><strong>Check email for new forwarding rules</strong> - attackers commonly set these for persistence</li>
+              <li><strong>Review ALL activity</strong> since the successful MFA auth for signs of data access</li>
+              <li><strong>Engage Incident Response team</strong> for full investigation</li>
+              <li><strong>Check for lateral movement</strong> to other systems using those credentials</li>
+              <li><strong>Preserve logs</strong> for forensic analysis</li>
+            </ol>
+          </div>
+          
+          <div class="response-box" style="border-color:#7c3aed;background:#f3e8ff;">
+            <h5>👔 If Privileged User - Additional Steps:</h5>
+            <ol>
+              <li><strong>Page security lead immediately</strong> - don't wait for next business day</li>
+              <li><strong>Audit all privileged actions</strong> taken by this account in last 24 hours</li>
+              <li><strong>Check for new admin accounts</strong> created or privilege escalations</li>
+              <li><strong>Review service account access</strong> if user had access to service credentials</li>
+              <li><strong>Consider suspending related service accounts</strong> if compromise suspected</li>
+              <li><strong>Brief executive leadership</strong> on potential impact</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Drilldown -->
+        <div class="section">
+          <h2 class="section-title">Step C: Post-Compromise Activity Check</h2>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">C</span> What Did the Attacker Do After Getting In?</h4>
+            <div class="code-block"><div class="code-body"><pre><code>index=cyberark sourcetype=cyberark:identity:audit earliest=-2h Username="$Username$"
+| eval event_category = case(
+    match(EventType, "(?i)mfa"), "MFA Event",
+    match(EventType, "(?i)login|auth"), "Authentication",
+    match(EventType, "(?i)password"), "Password Change",
+    match(EventType, "(?i)role|permission|privilege|admin"), "Privilege Change",
+    match(EventType, "(?i)user|account"), "Account Modification",
+    1=1, "Other Activity"
+)
+| eval risk_indicator = case(
+    match(EventType, "(?i)(admin|privilege|role|permission)"), "⚠️ HIGH RISK",
+    match(EventType, "(?i)password"), "⚠️ MEDIUM RISK",
+    EventType="Cloud.Core.MfaAuthentication" AND Result="Success", "🔴 BREACH POINT",
+    1=1, ""
+)
+| table _time EventType event_category Result FromIPAddress City Country Application risk_indicator
+| sort _time</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section">
+          <div class="grid grid-2">
+            <div>
+              <a href="uc1-fatigue.html" class="btn btn-secondary">← Previous: UC1 MFA Fatigue</a>
+            </div>
+            <div style="text-align:right;">
+              <a href="uc3-travel.html" class="btn btn-primary">Next: UC3 Impossible Travel →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/app.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{nodeSpacing:25,rankSpacing:30,curve:'basis'}});
+  </script>
+</body>
+</html>

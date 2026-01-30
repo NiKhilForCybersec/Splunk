@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAF-UC2: Single IP Flood | myfirstpro Detection Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    .impl-step{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .impl-step h4{color:var(--primary-700);margin-bottom:16px;font-size:1rem;display:flex;align-items:center;gap:8px;}
+    .impl-step h4 .step-letter{background:var(--primary-500);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:bold;}
+    .impl-step.warning{border-left-color:#f59e0b;}
+    .diagram-box{background:white;padding:20px;border-radius:8px;margin:12px 0;min-height:300px;overflow-x:auto;}
+    .es-config{display:grid;grid-template-columns:220px 1fr;gap:10px;font-size:0.85rem;background:white;padding:16px;border-radius:6px;margin-top:12px;}
+    .es-config dt{font-weight:600;color:var(--gray-700);}
+    .es-config dd{color:var(--gray-600);margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+    .tuning-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .tuning-table th{background:var(--gray-100);padding:10px;text-align:left;border:1px solid var(--gray-200);}
+    .tuning-table td{padding:10px;border:1px solid var(--gray-200);}
+    .fp-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .fp-table th{background:#fef3c7;padding:10px;text-align:left;border:1px solid #fde68a;}
+    .fp-table td{padding:10px;border:1px solid var(--gray-200);}
+    .where-box{background:#e0f2fe;padding:12px 16px;border-radius:6px;font-size:0.85rem;margin-bottom:16px;}
+    .where-box strong{color:#0369a1;}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text"><h1>myfirstpro</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">WAF Use Cases</div>
+          <a href="uc1-volume.html" class="nav-item"><span>UC1: Volume Anomaly</span></a>
+          <a href="uc2-single-ip.html" class="nav-item active"><span>UC2: Single IP Flood</span></a>
+          <a href="uc3-auth.html" class="nav-item"><span>UC3: Auth Attack</span></a>
+          <a href="uc4-sqli.html" class="nav-item"><span>UC4: SQLi/XSS</span></a>
+          <a href="uc5-distributed.html" class="nav-item"><span>UC5: Distributed DDoS</span></a>
+          <a href="uc6-geo.html" class="nav-item"><span>UC6: Geo Anomaly</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Use Cases</div>
+          <a href="../mfa/uc1-fatigue.html" class="nav-item"><span>UC1: MFA Fatigue</span></a>
+          <a href="../mfa/uc2-breach.html" class="nav-item"><span>UC2: Breach Indicator</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../waf-overview.html" class="breadcrumb-item">WAF</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC2: Single IP Flood</span>
+          </div>
+        </div>
+        <span class="badge error">HIGH</span>
+      </header>
+
+      <div class="page-content">
+        <!-- Header Card -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+          <h1 style="font-size:1.5rem;margin-bottom:12px;">WAF-UC2: Single Source Flood Attack</h1>
+          <p style="font-size:1rem;color:var(--gray-600);margin-bottom:20px;">Detect when a single IP generates excessive requests - indicates brute force, credential stuffing, or denial-of-service attempt from a single source.</p>
+          
+          <div class="grid grid-4">
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Default Severity</span>
+              <span class="badge error">HIGH</span>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">MITRE ATT&CK</span>
+              <code style="font-size:0.9rem;">T1498.001</code>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Schedule</span>
+              <strong>Every 5 min</strong>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Time Range</span>
+              <strong>Last 5 min</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 1: Decision Tree -->
+        <div class="section">
+          <h2 class="section-title">Step 1: Decision Tree (Detection Logic)</h2>
+          
+          <div class="impl-step">
+            <div class="diagram-box">
+              <pre class="mermaid">
+flowchart TD
+    START[Aggregate all WAF events by src_ip over 5 min window] --> A[Calculate total_requests per source IP]
+    A --> B[Calculate blocked_count per source IP]
+    B --> C[Calculate unique_endpoints accessed per IP]
+    C --> D{Is total_requests GT 500}
+    D -->|No| E{Is blocked_count GT 100}
+    E -->|No| BELOW[Below threshold - no alert needed]
+    E -->|Yes| HIGH_BLOCK[High block volume from single IP]
+    D -->|Yes| HIGH_VOL[High total volume from single IP]
+    HIGH_BLOCK --> F[Calculate block_ratio percentage]
+    HIGH_VOL --> F
+    F --> F1[block_ratio = blocked_count divided by total_requests times 100]
+    F1 --> G{Is block_ratio GT 90 percent}
+    G -->|Yes| PURE[Pure Attack Pattern - almost all requests blocked]
+    G -->|No| H{Is block_ratio GT 50 percent}
+    H -->|Yes| MIXED[Mixed Traffic Pattern - suspicious activity]
+    H -->|No| SUSPICIOUS[High volume but low block rate - investigate]
+    PURE --> I{Is blocked_count GT 500}
+    I -->|Yes| CRIT[CRITICAL severity - massive attack]
+    I -->|No| J{Is blocked_count GT 200}
+    J -->|Yes| HIGHSEV[HIGH severity - significant attack]
+    J -->|No| MEDSEV[MEDIUM severity - moderate attack]
+    MIXED --> J
+    SUSPICIOUS --> K[Check if legitimate high-traffic user or partner]
+    K --> MEDSEV
+    CRIT --> CREATE[Create Notable Event with src_ip as primary field]
+    HIGHSEV --> CREATE
+    MEDSEV --> CREATE
+    CREATE --> ENRICH[Enrich with target hosts and URIs]
+    ENRICH --> THROTTLE[Throttle by src_ip for 30 minutes]
+    THROTTLE --> ALERT[Send to Incident Review for analyst action]
+
+    style CRIT fill:#fee2e2,stroke:#dc2626,stroke-width:2px
+    style HIGHSEV fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style MEDSEV fill:#fefce8,stroke:#ca8a04,stroke-width:2px
+    style BELOW fill:#dcfce7,stroke:#16a34a,stroke-width:2px
+    style PURE fill:#fef2f2,stroke:#dc2626
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP A: Build SPL -->
+        <div class="section">
+          <h2 class="section-title">Step A: Build SPL in Search First</h2>
+          <div class="where-box">
+            <strong>Where:</strong> Splunk Search → Build and test SPL
+          </div>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">A1</span> Basic Single IP Flood Detection</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> Simple single-IP flood detection. Good starting point for most environments.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-5m
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| stats count as total_requests 
+        count(eval(waf_action="deny" OR waf_action="block")) as blocked_count
+        dc(uri) as unique_endpoints
+        dc(vhost) as unique_hosts
+        values(vhost) as target_hosts
+        BY src_ip
+| eval block_ratio = round(blocked_count / total_requests * 100, 1)
+| where total_requests > 500 OR blocked_count > 100
+| eval attack_type = case(
+    block_ratio >= 90, "Pure Attack",
+    block_ratio >= 50, "Mixed Traffic",
+    1=1, "Suspicious Volume"
+)
+| eval severity = case(
+    blocked_count > 500, "critical",
+    blocked_count > 200, "high",
+    1=1, "medium"
+)
+| table src_ip total_requests blocked_count block_ratio unique_endpoints unique_hosts target_hosts attack_type severity</code></pre></div></div>
+          </div>
+
+          <div class="impl-step">
+            <h4><span class="step-letter">A2</span> With Attack Signature Analysis</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> You want to know WHAT type of attacks the IP is attempting.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-5m
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| stats count as total_requests 
+        count(eval(waf_action="deny" OR waf_action="block")) as blocked_count
+        dc(uri) as unique_endpoints
+        values(uri) as sample_uris
+        values(signature) as attack_signatures
+        values(vhost) as target_hosts
+        BY src_ip
+| eval block_ratio = round(blocked_count / total_requests * 100, 1)
+| where total_requests > 500 OR blocked_count > 100
+| eval is_auth_attack = if(match(mvjoin(sample_uris,","), "(?i)(login|auth|signin|password|oauth|token)"), "Yes", "No")
+| eval is_injection_attack = if(match(mvjoin(attack_signatures,","), "(?i)(sql|xss|cmd|lfi|rfi)"), "Yes", "No")
+| eval severity = case(
+    blocked_count > 500, "critical",
+    blocked_count > 200, "high",
+    1=1, "medium"
+)
+| table src_ip total_requests blocked_count block_ratio unique_endpoints sample_uris attack_signatures is_auth_attack is_injection_attack target_hosts severity</code></pre></div></div>
+          </div>
+
+          <div class="impl-step">
+            <h4><span class="step-letter">A3</span> With Geographic Enrichment</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
+              <strong>Use when:</strong> You want geographic context about the attacker for threat intel and blocking decisions.
+            </p>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-5m
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval country=coalesce(src_country,'geo.country')
+| eval city=coalesce(src_city,'geo.city')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| stats count as total_requests 
+        count(eval(waf_action="deny" OR waf_action="block")) as blocked_count
+        dc(uri) as unique_endpoints
+        values(country) as src_country
+        values(city) as src_city
+        BY src_ip
+| eval block_ratio = round(blocked_count / total_requests * 100, 1)
+| where total_requests > 500 OR blocked_count > 100
+| iplocation src_ip
+| eval severity = case(
+    blocked_count > 500, "critical",
+    blocked_count > 200, "high",
+    1=1, "medium"
+)
+| table src_ip Country City total_requests blocked_count block_ratio unique_endpoints severity</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP B: ES Correlation Search -->
+        <div class="section">
+          <h2 class="section-title">Step B: Create ES Correlation Search</h2>
+          <div class="where-box">
+            <strong>Where:</strong> ES → Content Management → Correlation Searches → Create New
+          </div>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">B</span> ES Correlation Search Configuration</h4>
+            <dl class="es-config">
+              <dt>Search Name</dt>
+              <dd>WAF-UC2: Single Source Flood Attack</dd>
+              
+              <dt>Cron Schedule</dt>
+              <dd>*/5 * * * *</dd>
+              
+              <dt>Earliest Time</dt>
+              <dd>-5m</dd>
+              
+              <dt>Latest Time</dt>
+              <dd>now</dd>
+              
+              <dt>Notable Title</dt>
+              <dd>WAF: Single source flood from $src_ip$ ($blocked_count$ blocks, $block_ratio$% block rate)</dd>
+              
+              <dt>Notable Description</dt>
+              <dd>IP $src_ip$ generated $total_requests$ requests with $blocked_count$ blocked ($block_ratio$% block rate). Attack type: $attack_type$. Targeted $unique_endpoints$ unique endpoints across hosts: $target_hosts$.</dd>
+              
+              <dt>Default Severity</dt>
+              <dd>High</dd>
+              
+              <dt>Throttle Duration</dt>
+              <dd>1800 seconds (30 minutes)</dd>
+              
+              <dt>Throttle Fields</dt>
+              <dd>src_ip</dd>
+              
+              <dt>MITRE ATT&CK</dt>
+              <dd>T1498.001 - Direct Network Flood</dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- STEP C: Drilldown -->
+        <div class="section">
+          <h2 class="section-title">Step C: Drilldown Search</h2>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">C</span> Show Detailed Attack Pattern for IP</h4>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-15m src_ip="$src_ip$"
+| spath
+| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
+| eval status=coalesce(status,'httpMessage.status')
+| eval user_agent=coalesce(http_user_agent,'httpMessage.requestHeaders.User-Agent')
+| stats count as requests 
+        values(waf_action) as actions
+        values(status) as http_status
+        values(user_agent) as user_agents
+        by uri signature
+| sort - requests
+| head 30</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP D: Tuning -->
+        <div class="section">
+          <h2 class="section-title">Step D: Tuning Parameters</h2>
+          
+          <div class="impl-step">
+            <h4><span class="step-letter">D</span> Threshold Recommendations by Site Size</h4>
+            <table class="tuning-table">
+              <thead>
+                <tr><th>Parameter</th><th>Small Site</th><th>Medium Site</th><th>Large Site</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Total requests threshold</strong></td>
+                  <td>200</td>
+                  <td>500</td>
+                  <td>1000</td>
+                  <td>What counts as "high volume" from single IP</td>
+                </tr>
+                <tr>
+                  <td><strong>Blocked count threshold</strong></td>
+                  <td>50</td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>Minimum blocks to trigger alert</td>
+                </tr>
+                <tr>
+                  <td><strong>Critical blocked threshold</strong></td>
+                  <td>200</td>
+                  <td>500</td>
+                  <td>1000</td>
+                  <td>When to escalate to critical severity</td>
+                </tr>
+                <tr>
+                  <td><strong>Time window</strong></td>
+                  <td>5m</td>
+                  <td>5m</td>
+                  <td>5m</td>
+                  <td>Keep short for DoS detection responsiveness</td>
+                </tr>
+                <tr>
+                  <td><strong>Throttle duration</strong></td>
+                  <td>30m</td>
+                  <td>30m</td>
+                  <td>60m</td>
+                  <td>Larger sites may need longer throttle</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- STEP E: False Positives -->
+        <div class="section">
+          <h2 class="section-title">Step E: Handle False Positives</h2>
+          
+          <div class="impl-step warning">
+            <h4><span class="step-letter">E</span> Common False Positives & Solutions</h4>
+            <table class="fp-table">
+              <thead>
+                <tr><th>FP Source</th><th>How to Identify</th><th>Solution</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Corporate NAT/Proxy</strong></td>
+                  <td>Known corporate egress IPs, many different user agents, diverse URI patterns</td>
+                  <td>Create corporate_egress.csv lookup with known NAT IPs, exclude or tag separately</td>
+                </tr>
+                <tr>
+                  <td><strong>Load testing tools</strong></td>
+                  <td>Spikes during QA windows, JMeter/Gatling/Locust/k6 user agents</td>
+                  <td>Coordinate test schedules with QA, suppress during known windows</td>
+                </tr>
+                <tr>
+                  <td><strong>Monitoring services</strong></td>
+                  <td>Pingdom/UptimeRobot/Datadog/New Relic IP ranges, regular intervals</td>
+                  <td>Allowlist monitoring service IP ranges in lookup</td>
+                </tr>
+                <tr>
+                  <td><strong>Search engine crawlers</strong></td>
+                  <td>Googlebot/Bingbot user agents, verified crawler IPs</td>
+                  <td>Verify via reverse DNS, allowlist legitimate crawler IP ranges</td>
+                </tr>
+                <tr>
+                  <td><strong>CDN edge servers</strong></td>
+                  <td>Requests from Akamai/Cloudflare/Fastly edge IPs forwarding traffic</td>
+                  <td>Use X-Forwarded-For header to get real client IP instead</td>
+                </tr>
+                <tr>
+                  <td><strong>Partner API integrations</strong></td>
+                  <td>Known partner IPs, legitimate business traffic patterns</td>
+                  <td>Create partner_ips.csv lookup, exclude or create separate "partner anomaly" detection</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section">
+          <div class="grid grid-2">
+            <div>
+              <a href="uc1-volume.html" class="btn btn-secondary">← Previous: UC1 Volume Anomaly</a>
+            </div>
+            <div style="text-align:right;">
+              <a href="uc3-auth.html" class="btn btn-primary">Next: UC3 Auth Attack →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/app.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{nodeSpacing:25,rankSpacing:30,curve:'basis'}});
+  </script>
+</body>
+</html>

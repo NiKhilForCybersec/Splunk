@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAF-UC11: Security Scanner Detection | myfirstpro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    .impl-step{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .impl-step h4{color:var(--primary-700);margin-bottom:16px;font-size:1rem;}
+    .impl-step.warning{border-left-color:#f59e0b;}
+    .diagram-box{background:white;padding:20px;border-radius:8px;margin:12px 0;min-height:300px;overflow-x:auto;}
+    .es-config{display:grid;grid-template-columns:220px 1fr;gap:10px;font-size:0.85rem;background:white;padding:16px;border-radius:6px;margin-top:12px;}
+    .es-config dt{font-weight:600;color:var(--gray-700);}
+    .es-config dd{color:var(--gray-600);margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+    .tuning-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .tuning-table th{background:var(--gray-100);padding:10px;text-align:left;border:1px solid var(--gray-200);}
+    .tuning-table td{padding:10px;border:1px solid var(--gray-200);}
+    .where-box{background:#e0f2fe;padding:12px 16px;border-radius:6px;font-size:0.85rem;margin-bottom:16px;}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text"><h1>myfirstpro</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">WAF Use Cases</div>
+          <a href="uc10-path.html" class="nav-item"><span>UC10: Path Traversal</span></a>
+          <a href="uc11-scanner.html" class="nav-item active"><span>UC11: Scanner Detection</span></a>
+          <a href="uc12-rate.html" class="nav-item"><span>UC12: Rate Limit</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../waf-usecases.html" class="breadcrumb-item">WAF</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC11: Scanner Detection</span>
+          </div>
+        </div>
+        <span class="badge warning">MEDIUM</span>
+      </header>
+
+      <div class="page-content">
+        <!-- Header Card -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+          <h1 style="font-size:1.5rem;margin-bottom:12px;">WAF-UC11: Security Scanner Detection</h1>
+          <p style="font-size:1rem;color:var(--gray-600);margin-bottom:20px;">Detect known vulnerability scanners by their user agent signatures (Nessus, Nikto, sqlmap, Burp Suite, etc.). Distinguishes between internal authorized scans and unauthorized external reconnaissance.</p>
+          
+          <div class="grid grid-4">
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Severity</span>
+              <span class="badge warning">MEDIUM</span>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">MITRE</span>
+              <code style="font-size:0.9rem;">T1595</code>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Schedule</span>
+              <strong>Every 15 min</strong>
+            </div>
+            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
+              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Time Range</span>
+              <strong>Last 30 min</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scanner Classification -->
+        <div class="section">
+          <h2 class="section-title">Known Scanner Reference</h2>
+          
+          <div class="impl-step">
+            <h4>Scanner User Agent Patterns</h4>
+            <table class="tuning-table">
+              <thead>
+                <tr><th>Scanner</th><th>User Agent Pattern</th><th>Type</th><th>If External</th></tr>
+              </thead>
+              <tbody>
+                <tr style="background:#fef2f2;">
+                  <td><strong>sqlmap</strong></td>
+                  <td><code>sqlmap</code></td>
+                  <td>SQL Injection</td>
+                  <td style="color:#dc2626;font-weight:bold;">HIGH - Active SQLi attack</td>
+                </tr>
+                <tr style="background:#fef2f2;">
+                  <td><strong>Nikto</strong></td>
+                  <td><code>Nikto</code></td>
+                  <td>Web Vuln Scanner</td>
+                  <td style="color:#dc2626;font-weight:bold;">HIGH - Reconnaissance</td>
+                </tr>
+                <tr style="background:#fff7ed;">
+                  <td><strong>Nessus</strong></td>
+                  <td><code>Nessus</code></td>
+                  <td>Enterprise Scanner</td>
+                  <td style="color:#ea580c;font-weight:bold;">Check if authorized</td>
+                </tr>
+                <tr style="background:#fff7ed;">
+                  <td><strong>Qualys</strong></td>
+                  <td><code>Qualys</code></td>
+                  <td>Enterprise Scanner</td>
+                  <td style="color:#ea580c;font-weight:bold;">Check if authorized</td>
+                </tr>
+                <tr style="background:#fff7ed;">
+                  <td><strong>Burp Suite</strong></td>
+                  <td><code>Burp</code></td>
+                  <td>Pen Testing</td>
+                  <td style="color:#ea580c;font-weight:bold;">Check if authorized</td>
+                </tr>
+                <tr>
+                  <td><strong>OWASP ZAP</strong></td>
+                  <td><code>OWASP ZAP</code></td>
+                  <td>Web Scanner</td>
+                  <td>Check if authorized</td>
+                </tr>
+                <tr>
+                  <td><strong>Acunetix</strong></td>
+                  <td><code>Acunetix</code></td>
+                  <td>Web Scanner</td>
+                  <td>Check if authorized</td>
+                </tr>
+                <tr>
+                  <td><strong>Rapid7</strong></td>
+                  <td><code>Rapid7</code></td>
+                  <td>Enterprise Scanner</td>
+                  <td>Usually internal</td>
+                </tr>
+                <tr>
+                  <td><strong>w3af</strong></td>
+                  <td><code>w3af</code></td>
+                  <td>Web Scanner</td>
+                  <td>External = alert</td>
+                </tr>
+                <tr>
+                  <td><strong>Wapiti</strong></td>
+                  <td><code>Wapiti</code></td>
+                  <td>Web Scanner</td>
+                  <td>External = alert</td>
+                </tr>
+                <tr>
+                  <td><strong>DirBuster</strong></td>
+                  <td><code>DirBuster</code></td>
+                  <td>Directory Brute Force</td>
+                  <td>External = alert</td>
+                </tr>
+                <tr>
+                  <td><strong>Gobuster</strong></td>
+                  <td><code>gobuster</code></td>
+                  <td>Directory Brute Force</td>
+                  <td>External = alert</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- STEP 1: Decision Tree -->
+        <div class="section">
+          <h2 class="section-title">Step 1: Decision Tree (Detection Logic)</h2>
+          
+          <div class="impl-step">
+            <div class="diagram-box">
+              <pre class="mermaid">
+flowchart TD
+    START[Check User Agent in WAF logs] --> A{Does UA match known scanner pattern}
+    A -->|No| OTHER[Not scanner - route to other detections]
+    A -->|Yes| B[Identify scanner type]
+    B --> C[Lookup source IP]
+    C --> D{Is source IP in authorized_scanners.csv}
+    D -->|Yes| INTERNAL[Internal Authorized Scan]
+    D -->|No| EXTERNAL[EXTERNAL Scanner - Unauthorized]
+    INTERNAL --> E{Is scan happening during approved window}
+    E -->|Yes| APPROVED[Approved scan - log only no alert]
+    E -->|No| UNSCHEDULED[Unscheduled internal scan - verify]
+    EXTERNAL --> F{What type of scanner}
+    F --> G{Is it sqlmap}
+    G -->|Yes| SQLI_ATTACK[CRITICAL - Active SQLi tool]
+    G -->|No| H{Is it attack-focused tool}
+    H -->|Yes| ATTACK[HIGH - Attack tool reconnaissance]
+    H -->|No| RECON[MEDIUM - General reconnaissance]
+    SQLI_ATTACK --> ALERT[Create Notable - HIGH priority]
+    ATTACK --> ALERT
+    RECON --> LOG[Create Notable - MEDIUM priority]
+    UNSCHEDULED --> VERIFY[Verify with security team]
+
+    style SQLI_ATTACK fill:#fee2e2,stroke:#dc2626,stroke-width:2px
+    style ATTACK fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style EXTERNAL fill:#fef2f2,stroke:#dc2626
+    style APPROVED fill:#dcfce7,stroke:#16a34a
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP A: Build SPL -->
+        <div class="section">
+          <h2 class="section-title">Step A: Build SPL in Search First</h2>
+          <div class="where-box">
+            <strong>Where:</strong> Splunk Search → Build and test SPL
+          </div>
+          
+          <div class="impl-step">
+            <h4>Scanner Detection SPL</h4>
+            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-30m
+| spath
+| eval src_ip=coalesce(src_ip,'attackData.clientIP')
+| eval uri=coalesce(uri,'httpMessage.requestUri')
+| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
+| eval user_agent=coalesce(http_user_agent,'httpMessage.requestHeaders.User-Agent')
+| where match(user_agent, "(?i)(sqlmap|nikto|nessus|qualys|burp|acunetix|owasp.?zap|rapid7|w3af|wapiti|dirbuster|gobuster|wfuzz|ffuf|nuclei|xray|jaeles)")
+| eval scanner_name = case(
+    match(user_agent, "(?i)sqlmap"), "sqlmap",
+    match(user_agent, "(?i)nikto"), "Nikto",
+    match(user_agent, "(?i)nessus"), "Nessus",
+    match(user_agent, "(?i)qualys"), "Qualys",
+    match(user_agent, "(?i)burp"), "Burp Suite",
+    match(user_agent, "(?i)owasp.?zap"), "OWASP ZAP",
+    match(user_agent, "(?i)acunetix"), "Acunetix",
+    match(user_agent, "(?i)rapid7"), "Rapid7",
+    match(user_agent, "(?i)dirbuster|gobuster|wfuzz|ffuf"), "Directory Bruteforcer",
+    match(user_agent, "(?i)nuclei|xray|jaeles"), "Modern Scanner",
+    1=1, "Unknown Scanner"
+)
+| eval scanner_category = case(
+    match(scanner_name, "(?i)sqlmap"), "SQLi Attack Tool",
+    match(scanner_name, "(?i)(nikto|zap|acunetix|w3af|wapiti)"), "Web Vulnerability Scanner",
+    match(scanner_name, "(?i)(nessus|qualys|rapid7)"), "Enterprise Scanner",
+    match(scanner_name, "(?i)(dirbuster|gobuster|wfuzz|ffuf)"), "Directory Enumeration",
+    match(scanner_name, "(?i)burp"), "Pen Test Tool",
+    1=1, "Other Scanner"
+)
+| stats count as requests
+        dc(uri) as unique_uris
+        values(uri) as sample_uris
+        BY src_ip, vhost, scanner_name, scanner_category
+| lookup authorized_scanners.csv src_ip OUTPUT is_authorized scan_owner
+| eval is_authorized = if(isnull(is_authorized), "No", is_authorized)
+| eval severity = case(
+    is_authorized="Yes", "info",
+    scanner_category="SQLi Attack Tool", "critical",
+    scanner_category="Pen Test Tool" AND is_authorized="No", "high",
+    scanner_category="Web Vulnerability Scanner" AND requests > 100, "high",
+    1=1, "medium"
+)
+| where severity!="info"
+| table src_ip vhost scanner_name scanner_category requests unique_uris is_authorized scan_owner sample_uris severity</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- STEP B: ES Config -->
+        <div class="section">
+          <h2 class="section-title">Step B: ES Correlation Search Settings</h2>
+          
+          <div class="impl-step">
+            <h4>ES Configuration</h4>
+            <dl class="es-config">
+              <dt>Search Name</dt>
+              <dd>WAF-UC11: Security Scanner Detection</dd>
+              
+              <dt>Cron Schedule</dt>
+              <dd>*/15 * * * *</dd>
+              
+              <dt>Earliest Time</dt>
+              <dd>-30m</dd>
+              
+              <dt>Notable Title</dt>
+              <dd>Scanner Detected: $scanner_name$ ($scanner_category$) on $vhost$ from $src_ip$</dd>
+              
+              <dt>Notable Description</dt>
+              <dd>Security scanner detected. Scanner: $scanner_name$ ($scanner_category$). Source: $src_ip$. Target: $vhost$. Requests: $requests$ to $unique_uris$ unique URIs. Authorized: $is_authorized$. Owner: $scan_owner$. Sample URIs: $sample_uris$</dd>
+              
+              <dt>Default Severity</dt>
+              <dd>Medium (or map from $severity$)</dd>
+              
+              <dt>Throttle Duration</dt>
+              <dd>3600 seconds (1 hour)</dd>
+              
+              <dt>Throttle Fields</dt>
+              <dd>src_ip, scanner_name</dd>
+              
+              <dt>MITRE ATT&CK</dt>
+              <dd>T1595 - Active Scanning</dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- Creating Authorized Scanner Lookup -->
+        <div class="section">
+          <h2 class="section-title">Prerequisite: Create Authorized Scanner Lookup</h2>
+          
+          <div class="impl-step">
+            <h4>Create authorized_scanners.csv</h4>
+            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;">Upload this lookup with your authorized scanner IPs:</p>
+            <div class="code-block"><div class="code-body"><pre><code>src_ip,is_authorized,scan_owner,scan_window
+10.1.2.50,Yes,Security Team,Tuesday 2AM-6AM
+10.1.2.51,Yes,Security Team,Tuesday 2AM-6AM
+192.168.1.100,Yes,Qualys Cloud,Daily
+52.x.x.x,Yes,Rapid7 InsightVM,Weekly</code></pre></div></div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section">
+          <div class="grid grid-2">
+            <div>
+              <a href="uc10-path.html" class="btn btn-secondary">← Previous: UC10 Path Traversal</a>
+            </div>
+            <div style="text-align:right;">
+              <a href="uc12-rate.html" class="btn btn-primary">Next: UC12 Rate Limit →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/app.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{nodeSpacing:25,rankSpacing:30,curve:'basis'}});
+  </script>
+</body>
+</html>
