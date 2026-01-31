@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Splunk Architecture Deep Dive | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+                    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>Splunk Reference</h1>
+              <span>Log & Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Platform</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
+          <a href="splunk-architecture.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Architecture Deep Dive</span></a>
+          <a href="splunk-apps.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Apps & Add-ons</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Log Engineering</div>
+          <a href="log-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding Guide</span></a>
+          <a href="data-inputs.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Data Inputs (HEC/UF)</span></a>
+          <a href="props-transforms.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>props.conf & transforms</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>CIM Compliance</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">SPL Mastery</div>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>SPL Fundamentals</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>SPL Reference Card</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Enterprise Security</div>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>ES Overview</span></a>
+          <a href="correlation-searches.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Correlation Searches</span></a>
+          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID / Azure AD</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Active Projects</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>WAF/DDoS Project</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>WAF Use Cases</span></a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>MFA Project</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>MFA Use Cases</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span>Splunk Cloud Admin</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Troubleshooting</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Reference</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+          <a href="cheat-sheets.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Cheat Sheets</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Log & Detection Engineering v3.0</p></div>
+    </aside>
+    
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Splunk Architecture</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Splunk Architecture Deep Dive</h1>
+          <p class="section-subtitle">Understanding how Splunk works from data ingestion to search — essential knowledge for log and detection engineering</p>
+        </div>
+
+        <!-- Why This Matters -->
+        <div class="callout critical">
+          <div class="callout-content">
+            <div class="callout-title">Why You Need This Knowledge</div>
+            <div class="callout-body">
+              Understanding Splunk architecture helps you:<br>
+              • <strong>Troubleshoot data issues</strong> — Know where to look when logs aren't appearing<br>
+              • <strong>Optimize searches</strong> — Write efficient SPL that doesn't overload the system<br>
+              • <strong>Design better detections</strong> — Understand indexing and search time vs index time<br>
+              • <strong>Communicate effectively</strong> — Speak the same language as Splunk admins
+            </div>
+          </div>
+        </div>
+
+        <!-- Splunk Cloud vs Enterprise -->
+        <div class="section">
+          <h2 class="subsection-title">Splunk Cloud vs Splunk Enterprise</h2>
+          
+          <div class="card" style="padding:24px;margin-bottom:24px;">
+            <h3 style="margin-top:0;color:var(--primary-700);">Splunk Cloud (What Most Clients Use)</h3>
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>Splunk Cloud</th>
+                  <th>Splunk Enterprise (On-Prem)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Infrastructure</strong></td>
+                  <td>Managed by Splunk on AWS/GCP</td>
+                  <td>Self-managed on your servers</td>
+                </tr>
+                <tr>
+                  <td><strong>Administration</strong></td>
+                  <td>Limited admin access; many changes require support cases</td>
+                  <td>Full admin access to everything</td>
+                </tr>
+                <tr>
+                  <td><strong>App Installation</strong></td>
+                  <td>Via Splunk Web, ACS API, or support case</td>
+                  <td>Direct installation on server</td>
+                </tr>
+                <tr>
+                  <td><strong>Configuration Files</strong></td>
+                  <td>Limited direct access; use UI or support</td>
+                  <td>Direct file system access</td>
+                </tr>
+                <tr>
+                  <td><strong>Deployment Types</strong></td>
+                  <td>Victoria Experience (newer) or Classic</td>
+                  <td>Single instance or distributed</td>
+                </tr>
+                <tr>
+                  <td><strong>Data Inputs</strong></td>
+                  <td>HEC preferred; forwarders for on-prem</td>
+                  <td>Any input method</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout info">
+            <div class="callout-content">
+              <div class="callout-title">How to Check Your Deployment Type</div>
+              <div class="callout-body">
+                <strong>Splunk Cloud Victoria Experience:</strong> Look for "Stack Management" in Settings<br>
+                <strong>Splunk Cloud Classic:</strong> No Stack Management; traditional UI<br>
+                <strong>Finding Your Stack Name:</strong> Help menu → About → Look for stack name (e.g., "acme-prod")
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Core Architecture Components -->
+        <div class="section">
+          <h2 class="subsection-title">Core Architecture Components</h2>
+          
+          <div class="card" style="padding:24px;margin-bottom:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart LR
+    subgraph Sources["Data Sources"]
+        A1[Servers/Apps]
+        A2[Cloud Services]
+        A3[Network Devices]
+        A4[Security Tools]
+    end
+    
+    subgraph Ingestion["Data Ingestion"]
+        B1[Universal Forwarder]
+        B2[Heavy Forwarder]
+        B3[HEC]
+        B4[Scripted/Modular Input]
+    end
+    
+    subgraph Processing["Data Processing"]
+        C1[Indexer]
+    end
+    
+    subgraph Storage["Storage"]
+        D1[Hot]
+        D2[Warm]
+        D3[Cold]
+        D4[Frozen]
+    end
+    
+    subgraph Search["Search Layer"]
+        E1[Search Head]
+    end
+    
+    A1 --> B1
+    A2 --> B3
+    A3 --> B2
+    A4 --> B3
+    B1 --> C1
+    B2 --> C1
+    B3 --> C1
+    B4 --> C1
+    C1 --> D1
+    D1 --> D2
+    D2 --> D3
+    D3 --> D4
+    C1 --> E1
+            </div>
+          </div>
+
+          <!-- Component Details -->
+          <div class="grid-2">
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--info-600);">📥 Universal Forwarder (UF)</h4>
+              <p style="margin-bottom:8px;"><strong>What it does:</strong> Lightweight agent that collects and forwards data</p>
+              <p style="margin-bottom:8px;"><strong>Where it runs:</strong> On servers/endpoints you want to collect from</p>
+              <p style="margin-bottom:8px;"><strong>Key points:</strong></p>
+              <ul style="margin:0;padding-left:20px;">
+                <li>No parsing/indexing — just forwarding</li>
+                <li>~50MB footprint, minimal CPU</li>
+                <li>Configured via inputs.conf and outputs.conf</li>
+                <li>Can buffer data if connection lost</li>
+              </ul>
+            </div>
+            
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--warning-600);">📤 Heavy Forwarder (HF)</h4>
+              <p style="margin-bottom:8px;"><strong>What it does:</strong> Full Splunk instance that can parse/filter before forwarding</p>
+              <p style="margin-bottom:8px;"><strong>Where it runs:</strong> Intermediate layer for complex data</p>
+              <p style="margin-bottom:8px;"><strong>Key points:</strong></p>
+              <ul style="margin:0;padding-left:20px;">
+                <li>Can parse, filter, mask, route data</li>
+                <li>Higher resource requirements</li>
+                <li>Useful for data transformation</li>
+                <li>Often used for syslog aggregation</li>
+              </ul>
+            </div>
+            
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--success-600);">🌐 HTTP Event Collector (HEC)</h4>
+              <p style="margin-bottom:8px;"><strong>What it does:</strong> RESTful API endpoint for sending data over HTTP/HTTPS</p>
+              <p style="margin-bottom:8px;"><strong>Where it runs:</strong> On indexers/Splunk Cloud</p>
+              <p style="margin-bottom:8px;"><strong>Key points:</strong></p>
+              <ul style="margin:0;padding-left:20px;">
+                <li>Token-based authentication</li>
+                <li>Preferred method for cloud services</li>
+                <li>JSON or raw data format</li>
+                <li>Can specify index, sourcetype, host at send time</li>
+              </ul>
+            </div>
+            
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--error-600);">💾 Indexer</h4>
+              <p style="margin-bottom:8px;"><strong>What it does:</strong> Processes, stores, and indexes incoming data</p>
+              <p style="margin-bottom:8px;"><strong>Where it runs:</strong> Core of Splunk deployment</p>
+              <p style="margin-bottom:8px;"><strong>Key points:</strong></p>
+              <ul style="margin:0;padding-left:20px;">
+                <li>Parses events and extracts timestamps</li>
+                <li>Applies index-time field extractions</li>
+                <li>Compresses and stores in buckets</li>
+                <li>Creates TSIDX files for fast searching</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Index Time vs Search Time -->
+        <div class="section">
+          <h2 class="subsection-title">Index Time vs Search Time — Critical Concept</h2>
+          
+          <div class="callout warning">
+            <div class="callout-content">
+              <div class="callout-title">⚠️ This Is a Job Interview Question</div>
+              <div class="callout-body">
+                Understanding the difference between index-time and search-time operations is fundamental. Get this wrong and you'll look like a beginner.
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;margin-bottom:24px;">
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>Index Time</th>
+                  <th>Search Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>When it happens</strong></td>
+                  <td>When data is ingested/indexed</td>
+                  <td>When you run a search</td>
+                </tr>
+                <tr>
+                  <td><strong>Can be changed?</strong></td>
+                  <td>NO — once indexed, it's permanent</td>
+                  <td>YES — can change extractions anytime</td>
+                </tr>
+                <tr>
+                  <td><strong>Performance impact</strong></td>
+                  <td>Slightly slower indexing, faster searches</td>
+                  <td>No indexing impact, computed per search</td>
+                </tr>
+                <tr>
+                  <td><strong>Configuration</strong></td>
+                  <td>props.conf with TRANSFORMS</td>
+                  <td>props.conf with EXTRACT/REPORT</td>
+                </tr>
+                <tr>
+                  <td><strong>Use cases</strong></td>
+                  <td>Critical fields like host, source, sourcetype</td>
+                  <td>Most field extractions</td>
+                </tr>
+                <tr>
+                  <td><strong>Example</strong></td>
+                  <td>Routing events to specific index</td>
+                  <td>Extracting IP addresses from logs</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card" style="padding:20px;background:var(--gray-50);">
+            <h4 style="margin-top:0;">Default Indexed Fields (Always Available)</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;">
+# These fields are ALWAYS indexed:
+host       # The host that generated the event
+source     # The file/input path
+sourcetype # The data format identifier
+index      # Which index the event is stored in
+_time      # The event timestamp
+_raw       # The original raw event text
+_indextime # When the event was indexed
+            </code>
+          </div>
+        </div>
+
+        <!-- Data Storage Buckets -->
+        <div class="section">
+          <h2 class="subsection-title">Data Storage — Bucket Lifecycle</h2>
+          
+          <div class="card" style="padding:24px;margin-bottom:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart LR
+    A[Hot Bucket<br/>Actively Written] -->|Roll when full<br/>or time limit| B[Warm Bucket<br/>Searchable, Read-only]
+    B -->|Age-based| C[Cold Bucket<br/>Searchable, Slower]
+    C -->|Retention policy| D[Frozen<br/>Archived/Deleted]
+    
+    style A fill:#ef4444,color:#fff
+    style B fill:#f59e0b,color:#fff
+    style C fill:#3b82f6,color:#fff
+    style D fill:#6b7280,color:#fff
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;">
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Bucket</th>
+                  <th>State</th>
+                  <th>Storage</th>
+                  <th>Typical Duration</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge" style="background:#ef4444;">Hot</span></td>
+                  <td>Actively receiving data; open for writes</td>
+                  <td>Fast storage (SSD)</td>
+                  <td>Minutes to hours</td>
+                </tr>
+                <tr>
+                  <td><span class="badge" style="background:#f59e0b;">Warm</span></td>
+                  <td>Closed to writes; fully searchable</td>
+                  <td>Fast storage (SSD)</td>
+                  <td>Days to weeks</td>
+                </tr>
+                <tr>
+                  <td><span class="badge" style="background:#3b82f6;">Cold</span></td>
+                  <td>Moved to slower storage; searchable</td>
+                  <td>Slower storage (HDD/S3)</td>
+                  <td>Weeks to months</td>
+                </tr>
+                <tr>
+                  <td><span class="badge" style="background:#6b7280;">Frozen</span></td>
+                  <td>Removed from index; optionally archived</td>
+                  <td>Archive or deleted</td>
+                  <td>Per retention policy</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout info">
+            <div class="callout-content">
+              <div class="callout-title">Checking Index Storage</div>
+              <div class="callout-body">
+                <code>| dbinspect index=your_index | stats sum(sizeOnDiskMB) as total_MB by state</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search Architecture -->
+        <div class="section">
+          <h2 class="subsection-title">Search Architecture — How Searches Work</h2>
+          
+          <div class="card" style="padding:24px;margin-bottom:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+sequenceDiagram
+    participant User
+    participant SH as Search Head
+    participant IDX1 as Indexer 1
+    participant IDX2 as Indexer 2
+    
+    User->>SH: Submit search query
+    SH->>SH: Parse SPL
+    SH->>IDX1: Send search job
+    SH->>IDX2: Send search job
+    IDX1->>IDX1: Search local buckets
+    IDX2->>IDX2: Search local buckets
+    IDX1->>SH: Return partial results
+    IDX2->>SH: Return partial results
+    SH->>SH: Merge & process results
+    SH->>User: Return final results
+            </div>
+          </div>
+
+          <div class="card" style="padding:20px;">
+            <h4 style="margin-top:0;">Search Pipeline Phases</h4>
+            <table class="reference-table">
+              <tbody>
+                <tr>
+                  <td><strong>1. Parsing</strong></td>
+                  <td>SPL is parsed into search phases</td>
+                </tr>
+                <tr>
+                  <td><strong>2. Bloom Filter</strong></td>
+                  <td>Quick elimination of buckets that definitely don't match</td>
+                </tr>
+                <tr>
+                  <td><strong>3. TSIDX Lookup</strong></td>
+                  <td>Index files checked for matching terms</td>
+                </tr>
+                <tr>
+                  <td><strong>4. Raw Data Scan</strong></td>
+                  <td>Actual events retrieved from buckets</td>
+                </tr>
+                <tr>
+                  <td><strong>5. Field Extraction</strong></td>
+                  <td>Search-time extractions applied</td>
+                </tr>
+                <tr>
+                  <td><strong>6. Filtering</strong></td>
+                  <td>WHERE, search terms applied</td>
+                </tr>
+                <tr>
+                  <td><strong>7. Transforming</strong></td>
+                  <td>stats, eval, etc. commands processed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Knowledge Objects -->
+        <div class="section">
+          <h2 class="subsection-title">Knowledge Objects — Where Configurations Live</h2>
+          
+          <div class="card" style="padding:24px;">
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Object Type</th>
+                  <th>Config File</th>
+                  <th>Purpose</th>
+                  <th>Location</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Field Extractions</strong></td>
+                  <td>props.conf, transforms.conf</td>
+                  <td>Extract fields from raw data</td>
+                  <td>Settings → Fields</td>
+                </tr>
+                <tr>
+                  <td><strong>Lookups</strong></td>
+                  <td>transforms.conf + CSV files</td>
+                  <td>Enrich data with external info</td>
+                  <td>Settings → Lookups</td>
+                </tr>
+                <tr>
+                  <td><strong>Event Types</strong></td>
+                  <td>eventtypes.conf</td>
+                  <td>Categorize events by search</td>
+                  <td>Settings → Event Types</td>
+                </tr>
+                <tr>
+                  <td><strong>Tags</strong></td>
+                  <td>tags.conf</td>
+                  <td>Add labels to field values</td>
+                  <td>Settings → Tags</td>
+                </tr>
+                <tr>
+                  <td><strong>Macros</strong></td>
+                  <td>macros.conf</td>
+                  <td>Reusable search snippets</td>
+                  <td>Settings → Advanced Search → Search Macros</td>
+                </tr>
+                <tr>
+                  <td><strong>Saved Searches</strong></td>
+                  <td>savedsearches.conf</td>
+                  <td>Reports, alerts, correlation searches</td>
+                  <td>Settings → Searches, Reports, Alerts</td>
+                </tr>
+                <tr>
+                  <td><strong>Data Models</strong></td>
+                  <td>datamodels.conf</td>
+                  <td>Structured data schemas</td>
+                  <td>Settings → Data Models</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Configuration File Precedence -->
+        <div class="section">
+          <h2 class="subsection-title">Configuration File Precedence</h2>
+          
+          <div class="callout warning">
+            <div class="callout-content">
+              <div class="callout-title">Why Settings Sometimes Don't Work</div>
+              <div class="callout-body">
+                Splunk has a complex configuration precedence system. A setting in one location can override another. This is a common source of confusion.
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:24px;">
+            <h4 style="margin-top:0;">Precedence Order (Highest to Lowest)</h4>
+            <ol style="margin-bottom:0;">
+              <li><strong>User-specific</strong>: $SPLUNK_HOME/etc/users/&lt;username&gt;/&lt;app&gt;/local/</li>
+              <li><strong>App local</strong>: $SPLUNK_HOME/etc/apps/&lt;app&gt;/local/</li>
+              <li><strong>App default</strong>: $SPLUNK_HOME/etc/apps/&lt;app&gt;/default/</li>
+              <li><strong>System local</strong>: $SPLUNK_HOME/etc/system/local/</li>
+              <li><strong>System default</strong>: $SPLUNK_HOME/etc/system/default/</li>
+            </ol>
+          </div>
+
+          <div class="callout info">
+            <div class="callout-content">
+              <div class="callout-title">Viewing Effective Configuration</div>
+              <div class="callout-body">
+                Use this command to see what configuration is actually in effect:<br>
+                <code>| btool props list --debug</code> (command line only)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Splunk Cloud Specific Architecture -->
+        <div class="section">
+          <h2 class="subsection-title">Splunk Cloud Architecture (Victoria Experience)</h2>
+          
+          <div class="card" style="padding:24px;margin-bottom:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TB
+    subgraph External["External Systems"]
+        A1[On-Prem Servers]
+        A2[Cloud Services<br/>AWS/Azure/GCP]
+        A3[SaaS Apps]
+    end
+    
+    subgraph Cloud["Splunk Cloud"]
+        B1[IDM<br/>Inputs Data Manager]
+        B2[HEC Endpoints]
+        C1[Search Heads]
+        C2[Indexer Cluster]
+        D1[S3 Storage<br/>SmartStore]
+    end
+    
+    A1 -->|Universal Forwarder| B1
+    A2 -->|HEC/APIs| B2
+    A3 -->|HEC| B2
+    B1 --> C2
+    B2 --> C2
+    C2 --> D1
+    C1 --> C2
+            </div>
+          </div>
+
+          <div class="card" style="padding:20px;">
+            <h4 style="margin-top:0;">Key Splunk Cloud URLs</h4>
+            <table class="reference-table">
+              <tbody>
+                <tr>
+                  <td><strong>Search Head</strong></td>
+                  <td><code>https://&lt;stack-name&gt;.splunkcloud.com</code></td>
+                </tr>
+                <tr>
+                  <td><strong>HEC Endpoint</strong></td>
+                  <td><code>https://http-inputs-&lt;stack-name&gt;.splunkcloud.com:443/services/collector</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Forwarder Input</strong></td>
+                  <td><code>inputs1.&lt;stack-name&gt;.splunkcloud.com:9997</code></td>
+                </tr>
+                <tr>
+                  <td><strong>IDM (Inputs Data Manager)</strong></td>
+                  <td><code>https://&lt;stack-name&gt;.splunkcloud.com</code> (Settings → Data Inputs)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Quick Reference Commands -->
+        <div class="section">
+          <h2 class="subsection-title">Architecture Discovery Commands</h2>
+          
+          <div class="card" style="padding:20px;background:var(--gray-50);">
+            <h4 style="margin-top:0;">SPL Commands to Understand Your Environment</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# List all indexes and their sizes
+| eventcount summarize=false index=* | dedup index | fields index
+
+# Check index settings
+| rest /services/data/indexes | table title totalEventCount currentDBSizeMB maxTotalDataSizeMB frozenTimePeriodInSecs
+
+# List all sourcetypes with event counts
+| metadata type=sourcetypes index=* | table sourcetype totalCount recentTime
+
+# Check forwarder connections
+| rest /services/deployment/server/clients | table hostname ip clientName
+
+# View installed apps
+| rest /services/apps/local | table title version disabled
+
+# Check HEC token status
+| rest /services/data/inputs/http | table name disabled index sourcetype
+
+# Server info
+| rest /services/server/info | table serverName version os_name numberOfCores physicalMemoryMB
+            </code>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;">
+          <div class="grid-2">
+            <a href="splunk-fundamentals.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Previous</div>
+              <div style="color:var(--primary-700);font-weight:600;">Splunk 101</div>
+            </a>
+            <a href="splunk-apps.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Next →</div>
+              <div style="color:var(--primary-700);font-weight:600;">Apps & Add-ons</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</body>
+</html>

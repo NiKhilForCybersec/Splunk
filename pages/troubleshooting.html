@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Troubleshooting | myfirstpro Detection Engineering</title>
+  <title>Troubleshooting Guide | Splunk Reference</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 </head>
 <body>
   <div class="app-container">
-                                    <aside class="sidebar">
+        <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
           <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
@@ -20,8 +20,8 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
             <div class="sidebar-logo-text">
-              <h1>myfirstpro</h1>
-              <span>Detection Engineering</span>
+              <h1>Splunk Reference</h1>
+              <span>Log & Detection Engineering</span>
             </div>
           </a>
         </div>
@@ -31,458 +31,660 @@
           <div class="nav-section-title">Getting Started</div>
           <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
           <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
-          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
           <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Splunk Fundamentals</div>
+          <div class="nav-section-title">Splunk Platform</div>
           <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
-          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
-          <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow & Event Hub</span></a>
+          <a href="splunk-architecture.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Architecture Deep Dive</span></a>
+          <a href="splunk-apps.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Apps & Add-ons</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Log Engineering</div>
+          <a href="log-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding Guide</span></a>
+          <a href="data-inputs.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Data Inputs (HEC/UF)</span></a>
+          <a href="props-transforms.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>props.conf & transforms</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>CIM Compliance</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">SPL Mastery</div>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>SPL Fundamentals</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>SPL Reference Card</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Enterprise Security</div>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>ES Overview</span></a>
+          <a href="correlation-searches.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Correlation Searches</span></a>
           <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
-          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Splunk How-To Guide</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Data Sources</div>
           <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
           <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
-          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID / Azure AD</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Splunk Operations</div>
-          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
-          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
-          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
-          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
-          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+          <div class="nav-section-title">Active Projects</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>WAF/DDoS Project</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>WAF Use Cases</span></a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>MFA Project</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>MFA Use Cases</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">WAF/DDoS Project</div>
-          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-12)</span></a>
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span>Splunk Cloud Admin</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Troubleshooting</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">MFA Project</div>
-          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Response & Support</div>
+          <div class="nav-section-title">Reference</div>
           <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
-          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
           <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+          <a href="cheat-sheets.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Cheat Sheets</span></a>
         </div>
       </nav>
-      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+      <div class="sidebar-footer"><p>Log & Detection Engineering v3.0</p></div>
     </aside>
-
+    
     <main class="main-content">
       <header class="header">
         <div class="header-left">
-          <button class="menu-toggle" aria-label="Toggle menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
             <span class="breadcrumb-item current">Troubleshooting</span>
           </div>
         </div>
-        <span class="badge error">Fix Issues Fast</span>
+        <span class="badge warning">Reference</span>
       </header>
 
       <div class="page-content">
         <div class="section">
           <h1 class="section-title">Troubleshooting Guide</h1>
-          <p class="section-subtitle">Quick fixes for common data and detection issues</p>
-          
-          <div class="callout info" style="margin-top:16px;">
-            <div class="callout-content">
-              <div class="callout-title">Need Step-by-Step Instructions?</div>
-              <div class="callout-body">
-                This page tells you WHAT to fix. For detailed HOW-TO instructions (exact clicks), see:<br>
-                <a href="splunk-howto.html" style="font-weight:600;">→ Splunk How-To Guide</a> — covers HEC tokens, indexes, TAs, lookups, alerts, and more
-              </div>
-            </div>
-          </div>
+          <p class="section-subtitle">Decision trees and step-by-step procedures for diagnosing and resolving common Splunk issues</p>
         </div>
 
-
-        <!-- Troubleshooting Decision Tree -->
+        <!-- Master Troubleshooting Decision Tree -->
         <div class="section">
-          <h2 class="subsection-title">Quick Diagnosis Flow</h2>
+          <h2 class="subsection-title">Master Troubleshooting Decision Tree</h2>
+          <p>Start here when something isn't working. Follow the decision tree to identify your issue category.</p>
+          
           <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
             <div class="mermaid">
 flowchart TD
-    A[Issue Reported] --> B{Data visible<br/>in Splunk?}
-    B -->|No| C{HEC token<br/>enabled?}
-    B -->|Yes| D{Timestamp<br/>correct?}
+    A[What's the problem?] --> B{Data related?}
+    B -->|Yes| C{Data arriving?}
+    B -->|No| D{Search related?}
     
-    C -->|No| E[Enable HEC token]
-    C -->|Yes| F[Check source system]
+    C -->|No data at all| E[Go to: No Data Arriving]
+    C -->|Data arriving but wrong| F{What's wrong?}
     
-    D -->|No| G[Fix TIME_FORMAT]
-    D -->|Yes| H{Fields<br/>extracted?}
+    F -->|Wrong timestamp| G[Go to: Timestamp Issues]
+    F -->|Fields not extracting| H[Go to: Field Extraction Issues]
+    F -->|Events merged/split| I[Go to: Event Breaking Issues]
+    F -->|Wrong sourcetype| J[Go to: Sourcetype Issues]
     
-    H -->|No| I[Check props.conf/TA]
-    H -->|Yes| J{Alert<br/>firing?}
+    D -->|Yes| K{What kind?}
+    D -->|No| L{Detection related?}
     
-    J -->|No| K[Check threshold/filter]
-    J -->|Yes| L[Issue resolved ✓]
+    K -->|Search slow| M[Go to: Search Performance]
+    K -->|Search errors| N[Go to: Search Errors]
+    K -->|Wrong results| O[Go to: Search Logic Issues]
     
-    style L fill:#d4edda,stroke:#28a745
-    style A fill:#cce5ff,stroke:#007bff
+    L -->|Yes| P{What's happening?}
+    L -->|No| Q[Go to: Other Issues]
+    
+    P -->|No alerts firing| R[Go to: Detection Not Firing]
+    P -->|Too many alerts| S[Go to: False Positives]
+    P -->|Alert delayed| T[Go to: Alert Timing Issues]
+    
+    style A fill:#3b82f6,color:#fff
+    style E fill:#ef4444,color:#fff
+    style G fill:#f59e0b,color:#fff
+    style H fill:#f59e0b,color:#fff
+    style I fill:#f59e0b,color:#fff
+    style M fill:#8b5cf6,color:#fff
+    style R fill:#10b981,color:#fff
+    style S fill:#10b981,color:#fff
             </div>
           </div>
         </div>
 
+        <!-- No Data Arriving -->
+        <div class="section">
+          <h2 class="subsection-title">🔴 No Data Arriving</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+            <div class="mermaid">
+flowchart TD
+    A[No data in index] --> B{What input method?}
+    
+    B -->|HEC| C[Check HEC Token]
+    B -->|Forwarder| D[Check Forwarder]
+    B -->|Syslog| E[Check Syslog Config]
+    
+    C --> C1{Token enabled?}
+    C1 -->|No| C2[Enable token in Settings → Data Inputs → HTTP Event Collector]
+    C1 -->|Yes| C3{Test with curl works?}
+    C3 -->|No| C4{What error code?}
+    C3 -->|Yes| C5[Source system not sending - check source config]
+    
+    C4 -->|401/403| C6[Token invalid or wrong - regenerate token]
+    C4 -->|Connection refused| C7[HEC endpoint unreachable - check firewall/URL]
+    C4 -->|SSL error| C8[Certificate issue - verify SSL config]
+    
+    D --> D1{Forwarder running?}
+    D1 -->|No| D2[Start forwarder: splunk start]
+    D1 -->|Yes| D3{outputs.conf correct?}
+    D3 -->|No| D4[Fix server address and credentials]
+    D3 -->|Yes| D5{inputs.conf correct?}
+    D5 -->|No| D6[Fix monitor path or input config]
+    D5 -->|Yes| D7{Network connectivity?}
+    D7 -->|No| D8[Check firewall rules port 9997]
+    D7 -->|Yes| D9[Check internal logs: index=_internal host=forwarder]
+    
+    E --> E1{Syslog daemon running?}
+    E1 -->|No| E2[Start syslog service]
+    E1 -->|Yes| E3{Correct port/protocol?}
+    E3 -->|No| E4[Match UDP/TCP and port number]
+    E3 -->|Yes| E5[Check Heavy Forwarder inputs.conf]
+    
+    style A fill:#ef4444,color:#fff
+    style C2 fill:#10b981,color:#fff
+    style C6 fill:#10b981,color:#fff
+    style D2 fill:#10b981,color:#fff
+    style D4 fill:#10b981,color:#fff
+            </div>
+          </div>
+
+          <h4>Diagnostic Commands</h4>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# Check if ANY data is arriving to the index
+index=your_index earliest=-24h | stats count
+
+# Check HEC token status
+| rest /services/data/inputs/http | table name disabled index sourcetype
+
+# Test HEC endpoint
+curl -k "https://http-inputs-STACK.splunkcloud.com:443/services/collector/event" \
+  -H "Authorization: Splunk YOUR_TOKEN" \
+  -d '{"event": "test"}'
+
+# Check forwarder connections (run on indexer/cloud)
+index=_internal sourcetype=splunkd group=tcpin_connections 
+| stats latest(version) by hostname, sourceIp
+
+# Check for ingestion errors
+index=_internal sourcetype=splunkd log_level=ERROR component=HttpInputDataHandler
+          </code>
+        </div>
+
+        <!-- Timestamp Issues -->
+        <div class="section">
+          <h2 class="subsection-title">🟠 Timestamp Issues</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+            <div class="mermaid">
+flowchart TD
+    A[Timestamp Problem] --> B{What's the symptom?}
+    
+    B -->|Events show current time instead of event time| C[Timestamp not being extracted]
+    B -->|Events show wrong time| D[Timestamp parsed incorrectly]
+    B -->|Events hours off| E[Timezone issue]
+    B -->|Events in future| F[Clock sync or TZ issue]
+    
+    C --> C1{Is TIME_FORMAT set?}
+    C1 -->|No| C2[Add TIME_FORMAT to props.conf]
+    C1 -->|Yes| C3{Is TIME_PREFIX set?}
+    C3 -->|No| C4[Add TIME_PREFIX - regex before timestamp]
+    C3 -->|Yes| C5{Does regex match?}
+    C5 -->|No| C6[Fix TIME_PREFIX regex]
+    C5 -->|Yes| C7[Increase MAX_TIMESTAMP_LOOKAHEAD]
+    
+    D --> D1{Check TIME_FORMAT}
+    D1 --> D2{Format matches timestamp?}
+    D2 -->|No| D3[Fix strptime format codes]
+    D2 -->|Yes| D4[Check for microseconds %6N vs %3N]
+    
+    E --> E1{TZ in timestamp?}
+    E1 -->|No| E2[Add TZ = UTC or correct zone to props.conf]
+    E1 -->|Yes| E3{TZ being parsed?}
+    E3 -->|No| E4[Add %Z or %z to TIME_FORMAT]
+    E3 -->|Yes| E5[Source system clock may be wrong]
+    
+    F --> F1[Check source system clock]
+    F1 --> F2[Check TZ configuration]
+    
+    style A fill:#f59e0b,color:#fff
+    style C2 fill:#10b981,color:#fff
+    style C4 fill:#10b981,color:#fff
+    style D3 fill:#10b981,color:#fff
+    style E2 fill:#10b981,color:#fff
+            </div>
+          </div>
+
+          <h4>Common TIME_FORMAT Patterns</h4>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# ISO 8601 with milliseconds
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%3NZ
+
+# ISO 8601 with timezone offset
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S%z
+
+# Syslog format
+TIME_FORMAT = %b %d %H:%M:%S
+
+# Apache/CLF format
+TIME_FORMAT = %d/%b/%Y:%H:%M:%S %z
+
+# Epoch seconds
+TIME_FORMAT = %s
+
+# Epoch with milliseconds
+TIME_FORMAT = %s%3N
+
+# Custom: 2024-01-15 14:30:45,123
+TIME_FORMAT = %Y-%m-%d %H:%M:%S,%3N
+          </code>
+
+          <h4>Diagnostic Commands</h4>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# Check if timestamps are being extracted
+index=your_index | eval time_diff=_indextime-_time 
+| stats avg(time_diff) as avg_lag, max(time_diff) as max_lag
+
+# View raw timestamp in events
+index=your_index | head 5 | table _time, _raw
+
+# Test timestamp parsing with specific format
+| makeresults | eval _raw="2024-01-15T14:30:45.123Z" 
+| rex "(?<test_time>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})"
+| eval parsed=strptime(test_time, "%Y-%m-%dT%H:%M:%S")
+| table _raw, test_time, parsed
+          </code>
+        </div>
+
+        <!-- Field Extraction Issues -->
+        <div class="section">
+          <h2 class="subsection-title">🟠 Field Extraction Issues</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+            <div class="mermaid">
+flowchart TD
+    A[Fields Not Extracting] --> B{What data format?}
+    
+    B -->|JSON| C{KV_MODE = json set?}
+    B -->|Key=Value| D{KV_MODE = auto?}
+    B -->|Custom/Syslog| E{Regex extraction defined?}
+    
+    C -->|No| C1[Add KV_MODE = json to props.conf]
+    C -->|Yes| C2{Valid JSON?}
+    C2 -->|No| C3[Fix JSON at source - check for truncation]
+    C2 -->|Yes| C4{Nested fields?}
+    C4 -->|Yes| C5[Access as field.subfield or use spath]
+    C4 -->|No| C6[Check field names for special characters]
+    
+    D -->|No| D1[Add KV_MODE = auto to props.conf]
+    D -->|Yes| D2{Delimiter standard?}
+    D2 -->|No| D3[Set custom KV_MODE or use EXTRACT]
+    D2 -->|Yes| D4[Check for quotes around values]
+    
+    E -->|No| E1[Create EXTRACT- in props.conf]
+    E -->|Yes| E2{Regex correct?}
+    E2 -->|No| E3[Test regex with rex command first]
+    E2 -->|Yes| E4{Named capture groups?}
+    E4 -->|No| E5[Add ?<fieldname> to regex]
+    E4 -->|Yes| E6[Check for conflicting extractions]
+    
+    style A fill:#f59e0b,color:#fff
+    style C1 fill:#10b981,color:#fff
+    style D1 fill:#10b981,color:#fff
+    style E1 fill:#10b981,color:#fff
+    style E3 fill:#10b981,color:#fff
+            </div>
+          </div>
+
+          <h4>Diagnostic Commands</h4>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# Check what fields are being extracted
+index=your_index | fieldsummary | where count>0 | table field count distinct_count
+
+# Test regex extraction before saving
+index=your_index | head 100 
+| rex "src[=:](?<test_src>\d+\.\d+\.\d+\.\d+)"
+| stats count by test_src
+
+# Check for JSON parsing
+index=your_index | head 1 | spath | table *
+
+# View current extractions for sourcetype
+| rest /services/data/props/extractions 
+| search stanza="your_sourcetype"
+| table stanza, attribute, value
+          </code>
+        </div>
+
+        <!-- Event Breaking Issues -->
+        <div class="section">
+          <h2 class="subsection-title">🟠 Event Breaking Issues</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+            <div class="mermaid">
+flowchart TD
+    A[Event Breaking Problem] --> B{What's happening?}
+    
+    B -->|Multiple events merged into one| C[Events being merged]
+    B -->|One event split into multiple| D[Events being split]
+    B -->|Stack traces split| E[Multi-line not working]
+    
+    C --> C1{SHOULD_LINEMERGE setting?}
+    C1 -->|true| C2[Set SHOULD_LINEMERGE = false]
+    C1 -->|false| C3{LINE_BREAKER set?}
+    C3 -->|No| C4[Add LINE_BREAKER regex]
+    C3 -->|Yes| C5[LINE_BREAKER not matching - fix regex]
+    
+    D --> D1{LINE_BREAKER too aggressive?}
+    D1 -->|Yes| D2[Make LINE_BREAKER more specific]
+    D1 -->|No| D3{Use BREAK_ONLY_BEFORE instead}
+    D3 --> D4[Set BREAK_ONLY_BEFORE = timestamp pattern]
+    
+    E --> E1[Enable multi-line merging]
+    E1 --> E2[Set SHOULD_LINEMERGE = true]
+    E2 --> E3[Set BREAK_ONLY_BEFORE = ^timestamp_pattern]
+    E3 --> E4[Set MAX_EVENTS = 256 or higher if needed]
+    
+    style A fill:#f59e0b,color:#fff
+    style C2 fill:#10b981,color:#fff
+    style C4 fill:#10b981,color:#fff
+    style D2 fill:#10b981,color:#fff
+    style E2 fill:#10b981,color:#fff
+            </div>
+          </div>
+
+          <h4>Common LINE_BREAKER Patterns</h4>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# Standard line break (each line is one event)
+LINE_BREAKER = ([\r\n]+)
+
+# JSON objects (break before opening brace)
+LINE_BREAKER = ([\r\n]+)(?=\{)
+
+# Break before timestamp pattern
+BREAK_ONLY_BEFORE = ^\d{4}-\d{2}-\d{2}
+
+# Break before syslog timestamp
+BREAK_ONLY_BEFORE = ^[A-Z][a-z]{2}\s+\d+\s+\d+:\d+:\d+
+
+# XML documents
+LINE_BREAKER = ([\r\n]+)(?=<\?xml|<Record)
+          </code>
+        </div>
+
+        <!-- Search Performance -->
+        <div class="section">
+          <h2 class="subsection-title">🟣 Search Performance Issues</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+            <div class="mermaid">
+flowchart TD
+    A[Search is Slow] --> B{How slow?}
+    
+    B -->|Minutes| C[Moderately slow]
+    B -->|10+ minutes| D[Very slow]
+    B -->|Times out| E[Critical performance issue]
+    
+    C --> C1{Using tstats?}
+    C1 -->|No| C2{Can use data model?}
+    C2 -->|Yes| C3[Convert to tstats query]
+    C2 -->|No| C4[Add more specific filters]
+    C1 -->|Yes| C5[Check data model acceleration]
+    
+    D --> D1{Time range too wide?}
+    D1 -->|Yes| D2[Narrow time range]
+    D1 -->|No| D3{Too many events scanned?}
+    D3 -->|Yes| D4[Add index= and sourcetype= filters]
+    D3 -->|No| D5{Complex transforming commands?}
+    D5 -->|Yes| D6[Move filters before transforms]
+    D5 -->|No| D7[Check search job inspector]
+    
+    E --> E1[Check Job Inspector]
+    E1 --> E2{Scan count very high?}
+    E2 -->|Yes| E3[Add base filters: index, sourcetype, time]
+    E2 -->|No| E4{Memory limit hit?}
+    E4 -->|Yes| E5[Add | head or limit results earlier]
+    E4 -->|No| E6[Contact Splunk admin]
+    
+    style A fill:#8b5cf6,color:#fff
+    style C3 fill:#10b981,color:#fff
+    style D2 fill:#10b981,color:#fff
+    style D4 fill:#10b981,color:#fff
+    style E3 fill:#10b981,color:#fff
+            </div>
+          </div>
+
+          <h4>Performance Optimization Checklist</h4>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# SLOW: Searching all data
+error | stats count by src
+
+# FAST: Specify index and time
+index=security sourcetype=firewall error earliest=-1h | stats count by src
+
+# SLOW: Raw search for data model data
+index=main action=blocked | stats count by src, dest
+
+# FAST: Use tstats with data model
+| tstats summariesonly=true count from datamodel=Network_Traffic 
+  where Network_Traffic.action=blocked by Network_Traffic.src, Network_Traffic.dest
+
+# Check Job Inspector metrics
+# Search → Job → Inspect Job
+# Look for: scanCount, resultCount, runDuration
+          </code>
+        </div>
+
+        <!-- Detection Not Firing -->
+        <div class="section">
+          <h2 class="subsection-title">🟢 Detection Not Firing</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+            <div class="mermaid">
+flowchart TD
+    A[Detection Not Creating Alerts] --> B{Is search enabled?}
+    
+    B -->|No| B1[Enable in Content Management]
+    B -->|Yes| C{Search running on schedule?}
+    
+    C -->|No| C1{Check cron schedule}
+    C1 --> C2[Verify cron expression is valid]
+    C -->|Yes| D{Search returning results?}
+    
+    D -->|No| E{Run search manually}
+    E --> E1{Any results with wider time range?}
+    E1 -->|No| E2[No matching data - check data arrival]
+    E1 -->|Yes| E3{Threshold too high?}
+    E3 -->|Yes| E4[Lower threshold in search]
+    E3 -->|No| E5[Time range may miss events - check schedule alignment]
+    
+    D -->|Yes| F{Notable action enabled?}
+    F -->|No| F1[Enable notable action in correlation search]
+    F -->|Yes| G{Check throttling}
+    
+    G --> G1{Throttled?}
+    G1 -->|Yes| G2[Previous alert within throttle period - wait or reduce throttle]
+    G1 -->|No| H{Check alert actions}
+    
+    H --> H1[Review Triggered Alerts in Activity menu]
+    H1 --> H2{Alerts showing?}
+    H2 -->|Yes| H3[Alert firing but notable not created - check ES config]
+    H2 -->|No| H4[Search completing but no trigger - check trigger conditions]
+    
+    style A fill:#10b981,color:#fff
+    style B1 fill:#10b981,color:#fff
+    style E4 fill:#10b981,color:#fff
+    style F1 fill:#10b981,color:#fff
+    style G2 fill:#10b981,color:#fff
+            </div>
+          </div>
+
+          <h4>Diagnostic Commands</h4>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# Check if correlation search is enabled
+| rest /services/saved/searches/YOUR_SEARCH_NAME
+| table title, disabled, cron_schedule, 'action.correlationsearch.enabled'
+
+# Check recent search runs
+index=_internal sourcetype=scheduler savedsearch_name="YOUR_SEARCH_NAME"
+| table _time, status, run_time, result_count
+
+# Check throttling status
+index=_internal sourcetype=splunkd component=AlertNotifier
+| search savedsearch_name="YOUR_SEARCH_NAME"
+| table _time, action, reason
+
+# Manually test search with same time range
+YOUR_SEARCH_SPL earliest=-10m latest=-5m
+
+# Check notable events created
+index=notable | search rule_name="YOUR_SEARCH_NAME" | head 10
+          </code>
+        </div>
+
+        <!-- False Positives -->
+        <div class="section">
+          <h2 class="subsection-title">🟢 Too Many False Positives</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+            <div class="mermaid">
+flowchart TD
+    A[Too Many Alerts / False Positives] --> B{Analyze the alerts}
+    
+    B --> C{Common pattern in FPs?}
+    
+    C -->|Same source IP| D[Add source to whitelist/lookup]
+    C -->|Same user| E[Add user to exception list]
+    C -->|Same application| F[Add app-specific filter]
+    C -->|Time-based pattern| G[Adjust schedule or add time filter]
+    C -->|No clear pattern| H[Threshold too low]
+    
+    D --> D1[Create/update whitelist lookup]
+    D1 --> D2[Add lookup filter to search]
+    
+    E --> E1[Create/update user exception lookup]
+    E1 --> E2[Add NOT user IN lookup to search]
+    
+    F --> F1[Add app/process exclusion to search]
+    
+    G --> G1{Business hours only?}
+    G1 -->|Yes| G2[Add time-based filter]
+    G1 -->|No| G3[Review if detection applies to off-hours]
+    
+    H --> H1{What threshold?}
+    H1 -->|Count-based| H2[Increase count threshold]
+    H1 -->|Time-based| H3[Increase time window]
+    H1 -->|Percentage| H4[Increase percentage threshold]
+    
+    style A fill:#10b981,color:#fff
+    style D2 fill:#10b981,color:#fff
+    style E2 fill:#10b981,color:#fff
+    style H2 fill:#10b981,color:#fff
+            </div>
+          </div>
+
+          <h4>Tuning Techniques</h4>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# Add whitelist lookup filter
+| tstats count from datamodel=Web where Web.action=blocked by Web.src
+| lookup ip_whitelist ip AS src OUTPUT is_whitelisted
+| where isnull(is_whitelisted) OR is_whitelisted!="true"
+| where count > 100
+
+# Add user exception
+| tstats count from datamodel=Authentication 
+  where Authentication.action=failure by Authentication.user
+| search NOT [| inputlookup service_accounts | fields user]
+| where count > 5
+
+# Add time-based filter (business hours only)
+| tstats count from datamodel=Web by Web.src, _time span=1h
+| eval hour=strftime(_time, "%H")
+| where hour >= 8 AND hour <= 18
+
+# Statistical baseline (alert on anomalies)
+| tstats count from datamodel=Web by Web.src span=1h
+| eventstats avg(count) as avg_count, stdev(count) as stdev_count
+| where count > (avg_count + 3*stdev_count)
+          </code>
+        </div>
 
         <!-- Quick Reference Table -->
         <div class="section">
-          <h2 class="subsection-title">Quick Troubleshooting Reference</h2>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Symptom</th>
-                  <th>Likely Cause</th>
-                  <th>Diagnostic Query</th>
-                  <th>Solution</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="highlight">No data in index</td>
-                  <td>HEC token disabled or wrong index</td>
-                  <td><code>| rest /services/data/inputs/http</code></td>
-                  <td>Enable token in Settings → Data Inputs</td>
-                </tr>
-                <tr>
-                  <td class="highlight">Wrong timestamp</td>
-                  <td>Incorrect TIME_FORMAT in props.conf</td>
-                  <td><code>index=X | table _time _raw | head 5</code></td>
-                  <td>Update TIME_FORMAT to match log format</td>
-                </tr>
-                <tr>
-                  <td class="highlight">Missing fields</td>
-                  <td>JSON not parsed or spath needed</td>
-                  <td><code>index=X | spath | table *</code></td>
-                  <td>Set KV_MODE=json or use spath in search</td>
-                </tr>
-                <tr>
-                  <td class="highlight">High latency (&gt;10 min)</td>
-                  <td>Network/queue backup</td>
-                  <td><code>index=_internal HEC queue</code></td>
-                  <td>Check source system, contact Splunk admin</td>
-                </tr>
-                <tr>
-                  <td class="highlight">Too many alerts</td>
-                  <td>Threshold too low</td>
-                  <td><code>Run detection -14d | timechart count</code></td>
-                  <td>Increase threshold based on baseline</td>
-                </tr>
-                <tr>
-                  <td class="highlight">No alerts</td>
-                  <td>No matching data or filter too strict</td>
-                  <td><code>Run SPL without time filter</code></td>
-                  <td>Verify filter conditions and field names</td>
-                </tr>
-                <tr>
-                  <td class="highlight">Lookup not working</td>
-                  <td>Field name mismatch</td>
-                  <td><code>| inputlookup privileged_users.csv</code></td>
-                  <td>Check field names match exactly</td>
-                </tr>
-                <tr>
-                  <td class="highlight">Scheduled search failing</td>
-                  <td>Permission or resource issue</td>
-                  <td><code>index=_internal search_id | head 100</code></td>
-                  <td>Check search.log for errors</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Data Not Flowing -->
-        <div class="section">
-          <h2 class="subsection-title">Issue: Data Not Flowing</h2>
+          <h2 class="subsection-title">Quick Diagnostic Commands Reference</h2>
           
-          <div class="accordion">
-            <div class="accordion-item open">
-              <button class="accordion-header">
-                <span>Step 1: Verify Index Exists</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <div class="code-block">
-                  <div class="code-header"><span class="code-title">Check if index exists</span></div>
-                  <div class="code-body">
-                    <pre><code>| eventcount summarize=false index=akamai
-| eventcount summarize=false index=cyberark
-| eventcount summarize=false index=azure</code></pre>
-                  </div>
-                </div>
-                <p style="font-size:0.875rem;color:var(--gray-600);margin-top:12px;">
-                  <strong>If count = 0:</strong> Index may not exist or has no data. Check Settings → Indexes.
-                </p>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header">
-                <span>Step 2: Check HEC Token Status</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <div class="code-block">
-                  <div class="code-header"><span class="code-title">List all HEC tokens</span></div>
-                  <div class="code-body">
-                    <pre><code>| rest /services/data/inputs/http 
-| search disabled=0 
-| table title index sourcetype disabled</code></pre>
-                  </div>
-                </div>
-                <p style="font-size:0.875rem;color:var(--gray-600);margin-top:12px;">
-                  <strong>If disabled=1:</strong> Enable in Settings → Data Inputs → HTTP Event Collector
-                </p>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header">
-                <span>Step 3: Check Source System</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <div class="grid grid-2">
-                  <div class="card bordered-left akamai">
-                    <h4>Akamai</h4>
-                    <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;">
-                      <li>Check Akamai Control Center → SIEM Integration</li>
-                      <li>Verify API credentials not expired</li>
-                      <li>Check Splunk add-on input status</li>
-                    </ul>
-                  </div>
-                  <div class="card bordered-left cyberark">
-                    <h4>CyberArk</h4>
-                    <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;">
-                      <li>Check CyberArk Identity → Logs → Export settings</li>
-                      <li>Verify SIEM connector configuration</li>
-                      <li>Check Splunk add-on input status</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header">
-                <span>Step 4: Check Splunk Internal Logs</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <div class="code-block">
-                  <div class="code-header"><span class="code-title">Check for HEC errors</span></div>
-                  <div class="code-body">
-                    <pre><code>index=_internal sourcetype=splunkd component=HttpInputDataHandler 
-| stats count BY log_level message 
-| sort - count</code></pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Issue</th>
+                <th>Diagnostic Command</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Check data arrival</td>
+                <td><code>index=X earliest=-1h | stats count by sourcetype</code></td>
+              </tr>
+              <tr>
+                <td>Check HEC tokens</td>
+                <td><code>| rest /services/data/inputs/http | table name disabled</code></td>
+              </tr>
+              <tr>
+                <td>Check forwarders</td>
+                <td><code>index=_internal group=tcpin_connections | stats count by hostname</code></td>
+              </tr>
+              <tr>
+                <td>Check field extraction</td>
+                <td><code>index=X | fieldsummary | where count>0</code></td>
+              </tr>
+              <tr>
+                <td>Check timestamp parsing</td>
+                <td><code>index=X | eval lag=_indextime-_time | stats avg(lag)</code></td>
+              </tr>
+              <tr>
+                <td>Check search schedule</td>
+                <td><code>index=_internal sourcetype=scheduler | stats count by savedsearch_name status</code></td>
+              </tr>
+              <tr>
+                <td>Check correlation searches</td>
+                <td><code>| rest /services/saved/searches | where match('action.correlationsearch.enabled',"1")</code></td>
+              </tr>
+              <tr>
+                <td>Check data model acceleration</td>
+                <td><code>| rest /services/datamodel/acceleration | table title acceleration.enabled</code></td>
+              </tr>
+              <tr>
+                <td>Check license usage</td>
+                <td><code>index=_internal source=*license_usage* type=Usage | stats sum(b) by idx</code></td>
+              </tr>
+              <tr>
+                <td>Check Splunk errors</td>
+                <td><code>index=_internal log_level=ERROR | stats count by component</code></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-        <!-- Wrong Timestamp -->
-        <div class="section">
-          <h2 class="subsection-title">Issue: Wrong Timestamp</h2>
-          
-          <div class="code-block">
-            <div class="code-header"><span class="code-title">Compare _time vs raw timestamp</span></div>
-            <div class="code-body">
-              <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
-| head 10
-| eval parsed_time = strftime(_time, "%Y-%m-%d %H:%M:%S")
-| table _time parsed_time _raw</code></pre>
-            </div>
-          </div>
-
-          <div class="grid grid-3" style="margin-top:16px;">
-            <div class="card bordered-left akamai">
-              <h4>Akamai</h4>
-              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
-                <code>TIME_FORMAT = %s%3N</code><br>
-                Epoch milliseconds
-              </p>
-            </div>
-            <div class="card bordered-left cyberark">
-              <h4>CyberArk</h4>
-              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
-                <code>TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%3N%Z</code><br>
-                ISO 8601 format
-              </p>
-            </div>
-            <div class="card bordered-left microsoft">
-              <h4>Entra ID</h4>
-              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
-                <code>TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%6N%Z</code><br>
-                ISO 8601 with microseconds
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Missing Fields -->
-        <div class="section">
-          <h2 class="subsection-title">Issue: Missing Fields</h2>
-          
-          <div class="code-block">
-            <div class="code-header"><span class="code-title">Check field extraction</span></div>
-            <div class="code-body">
-              <pre><code>index=akamai sourcetype=akamai:siem earliest=-1h
-| head 100
-| fieldsummary 
-| where count < 100
-| table field count distinct_count
-| sort - count</code></pre>
-            </div>
-          </div>
-
-          <div class="callout warning" style="margin-top:16px;">
-            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-            <div class="callout-content">
-              <div class="callout-title">Nested JSON Fields</div>
-              <div class="callout-body">Akamai and CyberArk use nested JSON. Use <code>| spath</code> at the start of your search to extract all fields, or <code>| spath path=attackData.clientIP output=clientIP</code> for specific fields.</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Lookup Issues -->
-        <div class="section">
-          <h2 class="subsection-title">Issue: Lookup Not Working</h2>
-          
-          <div class="code-block">
-            <div class="code-header"><span class="code-title">Verify lookup file</span></div>
-            <div class="code-body">
-              <pre><code>``` Check if lookup exists and has data
-| inputlookup privileged_users.csv
-| head 10
-
-``` Test lookup with sample data
-| makeresults 
-| eval user="test.admin@myfirstpro.com"
-| lookup privileged_users.csv userPrincipalName as user OUTPUT is_privileged role
-| table user is_privileged role</code></pre>
-            </div>
-          </div>
-
-          <div class="grid grid-2" style="margin-top:16px;">
-            <div class="card bordered-left error">
-              <h4>Common Issues</h4>
-              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;">
-                <li>Field name case mismatch (user vs User)</li>
-                <li>Lookup file not in correct location</li>
-                <li>CSV has BOM or encoding issues</li>
-                <li>Missing transforms.conf definition</li>
-              </ul>
-            </div>
-            <div class="card bordered-left success">
-              <h4>Solutions</h4>
-              <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;">
-                <li>Use lowercase field names consistently</li>
-                <li>Upload via Settings → Lookups → Add new</li>
-                <li>Save as UTF-8 without BOM</li>
-                <li>Create automatic lookup in transforms.conf</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Alert Issues -->
-        <div class="section">
-          <h2 class="subsection-title">Issue: Alert Not Firing</h2>
-          
-          <div class="accordion">
-            <div class="accordion-item open">
-              <button class="accordion-header">
-                <span>Step 1: Test the SPL manually</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <p style="font-size:0.875rem;color:var(--gray-600);">Run the detection query manually in Search. If it returns results, the SPL is working.</p>
-                <div class="code-block" style="margin-top:12px;">
-                  <div class="code-body">
-                    <pre><code>``` Run over longer time range to verify logic
-index=akamai sourcetype=akamai:siem earliest=-7d
-| spath path=attackData.rules{}.ruleAction output=action
-| where action="deny"
-| stats count BY _time | where count > 0</code></pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header">
-                <span>Step 2: Check scheduled search settings</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <div class="code-block">
-                  <div class="code-body">
-                    <pre><code>| rest /services/saved/searches 
-| search title="WAF*" OR title="MFA*"
-| table title is_scheduled disabled cron_schedule next_scheduled_time</code></pre>
-                  </div>
-                </div>
-                <p style="font-size:0.875rem;color:var(--gray-600);margin-top:12px;">
-                  <strong>Check:</strong> is_scheduled=1, disabled=0, cron_schedule is valid
-                </p>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header">
-                <span>Step 3: Check alert trigger condition</span>
-                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-              <div class="accordion-content">
-                <p style="font-size:0.875rem;color:var(--gray-600);">
-                  Verify the alert is set to trigger when "Number of results is greater than 0" (not equal to).<br>
-                  Also check suppression settings aren't preventing alerts.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Emergency Contacts -->
-        <div class="section">
-          <h2 class="subsection-title">Escalation Contacts</h2>
-          <div class="grid grid-3">
-            <div class="card bordered-left primary">
-              <h4>Splunk Cloud Support</h4>
-              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
-                For platform issues, index creation, app installation<br>
-                <strong>Method:</strong> Support ticket via Splunk portal
-              </p>
-            </div>
-            <div class="card bordered-left warning">
-              <h4>Akamai Support</h4>
-              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
-                For SIEM API issues, Logpush problems<br>
-                <strong>Method:</strong> Akamai Control Center → Support
-              </p>
-            </div>
-            <div class="card bordered-left error">
-              <h4>Internal Escalation</h4>
-              <p style="font-size:0.8125rem;color:var(--gray-600);margin-top:8px;">
-                For access issues, data source problems<br>
-                <strong>Contact:</strong> [myfirstpro IT contact]
-              </p>
-            </div>
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;">
+          <div class="grid-2">
+            <a href="splunk-ops.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Previous</div>
+              <div style="color:var(--primary-700);font-weight:600;">Splunk Cloud Admin</div>
+            </a>
+            <a href="decision-trees.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Next →</div>
+              <div style="color:var(--primary-700);font-weight:600;">Decision Trees</div>
+            </a>
           </div>
         </div>
 

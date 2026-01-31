@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cheat Sheets | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .cheat-section { margin-bottom: 32px; }
+    .cheat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+    .cheat-card { background: var(--gray-50); border-radius: 8px; padding: 16px; }
+    .cheat-card h4 { margin: 0 0 12px 0; color: var(--primary-700); font-size: 14px; }
+    .cheat-card code { display: block; background: var(--gray-900); color: var(--gray-100); padding: 8px 12px; border-radius: 4px; font-size: 12px; margin-bottom: 8px; overflow-x: auto; }
+    .cheat-card .desc { font-size: 12px; color: var(--gray-600); margin: 0; }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+            <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>Splunk Reference</h1>
+              <span>Log & Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Platform</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
+          <a href="splunk-architecture.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Architecture Deep Dive</span></a>
+          <a href="splunk-apps.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Apps & Add-ons</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Log Engineering</div>
+          <a href="log-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding Guide</span></a>
+          <a href="data-inputs.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Data Inputs (HEC/UF)</span></a>
+          <a href="props-transforms.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>props.conf & transforms</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>CIM Compliance</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">SPL Mastery</div>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>SPL Fundamentals</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>SPL Reference Card</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Enterprise Security</div>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>ES Overview</span></a>
+          <a href="correlation-searches.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Correlation Searches</span></a>
+          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID / Azure AD</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Active Projects</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>WAF/DDoS Project</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>WAF Use Cases</span></a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>MFA Project</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>MFA Use Cases</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span>Splunk Cloud Admin</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Troubleshooting</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Reference</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+          <a href="cheat-sheets.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Cheat Sheets</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Log & Detection Engineering v3.0</p></div>
+    </aside>
+    
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Cheat Sheets</span>
+          </div>
+        </div>
+        <span class="badge info">Quick Reference</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Splunk Cheat Sheets</h1>
+          <p class="section-subtitle">Quick reference cards for common SPL commands, configurations, and operations — print these out!</p>
+        </div>
+
+        <!-- SPL Basics -->
+        <div class="cheat-section">
+          <h2 class="subsection-title">SPL Essentials</h2>
+          <div class="cheat-grid">
+            <div class="cheat-card">
+              <h4>Basic Search</h4>
+              <code>index=main error earliest=-24h</code>
+              <p class="desc">Search index for "error" in last 24 hours</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Field Filtering</h4>
+              <code>index=main src_ip=10.* | table _time, src_ip, action</code>
+              <p class="desc">Filter by field, display specific columns</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Count Events</h4>
+              <code>index=main | stats count by sourcetype</code>
+              <p class="desc">Count events grouped by sourcetype</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Time Chart</h4>
+              <code>index=main | timechart span=1h count by status</code>
+              <p class="desc">Events over time by status code</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Top Values</h4>
+              <code>index=main | top 10 src_ip</code>
+              <p class="desc">Top 10 source IPs by count</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Rare Values</h4>
+              <code>index=main | rare 10 user_agent</code>
+              <p class="desc">10 least common user agents</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Commands -->
+        <div class="cheat-section">
+          <h2 class="subsection-title">Stats Functions</h2>
+          <div class="cheat-grid">
+            <div class="cheat-card">
+              <h4>Count & Sum</h4>
+              <code>| stats count, sum(bytes) as total_bytes by src</code>
+              <p class="desc">Count and sum with alias</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Distinct Count</h4>
+              <code>| stats dc(user) as unique_users by src_ip</code>
+              <p class="desc">Count distinct values</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Average & Percentile</h4>
+              <code>| stats avg(response_time), perc95(response_time)</code>
+              <p class="desc">Average and 95th percentile</p>
+            </div>
+            <div class="cheat-card">
+              <h4>First/Last Values</h4>
+              <code>| stats first(status) as first_status, last(status) as last_status by session_id</code>
+              <p class="desc">First and last values chronologically</p>
+            </div>
+            <div class="cheat-card">
+              <h4>List Values</h4>
+              <code>| stats values(action) as actions by user</code>
+              <p class="desc">Collect unique values into multivalue</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Multiple Groupings</h4>
+              <code>| stats count by src, dest, action</code>
+              <p class="desc">Group by multiple fields</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Eval Functions -->
+        <div class="cheat-section">
+          <h2 class="subsection-title">Eval Functions</h2>
+          <div class="cheat-grid">
+            <div class="cheat-card">
+              <h4>Conditional (If)</h4>
+              <code>| eval severity=if(count>100, "high", "low")</code>
+              <p class="desc">If-then-else logic</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Case Statement</h4>
+              <code>| eval tier=case(count>1000,"critical", count>100,"high", 1=1,"normal")</code>
+              <p class="desc">Multiple conditions (1=1 is default)</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Coalesce (First Non-Null)</h4>
+              <code>| eval ip=coalesce(src_ip, client_ip, source_address)</code>
+              <p class="desc">Use first non-null value</p>
+            </div>
+            <div class="cheat-card">
+              <h4>String Functions</h4>
+              <code>| eval domain=lower(split(email,"@",2))</code>
+              <p class="desc">lower(), upper(), split(), replace()</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Math</h4>
+              <code>| eval mb=bytes/1024/1024, pct=round(count/total*100,2)</code>
+              <p class="desc">Division, round(), ceil(), floor()</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Time Functions</h4>
+              <code>| eval hour=strftime(_time,"%H"), day=strftime(_time,"%A")</code>
+              <p class="desc">Format time to strings</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Model / tstats -->
+        <div class="cheat-section">
+          <h2 class="subsection-title">tstats (Data Model Searches)</h2>
+          <div class="cheat-grid">
+            <div class="cheat-card">
+              <h4>Basic tstats</h4>
+              <code>| tstats count from datamodel=Web by Web.src</code>
+              <p class="desc">Count from Web data model</p>
+            </div>
+            <div class="cheat-card">
+              <h4>With Filter</h4>
+              <code>| tstats count from datamodel=Web where Web.action="blocked" by Web.src, Web.dest</code>
+              <p class="desc">Filter within data model</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Time Span</h4>
+              <code>| tstats count from datamodel=Authentication by _time span=1h</code>
+              <p class="desc">Aggregate by time buckets</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Summaries Only</h4>
+              <code>| tstats summariesonly=true count from datamodel=Web</code>
+              <p class="desc">Use accelerated summaries only (faster)</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Rename Fields</h4>
+              <code>| tstats count from datamodel=Web by Web.src | rename Web.src as src</code>
+              <p class="desc">Clean up data model field names</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Multiple Stats</h4>
+              <code>| tstats count, dc(Web.dest) as targets from datamodel=Web by Web.src</code>
+              <p class="desc">Multiple aggregations</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- REST API Searches -->
+        <div class="cheat-section">
+          <h2 class="subsection-title">REST API Searches</h2>
+          <div class="cheat-grid">
+            <div class="cheat-card">
+              <h4>List Indexes</h4>
+              <code>| rest /services/data/indexes | table title, totalEventCount, currentDBSizeMB</code>
+              <p class="desc">Index inventory</p>
+            </div>
+            <div class="cheat-card">
+              <h4>List Saved Searches</h4>
+              <code>| rest /services/saved/searches | table title, disabled, cron_schedule</code>
+              <p class="desc">All saved searches</p>
+            </div>
+            <div class="cheat-card">
+              <h4>List Apps</h4>
+              <code>| rest /services/apps/local | table title, version, disabled</code>
+              <p class="desc">Installed apps</p>
+            </div>
+            <div class="cheat-card">
+              <h4>List HEC Tokens</h4>
+              <code>| rest /services/data/inputs/http | table name, disabled, index</code>
+              <p class="desc">HEC token inventory</p>
+            </div>
+            <div class="cheat-card">
+              <h4>List Users</h4>
+              <code>| rest /services/authentication/users | table title, roles, email</code>
+              <p class="desc">User accounts</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Server Info</h4>
+              <code>| rest /services/server/info | table serverName, version, os_name</code>
+              <p class="desc">Splunk server details</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Time Modifiers -->
+        <div class="cheat-section">
+          <h2 class="subsection-title">Time Modifiers</h2>
+          <div class="cheat-grid">
+            <div class="cheat-card">
+              <h4>Relative Time</h4>
+              <code>earliest=-24h latest=now</code>
+              <p class="desc">Last 24 hours</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Snap to Hour</h4>
+              <code>earliest=-7d@d latest=@d</code>
+              <p class="desc">Last 7 days, snapped to midnight</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Business Hours</h4>
+              <code>earliest=-1d@d+9h latest=-1d@d+17h</code>
+              <p class="desc">Yesterday 9am-5pm</p>
+            </div>
+            <div class="cheat-card">
+              <h4>This Week</h4>
+              <code>earliest=-7d@w1 latest=@w1</code>
+              <p class="desc">From Monday to Monday</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Last Month</h4>
+              <code>earliest=-1mon@mon latest=@mon</code>
+              <p class="desc">Previous calendar month</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Specific Date</h4>
+              <code>earliest="01/15/2024:00:00:00" latest="01/16/2024:00:00:00"</code>
+              <p class="desc">Absolute date range</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Config File Reference -->
+        <div class="cheat-section">
+          <h2 class="subsection-title">Configuration Files Quick Reference</h2>
+          
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h4 style="margin-top:0;">props.conf — Parsing & Extraction</h4>
+            <code style="display:block;padding:12px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;font-size:12px;overflow-x:auto;white-space:pre;">
+[mysourcetype]
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%3NZ     # Timestamp format
+TIME_PREFIX = "timestamp":\s*"            # What comes before timestamp
+MAX_TIMESTAMP_LOOKAHEAD = 40              # Characters to search
+TZ = UTC                                  # Timezone
+SHOULD_LINEMERGE = false                  # Don't merge lines
+LINE_BREAKER = ([\r\n]+)                  # Event boundary
+KV_MODE = json                            # Key-value extraction mode
+EXTRACT-myfield = regex(?&lt;field&gt;pattern)  # Inline extraction
+FIELDALIAS-cim = vendor_field AS cim_field # Field alias
+EVAL-calc = field1 + field2               # Calculated field
+            </code>
+          </div>
+
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h4 style="margin-top:0;">transforms.conf — Reusable Transforms</h4>
+            <code style="display:block;padding:12px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;font-size:12px;overflow-x:auto;white-space:pre;">
+[my_extraction]
+REGEX = src=(?&lt;src_ip&gt;\d+\.\d+\.\d+\.\d+)
+
+[route_to_index]
+REGEX = (ERROR|CRITICAL)
+DEST_KEY = _MetaData:Index
+FORMAT = critical_index
+
+[nullqueue_healthcheck]
+REGEX = healthcheck
+DEST_KEY = queue
+FORMAT = nullQueue
+            </code>
+          </div>
+
+          <div class="card" style="padding:20px;">
+            <h4 style="margin-top:0;">inputs.conf — Data Inputs</h4>
+            <code style="display:block;padding:12px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;font-size:12px;overflow-x:auto;white-space:pre;">
+[monitor:///var/log/app/*.log]
+disabled = false
+sourcetype = myapp:log
+index = application
+
+[http://mytoken]
+disabled = false
+sourcetype = myapp:json
+index = application
+            </code>
+          </div>
+        </div>
+
+        <!-- CIM Fields -->
+        <div class="cheat-section">
+          <h2 class="subsection-title">Common CIM Fields</h2>
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Data Model</th>
+                <th>Key Fields</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Web</strong></td>
+                <td><code>src</code>, <code>dest</code>, <code>url</code>, <code>http_method</code>, <code>status</code>, <code>action</code>, <code>user</code>, <code>bytes_in</code>, <code>bytes_out</code></td>
+              </tr>
+              <tr>
+                <td><strong>Authentication</strong></td>
+                <td><code>src</code>, <code>dest</code>, <code>user</code>, <code>action</code>, <code>app</code>, <code>src_user</code>, <code>signature</code></td>
+              </tr>
+              <tr>
+                <td><strong>Network_Traffic</strong></td>
+                <td><code>src</code>, <code>dest</code>, <code>src_port</code>, <code>dest_port</code>, <code>action</code>, <code>transport</code>, <code>bytes</code></td>
+              </tr>
+              <tr>
+                <td><strong>Endpoint</strong></td>
+                <td><code>dest</code>, <code>user</code>, <code>process</code>, <code>process_path</code>, <code>parent_process</code>, <code>action</code></td>
+              </tr>
+              <tr>
+                <td><strong>Intrusion_Detection</strong></td>
+                <td><code>src</code>, <code>dest</code>, <code>signature</code>, <code>severity</code>, <code>category</code>, <code>vendor_product</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Troubleshooting Commands -->
+        <div class="cheat-section">
+          <h2 class="subsection-title">Troubleshooting Commands</h2>
+          <div class="cheat-grid">
+            <div class="cheat-card">
+              <h4>Check Data Arrival</h4>
+              <code>index=myindex earliest=-15m | stats count by sourcetype</code>
+              <p class="desc">Verify recent data ingestion</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Field Summary</h4>
+              <code>index=myindex | fieldsummary | where count>0</code>
+              <p class="desc">List all extracted fields</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Ingestion Delay</h4>
+              <code>index=myindex | eval lag=_indextime-_time | stats avg(lag)</code>
+              <p class="desc">Average seconds between event and index</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Search Errors</h4>
+              <code>index=_internal sourcetype=splunkd log_level=ERROR</code>
+              <p class="desc">Splunk internal errors</p>
+            </div>
+            <div class="cheat-card">
+              <h4>License Usage</h4>
+              <code>index=_internal source=*license_usage.log type=Usage | timechart sum(b) as bytes</code>
+              <p class="desc">Daily license consumption</p>
+            </div>
+            <div class="cheat-card">
+              <h4>Slow Searches</h4>
+              <code>index=_audit action=search info=completed | where total_run_time>60</code>
+              <p class="desc">Searches taking >60 seconds</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Keyboard Shortcuts -->
+        <div class="cheat-section">
+          <h2 class="subsection-title">Splunk Web Keyboard Shortcuts</h2>
+          <div class="card" style="padding:20px;">
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Shortcut</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>Ctrl + Enter</code></td><td>Run search</td></tr>
+                <tr><td><code>Ctrl + Shift + E</code></td><td>Export results</td></tr>
+                <tr><td><code>Ctrl + Shift + P</code></td><td>Print</td></tr>
+                <tr><td><code>Ctrl + /</code></td><td>Toggle comment in search</td></tr>
+                <tr><td><code>Ctrl + \</code></td><td>Format/beautify SPL</td></tr>
+                <tr><td><code>Tab</code></td><td>Auto-complete command</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;">
+          <div class="grid-2">
+            <a href="runbooks.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Previous</div>
+              <div style="color:var(--primary-700);font-weight:600;">SOC Runbooks</div>
+            </a>
+            <a href="decision-trees.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Next →</div>
+              <div style="color:var(--primary-700);font-weight:600;">Decision Trees</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

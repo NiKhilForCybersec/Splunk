@@ -3,39 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WAF-UC1: Block Volume Anomaly | myfirstpro Detection Engineering</title>
+  <title>UC1: High Volume Blocked Requests | Splunk Reference</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <style>
-    .impl-step{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
-    .impl-step h4{color:var(--primary-700);margin-bottom:16px;font-size:1rem;display:flex;align-items:center;gap:8px;}
-    .impl-step h4 .step-letter{background:var(--primary-500);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:bold;}
-    .impl-step.warning{border-left-color:#f59e0b;}
-    .impl-step.critical{border-left-color:#dc2626;}
-    .diagram-box{background:white;padding:20px;border-radius:8px;margin:12px 0;min-height:300px;overflow-x:auto;}
-    .es-config{display:grid;grid-template-columns:220px 1fr;gap:10px;font-size:0.85rem;background:white;padding:16px;border-radius:6px;margin-top:12px;}
-    .es-config dt{font-weight:600;color:var(--gray-700);}
-    .es-config dd{color:var(--gray-600);margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
-    .tuning-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
-    .tuning-table th{background:var(--gray-100);padding:10px;text-align:left;border:1px solid var(--gray-200);}
-    .tuning-table td{padding:10px;border:1px solid var(--gray-200);}
-    .fp-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
-    .fp-table th{background:#fef3c7;padding:10px;text-align:left;border:1px solid #fde68a;}
-    .fp-table td{padding:10px;border:1px solid var(--gray-200);}
-    .validation-list{font-size:0.85rem;line-height:2;}
-    .where-box{background:#e0f2fe;padding:12px 16px;border-radius:6px;font-size:0.85rem;margin-bottom:16px;}
-    .where-box strong{color:#0369a1;}
-    .uc-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
-    .uc-nav a{padding:6px 12px;background:var(--gray-100);border-radius:4px;font-size:0.75rem;text-decoration:none;color:var(--gray-600);}
-    .uc-nav a:hover{background:var(--gray-200);}
-    .uc-nav a.current{background:var(--primary-500);color:white;}
-  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
   <div class="app-container">
-    <aside class="sidebar">
+        <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
           <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
@@ -43,8 +20,8 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
             <div class="sidebar-logo-text">
-              <h1>myfirstpro</h1>
-              <span>Detection Engineering</span>
+              <h1>Splunk Reference</h1>
+              <span>Log & Detection Engineering</span>
             </div>
           </a>
         </div>
@@ -54,503 +31,394 @@
           <div class="nav-section-title">Getting Started</div>
           <a href="../../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
           <a href="../day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
-          <a href="../client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
           <a href="../professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Splunk Fundamentals</div>
+          <div class="nav-section-title">Splunk Platform</div>
           <a href="../splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
-          <a href="../splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
-          <a href="../data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow & Event Hub</span></a>
+          <a href="../splunk-architecture.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Architecture Deep Dive</span></a>
+          <a href="../splunk-apps.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Apps & Add-ons</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Log Engineering</div>
+          <a href="../log-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding Guide</span></a>
+          <a href="../data-inputs.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Data Inputs (HEC/UF)</span></a>
+          <a href="../props-transforms.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>props.conf & transforms</span></a>
+          <a href="../parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>CIM Compliance</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">SPL Mastery</div>
+          <a href="../splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>SPL Fundamentals</span></a>
+          <a href="../spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>SPL Reference Card</span></a>
+          <a href="../lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Enterprise Security</div>
+          <a href="../splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>ES Overview</span></a>
+          <a href="../correlation-searches.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Correlation Searches</span></a>
           <a href="../detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
-          <a href="../splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Splunk How-To Guide</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Data Sources</div>
           <a href="../vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
           <a href="../vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
-          <a href="../vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+          <a href="../vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID / Azure AD</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Splunk Operations</div>
-          <a href="../waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
-          <a href="../parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
-          <a href="../lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
-          <a href="../splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
-          <a href="../spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+          <div class="nav-section-title">Active Projects</div>
+          <a href="../waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>WAF/DDoS Project</span></a>
+          <a href="../waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>WAF Use Cases</span></a>
+          <a href="../mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>MFA Project</span></a>
+          <a href="../mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>MFA Use Cases</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">WAF/DDoS Project</div>
-          <a href="../waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="../waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-12)</span></a>
+          <div class="nav-section-title">Operations</div>
+          <a href="../splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span>Splunk Cloud Admin</span></a>
+          <a href="../troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Troubleshooting</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">MFA Project</div>
-          <a href="../mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="../mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Response & Support</div>
+          <div class="nav-section-title">Reference</div>
           <a href="../decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
-          <a href="../troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
           <a href="../runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+          <a href="../cheat-sheets.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Cheat Sheets</span></a>
         </div>
       </nav>
-      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+      <div class="sidebar-footer"><p>Log & Detection Engineering v3.0</p></div>
     </aside>
-
+    
     <main class="main-content">
       <header class="header">
         <div class="header-left">
-          <button class="menu-toggle" aria-label="Toggle menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
           <div class="breadcrumb">
             <a href="../../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
-            <a href="../waf-overview.html" class="breadcrumb-item">WAF</a>
+            <a href="../waf-usecases.html" class="breadcrumb-item">WAF Use Cases</a>
             <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-item current">UC1: Volume Anomaly</span>
+            <span class="breadcrumb-item current">UC1: High Volume Blocked</span>
           </div>
         </div>
-        <span class="badge warning">MEDIUM</span>
+        <span class="badge" style="background:var(--akamai-primary);">Akamai WAF</span>
       </header>
 
       <div class="page-content">
-        <!-- Header Card -->
-        <div class="card" style="padding:24px;margin-bottom:24px;">
-          <h1 style="font-size:1.5rem;margin-bottom:12px;">WAF-UC1: Block Volume Anomaly Detection</h1>
-          <p style="font-size:1rem;color:var(--gray-600);margin-bottom:20px;">Detect significant spikes in deny/block volume indicating scanning, exploit attempts, or DDoS activity. Uses statistical baseline to identify anomalous traffic patterns.</p>
-          
-          <div class="grid grid-4">
-            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
-              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Default Severity</span>
-              <span class="badge warning">MEDIUM</span>
-            </div>
-            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
-              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">MITRE ATT&CK</span>
-              <code style="font-size:0.9rem;">T1190</code>
-            </div>
-            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
-              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Schedule</span>
-              <strong>Every 5 min</strong>
-            </div>
-            <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;">
-              <span style="font-size:0.7rem;color:var(--gray-500);display:block;margin-bottom:6px;">Time Range</span>
-              <strong>Last 10 min</strong>
-            </div>
-          </div>
+        <div class="section">
+          <h1 class="section-title">UC1: High Volume Blocked Requests from Single IP</h1>
+          <p class="section-subtitle">Detection and investigation workflow for detecting potential DDoS or brute force attacks</p>
         </div>
 
-        <!-- STEP 1: Decision Tree -->
+        <!-- Use Case Overview -->
         <div class="section">
-          <h2 class="section-title">Step 1: Decision Tree (Detection Logic)</h2>
-          <p class="section-subtitle">Visual representation of the detection logic flow</p>
-          
-          <div class="impl-step">
-            <div class="diagram-box">
-              <pre class="mermaid">
-flowchart TD
-    START[WAF Event Received] --> A{Is waf_action = deny OR block}
-    A -->|No| IGNORE[Ignore event - not a block]
-    A -->|Yes| B[Aggregate events into 5-minute time buckets]
-    B --> C[Count block_count per bucket]
-    C --> D[Calculate 24h baseline using eventstats]
-    D --> D1[baseline = avg of block_count]
-    D1 --> D2[stdev = standard deviation of block_count]
-    D2 --> E[Calculate dynamic threshold]
-    E --> E1[threshold = baseline + 2 x stdev]
-    E1 --> F{Is threshold LT 50}
-    F -->|Yes| G[Set threshold = 50 as minimum floor]
-    F -->|No| H[Keep calculated threshold]
-    G --> I{Is block_count GT threshold}
-    H --> I
-    I -->|No| NORMAL[Normal traffic volume - no alert]
-    I -->|Yes| J{Is block_count GT 10 absolute minimum}
-    J -->|No| NORMAL
-    J -->|Yes| K[Calculate deviation in sigma units]
-    K --> K1[deviation = block_count minus baseline divided by stdev]
-    K1 --> L{Is deviation GTE 5 sigma}
-    L -->|Yes| CRIT[Set severity = CRITICAL]
-    L -->|No| M{Is deviation GTE 3 sigma}
-    M -->|Yes| HIGH[Set severity = HIGH]
-    M -->|No| MED[Set severity = MEDIUM]
-    CRIT --> CREATE[Create Notable Event in ES]
-    HIGH --> CREATE
-    MED --> CREATE
-    CREATE --> THROTTLE{Was Notable created for same condition in last 30 min}
-    THROTTLE -->|Yes| SUPPRESS[Suppress duplicate - do not create new Notable]
-    THROTTLE -->|No| ALERT[Notable sent to Incident Review queue]
-    ALERT --> ENRICH[Enrich with unique_ips and affected hosts]
-
-    style CRIT fill:#fee2e2,stroke:#dc2626,stroke-width:2px
-    style HIGH fill:#fff7ed,stroke:#ea580c,stroke-width:2px
-    style MED fill:#fefce8,stroke:#ca8a04,stroke-width:2px
-    style NORMAL fill:#dcfce7,stroke:#16a34a,stroke-width:2px
-    style IGNORE fill:#f3f4f6,stroke:#9ca3af
-    style SUPPRESS fill:#f3f4f6,stroke:#9ca3af
-              </pre>
+          <div class="grid-2">
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--primary-700);">Detection Summary</h4>
+              <table style="width:100%;">
+                <tr><td><strong>Threat:</strong></td><td>DDoS / Brute Force / Scanning</td></tr>
+                <tr><td><strong>Data Source:</strong></td><td>Akamai SIEM API</td></tr>
+                <tr><td><strong>MITRE ATT&CK:</strong></td><td>T1498 (Network DoS), T1110 (Brute Force)</td></tr>
+                <tr><td><strong>Severity:</strong></td><td>Medium-High</td></tr>
+                <tr><td><strong>Schedule:</strong></td><td>Every 5 minutes</td></tr>
+              </table>
+            </div>
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--primary-700);">Key Indicators</h4>
+              <ul style="margin:0;padding-left:20px;">
+                <li>Single IP with >100 blocked requests in 5 min</li>
+                <li>Multiple WAF rules triggered</li>
+                <li>Consistent targeting of specific endpoints</li>
+                <li>Unusual user agent strings</li>
+                <li>High request rate from unexpected geos</li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <!-- STEP A: Build SPL -->
+        <!-- Detection Logic -->
         <div class="section">
-          <h2 class="section-title">Step A: Build SPL in Search First</h2>
-          <div class="where-box">
-            <strong>Where:</strong> Splunk Search → Build and test SPL until results are stable and accurate before creating correlation search
-          </div>
+          <h2 class="subsection-title">Detection Logic</h2>
           
-          <div class="impl-step">
-            <h4><span class="step-letter">A1</span> Variant A: Global Spike (Recommended Start)</h4>
-            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
-              <strong>Use when:</strong> You want a single "something big is happening" alert without per-application granularity. Produces 1 notable per time bucket when threshold exceeded. Best for initial deployment.
-            </p>
-            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| where waf_action="deny" OR waf_action="block"
-| bin _time span=5m
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| stats count as block_count 
-        dc(src_ip) as unique_ips 
-        values(vhost) as hosts 
-        by _time
-| eventstats avg(block_count) as baseline stdev(block_count) as stdev
-| eval stdev=if(stdev=0,1,stdev)
-| eval threshold = baseline + (2*stdev)
-| eval threshold = if(threshold < 50, 50, threshold)
-| where block_count > threshold AND block_count > 10
-| eval deviation=round((block_count-baseline)/stdev,2)
-| eval severity=case(deviation>=5,"critical", deviation>=3,"high", 1=1,"medium")
-| table _time block_count baseline threshold deviation unique_ips hosts severity</code></pre></div></div>
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+            <div class="mermaid">
+flowchart LR
+    A[Akamai Events] --> B{action = blocked?}
+    B -->|Yes| C[Group by src IP]
+    C --> D{Count > threshold?}
+    D -->|Yes| E[Generate Notable]
+    D -->|No| F[No alert]
+    B -->|No| F
+    
+    E --> G[Add risk score to IP]
+    
+    style A fill:#0096d6,color:#fff
+    style E fill:#ef4444,color:#fff
+    style F fill:#10b981,color:#fff
+            </div>
           </div>
 
-          <div class="impl-step">
-            <h4><span class="step-letter">A2</span> Variant B: Per-Host Spike (More Actionable)</h4>
-            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
-              <strong>Use when:</strong> You want to know "which application is under attack" - more actionable for triage. Produces separate notables per vhost. Better for mature deployments.
-            </p>
-            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-24h
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| where waf_action="deny" OR waf_action="block"
-| bin _time span=5m
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| stats count as block_count dc(src_ip) as unique_ips by _time vhost
-| eventstats avg(block_count) as baseline stdev(block_count) as stdev by vhost
-| eval stdev=if(stdev=0,1,stdev)
-| eval threshold = baseline + (2*stdev)
-| eval threshold = if(threshold < 25, 25, threshold)
-| where block_count > threshold AND block_count > 10
-| eval deviation=round((block_count-baseline)/stdev,2)
-| eval severity=case(deviation>=5,"critical", deviation>=3,"high", 1=1,"medium")
-| table _time vhost block_count baseline threshold deviation unique_ips severity</code></pre></div></div>
-          </div>
+          <h4>Correlation Search SPL</h4>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+| tstats summariesonly=true count 
+    from datamodel=Web 
+    where Web.action="blocked" AND index=akamai 
+    by Web.src, Web.dest, Web.http_method span=5m
 
-          <div class="impl-step">
-            <h4><span class="step-letter">A3</span> Variant C: 7-Day Baseline (Stable Traffic)</h4>
-            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:6px;">
-              <strong>Use when:</strong> Traffic has stable weekly patterns (e.g., lower on weekends). More accurate baseline but heavier on Splunk resources. Use after initial deployment is stable.
-            </p>
-            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-7d
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| where waf_action="deny" OR waf_action="block"
-| bin _time span=5m
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| stats count as block_count dc(src_ip) as unique_ips values(vhost) as hosts by _time
-| eventstats avg(block_count) as baseline stdev(block_count) as stdev
-| eval stdev=if(stdev=0,1,stdev)
-| eval threshold = baseline + (2*stdev)
-| eval threshold = if(threshold < 50, 50, threshold)
-| where block_count > threshold AND block_count > 10
-| eval deviation=round((block_count-baseline)/stdev,2)
-| eval severity=case(deviation>=5,"critical", deviation>=3,"high", 1=1,"medium")
-| table _time block_count baseline threshold deviation unique_ips hosts severity</code></pre></div></div>
-            <p style="font-size:0.85rem;color:var(--gray-500);margin-top:12px;"><strong>Best practice:</strong> Start with 24h baseline (Variant A). Once detection is stable for 2 weeks, move to 7d baseline for better accuracy.</p>
-          </div>
-        </div>
+| where count > 100
 
-        <!-- STEP B: ES Correlation Search -->
-        <div class="section">
-          <h2 class="section-title">Step B: Create ES Correlation Search</h2>
-          <div class="where-box">
-            <strong>Where:</strong> ES → Content Management → Correlation Searches → Create New
-          </div>
-          
-          <div class="impl-step">
-            <h4><span class="step-letter">B</span> ES Correlation Search Configuration</h4>
-            <dl class="es-config">
-              <dt>Search Name</dt>
-              <dd>WAF-UC1: Block Volume Anomaly</dd>
-              
-              <dt>App Context</dt>
-              <dd>SplunkEnterpriseSecuritySuite</dd>
-              
-              <dt>Cron Schedule</dt>
-              <dd>*/5 * * * *</dd>
-              
-              <dt>Earliest Time</dt>
-              <dd>-10m</dd>
-              
-              <dt>Latest Time</dt>
-              <dd>now</dd>
-              
-              <dt>Scheduling Priority</dt>
-              <dd>Default</dd>
-              
-              <dt>Create Notable Event</dt>
-              <dd>✅ Enabled</dd>
-              
-              <dt>Notable Title</dt>
-              <dd>WAF: Block volume spike detected ($block_count$ blocks, $deviation$σ deviation)</dd>
-              
-              <dt>Notable Description</dt>
-              <dd>Block count $block_count$ exceeded threshold $threshold$ (baseline: $baseline$). Unique attackers: $unique_ips$. Affected hosts: $hosts$. Severity determined by statistical deviation from 24h baseline.</dd>
-              
-              <dt>Default Severity</dt>
-              <dd>Medium (or map dynamically from $severity$ field if ES version supports)</dd>
-              
-              <dt>Security Domain</dt>
-              <dd>network</dd>
-              
-              <dt>Throttle Duration</dt>
-              <dd>1800 seconds (30 minutes)</dd>
-              
-              <dt>Throttle Fields</dt>
-              <dd><em>(empty for global throttle)</em> OR <code>vhost</code> for per-host variant</dd>
-              
-              <dt>Group By Fields</dt>
-              <dd>_time (for global) OR _time, vhost (for per-host)</dd>
-              
-              <dt>MITRE ATT&CK Technique</dt>
-              <dd>T1190 - Exploit Public-Facing Application</dd>
-              
-              <dt>MITRE ATT&CK Tactic</dt>
-              <dd>Initial Access</dd>
-              
-              <dt>Kill Chain Phase</dt>
-              <dd>Exploitation</dd>
-            </dl>
-          </div>
-        </div>
+| rename Web.src as src, Web.dest as dest, Web.http_method as http_method
 
-        <!-- STEP C: Drilldown -->
-        <div class="section">
-          <h2 class="section-title">Step C: Add Drilldown Search</h2>
-          <div class="where-box">
-            <strong>Where:</strong> Add as Adaptive Response Action OR linked search in Notable Event settings
-          </div>
-          
-          <div class="impl-step">
-            <h4><span class="step-letter">C</span> Drilldown: Show Top Attackers and Targets</h4>
-            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;">This search runs when an analyst clicks into the notable to see who is attacking and what they're targeting:</p>
-            <div class="code-block"><div class="code-body"><pre><code>index=akamai sourcetype=akamai:siem earliest=-15m
-| spath
-| eval waf_action=coalesce(action, mvindex('attackData.rules{}.ruleAction',0))
-| where waf_action="deny" OR waf_action="block"
-| eval src_ip=coalesce(src_ip,'attackData.clientIP')
-| eval vhost=coalesce(vhost,'httpMessage.requestHeaders.Host')
-| eval uri=coalesce(uri,'httpMessage.requestUri')
-| eval signature=coalesce(signature,'attackData.rules{}.ruleTag')
-| stats count as blocked_requests
-        dc(uri) as unique_uris 
-        values(uri) as sample_uris 
-        values(signature) as attack_types
-        by vhost src_ip
-| sort - blocked_requests
-| head 20</code></pre></div></div>
-          </div>
-        </div>
-
-        <!-- STEP D: Validate -->
-        <div class="section">
-          <h2 class="section-title">Step D: Validate Notables</h2>
-          <div class="where-box">
-            <strong>Where:</strong> ES → Incident Review → Filter by "WAF-UC1"
-          </div>
-          
-          <div class="impl-step">
-            <h4><span class="step-letter">D</span> Validation Checklist</h4>
-            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:16px;">Check ALL of these before marking detection as "production ready":</p>
-            <ul class="validation-list">
-              <li>✅ <strong>Notable appears</strong> within 10 minutes of enabling rule (if traffic exists)</li>
-              <li>✅ <strong>All expected fields visible:</strong> vhost, block_count, baseline, threshold, deviation, unique_ips, hosts</li>
-              <li>✅ <strong>Severity is correct:</strong> deviation ≥5 = critical, ≥3 = high, else medium</li>
-              <li>✅ <strong>Notable is NOT spamming:</strong> if >10/hour for same condition, increase throttle or threshold</li>
-              <li>✅ <strong>Drilldown search works:</strong> click into notable and verify drilldown returns relevant data</li>
-              <li>✅ <strong>MITRE tagging visible:</strong> T1190 shows in Notable details</li>
-              <li>✅ <strong>Historical validation:</strong> run search over known attack period to verify it would have detected</li>
-              <li>✅ <strong>False positive check:</strong> run over 7 days of normal traffic to estimate FP rate</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- STEP E: Tune -->
-        <div class="section">
-          <h2 class="section-title">Step E: Tune Detection</h2>
-          
-          <div class="impl-step">
-            <h4><span class="step-letter">E1</span> Tuning Parameter Reference</h4>
-            <table class="tuning-table">
-              <thead>
-                <tr><th>Parameter</th><th>Default</th><th>Fewer Alerts</th><th>More Coverage</th><th>What It Controls</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Minimum floor</strong></td>
-                  <td>50</td>
-                  <td>100-200</td>
-                  <td>20-30</td>
-                  <td>Prevents alerts on statistically significant but low-volume spikes</td>
-                </tr>
-                <tr>
-                  <td><strong>Sigma multiplier</strong></td>
-                  <td>2σ</td>
-                  <td>3σ</td>
-                  <td>1.5σ</td>
-                  <td>How many standard deviations above baseline triggers alert</td>
-                </tr>
-                <tr>
-                  <td><strong>Baseline window</strong></td>
-                  <td>24h</td>
-                  <td>7d</td>
-                  <td>12h</td>
-                  <td>Longer = more stable baseline, shorter = adapts faster to changes</td>
-                </tr>
-                <tr>
-                  <td><strong>Time bucket span</strong></td>
-                  <td>5m</td>
-                  <td>10m</td>
-                  <td>2m</td>
-                  <td>Smaller = faster detection but more noise, larger = smoother</td>
-                </tr>
-                <tr>
-                  <td><strong>Throttle duration</strong></td>
-                  <td>30m</td>
-                  <td>60m</td>
-                  <td>15m</td>
-                  <td>How long to suppress duplicate alerts for same condition</td>
-                </tr>
-                <tr>
-                  <td><strong>Schedule frequency</strong></td>
-                  <td>5m</td>
-                  <td>10m</td>
-                  <td>2m</td>
-                  <td>How often correlation search runs (affects detection latency)</td>
-                </tr>
-                <tr>
-                  <td><strong>Absolute minimum</strong></td>
-                  <td>10</td>
-                  <td>25</td>
-                  <td>5</td>
-                  <td>Minimum blocks required regardless of statistics</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="impl-step">
-            <h4><span class="step-letter">E2</span> Additional Tuning SPL Snippets</h4>
-            
-            <p style="font-size:0.9rem;font-weight:600;margin-bottom:8px;">Allowlist internal/test IPs:</p>
-            <div class="code-block" style="margin-bottom:16px;"><div class="code-body"><pre><code>| where NOT cidrmatch("10.0.0.0/8", src_ip) 
-        AND NOT cidrmatch("192.168.0.0/16", src_ip)
-        AND NOT cidrmatch("172.16.0.0/12", src_ip)</code></pre></div></div>
-            
-            <p style="font-size:0.9rem;font-weight:600;margin-bottom:8px;">Exclude non-production environments:</p>
-            <div class="code-block" style="margin-bottom:16px;"><div class="code-body"><pre><code>| where NOT match(vhost, "(?i)(dev|test|staging|uat|qa|sandbox)")</code></pre></div></div>
-            
-            <p style="font-size:0.9rem;font-weight:600;margin-bottom:8px;">Business hours only detection:</p>
-            <div class="code-block" style="margin-bottom:16px;"><div class="code-body"><pre><code>| eval hour=strftime(_time,"%H") 
-| where hour >= 6 AND hour <= 22</code></pre></div></div>
-            
-            <p style="font-size:0.9rem;font-weight:600;margin-bottom:8px;">Exclude known scanner IPs (using lookup):</p>
-            <div class="code-block" style="margin-bottom:16px;"><div class="code-body"><pre><code>| lookup scanner_allowlist.csv src_ip OUTPUT is_scanner 
-| where is_scanner!="true" OR isnull(is_scanner)</code></pre></div></div>
-            
-            <p style="font-size:0.9rem;font-weight:600;margin-bottom:8px;">Separate production vs non-production alerting:</p>
-            <div class="code-block"><div class="code-body"><pre><code>| eval environment = case(
-    match(vhost, "(?i)(prod|www\.|api\.)"), "production",
-    match(vhost, "(?i)(dev|test|staging)"), "non-production",
-    1=1, "unknown"
+| eval urgency=case(
+    count > 1000, "critical",
+    count > 500, "high",
+    count > 100, "medium",
+    1=1, "low"
 )
-| where environment="production"</code></pre></div></div>
+
+| eval rule_name="WAF - High Volume Blocked Requests"
+| eval rule_description="Source IP ".src." had ".count." blocked requests in 5 minutes targeting ".dest
+          </code>
+
+          <h4 style="margin-top:24px;">Threshold Guidelines</h4>
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Blocked Count (5 min)</th>
+                <th>Urgency</th>
+                <th>Typical Cause</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>100-500</td>
+                <td><span class="badge warning">Medium</span></td>
+                <td>Automated scanning, misconfigured app</td>
+              </tr>
+              <tr>
+                <td>500-1000</td>
+                <td><span class="badge" style="background:var(--warning-600);">High</span></td>
+                <td>Aggressive scan, targeted attack attempt</td>
+              </tr>
+              <tr>
+                <td>>1000</td>
+                <td><span class="badge critical">Critical</span></td>
+                <td>Active DDoS, brute force attack</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Investigation Decision Tree -->
+        <div class="section">
+          <h2 class="subsection-title">Investigation Decision Tree</h2>
+          <p>Follow this workflow when a UC1 alert fires:</p>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TD
+    A[UC1 Alert: High Volume Blocked] --> B{Check IP reputation}
+    
+    B --> C{VirusTotal / AbuseIPDB}
+    C -->|Known malicious| D[Confirm attack<br/>Recommend permanent block]
+    C -->|Unknown/Clean| E{Analyze request patterns}
+    
+    E --> F{Single endpoint targeted?}
+    F -->|Yes| G{What endpoint?}
+    F -->|No - Multiple endpoints| H[Likely scanning<br/>Add to watchlist]
+    
+    G -->|Login/Auth endpoint| I[Credential stuffing attempt<br/>Check for any successful auths]
+    G -->|API endpoint| J[API abuse<br/>Check rate limits]
+    G -->|Search/Form| K[Likely fuzzing<br/>Check for SQLi/XSS patterns]
+    G -->|Static resources| L[Misconfigured scraper<br/>Lower priority]
+    
+    I --> I1{Any successful logins from this IP?}
+    I1 -->|Yes| I2[CRITICAL: Possible account compromise<br/>Investigate user accounts]
+    I1 -->|No| I3[Attack blocked successfully<br/>Document and monitor]
+    
+    J --> J1{API has rate limiting?}
+    J1 -->|Yes| J2[Rate limits working<br/>Consider lowering thresholds]
+    J1 -->|No| J3[Recommend implementing rate limits]
+    
+    K --> K1{Check WAF rule triggers}
+    K1 --> K2{SQLi rules triggered?}
+    K2 -->|Yes| K3[Confirmed SQLi attempt<br/>Block IP recommended]
+    K2 -->|No| K4{XSS rules triggered?}
+    K4 -->|Yes| K5[Confirmed XSS attempt<br/>Block IP recommended]
+    K4 -->|No| K6[Generic fuzzing<br/>Monitor for escalation]
+    
+    D --> M[Create block request<br/>Document in case]
+    K3 --> M
+    K5 --> M
+    I2 --> N[ESCALATE: Potential breach<br/>Engage incident response]
+    
+    style A fill:#3b82f6,color:#fff
+    style D fill:#ef4444,color:#fff
+    style N fill:#ef4444,color:#fff
+    style M fill:#f59e0b,color:#fff
+    style I3 fill:#10b981,color:#fff
+    style H fill:#10b981,color:#fff
+            </div>
           </div>
         </div>
 
-        <!-- STEP F: False Positives -->
+        <!-- Investigation Queries -->
         <div class="section">
-          <h2 class="section-title">Step F: Handle False Positives</h2>
+          <h2 class="subsection-title">Investigation Queries</h2>
           
-          <div class="impl-step warning">
-            <h4><span class="step-letter">F</span> Common False Positives & Solutions</h4>
-            <table class="fp-table">
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h4 style="margin-top:0;color:var(--primary-700);">1. Deep Dive on Suspicious IP</h4>
+            <code style="display:block;padding:12px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;overflow-x:auto;white-space:pre;">
+index=akamai src="SUSPICIOUS_IP" earliest=-24h
+| stats count by action, http_method, http_uri, http_user_agent, rule_name
+| sort -count
+            </code>
+          </div>
+
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h4 style="margin-top:0;color:var(--primary-700);">2. Check for Successful Requests</h4>
+            <code style="display:block;padding:12px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;overflow-x:auto;white-space:pre;">
+index=akamai src="SUSPICIOUS_IP" action!="blocked" earliest=-24h
+| stats count by http_uri, status, action
+| sort -count
+            </code>
+          </div>
+
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h4 style="margin-top:0;color:var(--primary-700);">3. WAF Rules Triggered</h4>
+            <code style="display:block;padding:12px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;overflow-x:auto;white-space:pre;">
+index=akamai src="SUSPICIOUS_IP" action="blocked" earliest=-24h
+| stats count by rule_name, rule_id, rule_action
+| sort -count
+            </code>
+          </div>
+
+          <div class="card" style="padding:20px;margin-bottom:16px;">
+            <h4 style="margin-top:0;color:var(--primary-700);">4. Attack Pattern Analysis</h4>
+            <code style="display:block;padding:12px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;overflow-x:auto;white-space:pre;">
+index=akamai src="SUSPICIOUS_IP" earliest=-24h
+| timechart span=5m count by action
+| eval attack_intensity=blocked/allowed
+            </code>
+          </div>
+
+          <div class="card" style="padding:20px;">
+            <h4 style="margin-top:0;color:var(--primary-700);">5. Geographic Context</h4>
+            <code style="display:block;padding:12px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;overflow-x:auto;white-space:pre;">
+index=akamai src="SUSPICIOUS_IP" earliest=-24h
+| head 1
+| iplocation src
+| table src, City, Country, lat, lon
+            </code>
+          </div>
+        </div>
+
+        <!-- Response Actions -->
+        <div class="section">
+          <h2 class="subsection-title">Response Actions Decision Tree</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TD
+    A[Investigation Complete] --> B{Confirmed malicious?}
+    
+    B -->|Yes - Confirmed attack| C{Attack type?}
+    B -->|No - False positive| D[Document FP reason]
+    B -->|Uncertain| E[Add to watchlist<br/>Extended monitoring]
+    
+    C -->|DDoS attempt| F[Recommend IP block<br/>Check for distributed sources]
+    C -->|Brute force| G{Any success?}
+    C -->|Vulnerability scan| H[Add to threat intel<br/>Temporary block]
+    C -->|Targeted attack| I[ESCALATE<br/>Full incident response]
+    
+    G -->|Yes - Credentials compromised| G1[Force password reset<br/>Review account activity<br/>ESCALATE]
+    G -->|No - All blocked| G2[Block IP<br/>Monitor for pivoting]
+    
+    D --> D1{Recurring FP?}
+    D1 -->|Yes| D2[Create whitelist entry<br/>or tune detection]
+    D1 -->|No| D3[Close as FP<br/>Document reason]
+    
+    F --> F1[Submit block request]
+    H --> F1
+    G2 --> F1
+    
+    F1 --> F2{Block approved?}
+    F2 -->|Yes| F3[Implement block<br/>Close notable]
+    F2 -->|No| F4[Document denial reason<br/>Continue monitoring]
+    
+    style A fill:#3b82f6,color:#fff
+    style I fill:#ef4444,color:#fff
+    style G1 fill:#ef4444,color:#fff
+    style F3 fill:#10b981,color:#fff
+    style D3 fill:#10b981,color:#fff
+            </div>
+          </div>
+        </div>
+
+        <!-- Tuning Guidance -->
+        <div class="section">
+          <h2 class="subsection-title">Detection Tuning</h2>
+          
+          <div class="card" style="padding:24px;">
+            <h4 style="margin-top:0;">Common False Positive Sources</h4>
+            <table class="reference-table">
               <thead>
-                <tr><th>FP Source</th><th>How to Identify</th><th>Solution</th></tr>
+                <tr>
+                  <th>FP Source</th>
+                  <th>How to Identify</th>
+                  <th>Tuning Action</th>
+                </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Internal vulnerability scans</strong></td>
-                  <td>Same source IPs every Tuesday night, Nessus/Qualys/Rapid7 user agents in logs</td>
-                  <td>Create scanner_allowlist.csv lookup with scanner source IPs, exclude in query</td>
+                  <td>Health check monitors</td>
+                  <td>Same user agent, regular intervals, same URI</td>
+                  <td>Add user agent or source to whitelist</td>
                 </tr>
                 <tr>
-                  <td><strong>Marketing campaigns / sales events</strong></td>
-                  <td>Spike correlates with known event (Black Friday, product launch, email blast)</td>
-                  <td>Temporarily adjust baseline during known events OR add scheduled suppression</td>
+                  <td>Security scanners (authorized)</td>
+                  <td>Known scanner IPs, during testing windows</td>
+                  <td>Create time-based exception or IP whitelist</td>
                 </tr>
                 <tr>
-                  <td><strong>New WAF rule deployment</strong></td>
-                  <td>Spike starts exactly when new WAF rule was enabled, affects all traffic uniformly</td>
-                  <td>Monitor for 48h after any WAF rule change before trusting alerts; recalculate baseline</td>
+                  <td>CDN/Proxy IPs</td>
+                  <td>Multiple users behind same IP</td>
+                  <td>Raise threshold for known proxy IPs</td>
                 </tr>
                 <tr>
-                  <td><strong>Partner API misconfiguration</strong></td>
-                  <td>Single known partner IP, legitimate business traffic, not malicious request patterns</td>
-                  <td>Add partner IPs to known_partners lookup, potentially create separate "partner anomaly" detection</td>
-                </tr>
-                <tr>
-                  <td><strong>CDN health checks / edge probes</strong></td>
-                  <td>Akamai/Cloudflare/Fastly source IP ranges, regular interval patterns</td>
-                  <td>Exclude CDN probe IP ranges using cidrmatch against published ranges</td>
-                </tr>
-                <tr>
-                  <td><strong>Load testing / performance testing</strong></td>
-                  <td>Spike during QA testing windows, JMeter/Gatling/Locust user agents</td>
-                  <td>Coordinate with QA team for test schedules, suppress during known test windows</td>
-                </tr>
-                <tr>
-                  <td><strong>Bot traffic spikes</strong></td>
-                  <td>Search engine crawlers, legitimate bots with proper identification</td>
-                  <td>Verify User-Agent, allowlist Googlebot/Bingbot verified IPs</td>
+                  <td>Misconfigured applications</td>
+                  <td>Internal IP, specific app user agent</td>
+                  <td>Fix app config; temporary whitelist</td>
                 </tr>
               </tbody>
             </table>
+
+            <h4 style="margin-top:24px;">Threshold Adjustment</h4>
+            <code style="display:block;padding:12px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;overflow-x:auto;white-space:pre;">
+# Analyze normal baseline to set thresholds
+index=akamai action="blocked" earliest=-7d
+| timechart span=5m count by src
+| stats perc95(count) as p95, perc99(count) as p99, max(count) as max_count
+# Set threshold above p95 to reduce noise
+            </code>
           </div>
         </div>
 
         <!-- Navigation -->
-        <div class="section">
-          <div class="grid grid-2">
-            <div></div>
-            <div style="text-align:right;">
-              <a href="uc2-single-ip.html" class="btn btn-primary">Next: UC2 Single IP Flood →</a>
-            </div>
+        <div class="section" style="margin-top:48px;">
+          <div class="grid-2">
+            <a href="../waf-usecases.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Back to</div>
+              <div style="color:var(--primary-700);font-weight:600;">WAF Use Cases</div>
+            </a>
+            <a href="uc2-single-ip.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Next →</div>
+              <div style="color:var(--primary-700);font-weight:600;">UC2: Persistent Single IP</div>
+            </a>
           </div>
         </div>
 
       </div>
     </main>
   </div>
-
   <script src="../../js/app.js"></script>
-  <script>
-    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{nodeSpacing:25,rankSpacing:30,curve:'basis'}});
-  </script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
 </body>
 </html>

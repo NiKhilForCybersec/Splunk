@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log Onboarding Master Guide | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+                    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>Splunk Reference</h1>
+              <span>Log & Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Platform</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
+          <a href="splunk-architecture.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Architecture Deep Dive</span></a>
+          <a href="splunk-apps.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Apps & Add-ons</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Log Engineering</div>
+          <a href="log-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding Guide</span></a>
+          <a href="data-inputs.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Data Inputs (HEC/UF)</span></a>
+          <a href="props-transforms.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>props.conf & transforms</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>CIM Compliance</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">SPL Mastery</div>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>SPL Fundamentals</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>SPL Reference Card</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Enterprise Security</div>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>ES Overview</span></a>
+          <a href="correlation-searches.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Correlation Searches</span></a>
+          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID / Azure AD</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Active Projects</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>WAF/DDoS Project</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>WAF Use Cases</span></a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>MFA Project</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>MFA Use Cases</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span>Splunk Cloud Admin</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Troubleshooting</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Reference</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+          <a href="cheat-sheets.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Cheat Sheets</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Log & Detection Engineering v3.0</p></div>
+    </aside>
+    
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Log Onboarding Guide</span>
+          </div>
+        </div>
+        <span class="badge critical">Core Skill</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Log Onboarding Master Guide</h1>
+          <p class="section-subtitle">The complete step-by-step process for onboarding any log source to Splunk — from planning to validation</p>
+        </div>
+
+        <!-- Overview -->
+        <div class="callout critical">
+          <div class="callout-content">
+            <div class="callout-title">What is Log Onboarding?</div>
+            <div class="callout-body">
+              Log onboarding is the process of getting data from a source system into Splunk in a usable format. This includes:<br><br>
+              • <strong>Planning</strong> — What data, how much, where to store it<br>
+              • <strong>Configuration</strong> — Setting up inputs, indexes, sourcetypes<br>
+              • <strong>Parsing</strong> — Breaking raw data into events with proper timestamps<br>
+              • <strong>Field Extraction</strong> — Making fields searchable<br>
+              • <strong>CIM Mapping</strong> — Normalizing for Enterprise Security<br>
+              • <strong>Validation</strong> — Confirming everything works correctly
+            </div>
+          </div>
+        </div>
+
+        <!-- The Onboarding Workflow -->
+        <div class="section">
+          <h2 class="subsection-title">The 8-Phase Onboarding Workflow</h2>
+          
+          <div class="card" style="padding:24px;margin-bottom:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart LR
+    A[1. Discovery] --> B[2. Planning]
+    B --> C[3. Index Setup]
+    C --> D[4. Input Config]
+    D --> E[5. Parsing]
+    E --> F[6. Field Extraction]
+    F --> G[7. CIM Mapping]
+    G --> H[8. Validation]
+    
+    style A fill:#3b82f6,color:#fff
+    style B fill:#8b5cf6,color:#fff
+    style C fill:#06b6d4,color:#fff
+    style D fill:#10b981,color:#fff
+    style E fill:#f59e0b,color:#fff
+    style F fill:#ef4444,color:#fff
+    style G fill:#ec4899,color:#fff
+    style H fill:#14b8a6,color:#fff
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 1: Discovery -->
+        <div class="section">
+          <div class="card phase-card" style="border-left:4px solid #3b82f6;padding:24px;margin-bottom:24px;">
+            <h2 style="margin-top:0;color:#3b82f6;">Phase 1: Discovery — Understand the Data</h2>
+            
+            <p>Before touching Splunk, gather all information about the data source.</p>
+            
+            <h4>Questions to Ask the Data Owner</h4>
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Questions</th>
+                  <th>Why It Matters</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Data Volume</strong></td>
+                  <td>How many GB/day? Events per second?</td>
+                  <td>Index sizing, license impact</td>
+                </tr>
+                <tr>
+                  <td><strong>Format</strong></td>
+                  <td>JSON, syslog, XML, CSV, custom?</td>
+                  <td>Parsing complexity</td>
+                </tr>
+                <tr>
+                  <td><strong>Delivery Method</strong></td>
+                  <td>API push, file monitor, syslog, agent?</td>
+                  <td>Input configuration</td>
+                </tr>
+                <tr>
+                  <td><strong>Timestamp</strong></td>
+                  <td>Where is it? What format? What timezone?</td>
+                  <td>Time parsing configuration</td>
+                </tr>
+                <tr>
+                  <td><strong>Multi-line?</strong></td>
+                  <td>Does one event span multiple lines?</td>
+                  <td>Line breaking rules</td>
+                </tr>
+                <tr>
+                  <td><strong>Retention</strong></td>
+                  <td>How long must data be kept?</td>
+                  <td>Index retention settings</td>
+                </tr>
+                <tr>
+                  <td><strong>Security</strong></td>
+                  <td>Who needs access? Any sensitive data?</td>
+                  <td>RBAC, data masking</td>
+                </tr>
+                <tr>
+                  <td><strong>Use Cases</strong></td>
+                  <td>What detections/dashboards need this?</td>
+                  <td>CIM requirements, field priorities</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 style="margin-top:24px;">Get Sample Data</h4>
+            <div class="callout warning" style="margin-bottom:16px;">
+              <div class="callout-content">
+                <div class="callout-title">⚠️ Always Get Samples First</div>
+                <div class="callout-body">
+                  Never configure based on documentation alone. Get real sample data with at least 100 events covering different event types.
+                </div>
+              </div>
+            </div>
+
+            <h4>Sample Data Checklist</h4>
+            <ul>
+              <li>☐ At least 100+ events</li>
+              <li>☐ Multiple event types (success, failure, error)</li>
+              <li>☐ Full 24-hour period if possible</li>
+              <li>☐ Raw format (not truncated)</li>
+              <li>☐ Documentation of timestamp timezone</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Phase 2: Planning -->
+        <div class="section">
+          <div class="card phase-card" style="border-left:4px solid #8b5cf6;padding:24px;margin-bottom:24px;">
+            <h2 style="margin-top:0;color:#8b5cf6;">Phase 2: Planning — Design the Configuration</h2>
+            
+            <h4>Naming Conventions</h4>
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Element</th>
+                  <th>Format</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Index</strong></td>
+                  <td>vendor_product or category</td>
+                  <td><code>akamai</code>, <code>network</code>, <code>security</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Sourcetype</strong></td>
+                  <td>vendor:product:logtype</td>
+                  <td><code>akamai:siem</code>, <code>cisco:asa</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Source</strong></td>
+                  <td>Descriptive path or identifier</td>
+                  <td><code>/var/log/app.log</code>, <code>hec:akamai</code></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 style="margin-top:24px;">Volume Estimation</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;">
+# Calculate daily volume
+Events per day × Average event size (bytes) = Daily bytes
+
+# Example:
+1,000,000 events × 500 bytes = 500 MB/day raw
+With compression (~50%): ~250 MB/day stored
+
+# Splunk license calculation (based on ingested volume)
+500 MB/day = 0.5 GB/day license usage
+            </code>
+
+            <h4 style="margin-top:24px;">Design Decisions Checklist</h4>
+            <ul>
+              <li>☐ Index name decided</li>
+              <li>☐ Sourcetype name decided</li>
+              <li>☐ Input method chosen (HEC, forwarder, API)</li>
+              <li>☐ Retention period defined</li>
+              <li>☐ CIM data models identified</li>
+              <li>☐ Access controls planned</li>
+              <li>☐ TA (Technology Add-on) checked on Splunkbase</li>
+            </ul>
+
+            <div class="callout info">
+              <div class="callout-content">
+                <div class="callout-title">💡 Check for Existing TAs</div>
+                <div class="callout-body">
+                  Before building custom parsing, check <a href="https://splunkbase.splunk.com" target="_blank">Splunkbase</a> for existing Technology Add-ons. Most major vendors have pre-built TAs with parsing and CIM mapping.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3: Index Setup -->
+        <div class="section">
+          <div class="card phase-card" style="border-left:4px solid #06b6d4;padding:24px;margin-bottom:24px;">
+            <h2 style="margin-top:0;color:#06b6d4;">Phase 3: Index Setup</h2>
+            
+            <h4>Creating an Index (Splunk Cloud)</h4>
+            <ol>
+              <li>Navigate to <strong>Settings → Indexes</strong></li>
+              <li>Click <strong>New Index</strong></li>
+              <li>Configure:
+                <ul>
+                  <li><strong>Index Name:</strong> lowercase, no spaces (e.g., <code>akamai</code>)</li>
+                  <li><strong>Index Data Type:</strong> Events (for logs) or Metrics</li>
+                  <li><strong>Max Size:</strong> Based on volume estimate</li>
+                  <li><strong>Retention:</strong> Days to keep searchable</li>
+                  <li><strong>App:</strong> Which app context (usually <code>search</code>)</li>
+                </ul>
+              </li>
+              <li>Click <strong>Save</strong></li>
+            </ol>
+
+            <h4 style="margin-top:24px;">Index Configuration Reference</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;">
+# indexes.conf
+[akamai]
+homePath = $SPLUNK_DB/akamai/db
+coldPath = $SPLUNK_DB/akamai/colddb
+thawedPath = $SPLUNK_DB/akamai/thaweddb
+maxTotalDataSizeMB = 500000
+frozenTimePeriodInSecs = 7776000  # 90 days
+            </code>
+
+            <h4 style="margin-top:24px;">Verify Index Creation</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;">
+| rest /services/data/indexes/akamai 
+| table title maxTotalDataSizeMB frozenTimePeriodInSecs currentDBSizeMB
+            </code>
+          </div>
+        </div>
+
+        <!-- Phase 4: Input Configuration -->
+        <div class="section">
+          <div class="card phase-card" style="border-left:4px solid #10b981;padding:24px;margin-bottom:24px;">
+            <h2 style="margin-top:0;color:#10b981;">Phase 4: Input Configuration</h2>
+            
+            <p>Choose the appropriate input method based on your data source:</p>
+
+            <div class="grid-2" style="margin-top:16px;">
+              <div class="card" style="padding:16px;background:var(--gray-50);">
+                <h4 style="margin-top:0;color:var(--success-600);">HTTP Event Collector (HEC)</h4>
+                <p><strong>Best for:</strong> Cloud services, APIs, applications</p>
+                <p><strong>Setup Steps:</strong></p>
+                <ol style="margin-bottom:0;">
+                  <li>Settings → Data Inputs → HTTP Event Collector</li>
+                  <li>Global Settings → Enable HEC</li>
+                  <li>New Token → Configure name, sourcetype, index</li>
+                  <li>Copy token for source system</li>
+                </ol>
+              </div>
+              
+              <div class="card" style="padding:16px;background:var(--gray-50);">
+                <h4 style="margin-top:0;color:var(--info-600);">Universal Forwarder</h4>
+                <p><strong>Best for:</strong> File monitoring, Windows events, on-prem</p>
+                <p><strong>Setup Steps:</strong></p>
+                <ol style="margin-bottom:0;">
+                  <li>Install UF on source system</li>
+                  <li>Configure outputs.conf for Splunk Cloud</li>
+                  <li>Configure inputs.conf for data collection</li>
+                  <li>Deploy via deployment server or manually</li>
+                </ol>
+              </div>
+            </div>
+
+            <h4 style="margin-top:24px;">HEC Configuration Example</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# Settings when creating HEC token:
+Name:        akamai_hec_token
+Source type: akamai:siem
+Index:       akamai
+App Context: Splunk_TA_Akamai (if TA installed)
+
+# Resulting endpoint:
+https://http-inputs-STACK.splunkcloud.com:443/services/collector/event
+
+# Test with curl:
+curl -k "https://http-inputs-STACK.splunkcloud.com:443/services/collector/event" \
+  -H "Authorization: Splunk YOUR_TOKEN" \
+  -d '{"event": "test event", "sourcetype": "akamai:siem", "index": "akamai"}'
+            </code>
+
+            <h4 style="margin-top:24px;">Universal Forwarder Configuration</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# inputs.conf (on forwarder)
+[monitor:///var/log/application/*.log]
+disabled = false
+sourcetype = myapp:log
+index = myapp
+
+# outputs.conf (on forwarder)
+[tcpout]
+defaultGroup = splunkcloud
+
+[tcpout:splunkcloud]
+server = inputs1.STACK.splunkcloud.com:9997
+# SSL settings provided by Splunk Cloud
+            </code>
+
+            <h4 style="margin-top:24px;">Verify Data Input</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;">
+# Check if data is arriving
+index=akamai earliest=-15m | stats count by sourcetype, source, host
+
+# Check HEC health
+| rest /services/data/inputs/http | table name disabled index sourcetype
+            </code>
+          </div>
+        </div>
+
+        <!-- Phase 5: Parsing -->
+        <div class="section">
+          <div class="card phase-card" style="border-left:4px solid #f59e0b;padding:24px;margin-bottom:24px;">
+            <h2 style="margin-top:0;color:#f59e0b;">Phase 5: Parsing — Event Breaking & Timestamps</h2>
+            
+            <div class="callout warning">
+              <div class="callout-content">
+                <div class="callout-title">Critical: Parsing Happens at Index Time</div>
+                <div class="callout-body">
+                  Once data is indexed with incorrect parsing, you cannot fix it without re-indexing. Always validate parsing on sample data first!
+                </div>
+              </div>
+            </div>
+
+            <h4>Line Breaking (Event Boundaries)</h4>
+            <p>Splunk must know where one event ends and another begins.</p>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# props.conf - Line Breaking Examples
+
+# JSON (each complete JSON object is one event)
+[source::...akamai...]
+LINE_BREAKER = ([\r\n]+)(?=\{)
+SHOULD_LINEMERGE = false
+
+# Syslog (each line is one event)
+[syslog]
+LINE_BREAKER = ([\r\n]+)
+SHOULD_LINEMERGE = false
+
+# Multi-line stack traces (merge until next timestamp)
+[java:log]
+SHOULD_LINEMERGE = true
+BREAK_ONLY_BEFORE = ^\d{4}-\d{2}-\d{2}
+            </code>
+
+            <h4 style="margin-top:24px;">Timestamp Extraction</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# props.conf - Timestamp Configuration
+
+# Example: 2024-01-15T14:30:45.123Z
+[mysourcetype]
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%3N%Z
+TIME_PREFIX = "timestamp":\s*"
+MAX_TIMESTAMP_LOOKAHEAD = 30
+
+# Example: Jan 15 14:30:45
+[syslog]
+TIME_FORMAT = %b %d %H:%M:%S
+
+# Common strptime format codes:
+# %Y = 4-digit year (2024)
+# %m = 2-digit month (01-12)
+# %d = 2-digit day (01-31)
+# %H = 24-hour hour (00-23)
+# %M = minutes (00-59)
+# %S = seconds (00-59)
+# %3N = milliseconds
+# %Z = timezone name (UTC, EST)
+# %z = timezone offset (+0000)
+            </code>
+
+            <h4 style="margin-top:24px;">Testing Parsing (Before Indexing!)</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;">
+# Upload sample data to test parsing:
+# Settings → Add Data → Upload → Select file → Set sourcetype → Review events
+
+# Check if timestamps are correct:
+# Events should show correct _time field
+# No "timestampextraction=false" in event metadata
+            </code>
+
+            <h4 style="margin-top:24px;">Common Parsing Issues</h4>
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Problem</th>
+                  <th>Symptom</th>
+                  <th>Solution</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Events merged together</td>
+                  <td>Multiple events appear as one</td>
+                  <td>Fix LINE_BREAKER or SHOULD_LINEMERGE</td>
+                </tr>
+                <tr>
+                  <td>Events split incorrectly</td>
+                  <td>One event becomes multiple</td>
+                  <td>Adjust BREAK_ONLY_BEFORE pattern</td>
+                </tr>
+                <tr>
+                  <td>Wrong timestamp</td>
+                  <td>_time doesn't match event</td>
+                  <td>Fix TIME_FORMAT and TIME_PREFIX</td>
+                </tr>
+                <tr>
+                  <td>Timestamp in wrong TZ</td>
+                  <td>Events appear hours off</td>
+                  <td>Add TZ = UTC or correct zone</td>
+                </tr>
+                <tr>
+                  <td>No timestamp found</td>
+                  <td>Uses index time instead</td>
+                  <td>Configure TIME_PREFIX to find it</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Phase 6: Field Extraction -->
+        <div class="section">
+          <div class="card phase-card" style="border-left:4px solid #ef4444;padding:24px;margin-bottom:24px;">
+            <h2 style="margin-top:0;color:#ef4444;">Phase 6: Field Extraction</h2>
+            
+            <h4>Automatic vs Manual Extraction</h4>
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Format</th>
+                  <th>Automatic Extraction?</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>JSON</td>
+                  <td>✅ Yes</td>
+                  <td>Splunk auto-extracts JSON keys as fields</td>
+                </tr>
+                <tr>
+                  <td>Key=Value</td>
+                  <td>✅ Yes</td>
+                  <td>KV_MODE = auto (default)</td>
+                </tr>
+                <tr>
+                  <td>CSV</td>
+                  <td>✅ Yes</td>
+                  <td>With header row or configured INDEXED_EXTRACTIONS</td>
+                </tr>
+                <tr>
+                  <td>XML</td>
+                  <td>⚠️ Partial</td>
+                  <td>May need INDEXED_EXTRACTIONS = xml</td>
+                </tr>
+                <tr>
+                  <td>Syslog/Custom</td>
+                  <td>❌ No</td>
+                  <td>Requires regex field extractions</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 style="margin-top:24px;">JSON Field Extraction</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# props.conf - Enable JSON extraction
+[akamai:siem]
+KV_MODE = json
+# Nested JSON fields become field.subfield (e.g., httpMessage.method)
+            </code>
+
+            <h4 style="margin-top:24px;">Regex Field Extraction</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# props.conf - Define extraction
+[syslog]
+EXTRACT-src_ip = src=(?&lt;src_ip>\d+\.\d+\.\d+\.\d+)
+EXTRACT-user = user=(?&lt;user>\w+)
+
+# Using transforms.conf for reusable extractions
+[syslog]
+REPORT-myfields = extract_src_ip, extract_user
+
+# transforms.conf
+[extract_src_ip]
+REGEX = src=(?&lt;src_ip>\d+\.\d+\.\d+\.\d+)
+
+[extract_user]
+REGEX = user=(?&lt;user>\w+)
+            </code>
+
+            <h4 style="margin-top:24px;">Testing Extractions</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;">
+# Check if fields are extracting:
+index=akamai | head 10 | table _raw, src_ip, action, http_method
+
+# Use rex for testing regex before saving:
+index=akamai | rex "src=(?&lt;test_src_ip>\d+\.\d+\.\d+\.\d+)" | table test_src_ip
+
+# Field extraction health check:
+index=akamai | fieldsummary | where count>0 | table field count distinct_count
+            </code>
+          </div>
+        </div>
+
+        <!-- Phase 7: CIM Mapping -->
+        <div class="section">
+          <div class="card phase-card" style="border-left:4px solid #ec4899;padding:24px;margin-bottom:24px;">
+            <h2 style="margin-top:0;color:#ec4899;">Phase 7: CIM Mapping</h2>
+            
+            <div class="callout info">
+              <div class="callout-content">
+                <div class="callout-title">Why CIM Matters</div>
+                <div class="callout-body">
+                  The Common Information Model (CIM) provides standard field names. Enterprise Security requires CIM-compliant data to work properly with correlation searches and data models.
+                </div>
+              </div>
+            </div>
+
+            <h4>CIM Mapping Methods</h4>
+            <ol>
+              <li><strong>Field Aliases</strong> — Map your field name to CIM name</li>
+              <li><strong>Calculated Fields</strong> — Create CIM field from existing data</li>
+              <li><strong>Event Types & Tags</strong> — Categorize events for data models</li>
+            </ol>
+
+            <h4 style="margin-top:24px;">Field Alias Configuration</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# props.conf - Map vendor fields to CIM fields
+[akamai:siem]
+FIELDALIAS-src = attackData.clientIP AS src
+FIELDALIAS-dest = httpMessage.requestHeaders.Host AS dest
+FIELDALIAS-action = attackData.rules{}.ruleAction AS action
+FIELDALIAS-url = httpMessage.requestUri AS url
+FIELDALIAS-http_method = httpMessage.method AS http_method
+FIELDALIAS-status = httpMessage.status AS status
+            </code>
+
+            <h4 style="margin-top:24px;">Event Types and Tags</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# eventtypes.conf
+[akamai_web_traffic]
+search = sourcetype="akamai:siem"
+
+# tags.conf
+[eventtype=akamai_web_traffic]
+web = enabled
+            </code>
+
+            <h4 style="margin-top:24px;">Common CIM Data Models for Security</h4>
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Data Model</th>
+                  <th>Use For</th>
+                  <th>Key Fields</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Web</strong></td>
+                  <td>WAF, proxy, web server logs</td>
+                  <td>src, dest, url, http_method, status, action</td>
+                </tr>
+                <tr>
+                  <td><strong>Authentication</strong></td>
+                  <td>Login events</td>
+                  <td>src, user, action, app, dest</td>
+                </tr>
+                <tr>
+                  <td><strong>Network_Traffic</strong></td>
+                  <td>Firewall, flow data</td>
+                  <td>src, dest, src_port, dest_port, action</td>
+                </tr>
+                <tr>
+                  <td><strong>Intrusion_Detection</strong></td>
+                  <td>IDS/IPS alerts</td>
+                  <td>src, dest, signature, severity</td>
+                </tr>
+                <tr>
+                  <td><strong>Endpoint</strong></td>
+                  <td>EDR, process events</td>
+                  <td>dest, user, process, process_path</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 style="margin-top:24px;">Verify CIM Compliance</h4>
+            <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;">
+# Check if data appears in data model:
+| tstats count from datamodel=Web where index=akamai by Web.src, Web.dest
+
+# Verify field mappings:
+index=akamai | head 10 | table src, dest, action, url, http_method
+
+# Check event type tags:
+index=akamai | head 1 | tags
+            </code>
+          </div>
+        </div>
+
+        <!-- Phase 8: Validation -->
+        <div class="section">
+          <div class="card phase-card" style="border-left:4px solid #14b8a6;padding:24px;margin-bottom:24px;">
+            <h2 style="margin-top:0;color:#14b8a6;">Phase 8: Validation — Confirm Everything Works</h2>
+            
+            <h4>Complete Validation Checklist</h4>
+            
+            <div class="card" style="padding:16px;background:var(--gray-50);margin-bottom:16px;">
+              <h5 style="margin-top:0;">1. Data Ingestion</h5>
+              <code style="display:block;padding:10px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;">
+# Confirm data is arriving
+index=YOUR_INDEX earliest=-1h | stats count
+
+# Check volume
+index=YOUR_INDEX earliest=-24h | eval MB=len(_raw)/1024/1024 | stats sum(MB) as daily_MB
+
+# Verify no ingestion lag
+index=YOUR_INDEX | eval lag=_indextime-_time | stats avg(lag) as avg_lag_seconds
+              </code>
+            </div>
+
+            <div class="card" style="padding:16px;background:var(--gray-50);margin-bottom:16px;">
+              <h5 style="margin-top:0;">2. Parsing</h5>
+              <code style="display:block;padding:10px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;">
+# Check sourcetype assignment
+index=YOUR_INDEX | stats count by sourcetype
+
+# Verify events aren't merged/split incorrectly
+index=YOUR_INDEX | head 100 | eval event_length=len(_raw) | stats avg(event_length), min(event_length), max(event_length)
+
+# Confirm timestamps are correct
+index=YOUR_INDEX | eval time_diff=now()-_time | where time_diff>86400 | stats count
+# (should be 0 unless historical data)
+              </code>
+            </div>
+
+            <div class="card" style="padding:16px;background:var(--gray-50);margin-bottom:16px;">
+              <h5 style="margin-top:0;">3. Field Extraction</h5>
+              <code style="display:block;padding:10px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;">
+# Check field population rates
+index=YOUR_INDEX | fieldsummary | table field count distinct_count is_exact
+
+# Verify key fields are extracted
+index=YOUR_INDEX | stats count by src, dest, action | head 20
+
+# Check for NULL values in critical fields
+index=YOUR_INDEX | where isnull(src) OR isnull(dest) | stats count
+              </code>
+            </div>
+
+            <div class="card" style="padding:16px;background:var(--gray-50);margin-bottom:16px;">
+              <h5 style="margin-top:0;">4. CIM Compliance</h5>
+              <code style="display:block;padding:10px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;">
+# Verify data model mapping
+| tstats count from datamodel=Web where index=YOUR_INDEX
+
+# Check all required CIM fields
+index=YOUR_INDEX | table src, dest, action, url, http_method, status, user | head 10
+
+# Verify tags
+index=YOUR_INDEX | head 1 | eval taglist=mvjoin(tag, ", ") | table taglist
+              </code>
+            </div>
+
+            <div class="card" style="padding:16px;background:var(--gray-50);">
+              <h5 style="margin-top:0;">5. Performance</h5>
+              <code style="display:block;padding:10px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;">
+# Test search performance
+index=YOUR_INDEX earliest=-7d | stats count by src | head 100
+# Check Job Inspector for scan count and run duration
+
+# Verify no search errors
+index=_internal sourcetype=splunkd component=SearchParser error | stats count
+              </code>
+            </div>
+
+            <h4 style="margin-top:24px;">Sign-off Checklist</h4>
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Item</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Ingestion</strong></td>
+                  <td>Data arriving within expected latency</td>
+                  <td>☐</td>
+                </tr>
+                <tr>
+                  <td><strong>Ingestion</strong></td>
+                  <td>Volume matches estimates</td>
+                  <td>☐</td>
+                </tr>
+                <tr>
+                  <td><strong>Parsing</strong></td>
+                  <td>Correct sourcetype assigned</td>
+                  <td>☐</td>
+                </tr>
+                <tr>
+                  <td><strong>Parsing</strong></td>
+                  <td>Events properly bounded</td>
+                  <td>☐</td>
+                </tr>
+                <tr>
+                  <td><strong>Parsing</strong></td>
+                  <td>Timestamps accurate</td>
+                  <td>☐</td>
+                </tr>
+                <tr>
+                  <td><strong>Fields</strong></td>
+                  <td>All required fields extracting</td>
+                  <td>☐</td>
+                </tr>
+                <tr>
+                  <td><strong>CIM</strong></td>
+                  <td>Data model mapping verified</td>
+                  <td>☐</td>
+                </tr>
+                <tr>
+                  <td><strong>CIM</strong></td>
+                  <td>Tags properly assigned</td>
+                  <td>☐</td>
+                </tr>
+                <tr>
+                  <td><strong>Security</strong></td>
+                  <td>Index access controls verified</td>
+                  <td>☐</td>
+                </tr>
+                <tr>
+                  <td><strong>Documentation</strong></td>
+                  <td>Runbook/knowledge article created</td>
+                  <td>☐</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Quick Reference -->
+        <div class="section">
+          <h2 class="subsection-title">Quick Reference — Key Files</h2>
+          
+          <div class="card" style="padding:20px;">
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>File</th>
+                  <th>Purpose</th>
+                  <th>Key Settings</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>indexes.conf</code></td>
+                  <td>Define indexes</td>
+                  <td>homePath, maxTotalDataSizeMB, frozenTimePeriodInSecs</td>
+                </tr>
+                <tr>
+                  <td><code>inputs.conf</code></td>
+                  <td>Define data inputs</td>
+                  <td>[monitor://], [http://], sourcetype, index</td>
+                </tr>
+                <tr>
+                  <td><code>props.conf</code></td>
+                  <td>Parsing & extraction</td>
+                  <td>TIME_FORMAT, LINE_BREAKER, EXTRACT-, FIELDALIAS-</td>
+                </tr>
+                <tr>
+                  <td><code>transforms.conf</code></td>
+                  <td>Reusable transforms</td>
+                  <td>REGEX, FORMAT, DEST_KEY</td>
+                </tr>
+                <tr>
+                  <td><code>eventtypes.conf</code></td>
+                  <td>Event categorization</td>
+                  <td>search = ...</td>
+                </tr>
+                <tr>
+                  <td><code>tags.conf</code></td>
+                  <td>CIM tagging</td>
+                  <td>[eventtype=X] tag = enabled</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;">
+          <div class="grid-2">
+            <a href="splunk-apps.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Previous</div>
+              <div style="color:var(--primary-700);font-weight:600;">Apps & Add-ons</div>
+            </a>
+            <a href="data-inputs.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Next →</div>
+              <div style="color:var(--primary-700);font-weight:600;">Data Inputs Deep Dive</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</body>
+</html>

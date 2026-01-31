@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Correlation Searches | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+                    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>Splunk Reference</h1>
+              <span>Log & Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Platform</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
+          <a href="splunk-architecture.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Architecture Deep Dive</span></a>
+          <a href="splunk-apps.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Apps & Add-ons</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Log Engineering</div>
+          <a href="log-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding Guide</span></a>
+          <a href="data-inputs.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Data Inputs (HEC/UF)</span></a>
+          <a href="props-transforms.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>props.conf & transforms</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>CIM Compliance</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">SPL Mastery</div>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>SPL Fundamentals</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>SPL Reference Card</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Enterprise Security</div>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>ES Overview</span></a>
+          <a href="correlation-searches.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Correlation Searches</span></a>
+          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID / Azure AD</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Active Projects</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>WAF/DDoS Project</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>WAF Use Cases</span></a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>MFA Project</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>MFA Use Cases</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span>Splunk Cloud Admin</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Troubleshooting</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Reference</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+          <a href="cheat-sheets.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Cheat Sheets</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Log & Detection Engineering v3.0</p></div>
+    </aside>
+    
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Correlation Searches</span>
+          </div>
+        </div>
+        <span class="badge critical">Core Detection</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Correlation Searches Deep Dive</h1>
+          <p class="section-subtitle">Understanding how Enterprise Security detections work — from search to notable event</p>
+        </div>
+
+        <!-- What is a Correlation Search -->
+        <div class="section">
+          <h2 class="subsection-title">What is a Correlation Search?</h2>
+          
+          <div class="card" style="padding:24px;margin-bottom:24px;">
+            <p>A <strong>Correlation Search</strong> is a scheduled saved search in Splunk Enterprise Security that:</p>
+            <ol>
+              <li>Runs on a schedule (typically every 5-60 minutes)</li>
+              <li>Searches for patterns indicating security threats</li>
+              <li>Creates <strong>Notable Events</strong> when conditions are met</li>
+              <li>Optionally contributes to <strong>Risk-Based Alerting</strong></li>
+            </ol>
+          </div>
+
+          <div class="card" style="padding:24px;margin-bottom:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart LR
+    A[Raw Events] --> B[Data Models]
+    B --> C[Correlation Search<br/>Runs on Schedule]
+    C -->|Match Found| D{Output Type}
+    D -->|Notable| E[Notable Event<br/>in Incident Review]
+    D -->|Risk| F[Risk Score Added<br/>to Entity]
+    D -->|Both| E
+    D -->|Both| F
+    
+    style C fill:#3b82f6,color:#fff
+    style E fill:#ef4444,color:#fff
+    style F fill:#f59e0b,color:#fff
+            </div>
+          </div>
+        </div>
+
+        <!-- Anatomy of a Correlation Search -->
+        <div class="section">
+          <h2 class="subsection-title">Anatomy of a Correlation Search</h2>
+          
+          <h3>Key Components</h3>
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Purpose</th>
+                <th>Configuration Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Search Query</strong></td>
+                <td>The SPL that finds threats</td>
+                <td>Search string field</td>
+              </tr>
+              <tr>
+                <td><strong>Schedule</strong></td>
+                <td>How often to run</td>
+                <td>Cron expression</td>
+              </tr>
+              <tr>
+                <td><strong>Time Range</strong></td>
+                <td>How far back to look</td>
+                <td>Earliest/Latest time</td>
+              </tr>
+              <tr>
+                <td><strong>Throttling</strong></td>
+                <td>Prevent duplicate alerts</td>
+                <td>Throttle fields & duration</td>
+              </tr>
+              <tr>
+                <td><strong>Notable Fields</strong></td>
+                <td>Data to include in alert</td>
+                <td>drilldown_* fields</td>
+              </tr>
+              <tr>
+                <td><strong>Risk Score</strong></td>
+                <td>Points to add to entity</td>
+                <td>risk_score, risk_object</td>
+              </tr>
+              <tr>
+                <td><strong>MITRE ATT&CK</strong></td>
+                <td>Threat framework mapping</td>
+                <td>mitre_attack_* fields</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Creating a Correlation Search -->
+        <div class="section">
+          <h2 class="subsection-title">Creating a Correlation Search — Step by Step</h2>
+          
+          <h3>Step 1: Navigate to Content Management</h3>
+          <div class="card" style="padding:16px;margin-bottom:16px;background:var(--gray-50);">
+            <code>Enterprise Security → Configure → Content → Content Management</code>
+          </div>
+
+          <h3>Step 2: Click "Create New Content" → "Correlation Search"</h3>
+
+          <h3>Step 3: Configure General Settings</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+Search Name:        WAF - High Volume Blocked Requests
+App:                SA-ThreatIntelligence (or your custom app)
+Description:        Detects unusual volume of blocked requests from single IP
+
+# Scheduling
+Cron Schedule:      */5 * * * *     (every 5 minutes)
+Earliest Time:      -10m@m
+Latest Time:        -5m@m
+Schedule Window:    auto
+Schedule Priority:  default
+          </code>
+
+          <h3>Step 4: Write the Search Query</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# Using tstats for performance (searches data model)
+| tstats summariesonly=true count 
+    from datamodel=Web 
+    where Web.action="blocked" 
+    by Web.src, Web.dest 
+    span=5m
+
+# Set threshold
+| where count > 100
+
+# Rename fields for notable
+| rename Web.src as src, Web.dest as dest
+
+# Add context
+| eval urgency="medium"
+| eval rule_name="WAF - High Volume Blocked Requests"
+| eval rule_description="Source IP ".src." had ".count." blocked requests in 5 minutes"
+          </code>
+
+          <h3>Step 5: Configure Notable Event Settings</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# Throttle settings
+Throttle Fields:    src, dest
+Throttle Period:    1h
+
+# Notable metadata
+Security Domain:    network
+Severity:           high
+Default Owner:      unassigned
+Default Status:     new
+
+# Drilldown fields (what analysts see)
+drilldown_name:     View source activity
+drilldown_search:   index=akamai src=$src$ | stats count by action, http_uri
+          </code>
+
+          <h3>Step 6: Configure Risk Settings (Optional)</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# Risk-Based Alerting contribution
+Risk Score:         50
+Risk Object:        src
+Risk Object Type:   system
+
+# This adds 50 points to the src IP's risk score
+# When total risk exceeds threshold, a risk notable fires
+          </code>
+
+          <h3>Step 7: Add MITRE ATT&CK Mapping</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# Mapping to threat framework
+mitre_attack_technique:     T1498
+mitre_attack_tactic:        impact
+mitre_attack_technique_name: Network Denial of Service
+          </code>
+        </div>
+
+        <!-- tstats vs regular search -->
+        <div class="section">
+          <h2 class="subsection-title">tstats vs Regular Search — Performance Matters</h2>
+          
+          <div class="callout critical">
+            <div class="callout-content">
+              <div class="callout-title">Always Use tstats When Possible</div>
+              <div class="callout-body">
+                <code>tstats</code> searches the accelerated data model summaries, which is <strong>10-100x faster</strong> than raw event searches. This is critical for correlation searches that run frequently.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card" style="padding:20px;border-left:4px solid var(--success-500);">
+              <h4 style="margin-top:0;color:var(--success-600);">✅ Good: Using tstats</h4>
+              <code style="display:block;padding:12px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;font-size:12px;overflow-x:auto;">
+| tstats summariesonly=true count 
+  from datamodel=Web 
+  where Web.action="blocked" 
+  by Web.src
+              </code>
+              <p style="margin-top:12px;margin-bottom:0;font-size:13px;color:var(--gray-600);">
+                Uses pre-computed summaries<br>
+                Runs in seconds<br>
+                Minimal load on indexers
+              </p>
+            </div>
+            
+            <div class="card" style="padding:20px;border-left:4px solid var(--error-500);">
+              <h4 style="margin-top:0;color:var(--error-600);">❌ Bad: Raw Event Search</h4>
+              <code style="display:block;padding:12px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;font-size:12px;overflow-x:auto;">
+index=akamai action="blocked" 
+| stats count by src
+              </code>
+              <p style="margin-top:12px;margin-bottom:0;font-size:13px;color:var(--gray-600);">
+                Scans raw events<br>
+                Runs in minutes<br>
+                Heavy indexer load
+              </p>
+            </div>
+          </div>
+
+          <h3 style="margin-top:24px;">When You Can't Use tstats</h3>
+          <p>tstats requires accelerated data models with proper CIM mapping. If your data isn't CIM-compliant:</p>
+          <ol>
+            <li>First priority: Fix the CIM mapping (see <a href="cim-compliance.html">CIM Compliance</a>)</li>
+            <li>If urgent: Use raw search but limit scope with specific index and time range</li>
+            <li>Consider: Create custom data model for your data</li>
+          </ol>
+        </div>
+
+        <!-- Common Correlation Search Patterns -->
+        <div class="section">
+          <h2 class="subsection-title">Common Detection Patterns</h2>
+          
+          <h3>Pattern 1: Threshold-Based Detection</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:24px;">
+# Alert when count exceeds threshold
+| tstats summariesonly=true count from datamodel=Authentication 
+    where Authentication.action="failure" 
+    by Authentication.src, Authentication.user span=5m
+| where count > 5
+| rename Authentication.* as *
+          </code>
+
+          <h3>Pattern 2: Statistical Anomaly</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:24px;">
+# Alert when activity deviates from baseline
+| tstats summariesonly=true count from datamodel=Web 
+    where Web.status>=400 by Web.src span=1h
+| eventstats avg(count) as avg_count, stdev(count) as stdev_count by Web.src
+| where count > (avg_count + 3*stdev_count)
+| rename Web.src as src
+          </code>
+
+          <h3>Pattern 3: First-Time Seen</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:24px;">
+# Alert on new source IP (not seen in past 30 days)
+| tstats summariesonly=true dc(Web.src) as src_count 
+    from datamodel=Web where Web.action="blocked" by Web.src
+| search src_count=1
+| join type=left Web.src 
+    [| tstats summariesonly=true earliest(_time) as first_seen 
+       from datamodel=Web by Web.src 
+     | where first_seen > relative_time(now(), "-1d")]
+| where isnotnull(first_seen)
+| rename Web.src as src
+          </code>
+
+          <h3>Pattern 4: Sequence Detection (Multi-Stage)</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:24px;">
+# Alert on failed logins followed by success
+| tstats summariesonly=true count from datamodel=Authentication 
+    where Authentication.action="failure" 
+    by Authentication.user, Authentication.src span=5m
+| where count >= 3
+| join user, src type=inner 
+    [| tstats summariesonly=true count from datamodel=Authentication 
+       where Authentication.action="success" 
+       by Authentication.user AS user, Authentication.src AS src span=5m]
+| eval rule_description="User ".user." had multiple failures then success from ".src
+          </code>
+
+          <h3>Pattern 5: Lookup-Based (Known Bad)</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# Alert when traffic matches known malicious IPs
+| tstats summariesonly=true count from datamodel=Web 
+    by Web.src, Web.dest
+| lookup threat_intel_ip ip AS Web.src OUTPUT threat_type, threat_score
+| where isnotnull(threat_type)
+| rename Web.src as src, Web.dest as dest
+          </code>
+        </div>
+
+        <!-- Managing Correlation Searches -->
+        <div class="section">
+          <h2 class="subsection-title">Managing Correlation Searches</h2>
+          
+          <h3>Discover Available Correlation Searches</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# List all correlation searches
+| rest /services/saved/searches 
+| where match('action.correlationsearch.enabled', "1|true")
+| table title, disabled, cron_schedule, 'action.notable.param.severity'
+| sort title
+
+# List enabled vs disabled
+| rest /services/saved/searches 
+| where match('action.correlationsearch.enabled', "1|true")
+| stats count by disabled
+          </code>
+
+          <h3 style="margin-top:24px;">Enable/Disable via SPL</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# View current state
+| rest /services/saved/searches/YOUR_SEARCH_NAME 
+| table title, disabled
+
+# To enable/disable, use Content Management UI
+# Configure → Content → Content Management → Find search → Edit → Enable/Disable
+          </code>
+
+          <h3 style="margin-top:24px;">Check Correlation Search Performance</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# See search run times
+index=_internal sourcetype=scheduler savedsearch_name="*correlation*" status=success
+| stats avg(run_time) as avg_runtime, max(run_time) as max_runtime, count by savedsearch_name
+| sort -avg_runtime
+
+# Find slow searches (>60 seconds)
+index=_internal sourcetype=scheduler status=success run_time>60
+| stats count, avg(run_time) by savedsearch_name
+| sort -count
+          </code>
+        </div>
+
+        <!-- Testing Before Production -->
+        <div class="section">
+          <h2 class="subsection-title">Testing Before Production</h2>
+          
+          <div class="callout warning">
+            <div class="callout-content">
+              <div class="callout-title">Always Test First!</div>
+              <div class="callout-body">
+                Never enable a correlation search without testing. Bad searches can create thousands of false positives or overwhelm analysts.
+              </div>
+            </div>
+          </div>
+
+          <h3>Testing Workflow</h3>
+          <ol>
+            <li>
+              <strong>Run search manually with long time range</strong>
+              <code style="display:block;padding:10px;background:var(--gray-900);color:var(--gray-100);border-radius:4px;margin:8px 0;font-size:12px;">
+# Test against 7 days of data
+YOUR_SEARCH earliest=-7d latest=now
+              </code>
+            </li>
+            <li>
+              <strong>Check result count</strong> — Hundreds of results = too noisy
+            </li>
+            <li>
+              <strong>Sample results for accuracy</strong> — Are these real threats?
+            </li>
+            <li>
+              <strong>Check performance</strong> — Run time under 60 seconds?
+            </li>
+            <li>
+              <strong>Enable in "dry run" mode</strong> — Log only, no notables
+            </li>
+            <li>
+              <strong>Monitor for 24-48 hours</strong> — Review logs
+            </li>
+            <li>
+              <strong>Enable full mode</strong> — Create notables
+            </li>
+          </ol>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;">
+          <div class="grid-2">
+            <a href="splunk-es.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Previous</div>
+              <div style="color:var(--primary-700);font-weight:600;">Enterprise Security Overview</div>
+            </a>
+            <a href="notables-risk.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Next →</div>
+              <div style="color:var(--primary-700);font-weight:600;">Notables & Risk</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+</body>
+</html>

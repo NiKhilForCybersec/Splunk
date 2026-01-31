@@ -3,37 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Decision Trees & Workflows | myfirstpro Detection Engineering</title>
+  <title>Decision Trees | Splunk Reference</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <style>
-    .tree-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;border-bottom:2px solid var(--gray-200);padding-bottom:16px;}
-    .tree-tab{padding:10px 16px;border-radius:6px 6px 0 0;cursor:pointer;font-size:0.8125rem;font-weight:500;background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);border-bottom:none;transition:all 0.2s;}
-    .tree-tab:hover{background:var(--gray-200);}
-    .tree-tab.active{background:var(--primary-500);color:white;border-color:var(--primary-500);}
-    .tree-content{display:none;}
-    .tree-content.active{display:block;}
-    .tree-container{background:white;border-radius:12px;padding:32px;min-height:500px;border:1px solid var(--gray-200);overflow-x:auto;}
-    .tree-header{margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--gray-100);}
-    .tree-header h3{font-size:1.25rem;color:var(--gray-900);margin-bottom:8px;}
-    .tree-header p{font-size:0.875rem;color:var(--gray-600);line-height:1.6;}
-    .diagram-box{min-height:400px;display:flex;justify-content:center;align-items:flex-start;padding:20px 0;}
-    .quick-ref{margin-top:24px;padding:16px;background:var(--primary-50);border-radius:8px;border-left:4px solid var(--primary-500);}
-    .quick-ref h4{font-size:0.875rem;color:var(--primary-700);margin-bottom:8px;}
-    .quick-ref ul{font-size:0.8125rem;color:var(--gray-600);margin:0;padding-left:20px;line-height:1.8;}
-    .legend-box{margin-top:24px;padding:16px;background:var(--gray-50);border-radius:8px;}
-    .legend-box h4{font-size:0.875rem;color:var(--gray-700);margin-bottom:12px;}
-    .legend-items{display:flex;flex-wrap:wrap;gap:16px;}
-    .legend-item{display:flex;align-items:center;gap:8px;font-size:0.8125rem;}
-    .legend-color{width:16px;height:16px;border-radius:4px;}
-  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
   <div class="app-container">
-    <aside class="sidebar">
+        <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
           <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
@@ -41,8 +20,8 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
             <div class="sidebar-logo-text">
-              <h1>myfirstpro</h1>
-              <span>Detection Engineering</span>
+              <h1>Splunk Reference</h1>
+              <span>Log & Detection Engineering</span>
             </div>
           </a>
         </div>
@@ -52,714 +31,533 @@
           <div class="nav-section-title">Getting Started</div>
           <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
           <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
-          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Client Communication</span></a>
           <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Splunk Fundamentals</div>
+          <div class="nav-section-title">Splunk Platform</div>
           <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
-          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
-          <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow & Event Hub</span></a>
+          <a href="splunk-architecture.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Architecture Deep Dive</span></a>
+          <a href="splunk-apps.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Apps & Add-ons</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Log Engineering</div>
+          <a href="log-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding Guide</span></a>
+          <a href="data-inputs.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Data Inputs (HEC/UF)</span></a>
+          <a href="props-transforms.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>props.conf & transforms</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>CIM Compliance</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">SPL Mastery</div>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>SPL Fundamentals</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>SPL Reference Card</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Enterprise Security</div>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>ES Overview</span></a>
+          <a href="correlation-searches.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Correlation Searches</span></a>
           <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
-          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Splunk How-To Guide</span></a>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">Data Sources</div>
           <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
           <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
-          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID / Azure AD</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">Splunk Operations</div>
-          <a href="waf-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
-          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
-          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
-          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Splunk Cloud Ops</span></a>
-          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>SPL Reference</span></a>
+          <div class="nav-section-title">Active Projects</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>WAF/DDoS Project</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>WAF Use Cases</span></a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>MFA Project</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>MFA Use Cases</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">WAF/DDoS Project</div>
-          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-12)</span></a>
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span>Splunk Cloud Admin</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Troubleshooting</span></a>
         </div>
         <div class="nav-section">
-          <div class="nav-section-title">MFA Project</div>
-          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Project Overview</span></a>
-          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Cases (UC1-8)</span></a>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-title">Response & Support</div>
+          <div class="nav-section-title">Reference</div>
           <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
-          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Troubleshooting</span></a>
           <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+          <a href="cheat-sheets.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Cheat Sheets</span></a>
         </div>
       </nav>
-      <div class="sidebar-footer"><p>Detection Engineering v2.0</p></div>
+      <div class="sidebar-footer"><p>Log & Detection Engineering v3.0</p></div>
     </aside>
-
+    
     <main class="main-content">
       <header class="header">
         <div class="header-left">
-          <button class="menu-toggle" aria-label="Toggle menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
           <div class="breadcrumb">
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">/</span>
             <span class="breadcrumb-item current">Decision Trees</span>
           </div>
         </div>
-        <span class="badge primary">11 Visual Guides</span>
+        <span class="badge critical">SOC Reference</span>
       </header>
 
       <div class="page-content">
         <div class="section">
-          <h1 class="section-title">Decision Trees & Workflows</h1>
-          <p class="section-subtitle">Visual guides for detection engineering decisions, triage processes, and operational workflows.</p>
+          <h1 class="section-title">Security Decision Trees</h1>
+          <p class="section-subtitle">Visual decision trees for alert triage, incident response, and security operations workflows</p>
         </div>
 
+        <!-- Notable Triage Master -->
         <div class="section">
-          <div class="tree-tabs">
-            <div class="tree-tab active" onclick="showTree('dev')">Detection Dev</div>
-            <div class="tree-tab" onclick="showTree('triage')">Alert Triage</div>
-            <div class="tree-tab" onclick="showTree('validation')">Data Validation</div>
-            <div class="tree-tab" onclick="showTree('incident')">Incident Response</div>
-            <div class="tree-tab" onclick="showTree('notable')">Notable Lifecycle</div>
-            <div class="tree-tab" onclick="showTree('tuning')">Tuning Process</div>
-            <div class="tree-tab" onclick="showTree('escalation')">Escalation</div>
-            <div class="tree-tab" onclick="showTree('pattern')">Pattern Selection</div>
-            <div class="tree-tab" onclick="showTree('architecture')">Architecture</div>
-            <div class="tree-tab" onclick="showTree('waf')">WAF Response</div>
-            <div class="tree-tab" onclick="showTree('mfa')">MFA Response</div>
-          </div>
-
-          <!-- DETECTION DEVELOPMENT -->
-          <div id="dev" class="tree-content active">
-            <div class="tree-container">
-              <div class="tree-header">
-                <h3>Detection Development Lifecycle</h3>
-                <p>Complete workflow from use case request to production deployment.</p>
-              </div>
-              <div class="diagram-box">
-                <pre class="mermaid">
+          <h2 class="subsection-title">Notable Event Triage - Master Decision Tree</h2>
+          <p>Use this decision tree when a new notable event appears in Incident Review.</p>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
 flowchart TD
-    A[Receive Request] --> B{Clear Reqs?}
-    B -->|No| C[Clarify]
-    C --> B
-    B -->|Yes| D[Document Spec]
-    D --> E[ID Data Sources]
-    E --> F{Data Available?}
-    F -->|No| G[Request Onboard]
-    G --> F
-    F -->|Yes| H[Validate Fields]
-    H --> I{Fields OK?}
-    I -->|No| J[Fix Parsing]
-    J --> H
-    I -->|Yes| K[Build SPL]
-    K --> L[Test Query]
-    L --> M{Results OK?}
-    M -->|No| N[Refine Logic]
-    N --> L
-    M -->|Yes| O[Add Thresholds]
-    O --> P[Run 7-Day Test]
-    P --> Q{FP Rate OK?}
-    Q -->|No| R[Tune]
-    R --> P
-    Q -->|Yes| S[Create Correlation]
-    S --> T[Configure Notable]
-    T --> U[Enable Production]
-    U --> V[Monitor 48h]
-    V --> W{Working?}
-    W -->|No| X[Hotfix]
-    X --> V
-    W -->|Yes| Y[COMPLETE]
-    style A fill:#e0f2fe
-    style Y fill:#dcfce7
-                </pre>
-              </div>
-              <div class="quick-ref">
-                <h4>Key Points</h4>
-                <ul>
-                  <li>Never start without documented requirements</li>
-                  <li>Validate data before development</li>
-                  <li>Target less than 10 FPs per day before deployment</li>
-                  <li>48-hour monitoring period is mandatory</li>
-                </ul>
-              </div>
+    A[New Notable Event] --> B{First: Is this a duplicate?}
+    
+    B -->|Yes| B1[Link to existing incident<br/>Status: Duplicate]
+    B -->|No| C{Is source IP internal?}
+    
+    C -->|Yes - Internal| D{Known system/service account?}
+    C -->|No - External| E{IP in threat intel?}
+    
+    D -->|Yes| D1{Expected behavior?}
+    D1 -->|Yes| D2[Document and close<br/>Status: Benign]
+    D1 -->|No| D3[Investigate deviation<br/>Contact asset owner]
+    D -->|No| D4[Unknown internal IP<br/>Priority investigation]
+    
+    E -->|Yes - Known malicious| E1[ESCALATE IMMEDIATELY<br/>High priority incident]
+    E -->|No| F{Check reputation services}
+    
+    F --> F1{VirusTotal/AbuseIPDB?}
+    F1 -->|Malicious indicators| F2[Escalate to Tier 2<br/>Block recommendation]
+    F1 -->|Clean/Unknown| G{Analyze the activity}
+    
+    G --> G1{Attack pattern detected?}
+    G1 -->|SQLi/XSS/RCE patterns| G2[Confirmed attack attempt<br/>Escalate + Block]
+    G1 -->|Scanning/Recon| G3[Add to watchlist<br/>Monitor for escalation]
+    G1 -->|Normal traffic pattern| G4[Likely false positive<br/>Review detection tuning]
+    
+    D3 --> H{Owner confirms legitimate?}
+    H -->|Yes| H1[Document exception<br/>Add to whitelist if recurring]
+    H -->|No| H2[Potential compromise<br/>Escalate to incident]
+    
+    D4 --> I{Asset identified?}
+    I -->|Yes| I1[Contact owner<br/>Determine if authorized]
+    I -->|No| I2[Potential rogue device<br/>Escalate to network team]
+    
+    style A fill:#3b82f6,color:#fff
+    style E1 fill:#ef4444,color:#fff
+    style G2 fill:#ef4444,color:#fff
+    style D2 fill:#10b981,color:#fff
+    style G4 fill:#f59e0b,color:#fff
+    style B1 fill:#6b7280,color:#fff
             </div>
           </div>
-
-          <!-- ALERT TRIAGE -->
-          <div id="triage" class="tree-content">
-            <div class="tree-container">
-              <div class="tree-header">
-                <h3>Alert Triage Workflow</h3>
-                <p>SOC analyst process for triaging incoming alerts.</p>
-              </div>
-              <div class="diagram-box">
-                <pre class="mermaid">
-flowchart TD
-    A[New Alert] --> B[Open Incident Review]
-    B --> C[Review Details]
-    C --> D{Duplicate?}
-    D -->|Yes| E[Link Existing]
-    E --> F[Close Dup]
-    D -->|No| G{Context OK?}
-    G -->|No| H[Run Drilldowns]
-    H --> G
-    G -->|Yes| I{True Positive?}
-    I -->|FP| J[Document Reason]
-    J --> K{Recurring?}
-    K -->|Yes| L[Create Tuning Ticket]
-    K -->|No| M[Close as FP]
-    I -->|Investigate| N[Escalate Tier 2]
-    I -->|TP| O{Severity?}
-    O -->|Low/Med| P[Create Ticket]
-    P --> Q[Follow Runbook]
-    Q --> R[Document Close]
-    O -->|High/Crit| S[IMMEDIATE ESCALATION]
-    S --> T[Page On-Call]
-    T --> U[Incident Response]
-    style A fill:#fef3c7
-    style S fill:#fee2e2
-    style F fill:#dcfce7
-    style M fill:#dcfce7
-    style R fill:#dcfce7
-                </pre>
-              </div>
-              <div class="legend-box">
-                <h4>Disposition Codes</h4>
-                <div class="legend-items">
-                  <div class="legend-item"><div class="legend-color" style="background:#dc2626;"></div>True Positive Confirmed</div>
-                  <div class="legend-item"><div class="legend-color" style="background:#f97316;"></div>True Positive Benign</div>
-                  <div class="legend-item"><div class="legend-color" style="background:#eab308;"></div>False Positive Tuning</div>
-                  <div class="legend-item"><div class="legend-color" style="background:#22c55e;"></div>False Positive Expected</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- DATA VALIDATION -->
-          <div id="validation" class="tree-content">
-            <div class="tree-container">
-              <div class="tree-header">
-                <h3>Data Validation Workflow</h3>
-                <p>Verify data quality before building detections.</p>
-              </div>
-              <div class="diagram-box">
-                <pre class="mermaid">
-flowchart TD
-    A[Start Validation] --> B[Run Health Check]
-    B --> C{Events in 60m?}
-    C -->|No| D[DATA NOT FLOWING]
-    D --> E[Check HEC]
-    E --> F[Check Source]
-    F --> G{Resolved?}
-    G -->|No| H[Escalate Admin]
-    G -->|Yes| B
-    C -->|Yes| I{Volume Normal?}
-    I -->|Low| J[Possible Data Loss]
-    J --> K[Compare to Source]
-    I -->|OK| L[Check Fields]
-    L --> M{Fields Present?}
-    M -->|No| N[PARSING ISSUE]
-    N --> O[Fix props.conf]
-    M -->|Yes| P{Values Valid?}
-    P -->|No| Q[Mapping Issue]
-    Q --> R[Create Ticket]
-    P -->|Yes| S[Check Timestamps]
-    S --> T{Time Accurate?}
-    T -->|No| U[Timezone Issue]
-    T -->|Yes| V[VALIDATED]
-    V --> W[Document Results]
-    style D fill:#fee2e2
-    style N fill:#fee2e2
-    style J fill:#fef3c7
-    style Q fill:#fef3c7
-    style U fill:#fef3c7
-    style V fill:#dcfce7
-                </pre>
-              </div>
-              <div class="quick-ref">
-                <h4>Validation Checklist</h4>
-                <ul>
-                  <li>Events flowing within last 60 minutes</li>
-                  <li>Event count matches expected volume</li>
-                  <li>All required fields extracted</li>
-                  <li>Field values match expected format</li>
-                  <li>Timestamps accurate within 5 minutes</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- INCIDENT RESPONSE -->
-          <div id="incident" class="tree-content">
-            <div class="tree-container">
-              <div class="tree-header">
-                <h3>Incident Response Decision Tree</h3>
-                <p>High-level IR workflow for security incidents.</p>
-              </div>
-              <div class="diagram-box">
-                <pre class="mermaid">
-flowchart TD
-    A[Incident Detected] --> B{Type?}
-    B -->|Account| C[Disable Account]
-    C --> C1[Reset Creds]
-    C1 --> C2[Review Activity]
-    C2 --> C3[Check Persistence]
-    B -->|Malware| D[Isolate System]
-    D --> D1[Preserve Evidence]
-    D1 --> D2[ID Malware]
-    D2 --> D3[Determine Scope]
-    B -->|Data Exfil| E[ID Data Accessed]
-    E --> E1{PII/PHI?}
-    E1 -->|Yes| E2[Legal Notification]
-    E1 -->|No| E3[Internal Investigation]
-    B -->|Active Attack| F[BLOCK ATTACKER]
-    F --> F1[Preserve Artifacts]
-    F1 --> F2[Page IR Lead]
-    F2 --> F3[War Room]
-    C3 --> G[Document]
-    D3 --> G
-    E2 --> G
-    E3 --> G
-    F3 --> G
-    G --> H[Post-Mortem]
-    H --> I[Update Detections]
-    I --> J[Close Incident]
-    style A fill:#fee2e2
-    style F fill:#fee2e2
-    style J fill:#dcfce7
-                </pre>
-              </div>
-            </div>
-          </div>
-
-          <!-- NOTABLE LIFECYCLE -->
-          <div id="notable" class="tree-content">
-            <div class="tree-container">
-              <div class="tree-header">
-                <h3>Notable Event Lifecycle</h3>
-                <p>Complete lifecycle in Splunk Enterprise Security.</p>
-              </div>
-              <div class="diagram-box">
-                <pre class="mermaid">
-flowchart LR
-    subgraph Creation
-        A1[Search Runs] --> A2[Threshold Met]
-        A2 --> A3[Notable Created]
-        A3 --> A4[Status NEW]
-    end
-    subgraph Assignment
-        A4 --> B1[Incident Review]
-        B1 --> B2[Analyst Claims]
-        B2 --> B3[Status IN PROGRESS]
-    end
-    subgraph Investigation
-        B3 --> C1[Run Drilldowns]
-        C1 --> C2[Gather Context]
-        C2 --> C3[Make Decision]
-    end
-    subgraph Resolution
-        C3 --> D1{Disposition}
-        D1 -->|TP| D2[Remediate]
-        D1 -->|FP| D3[Tune]
-        D1 -->|Benign| D4[Document]
-        D2 --> D5[Status RESOLVED]
-        D3 --> D5
-        D4 --> D5
-    end
-    subgraph Closure
-        D5 --> E1[Add Comments]
-        E1 --> E2[Status CLOSED]
-    end
-    style A4 fill:#fef3c7
-    style B3 fill:#e0f2fe
-    style D5 fill:#dbeafe
-    style E2 fill:#dcfce7
-                </pre>
-              </div>
-              <div class="legend-box">
-                <h4>Status Flow</h4>
-                <div class="legend-items">
-                  <div class="legend-item"><div class="legend-color" style="background:#d97706;"></div>New</div>
-                  <div class="legend-item"><div class="legend-color" style="background:#0284c7;"></div>In Progress</div>
-                  <div class="legend-item"><div class="legend-color" style="background:#8b5cf6;"></div>Pending</div>
-                  <div class="legend-item"><div class="legend-color" style="background:#3b82f6;"></div>Resolved</div>
-                  <div class="legend-item"><div class="legend-color" style="background:#16a34a;"></div>Closed</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- TUNING -->
-          <div id="tuning" class="tree-content">
-            <div class="tree-container">
-              <div class="tree-header">
-                <h3>Detection Tuning Process</h3>
-                <p>Systematic approach to tuning based on FP patterns.</p>
-              </div>
-              <div class="diagram-box">
-                <pre class="mermaid">
-flowchart TD
-    A[FP Pattern Found] --> B{Single or Recurring?}
-    B -->|Single| C[Document Exception]
-    C --> D[Close as FP]
-    B -->|Recurring| E[Analyze Pattern]
-    E --> F{Root Cause?}
-    F -->|Legit Activity| G[Add to Allowlist]
-    G --> H[Create Lookup]
-    F -->|Threshold Issue| I[Adjust Threshold]
-    I --> J{Direction?}
-    J -->|Fewer Alerts| K[Increase Value]
-    J -->|More Coverage| L[Decrease Value]
-    F -->|Missing Context| M[Add Filter]
-    M --> N[Add WHERE Clause]
-    F -->|Time Pattern| O[Add Time Filter]
-    H --> P[Validate Tuning]
-    K --> P
-    L --> P
-    N --> P
-    O --> P
-    P --> Q{FP Rate OK?}
-    Q -->|No| R[Refine More]
-    R --> E
-    Q -->|Yes| S[Deploy]
-    S --> T[Monitor 7 Days]
-    T --> U{Success?}
-    U -->|No| V[Rollback]
-    V --> E
-    U -->|Yes| W[Document Changes]
-    style A fill:#fef3c7
-    style W fill:#dcfce7
-    style V fill:#fee2e2
-                </pre>
-              </div>
-              <div class="quick-ref">
-                <h4>Tuning Best Practices</h4>
-                <ul>
-                  <li>Document every tuning change with ticket</li>
-                  <li>Test against 7 days of historical data</li>
-                  <li>Monitor for 7 days post-tuning</li>
-                  <li>Never tune away real attacks to eliminate FPs</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- ESCALATION -->
-          <div id="escalation" class="tree-content">
-            <div class="tree-container">
-              <div class="tree-header">
-                <h3>Escalation Decision Tree</h3>
-                <p>When and how to escalate based on severity.</p>
-              </div>
-              <div class="diagram-box">
-                <pre class="mermaid">
-flowchart TD
-    A[Incident Detected] --> B{Severity?}
-    B -->|Info| C[Log and Monitor]
-    C --> D[No Escalation]
-    B -->|Low| E[Standard Ticket]
-    E --> F[Tier 1 Handles]
-    F --> G{Resolved in 4h?}
-    G -->|Yes| H[Close]
-    G -->|No| I[Escalate Tier 2]
-    B -->|Medium| J[Priority Ticket]
-    J --> K[Tier 2 Assigned]
-    K --> L{Resolved in 2h?}
-    L -->|Yes| M[Close]
-    L -->|No| N[Escalate Tier 3]
-    B -->|High| O[IMMEDIATE]
-    O --> P[Page Tier 3]
-    P --> Q[15min SLA]
-    Q --> R{Active Threat?}
-    R -->|Yes| S[Escalate IR Lead]
-    R -->|No| T[Tier 3 Investigates]
-    B -->|Critical| U[CRITICAL INCIDENT]
-    U --> V[Page IR Lead NOW]
-    V --> W[Page CISO 30min]
-    W --> X[War Room]
-    S --> Y[Containment]
-    T --> Y
-    X --> Y
-    style U fill:#fee2e2
-    style O fill:#fef3c7
-    style D fill:#dcfce7
-    style H fill:#dcfce7
-    style M fill:#dcfce7
-                </pre>
-              </div>
-              <div class="legend-box">
-                <h4>Escalation Contacts</h4>
-                <div class="legend-items">
-                  <div class="legend-item"><div class="legend-color" style="background:#22c55e;"></div>Tier 1 SOC 24x7</div>
-                  <div class="legend-item"><div class="legend-color" style="background:#3b82f6;"></div>Tier 2 Senior On-Call</div>
-                  <div class="legend-item"><div class="legend-color" style="background:#8b5cf6;"></div>Tier 3 Engineers</div>
-                  <div class="legend-item"><div class="legend-color" style="background:#dc2626;"></div>IR Lead</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- PATTERN -->
-          <div id="pattern" class="tree-content">
-            <div class="tree-container">
-              <div class="tree-header">
-                <h3>Detection Pattern Selection</h3>
-                <p>Choose the right detection pattern for your use case.</p>
-              </div>
-              <div class="diagram-box">
-                <pre class="mermaid">
-flowchart TD
-    A[New Use Case] --> B{Detecting What?}
-    B -->|Volume Anomaly| C[Threshold Based]
-    B -->|Specific Behavior| D[Sequence Based]
-    B -->|Deviation| E[Baseline Based]
-    B -->|Known Patterns| F[Signature Based]
-    C --> G{Static or Dynamic?}
-    G -->|Fixed| H[count GT X]
-    G -->|Relative| I[count GT avg plus 2 stdev]
-    D --> J{Complexity?}
-    J -->|A then B| K[streamstats]
-    J -->|Chain| L[transaction]
-    J -->|Time Window| M[bin plus stats]
-    E --> N{Baseline Type?}
-    N -->|User| O[Per-user Lookup]
-    N -->|System| P[Global Average]
-    N -->|Time| Q[Hour/Day Pattern]
-    F --> R{Source?}
-    R -->|Vendor| S[Native Fields]
-    R -->|Intel| T[Lookup Enrichment]
-    R -->|Custom| U[Regex Match]
-    style C fill:#cce5ff
-    style D fill:#d4edda
-    style E fill:#fff3cd
-    style F fill:#e2e3e5
-                </pre>
-              </div>
-              <div class="quick-ref">
-                <h4>Pattern Selection Guide</h4>
-                <ul>
-                  <li><strong>Threshold:</strong> DDoS, brute force, scanning</li>
-                  <li><strong>Sequence:</strong> Multi-stage attacks, kill chain</li>
-                  <li><strong>Baseline:</strong> Insider threats, unusual behavior</li>
-                  <li><strong>Signature:</strong> Known malware, exploits</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- ARCHITECTURE -->
-          <div id="architecture" class="tree-content">
-            <div class="tree-container">
-              <div class="tree-header">
-                <h3>Data Flow Architecture</h3>
-                <p>End-to-end data flow from sources to response.</p>
-              </div>
-              <div class="diagram-box">
-                <pre class="mermaid">
-flowchart LR
-    subgraph Sources
-        S1[Akamai WAF]
-        S2[CyberArk]
-        S3[Entra ID]
-    end
-    subgraph Integration
-        I1[SIEM API]
-        I2[Connector]
-        I3[Graph API]
-    end
-    subgraph Splunk
-        HEC[HEC Endpoint]
-        IDX[(Indexes)]
-        SH[Search Head]
-        DET[Correlation]
-        NOT[Notables]
-    end
-    subgraph Response
-        R1[Email]
-        R2[Slack]
-        R3[SOAR]
-        R4[ServiceNow]
-    end
-    S1 --> I1 --> HEC
-    S2 --> I2 --> HEC
-    S3 --> I3 --> HEC
-    HEC --> IDX --> SH --> DET --> NOT
-    NOT --> R1
-    NOT --> R2
-    NOT --> R3
-    NOT --> R4
-    style HEC fill:#65a637
-    style DET fill:#cce5ff
-    style NOT fill:#fee2e2
-                </pre>
-              </div>
-            </div>
-          </div>
-
-          <!-- WAF RESPONSE -->
-          <div id="waf" class="tree-content">
-            <div class="tree-container">
-              <div class="tree-header">
-                <h3>WAF Alert Response Workflow</h3>
-                <p>Specific workflow for responding to WAF alerts.</p>
-              </div>
-              <div class="diagram-box">
-                <pre class="mermaid">
-flowchart TD
-    A[WAF Alert] --> B{Type?}
-    B -->|Volume| C[Check Trend]
-    B -->|Single IP| D[Analyze IP]
-    B -->|Injection| E[Review Payloads]
-    B -->|Auth| F[Check Cred Stuffing]
-    C --> G{Spike GT 5 sigma?}
-    G -->|Yes| H[ACTIVE ATTACK]
-    G -->|No| I[Monitor]
-    D --> J[IP Reputation]
-    J --> K{Known Bad?}
-    K -->|Yes| L[Verify Blocking]
-    K -->|No| M{Corporate NAT?}
-    M -->|Yes| N[FP - NAT]
-    M -->|No| O[New Threat]
-    E --> P{Blocked?}
-    P -->|Yes| Q[Check Bypass]
-    P -->|No| R[CHECK BACKEND]
-    R --> S{500 Errors?}
-    S -->|Yes| T[Possible Compromise]
-    S -->|No| U[WAF Effective]
-    F --> V{Multi-user?}
-    V -->|Yes| W[Campaign]
-    V -->|No| X[Brute Force]
-    W --> Y[Alert Identity Team]
-    H --> Z[Escalate Tier 2]
-    T --> Z
-    L --> AA[Document Close]
-    Q --> AA
-    U --> AA
-    N --> AA
-    style A fill:#e0f2fe
-    style H fill:#fee2e2
-    style T fill:#fee2e2
-    style AA fill:#dcfce7
-                </pre>
-              </div>
-              <div class="quick-ref">
-                <h4>WAF Quick Actions</h4>
-                <ul>
-                  <li><strong>Volume spike:</strong> Check if legitimate traffic</li>
-                  <li><strong>Single IP:</strong> Verify blocking, geo-block if persistent</li>
-                  <li><strong>Injection:</strong> Always check backend for 500 errors</li>
-                  <li><strong>Auth attacks:</strong> Coordinate with identity team</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- MFA RESPONSE -->
-          <div id="mfa" class="tree-content">
-            <div class="tree-container">
-              <div class="tree-header">
-                <h3>MFA Alert Response Workflow</h3>
-                <p>Specific workflow for MFA-related security alerts.</p>
-              </div>
-              <div class="diagram-box">
-                <pre class="mermaid">
-flowchart TD
-    A[MFA Alert] --> B{Type?}
-    B -->|Fatigue| C[Check Denial Count]
-    B -->|Impossible Travel| D[Verify Locations]
-    B -->|New Device| E[Check Registration]
-    B -->|Dormant| F[Verify Account Status]
-    C --> G{GT 5 Denials?}
-    G -->|Yes| H{Then Success?}
-    H -->|Yes| I[BREACH LIKELY]
-    H -->|No| J[Attack Ongoing]
-    G -->|No| K[Monitor]
-    I --> L[CALL USER NOW]
-    L --> M{Approved?}
-    M -->|No| N[DISABLE ACCOUNT]
-    M -->|Yes| O[Verify Activity]
-    D --> P{Speed GT 800 kmh?}
-    P -->|Yes| Q{VPN Exit?}
-    Q -->|Yes| R[FP - VPN]
-    Q -->|No| S[Credential Theft]
-    P -->|No| T[Normal Travel]
-    E --> U{User Requested?}
-    U -->|Yes| V[Legitimate]
-    U -->|No| W[Persistence Attempt]
-    F --> X{Privileged?}
-    X -->|Yes| Y[HIGH PRIORITY]
-    X -->|No| Z[Standard Investigation]
-    style A fill:#e0f2fe
-    style I fill:#fee2e2
-    style N fill:#fee2e2
-    style S fill:#fee2e2
-    style W fill:#fee2e2
-    style R fill:#dcfce7
-    style T fill:#dcfce7
-    style V fill:#dcfce7
-                </pre>
-              </div>
-              <div class="quick-ref">
-                <h4>MFA Quick Actions</h4>
-                <ul>
-                  <li><strong>Fatigue + Success:</strong> CALL user immediately via phone</li>
-                  <li><strong>Impossible Travel:</strong> Check VPN usage first</li>
-                  <li><strong>New Device:</strong> Verify with user before closing</li>
-                  <li><strong>Dormant Account:</strong> Prioritize privileged accounts</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
         </div>
+
+        <!-- WAF Alert Triage -->
+        <div class="section">
+          <h2 class="subsection-title">WAF Alert Triage Decision Tree</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TD
+    A[WAF Alert Received] --> B{What type of alert?}
+    
+    B -->|High volume blocked| C[Volume-Based Alert]
+    B -->|Attack signature| D[Signature-Based Alert]
+    B -->|Anomaly detected| E[Behavior-Based Alert]
+    
+    C --> C1{Single IP or distributed?}
+    C1 -->|Single IP| C2{Blocked or allowed?}
+    C1 -->|Distributed| C3[Potential DDoS<br/>Check for attack pattern]
+    
+    C2 -->|Blocked| C4{Review block reasons}
+    C2 -->|Allowed| C5[CRITICAL: Attacks getting through<br/>Immediate escalation]
+    
+    C4 --> C6{Legitimate traffic?}
+    C6 -->|Yes - False positive| C7[Tune WAF rule<br/>Add to whitelist if needed]
+    C6 -->|No - Attack| C8{Attack successful?}
+    C8 -->|No - Blocked| C9[Document and close<br/>WAF working as expected]
+    C8 -->|Partial success| C10[Investigate impact<br/>Check application logs]
+    
+    D --> D1{What signature?}
+    D1 -->|SQLi| D2[SQL Injection Triage]
+    D1 -->|XSS| D3[XSS Triage]
+    D1 -->|Path Traversal| D4[Path Traversal Triage]
+    D1 -->|Command Injection| D5[CMDi Triage - High Priority]
+    
+    D2 --> D6{Payload in parameter?}
+    D6 -->|Yes| D7{Parameter expected to have SQL-like content?}
+    D7 -->|Yes - e.g., search field| D8[Likely false positive<br/>Review rule sensitivity]
+    D7 -->|No| D9{Check application response}
+    D9 -->|Error message with DB info| D10[CRITICAL: Possible SQLi success<br/>Escalate immediately]
+    D9 -->|Normal response| D11[Attack blocked<br/>Add IP to watchlist]
+    
+    E --> E1{What anomaly?}
+    E1 -->|New user agent| E2[Check if legitimate browser/tool]
+    E1 -->|Unusual path access| E3[Check if path exists and is sensitive]
+    E1 -->|Geographic anomaly| E4[Check if user/business operates there]
+    E1 -->|Time anomaly| E5[Check if after-hours access is normal]
+    
+    C3 --> C11{Traffic pattern?}
+    C11 -->|Same URI repeated| C12[Application-layer DDoS<br/>Enable rate limiting]
+    C11 -->|Random URIs| C13[Volumetric attack<br/>Engage DDoS mitigation]
+    C11 -->|Credential stuffing pattern| C14[Account takeover attempt<br/>Check for successful logins]
+    
+    style A fill:#3b82f6,color:#fff
+    style C5 fill:#ef4444,color:#fff
+    style D10 fill:#ef4444,color:#fff
+    style C9 fill:#10b981,color:#fff
+    style C7 fill:#f59e0b,color:#fff
+            </div>
+          </div>
+        </div>
+
+        <!-- MFA Alert Triage -->
+        <div class="section">
+          <h2 class="subsection-title">MFA Alert Triage Decision Tree</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TD
+    A[MFA Alert Received] --> B{What type?}
+    
+    B -->|MFA Fatigue| C[Multiple MFA Prompts]
+    B -->|Impossible Travel| D[Geographic Anomaly]
+    B -->|New Device| E[Unrecognized Device]
+    B -->|Failed Attempts| F[Authentication Failures]
+    
+    C --> C1{How many prompts?}
+    C1 -->|< 5| C2[Monitor - may be user error]
+    C1 -->|5-10| C3[Contact user to verify]
+    C1 -->|> 10| C4[Likely MFA fatigue attack<br/>Reset user credentials]
+    
+    C3 --> C5{User confirms legitimate?}
+    C5 -->|Yes| C6[Document - user having issues<br/>Offer MFA help]
+    C5 -->|No| C7[Account compromise attempt<br/>Reset password + MFA]
+    C5 -->|Cannot reach user| C8[Lock account preventively<br/>Continue investigation]
+    
+    D --> D1{Check timestamps}
+    D1 --> D2{Time between logins?}
+    D2 -->|Physically impossible| D3{VPN or proxy likely?}
+    D3 -->|Corporate VPN location| D4[Likely legitimate<br/>VPN exit point difference]
+    D3 -->|Anonymous proxy/TOR| D5[SUSPICIOUS<br/>Contact user immediately]
+    D3 -->|Unknown| D6[Investigate IP ownership]
+    D2 -->|Possible with travel| D7[Verify with user if unexpected]
+    
+    D5 --> D8{User confirms?}
+    D8 -->|No - wasn't me| D9[INCIDENT: Account compromised<br/>Force password reset<br/>Revoke all sessions]
+    D8 -->|Yes - I'm using VPN| D10[Document legitimate use<br/>Consider policy exception]
+    
+    E --> E1{Device type?}
+    E1 -->|New phone| E2{Recently changed phone?}
+    E2 -->|Yes - expected| E3[Close - legitimate device update]
+    E2 -->|No| E4[Contact user to verify]
+    E1 -->|Unknown computer| E5{Location expected?}
+    E5 -->|Office/Home| E6[Likely new work device<br/>Verify with user]
+    E5 -->|Unknown location| E7[SUSPICIOUS<br/>Verify immediately]
+    
+    F --> F1{Pattern analysis}
+    F1 -->|Single user, many failures| F2[Targeted attack or user lockout]
+    F1 -->|Many users, same time| F3[Possible credential stuffing<br/>or system issue]
+    F1 -->|Many users, same source| F4[Brute force from single IP<br/>Block and investigate]
+    
+    F2 --> F21{User aware?}
+    F21 -->|Forgot password| F22[Reset password<br/>Close alert]
+    F21 -->|Unaware| F23[Password likely compromised<br/>Force reset]
+    
+    style A fill:#3b82f6,color:#fff
+    style D9 fill:#ef4444,color:#fff
+    style C7 fill:#ef4444,color:#fff
+    style C4 fill:#ef4444,color:#fff
+    style C6 fill:#10b981,color:#fff
+    style D4 fill:#10b981,color:#fff
+            </div>
+          </div>
+        </div>
+
+        <!-- Incident Escalation -->
+        <div class="section">
+          <h2 class="subsection-title">Incident Escalation Decision Tree</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TD
+    A[Potential Security Incident] --> B{Confirmed malicious activity?}
+    
+    B -->|Yes| C{What's the impact?}
+    B -->|No - still investigating| D[Continue analysis<br/>Document findings]
+    B -->|Uncertain| E[Escalate to senior analyst<br/>for determination]
+    
+    C -->|Data breach suspected| F[P1 CRITICAL<br/>Invoke IR plan immediately]
+    C -->|System compromise| G{Production system?}
+    C -->|Account compromise| H{Privileged account?}
+    C -->|Malware detected| I{Spreading?}
+    
+    G -->|Yes - Production| G1[P1/P2<br/>Engage system owner immediately]
+    G -->|No - Dev/Test| G2[P3<br/>Standard IR process]
+    
+    H -->|Yes - Admin/Service| H1[P1<br/>Disable account immediately<br/>Full credential reset]
+    H -->|No - Standard user| H2[P2<br/>Reset credentials<br/>Investigate scope]
+    
+    I -->|Yes - Active spread| I1[P1<br/>Network isolation required<br/>Engage IR team]
+    I -->|No - Contained| I2[P2/P3<br/>Remediate and monitor]
+    
+    F --> F1[Notify: CISO, Legal, IR Lead]
+    F1 --> F2[Preserve evidence]
+    F2 --> F3[Contain affected systems]
+    F3 --> F4[Assess data exposure]
+    
+    subgraph Priority["Priority Levels"]
+        P1[P1 Critical: Immediate response<br/>15 min SLA]
+        P2[P2 High: Urgent response<br/>1 hour SLA]
+        P3[P3 Medium: Standard response<br/>4 hour SLA]
+        P4[P4 Low: Scheduled response<br/>24 hour SLA]
+    end
+    
+    style A fill:#3b82f6,color:#fff
+    style F fill:#ef4444,color:#fff
+    style G1 fill:#ef4444,color:#fff
+    style H1 fill:#ef4444,color:#fff
+    style I1 fill:#ef4444,color:#fff
+    style P1 fill:#ef4444,color:#fff
+    style P2 fill:#f59e0b,color:#fff
+    style P3 fill:#3b82f6,color:#fff
+    style P4 fill:#10b981,color:#fff
+            </div>
+          </div>
+        </div>
+
+        <!-- IP Reputation Check -->
+        <div class="section">
+          <h2 class="subsection-title">IP Reputation Investigation</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TD
+    A[Suspicious IP Identified] --> B[Gather IP Information]
+    
+    B --> C[Check VirusTotal]
+    B --> D[Check AbuseIPDB]
+    B --> E[Check Shodan]
+    B --> F[WHOIS Lookup]
+    
+    C --> G{VT Score?}
+    G -->|0 detections| G1[Clean on VT]
+    G -->|1-3 detections| G2[Low confidence malicious]
+    G -->|4+ detections| G3[High confidence malicious]
+    
+    D --> H{AbuseIPDB Score?}
+    H -->|0-25%| H1[Low abuse reports]
+    H -->|25-75%| H2[Moderate abuse reports]
+    H -->|75%+| H3[High abuse reports]
+    
+    E --> I{Shodan findings?}
+    I -->|Open proxy/VPN| I1[Anonymization service]
+    I -->|Known C2 ports| I2[Possible C2 server]
+    I -->|Normal services| I3[Standard server]
+    
+    F --> J{Ownership?}
+    J -->|Cloud provider| J1[Likely attacker infrastructure]
+    J -->|ISP residential| J2[Compromised home device or legitimate user]
+    J -->|Corporation| J3[May be legitimate business]
+    J -->|Hosting provider| J4[Could be either]
+    
+    G3 --> K[BLOCK IMMEDIATELY]
+    H3 --> K
+    I2 --> K
+    
+    G2 --> L{Combined with other indicators?}
+    H2 --> L
+    L -->|Multiple indicators| K
+    L -->|Single indicator| M[Add to watchlist<br/>Monitor activity]
+    
+    G1 --> N{Any historical activity in our logs?}
+    H1 --> N
+    N -->|Previous malicious activity| O[Consider blocking based on our data]
+    N -->|No history| P[Monitor - no action yet]
+    
+    J1 --> Q[Higher suspicion - attackers use cloud]
+    J2 --> R[May be innocent - verify activity type]
+    J3 --> S[Could be legitimate - verify business relationship]
+    
+    style A fill:#3b82f6,color:#fff
+    style K fill:#ef4444,color:#fff
+    style G3 fill:#ef4444,color:#fff
+    style H3 fill:#ef4444,color:#fff
+    style M fill:#f59e0b,color:#fff
+    style P fill:#10b981,color:#fff
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Quality Assessment -->
+        <div class="section">
+          <h2 class="subsection-title">Data Quality Assessment Decision Tree</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TD
+    A[Assess Data Source Quality] --> B{Data arriving?}
+    
+    B -->|No| B1[Go to Troubleshooting:<br/>No Data Arriving]
+    B -->|Yes| C{Correct volume?}
+    
+    C -->|Lower than expected| C1[Check for dropped events<br/>or source issues]
+    C -->|Higher than expected| C2[Check for duplicate events<br/>or misconfiguration]
+    C -->|Expected| D{Timestamps correct?}
+    
+    D -->|No| D1[Go to Troubleshooting:<br/>Timestamp Issues]
+    D -->|Yes| E{Fields extracting?}
+    
+    E -->|No| E1[Go to Troubleshooting:<br/>Field Extraction Issues]
+    E -->|Partial| E2{Critical fields present?}
+    E2 -->|No| E3[Fix critical field extraction first]
+    E2 -->|Yes| E4[Document missing fields<br/>Fix in next iteration]
+    E -->|Yes| F{CIM compliant?}
+    
+    F -->|No| F1{Required for ES?}
+    F1 -->|Yes| F2[Must add CIM mapping]
+    F1 -->|No| F3[Nice to have - schedule for later]
+    F -->|Yes| G{Data model accelerated?}
+    
+    G -->|No| G1{High volume data?}
+    G1 -->|Yes| G2[Enable acceleration for performance]
+    G1 -->|No| G3[Acceleration optional]
+    G -->|Yes| H[Data source fully onboarded ✓]
+    
+    H --> I{Detection coverage?}
+    I -->|None| I1[Create detection use cases]
+    I -->|Partial| I2[Review coverage gaps]
+    I -->|Full| I3[Data source complete ✓✓]
+    
+    style A fill:#3b82f6,color:#fff
+    style H fill:#10b981,color:#fff
+    style I3 fill:#10b981,color:#fff
+    style B1 fill:#ef4444,color:#fff
+    style D1 fill:#ef4444,color:#fff
+    style E1 fill:#ef4444,color:#fff
+            </div>
+          </div>
+        </div>
+
+        <!-- Communication Decision Tree -->
+        <div class="section">
+          <h2 class="subsection-title">Stakeholder Communication Decision Tree</h2>
+          
+          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
+            <div class="mermaid">
+flowchart TD
+    A[Need to Communicate] --> B{What type of communication?}
+    
+    B -->|Status Update| C{Audience?}
+    B -->|Issue/Blocker| D{Severity?}
+    B -->|Question| E{Urgency?}
+    B -->|Deliverable| F{Review needed?}
+    
+    C -->|Technical Team| C1[Detailed technical update<br/>Include metrics and specifics]
+    C -->|Management| C2[Executive summary<br/>Focus on progress, risks, timeline]
+    C -->|Client/Business| C3[Business-focused update<br/>Outcomes and value delivered]
+    
+    D -->|Blocking progress| D1{Can you solve it?}
+    D1 -->|Yes with time| D2[Inform + provide timeline]
+    D1 -->|Need help| D3[Escalate with clear ask]
+    D1 -->|External dependency| D4[Escalate + identify owner]
+    D -->|Risk but not blocking| D5[Document in status update<br/>Propose mitigation]
+    
+    E -->|Immediate answer needed| E1[Direct message or call<br/>Be specific about urgency]
+    E -->|Can wait| E2[Email or scheduled meeting<br/>Provide context]
+    
+    F -->|Yes - formal review| F1[Schedule review meeting<br/>Share materials in advance]
+    F -->|No - FYI only| F2[Send with summary<br/>Offer to discuss if questions]
+    
+    D3 --> D31{Who to escalate to?}
+    D31 -->|Technical issue| D32[Escalate to tech lead/SME]
+    D31 -->|Resource issue| D33[Escalate to project manager]
+    D31 -->|Client issue| D34[Escalate to engagement manager]
+    D31 -->|Security incident| D35[Follow incident escalation path]
+    
+    style A fill:#3b82f6,color:#fff
+    style D35 fill:#ef4444,color:#fff
+    style D2 fill:#10b981,color:#fff
+    style C2 fill:#f59e0b,color:#fff
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Reference -->
+        <div class="section">
+          <h2 class="subsection-title">Quick Decision Reference</h2>
+          
+          <div class="grid-2">
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--error-600);">🔴 Immediate Escalation Triggers</h4>
+              <ul style="margin:0;padding-left:20px;">
+                <li>Confirmed data breach</li>
+                <li>Active malware spreading</li>
+                <li>Privileged account compromise</li>
+                <li>Production system compromise</li>
+                <li>Ransomware detected</li>
+                <li>Threat actor in network</li>
+              </ul>
+            </div>
+            
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--warning-600);">🟠 Requires Investigation</h4>
+              <ul style="margin:0;padding-left:20px;">
+                <li>Multiple failed authentications</li>
+                <li>Unusual geographic access</li>
+                <li>New/unknown devices</li>
+                <li>High volume of blocked requests</li>
+                <li>Anomalous user behavior</li>
+                <li>Suspicious outbound connections</li>
+              </ul>
+            </div>
+            
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--success-600);">🟢 Likely Benign (Verify)</h4>
+              <ul style="margin:0;padding-left:20px;">
+                <li>Known service account activity</li>
+                <li>Expected maintenance windows</li>
+                <li>Documented exception</li>
+                <li>User-confirmed legitimate action</li>
+                <li>Expected application behavior</li>
+              </ul>
+            </div>
+            
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--info-600);">🔵 Monitor / Watchlist</h4>
+              <ul style="margin:0;padding-left:20px;">
+                <li>First-time seen IPs</li>
+                <li>Low-confidence threat intel</li>
+                <li>Minor policy violations</li>
+                <li>Reconnaissance activity</li>
+                <li>Single failed authentication</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;">
+          <div class="grid-2">
+            <a href="troubleshooting.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Previous</div>
+              <div style="color:var(--primary-700);font-weight:600;">Troubleshooting</div>
+            </a>
+            <a href="runbooks.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Next →</div>
+              <div style="color:var(--primary-700);font-weight:600;">SOC Runbooks</div>
+            </a>
+          </div>
+        </div>
+
       </div>
     </main>
   </div>
-  
   <script src="../js/app.js"></script>
-  <script>
-    // Initialize mermaid
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: 'neutral',
-      flowchart: {
-        curve: 'basis',
-        nodeSpacing: 30,
-        rankSpacing: 30
-      }
-    });
-
-    // Render initial diagram
-    document.addEventListener('DOMContentLoaded', function() {
-      renderDiagram('dev');
-    });
-
-    function renderDiagram(id) {
-      const container = document.getElementById(id);
-      const diagramBox = container.querySelector('.diagram-box');
-      const mermaidEl = diagramBox.querySelector('.mermaid');
-      
-      if (mermaidEl && !mermaidEl.getAttribute('data-processed')) {
-        mermaid.run({ nodes: [mermaidEl] });
-      }
-    }
-
-    function showTree(id) {
-      // Hide all
-      document.querySelectorAll('.tree-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tree-tab').forEach(el => el.classList.remove('active'));
-      
-      // Show selected
-      document.getElementById(id).classList.add('active');
-      event.target.classList.add('active');
-      
-      // Render diagram
-      setTimeout(() => renderDiagram(id), 50);
-    }
-  </script>
+  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
 </body>
 </html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>props.conf & transforms.conf | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+                    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>Splunk Reference</h1>
+              <span>Log & Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Platform</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
+          <a href="splunk-architecture.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Architecture Deep Dive</span></a>
+          <a href="splunk-apps.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Apps & Add-ons</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Log Engineering</div>
+          <a href="log-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding Guide</span></a>
+          <a href="data-inputs.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Data Inputs (HEC/UF)</span></a>
+          <a href="props-transforms.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>props.conf & transforms</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>CIM Compliance</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">SPL Mastery</div>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>SPL Fundamentals</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>SPL Reference Card</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups Deep Dive</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Enterprise Security</div>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>ES Overview</span></a>
+          <a href="correlation-searches.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Correlation Searches</span></a>
+          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk Identity</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID / Azure AD</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Active Projects</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>WAF/DDoS Project</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>WAF Use Cases</span></a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>MFA Project</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>MFA Use Cases</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span>Splunk Cloud Admin</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Troubleshooting</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Reference</div>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>SOC Runbooks</span></a>
+          <a href="cheat-sheets.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Cheat Sheets</span></a>
+        </div>
+      </nav>
+      <div class="sidebar-footer"><p>Log & Detection Engineering v3.0</p></div>
+    </aside>
+    
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">props.conf & transforms.conf</span>
+          </div>
+        </div>
+        <span class="badge warning">Advanced</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">props.conf & transforms.conf Deep Dive</h1>
+          <p class="section-subtitle">Master the configuration files that control how Splunk parses, extracts, and transforms your data</p>
+        </div>
+
+        <!-- Overview -->
+        <div class="callout critical">
+          <div class="callout-content">
+            <div class="callout-title">Why These Files Matter</div>
+            <div class="callout-body">
+              <strong>props.conf</strong> and <strong>transforms.conf</strong> are the backbone of data parsing in Splunk. Understanding them is essential for:<br>
+              • Fixing parsing issues when TAs don't work correctly<br>
+              • Creating custom sourcetypes for unsupported data<br>
+              • Optimizing field extractions for performance<br>
+              • Implementing CIM compliance
+            </div>
+          </div>
+        </div>
+
+        <!-- props.conf Section -->
+        <div class="section">
+          <h2 class="subsection-title">props.conf — The Master Configuration</h2>
+          
+          <h3>Stanza Types (What to Match Against)</h3>
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Stanza Format</th>
+                <th>Matches</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>[sourcetype]</code></td>
+                <td>Events with that sourcetype</td>
+                <td><code>[akamai:siem]</code></td>
+              </tr>
+              <tr>
+                <td><code>[source::path]</code></td>
+                <td>Events from that source path</td>
+                <td><code>[source::.../access.log]</code></td>
+              </tr>
+              <tr>
+                <td><code>[host::hostname]</code></td>
+                <td>Events from that host</td>
+                <td><code>[host::webserver*]</code></td>
+              </tr>
+              <tr>
+                <td><code>[default]</code></td>
+                <td>All events (lowest priority)</td>
+                <td><code>[default]</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 style="margin-top:24px;">Timestamp Configuration</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# props.conf
+
+[mysourcetype]
+# Where to find the timestamp
+TIME_PREFIX = "timestamp":\s*"
+# How far ahead to look for it
+MAX_TIMESTAMP_LOOKAHEAD = 40
+
+# Timestamp format (strptime format)
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%3N%Z
+
+# Timezone (if not in timestamp)
+TZ = UTC
+
+# Common TIME_FORMAT examples:
+# ISO 8601:        %Y-%m-%dT%H:%M:%S.%3NZ
+# Syslog:          %b %d %H:%M:%S
+# Apache:          %d/%b/%Y:%H:%M:%S %z
+# Windows:         %m/%d/%Y %H:%M:%S
+# Epoch:           %s.%3N
+# Custom:          %Y-%m-%d %H:%M:%S,%3N
+          </code>
+
+          <h3 style="margin-top:24px;">Line Breaking (Event Boundaries)</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# props.conf
+
+# For JSON (one object per line)
+[json:sourcetype]
+SHOULD_LINEMERGE = false
+LINE_BREAKER = ([\r\n]+)
+
+# For multi-line events (like stack traces)
+[java:log]
+SHOULD_LINEMERGE = true
+BREAK_ONLY_BEFORE = ^\d{4}-\d{2}-\d{2}
+MAX_EVENTS = 10000
+
+# For XML documents
+[xml:sourcetype]
+LINE_BREAKER = ([\r\n]+)(?=<\?xml|<Document|<Record)
+SHOULD_LINEMERGE = false
+
+# Truncation settings
+TRUNCATE = 100000        # Max event size in bytes (default 10000)
+          </code>
+
+          <h3 style="margin-top:24px;">Field Extraction Settings</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# props.conf
+
+[mysourcetype]
+# Key-Value mode
+KV_MODE = json      # Options: none, auto, multi, json, xml
+
+# Inline regex extraction (search-time)
+EXTRACT-src_ip = src=(?<src_ip>\d+\.\d+\.\d+\.\d+)
+EXTRACT-user = user="?(?<user>[^"\s]+)"?
+EXTRACT-action = action=(?<action>\w+)
+
+# Use transforms.conf (for complex/reusable extractions)
+REPORT-myfields = extract_srcip, extract_user
+
+# Field aliases (CIM mapping)
+FIELDALIAS-cim_src = client_ip AS src
+FIELDALIAS-cim_dest = server_ip AS dest
+FIELDALIAS-cim_user = username AS user
+
+# Calculated fields
+EVAL-bytes_total = bytes_in + bytes_out
+EVAL-src = coalesce(src_ip, client_ip, source_address)
+          </code>
+
+          <h3 style="margin-top:24px;">Sourcetype Assignment</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# props.conf
+
+# Assign sourcetype based on source path
+[source::.../var/log/httpd/access_log*]
+sourcetype = apache:access
+
+# Override sourcetype based on pattern in data
+[source::.../application.log]
+# This uses transforms.conf
+TRANSFORMS-setsourcetype = set_app_error, set_app_info
+          </code>
+        </div>
+
+        <!-- transforms.conf Section -->
+        <div class="section">
+          <h2 class="subsection-title">transforms.conf — Reusable Transformations</h2>
+          
+          <h3>Field Extraction Transforms</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# transforms.conf
+
+# Basic regex extraction
+[extract_srcip]
+REGEX = src(?:_ip)?[=:][\s"]*(?<src_ip>\d+\.\d+\.\d+\.\d+)
+
+[extract_user]
+REGEX = user(?:name)?[=:][\s"]*(?<user>[^\s"]+)
+
+# Multiple fields from one regex
+[extract_auth]
+REGEX = user=(?<user>\w+)\s+action=(?<action>\w+)\s+result=(?<result>\w+)
+
+# Delimited extraction (CSV-like)
+[extract_csv]
+DELIMS = ","
+FIELDS = field1, field2, field3, field4
+          </code>
+
+          <h3 style="margin-top:24px;">Index-Time Transforms (Use Carefully!)</h3>
+          <div class="callout warning">
+            <div class="callout-content">
+              <div class="callout-title">⚠️ Index-Time is Permanent</div>
+              <div class="callout-body">
+                Index-time transforms cannot be undone without re-indexing. Use only when necessary (routing, dropping, masking).
+              </div>
+            </div>
+          </div>
+
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# transforms.conf
+
+# Route events to different index based on content
+[route_errors_to_critical]
+REGEX = (ERROR|CRITICAL|FATAL)
+DEST_KEY = _MetaData:Index
+FORMAT = critical_index
+
+# Set sourcetype based on content
+[set_sourcetype_error]
+REGEX = level=ERROR
+DEST_KEY = MetaData:Sourcetype
+FORMAT = app:error
+
+# Drop events (nullQueue)
+[drop_healthchecks]
+REGEX = healthcheck|heartbeat
+DEST_KEY = queue
+FORMAT = nullQueue
+
+# Mask sensitive data
+[mask_ssn]
+REGEX = \b(\d{3})-(\d{2})-(\d{4})\b
+FORMAT = XXX-XX-$3
+DEST_KEY = _raw
+
+# Mask credit card numbers
+[mask_creditcard]
+REGEX = \b(\d{4})[\s-]?(\d{4})[\s-]?(\d{4})[\s-]?(\d{4})\b
+FORMAT = XXXX-XXXX-XXXX-$4
+DEST_KEY = _raw
+          </code>
+
+          <h3 style="margin-top:24px;">Lookup Transforms</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# transforms.conf
+
+[my_lookup]
+filename = my_lookup.csv
+# Match on these fields
+match_type = WILDCARD(src_ip)
+# Return these fields
+OUTPUT NEW field_from_lookup
+
+# Automatic lookup (applied at search time)
+[auto_asset_lookup]
+filename = assets.csv
+match_type = EXACT
+OUTPUT NEW asset_name, asset_criticality, asset_owner
+
+# In props.conf to enable:
+# [mysourcetype]
+# LOOKUP-assets = auto_asset_lookup src_ip AS ip OUTPUT asset_name
+          </code>
+        </div>
+
+        <!-- Common Patterns -->
+        <div class="section">
+          <h2 class="subsection-title">Common Configuration Patterns</h2>
+          
+          <h3>Pattern 1: JSON Sourcetype with CIM Mapping</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# props.conf
+[myvendor:json]
+# Parsing
+SHOULD_LINEMERGE = false
+LINE_BREAKER = ([\r\n]+)
+KV_MODE = json
+
+# Timestamp
+TIME_PREFIX = "timestamp":\s*"
+TIME_FORMAT = %Y-%m-%dT%H:%M:%S.%6NZ
+TZ = UTC
+
+# CIM Field Aliases
+FIELDALIAS-src = source_ip AS src
+FIELDALIAS-dest = destination_ip AS dest
+FIELDALIAS-user = user_name AS user
+FIELDALIAS-action = event_action AS action
+
+# Calculated field
+EVAL-vendor_product = "MyVendor Product"
+          </code>
+
+          <h3>Pattern 2: Syslog with Custom Parsing</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# props.conf
+[custom:syslog]
+# Parsing
+SHOULD_LINEMERGE = false
+TIME_FORMAT = %b %d %H:%M:%S
+
+# Extractions
+EXTRACT-host = ^(?:[^ ]+ ){3}(?<log_host>[^ ]+)
+EXTRACT-process = (?<process>\w+)\[(?<pid>\d+)\]
+REPORT-fields = extract_syslog_msg
+
+# transforms.conf
+[extract_syslog_msg]
+REGEX = \]:\s+(?<message>.+)$
+          </code>
+
+          <h3>Pattern 3: Multi-line Application Logs</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# props.conf
+[app:stacktrace]
+# Keep stack traces together
+SHOULD_LINEMERGE = true
+BREAK_ONLY_BEFORE = ^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}
+MAX_EVENTS = 256
+TIME_FORMAT = %Y-%m-%d %H:%M:%S,%3N
+
+# Extract severity
+EXTRACT-level = (?<level>DEBUG|INFO|WARN|ERROR|FATAL)
+EXTRACT-class = (?<java_class>[\w.]+Exception)
+          </code>
+
+          <h3>Pattern 4: Data Masking for Compliance</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
+# props.conf
+[sensitive:data]
+SEDCMD-mask_email = s/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/EMAIL_REDACTED/g
+SEDCMD-mask_phone = s/\b\d{3}[-.]?\d{3}[-.]?\d{4}\b/PHONE_REDACTED/g
+TRANSFORMS-mask = mask_ssn, mask_creditcard
+
+# transforms.conf
+[mask_ssn]
+REGEX = \b\d{3}-\d{2}-\d{4}\b
+FORMAT = SSN_REDACTED
+DEST_KEY = _raw
+
+[mask_creditcard]
+REGEX = \b(?:\d{4}[-\s]?){3}\d{4}\b
+FORMAT = CC_REDACTED
+DEST_KEY = _raw
+          </code>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="section">
+          <h2 class="subsection-title">Troubleshooting Configuration Issues</h2>
+          
+          <h3>btool — Your Best Friend</h3>
+          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;margin-bottom:16px;">
+# Check effective configuration (command line on Splunk server)
+$SPLUNK_HOME/bin/splunk btool props list mysourcetype --debug
+
+# Shows which file each setting comes from:
+# /opt/splunk/etc/apps/myapp/local/props.conf  [mysourcetype]
+# /opt/splunk/etc/apps/myapp/local/props.conf  TIME_FORMAT = %Y-%m-%d
+
+# Check for syntax errors
+$SPLUNK_HOME/bin/splunk btool check
+          </code>
+
+          <h3 style="margin-top:24px;">Testing via Splunk Web</h3>
+          <ol>
+            <li><strong>Settings → Add Data → Upload</strong> — Upload sample file</li>
+            <li><strong>Set Source Type</strong> — Select your sourcetype or create new</li>
+            <li><strong>Preview</strong> — Check event breaking and timestamps</li>
+            <li>If wrong, edit the sourcetype settings before proceeding</li>
+          </ol>
+
+          <h3 style="margin-top:24px;">Common Issues & Solutions</h3>
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Problem</th>
+                <th>Likely Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Events merged together</td>
+                <td>LINE_BREAKER wrong or SHOULD_LINEMERGE=true</td>
+                <td>Fix LINE_BREAKER regex, set SHOULD_LINEMERGE=false</td>
+              </tr>
+              <tr>
+                <td>Events split incorrectly</td>
+                <td>LINE_BREAKER too aggressive</td>
+                <td>Use BREAK_ONLY_BEFORE instead</td>
+              </tr>
+              <tr>
+                <td>Wrong timestamp</td>
+                <td>TIME_FORMAT doesn't match</td>
+                <td>Test strptime format, check TIME_PREFIX</td>
+              </tr>
+              <tr>
+                <td>Timestamp in wrong timezone</td>
+                <td>TZ not set correctly</td>
+                <td>Add TZ = UTC or correct zone</td>
+              </tr>
+              <tr>
+                <td>Fields not extracting</td>
+                <td>KV_MODE wrong or regex not matching</td>
+                <td>Test regex with | rex command first</td>
+              </tr>
+              <tr>
+                <td>Config not applying</td>
+                <td>Wrong stanza or precedence issue</td>
+                <td>Use btool to verify, check app context</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Quick Reference -->
+        <div class="section">
+          <h2 class="subsection-title">Quick Reference Card</h2>
+          
+          <div class="grid-2">
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--primary-700);">props.conf Attributes</h4>
+              <table style="width:100%;font-size:13px;">
+                <tr><td><code>TIME_FORMAT</code></td><td>strptime format</td></tr>
+                <tr><td><code>TIME_PREFIX</code></td><td>Regex before timestamp</td></tr>
+                <tr><td><code>MAX_TIMESTAMP_LOOKAHEAD</code></td><td>Characters to search</td></tr>
+                <tr><td><code>TZ</code></td><td>Timezone</td></tr>
+                <tr><td><code>LINE_BREAKER</code></td><td>Event boundary regex</td></tr>
+                <tr><td><code>SHOULD_LINEMERGE</code></td><td>Merge lines (true/false)</td></tr>
+                <tr><td><code>BREAK_ONLY_BEFORE</code></td><td>Break before pattern</td></tr>
+                <tr><td><code>KV_MODE</code></td><td>auto/json/xml/none</td></tr>
+                <tr><td><code>EXTRACT-name</code></td><td>Inline regex</td></tr>
+                <tr><td><code>REPORT-name</code></td><td>transforms reference</td></tr>
+                <tr><td><code>FIELDALIAS-name</code></td><td>Field aliasing</td></tr>
+                <tr><td><code>EVAL-name</code></td><td>Calculated field</td></tr>
+                <tr><td><code>LOOKUP-name</code></td><td>Automatic lookup</td></tr>
+              </table>
+            </div>
+            
+            <div class="card" style="padding:20px;">
+              <h4 style="margin-top:0;color:var(--primary-700);">transforms.conf Attributes</h4>
+              <table style="width:100%;font-size:13px;">
+                <tr><td><code>REGEX</code></td><td>Extraction pattern</td></tr>
+                <tr><td><code>FORMAT</code></td><td>Output format</td></tr>
+                <tr><td><code>DEST_KEY</code></td><td>Where to write</td></tr>
+                <tr><td><code>DELIMS</code></td><td>Field delimiters</td></tr>
+                <tr><td><code>FIELDS</code></td><td>Field names for delimited</td></tr>
+                <tr><td><code>SOURCE_KEY</code></td><td>Field to extract from</td></tr>
+                <tr><td><code>MV_ADD</code></td><td>Add to multivalue</td></tr>
+                <tr><td><code>filename</code></td><td>Lookup file</td></tr>
+                <tr><td><code>match_type</code></td><td>EXACT/WILDCARD/CIDR</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;">
+          <div class="grid-2">
+            <a href="parsing-extraction.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Previous</div>
+              <div style="color:var(--primary-700);font-weight:600;">Parsing & Extraction</div>
+            </a>
+            <a href="cim-compliance.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Next →</div>
+              <div style="color:var(--primary-700);font-weight:600;">CIM Compliance</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>
