@@ -8,11 +8,71 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    /* Large readable Mermaid diagrams */
+    .diagram-container {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .diagram-container .mermaid {
+      display: flex;
+      justify-content: center;
+      min-height: 350px;
+    }
+    .diagram-small .mermaid {
+      min-height: 280px;
+    }
+    /* Timeline visual */
+    .timeline-visual {
+      display: flex;
+      gap: 0;
+      margin: 24px 0;
+      overflow-x: auto;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .timeline-step {
+      flex: 1;
+      min-width: 110px;
+      padding: 16px 10px;
+      text-align: center;
+      position: relative;
+      background: linear-gradient(135deg, var(--step-color) 0%, var(--step-color-dark) 100%);
+      color: white;
+    }
+    .timeline-step::after {
+      content: ">";
+      position: absolute;
+      right: -4px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 1;
+      color: rgba(255,255,255,0.7);
+    }
+    .timeline-step:last-child::after {
+      display: none;
+    }
+    .timeline-step h4 {
+      margin: 0 0 4px 0;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .timeline-step p {
+      margin: 0;
+      font-size: 0.7rem;
+      opacity: 0.9;
+    }
+  </style>
 </head>
 <body>
   <div class="app-container">
-        <aside class="sidebar">
+    <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">
           <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
@@ -30,7 +90,7 @@
         <div class="nav-section">
           <div class="nav-section-title">Getting Started</div>
           <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
-          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="day1.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
           <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
         </div>
         <div class="nav-section">
@@ -105,79 +165,133 @@
           <p class="section-subtitle">Everything you need to do and ask on your first day — make a great impression</p>
         </div>
 
-        <!-- Day 1 Flow -->
+        <!-- Day 1 Timeline -->
         <div class="section">
           <h2 class="subsection-title">Your Day 1 Timeline</h2>
           
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
-flowchart LR
-    subgraph Morning["Morning (First 4 Hours)"]
-        A[Arrive Early<br/>15 min before] --> B[Setup & Access]
-        B --> C[Meet Team]
-        C --> D[Environment<br/>Walkthrough]
-    end
-    
-    subgraph Midday["Midday"]
-        E[Document<br/>Everything] --> F[Ask Initial<br/>Questions]
-        F --> G[Get Context<br/>on Projects]
-    end
-    
-    subgraph Afternoon["Afternoon"]
-        H[Splunk Access<br/>Validation] --> I[Review Existing<br/>Documentation]
-        I --> J[End of Day<br/>Summary]
-    end
-    
-    Morning --> Midday --> Afternoon
-    
-    style A fill:#10b981,color:#fff
-    style D fill:#3b82f6,color:#fff
-    style G fill:#f59e0b,color:#fff
-    style J fill:#8b5cf6,color:#fff
+          <div class="timeline-visual">
+            <div class="timeline-step" style="--step-color:#10b981;--step-color-dark:#059669;">
+              <h4>1. Arrive</h4>
+              <p>15 min early</p>
+            </div>
+            <div class="timeline-step" style="--step-color:#3b82f6;--step-color-dark:#2563eb;">
+              <h4>2. Setup</h4>
+              <p>Laptop access</p>
+            </div>
+            <div class="timeline-step" style="--step-color:#8b5cf6;--step-color-dark:#7c3aed;">
+              <h4>3. Team</h4>
+              <p>Meet people</p>
+            </div>
+            <div class="timeline-step" style="--step-color:#ec4899;--step-color-dark:#db2777;">
+              <h4>4. Tour</h4>
+              <p>Environment</p>
+            </div>
+            <div class="timeline-step" style="--step-color:#f59e0b;--step-color-dark:#d97706;">
+              <h4>5. Document</h4>
+              <p>Write notes</p>
+            </div>
+            <div class="timeline-step" style="--step-color:#ef4444;--step-color-dark:#dc2626;">
+              <h4>6. Ask</h4>
+              <p>Questions</p>
+            </div>
+            <div class="timeline-step" style="--step-color:#06b6d4;--step-color-dark:#0891b2;">
+              <h4>7. Validate</h4>
+              <p>Splunk</p>
+            </div>
+            <div class="timeline-step" style="--step-color:#65a637;--step-color-dark:#4d7c0f;">
+              <h4>8. Summary</h4>
+              <p>EOD email</p>
+            </div>
+          </div>
+          
+          <div class="grid-3" style="margin-top:24px;">
+            <div class="card" style="padding:20px;border-left:5px solid #10b981;">
+              <h4 style="margin:0 0 12px 0;color:#10b981;">Morning (First 4 Hours)</h4>
+              <ul style="margin:0;padding-left:20px;font-size:0.9rem;line-height:1.8;">
+                <li>Arrive 15 minutes early</li>
+                <li>Set up laptop, verify network</li>
+                <li>Meet team members, note names</li>
+                <li>Get environment walkthrough</li>
+              </ul>
+            </div>
+            <div class="card" style="padding:20px;border-left:5px solid #f59e0b;">
+              <h4 style="margin:0 0 12px 0;color:#f59e0b;">Midday</h4>
+              <ul style="margin:0;padding-left:20px;font-size:0.9rem;line-height:1.8;">
+                <li>Document everything learned</li>
+                <li>Ask all critical questions</li>
+                <li>Review project documentation</li>
+                <li>Understand current priorities</li>
+              </ul>
+            </div>
+            <div class="card" style="padding:20px;border-left:5px solid #8b5cf6;">
+              <h4 style="margin:0 0 12px 0;color:#8b5cf6;">Afternoon</h4>
+              <ul style="margin:0;padding-left:20px;font-size:0.9rem;line-height:1.8;">
+                <li>Validate Splunk access</li>
+                <li>Run validation commands</li>
+                <li>Review existing searches</li>
+                <li>Send EOD summary email</li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <!-- Access Checklist Decision Tree -->
+        <!-- Access Checklist -->
         <div class="section">
-          <h2 class="subsection-title">Access Request Decision Tree</h2>
-          <p>Use this to determine what access you need to request.</p>
+          <h2 class="subsection-title">Access Request Checklist</h2>
+          <p>What access you need to request on Day 1.</p>
           
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
+          <div class="grid-2" style="margin-top:20px;">
+            <div class="card" style="padding:24px;border-top:4px solid #65a637;">
+              <h4 style="margin:0 0 16px 0;color:#65a637;">Splunk Access Decision Tree</h4>
+              <div class="diagram-container diagram-small" style="padding:20px;margin:0;">
+                <div class="mermaid">
 flowchart TD
-    A[What Access Do I Need?] --> B{Splunk Access}
-    A --> C{Communication Tools}
-    A --> D{Documentation}
-    A --> E{Client Systems}
+    A[Need Splunk Access] --> B{Cloud or On-Prem?}
+    B -->|Cloud| C[Get stack URL and credentials]
+    B -->|On-Prem| D[Get VPN access and Splunk URL]
+    C --> E{What role do you need?}
+    D --> E
+    E -->|Search only| F[Request: power user]
+    E -->|Create content| G[Request: ess_analyst]
+    E -->|Full admin| H[Request: ess_admin]
     
-    B --> B1{Splunk Cloud?}
-    B1 -->|Yes| B2[Request: Splunk Cloud login<br/>Stack URL needed]
-    B1 -->|No| B3[Request: VPN + Splunk Enterprise URL]
-    
-    B2 --> B4{What role needed?}
-    B4 -->|Search only| B5[Request: power user role]
-    B4 -->|Create content| B6[Request: admin or ess_analyst role]
-    B4 -->|Manage ES| B7[Request: ess_admin role]
-    
-    C --> C1[Email/Teams access]
-    C --> C2[Slack channels if used]
-    C --> C3[Meeting invites for standups]
-    
-    D --> D1[SharePoint/Confluence access]
-    D --> D2[Project documentation location]
-    D --> D3[Previous deliverables]
-    
-    E --> E1{Data source access?}
-    E1 -->|Akamai| E2[Luna Portal access if needed]
-    E1 -->|Azure/Entra| E3[Azure Portal read access if needed]
-    E1 -->|CyberArk| E4[CyberArk admin console if needed]
-    
-    style A fill:#3b82f6,color:#fff
-    style B2 fill:#10b981,color:#fff
-    style B6 fill:#10b981,color:#fff
-    style C1 fill:#10b981,color:#fff
-    style D1 fill:#10b981,color:#fff
+    style A fill:#65a637,color:#fff
+    style C fill:#10b981,color:#fff
+    style D fill:#10b981,color:#fff
+    style F fill:#3b82f6,color:#fff
+    style G fill:#3b82f6,color:#fff
+    style H fill:#8b5cf6,color:#fff
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="padding:24px;border-top:4px solid #3b82f6;">
+              <h4 style="margin:0 0 16px 0;color:#3b82f6;">Communication & Docs Access</h4>
+              <table class="reference-table" style="font-size:0.9rem;">
+                <tbody>
+                  <tr><td><strong>Email/Outlook</strong></td><td>Corporate email access</td></tr>
+                  <tr><td><strong>Microsoft Teams</strong></td><td>Join project channels</td></tr>
+                  <tr><td><strong>Slack</strong></td><td>If organization uses it</td></tr>
+                  <tr><td><strong>SharePoint/Confluence</strong></td><td>Documentation access</td></tr>
+                  <tr><td><strong>Calendar</strong></td><td>Standup meeting invites</td></tr>
+                  <tr><td><strong>Ticketing</strong></td><td>Jira, ServiceNow, etc.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <div class="grid-3" style="margin-top:20px;">
+            <div class="card" style="padding:20px;border-top:4px solid #ff9900;">
+              <h5 style="margin:0 0 10px 0;color:#ff9900;">Akamai Access</h5>
+              <p style="margin:0;font-size:0.875rem;color:var(--gray-600);">Luna Portal access if you need to manage WAF configurations directly</p>
+            </div>
+            <div class="card" style="padding:20px;border-top:4px solid #0078d4;">
+              <h5 style="margin:0 0 10px 0;color:#0078d4;">Azure/Entra Access</h5>
+              <p style="margin:0;font-size:0.875rem;color:var(--gray-600);">Azure Portal read access for reviewing sign-in logs</p>
+            </div>
+            <div class="card" style="padding:20px;border-top:4px solid #6f2da8;">
+              <h5 style="margin:0 0 10px 0;color:#6f2da8;">CyberArk Access</h5>
+              <p style="margin:0;font-size:0.875rem;color:var(--gray-600);">Identity console access if managing MFA policies</p>
             </div>
           </div>
         </div>
@@ -187,55 +301,24 @@ flowchart TD
           <h2 class="subsection-title">Critical Questions to Ask</h2>
           
           <div class="callout critical">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <div class="callout-content">
               <div class="callout-title">Ask These on Day 1 — Document the Answers</div>
-              <div class="callout-body">
-                These questions help you understand the environment and avoid mistakes.
-              </div>
+              <div class="callout-body">These questions help you understand the environment and avoid mistakes. Write down every answer!</div>
             </div>
           </div>
 
           <div class="card" style="padding:24px;margin-bottom:24px;">
             <h4 style="margin-top:0;color:var(--primary-700);">Environment Questions</h4>
             <table class="reference-table">
-              <thead>
-                <tr>
-                  <th>Question</th>
-                  <th>Why It Matters</th>
-                  <th>Document This</th>
-                </tr>
-              </thead>
+              <thead><tr><th>Question</th><th>Why It Matters</th><th>Document This</th></tr></thead>
               <tbody>
-                <tr>
-                  <td>"What's the Splunk Cloud stack name/URL?"</td>
-                  <td>Need this to access Splunk</td>
-                  <td>Stack name, full URL</td>
-                </tr>
-                <tr>
-                  <td>"Is this Victoria Experience or Classic?"</td>
-                  <td>UI and admin workflows differ</td>
-                  <td>Version type</td>
-                </tr>
-                <tr>
-                  <td>"What indexes contain the data I'll work with?"</td>
-                  <td>Need to know where to search</td>
-                  <td>Index names and purposes</td>
-                </tr>
-                <tr>
-                  <td>"What TAs are installed?"</td>
-                  <td>Know what's parsing your data</td>
-                  <td>List of TAs</td>
-                </tr>
-                <tr>
-                  <td>"Is Enterprise Security installed? Version?"</td>
-                  <td>ES workflows differ by version</td>
-                  <td>ES version</td>
-                </tr>
-                <tr>
-                  <td>"What data models are accelerated?"</td>
-                  <td>Know what tstats will work on</td>
-                  <td>Accelerated DMs</td>
-                </tr>
+                <tr><td>"What's the Splunk Cloud stack name/URL?"</td><td>Need this to access Splunk</td><td>Stack name, full URL</td></tr>
+                <tr><td>"Is this Victoria Experience or Classic?"</td><td>UI and admin workflows differ</td><td>Version type</td></tr>
+                <tr><td>"What indexes contain the data I'll work with?"</td><td>Need to know where to search</td><td>Index names and purposes</td></tr>
+                <tr><td>"What TAs are installed?"</td><td>Know what's parsing your data</td><td>List of TAs</td></tr>
+                <tr><td>"Is Enterprise Security installed? Version?"</td><td>ES workflows differ by version</td><td>ES version</td></tr>
+                <tr><td>"What data models are accelerated?"</td><td>Know what tstats will work on</td><td>Accelerated DMs</td></tr>
               </tbody>
             </table>
           </div>
@@ -243,44 +326,14 @@ flowchart TD
           <div class="card" style="padding:24px;margin-bottom:24px;">
             <h4 style="margin-top:0;color:var(--primary-700);">Project Questions</h4>
             <table class="reference-table">
-              <thead>
-                <tr>
-                  <th>Question</th>
-                  <th>Why It Matters</th>
-                  <th>Document This</th>
-                </tr>
-              </thead>
+              <thead><tr><th>Question</th><th>Why It Matters</th><th>Document This</th></tr></thead>
               <tbody>
-                <tr>
-                  <td>"What's the current project status?"</td>
-                  <td>Understand where things stand</td>
-                  <td>Status summary</td>
-                </tr>
-                <tr>
-                  <td>"What are the immediate deliverables?"</td>
-                  <td>Know your priorities</td>
-                  <td>Next 2-week deliverables</td>
-                </tr>
-                <tr>
-                  <td>"Who are the key stakeholders?"</td>
-                  <td>Know who to communicate with</td>
-                  <td>Name, role, contact</td>
-                </tr>
-                <tr>
-                  <td>"What's the change management process?"</td>
-                  <td>Know how to deploy changes</td>
-                  <td>CM process steps</td>
-                </tr>
-                <tr>
-                  <td>"Are there any known issues or blockers?"</td>
-                  <td>Avoid stepping on landmines</td>
-                  <td>Known issues list</td>
-                </tr>
-                <tr>
-                  <td>"What was tried before that didn't work?"</td>
-                  <td>Don't repeat failed approaches</td>
-                  <td>Past attempts</td>
-                </tr>
+                <tr><td>"What's the current project status?"</td><td>Understand where things stand</td><td>Status summary</td></tr>
+                <tr><td>"What are the immediate deliverables?"</td><td>Know your priorities</td><td>Next 2-week deliverables</td></tr>
+                <tr><td>"Who are the key stakeholders?"</td><td>Know who to communicate with</td><td>Name, role, contact</td></tr>
+                <tr><td>"What's the change management process?"</td><td>Know how to deploy changes</td><td>CM process steps</td></tr>
+                <tr><td>"Are there any known issues or blockers?"</td><td>Avoid stepping on landmines</td><td>Known issues list</td></tr>
+                <tr><td>"What was tried before that didn't work?"</td><td>Don't repeat failed approaches</td><td>Past attempts</td></tr>
               </tbody>
             </table>
           </div>
@@ -288,87 +341,53 @@ flowchart TD
           <div class="card" style="padding:24px;">
             <h4 style="margin-top:0;color:var(--primary-700);">Practical Questions</h4>
             <table class="reference-table">
-              <thead>
-                <tr>
-                  <th>Question</th>
-                  <th>Why It Matters</th>
-                  <th>Document This</th>
-                </tr>
-              </thead>
+              <thead><tr><th>Question</th><th>Why It Matters</th><th>Document This</th></tr></thead>
               <tbody>
-                <tr>
-                  <td>"How do I submit support cases to Splunk?"</td>
-                  <td>You'll need this for app installs, etc.</td>
-                  <td>Support process</td>
-                </tr>
-                <tr>
-                  <td>"What's the naming convention for saved searches?"</td>
-                  <td>Follow existing patterns</td>
-                  <td>Naming standards</td>
-                </tr>
-                <tr>
-                  <td>"Where do I document my work?"</td>
-                  <td>Knowledge management</td>
-                  <td>Doc locations</td>
-                </tr>
-                <tr>
-                  <td>"Who approves enabling correlation searches?"</td>
-                  <td>Know the approval chain</td>
-                  <td>Approver names</td>
-                </tr>
-                <tr>
-                  <td>"Is there a dev/test environment?"</td>
-                  <td>Don't test in production</td>
-                  <td>Test env details</td>
-                </tr>
-                <tr>
-                  <td>"What are the maintenance windows?"</td>
-                  <td>Plan deployments accordingly</td>
-                  <td>MW schedule</td>
-                </tr>
+                <tr><td>"How do I submit support cases to Splunk?"</td><td>You'll need this for app installs</td><td>Support process</td></tr>
+                <tr><td>"What's the naming convention for saved searches?"</td><td>Follow existing patterns</td><td>Naming standards</td></tr>
+                <tr><td>"Where do I document my work?"</td><td>Knowledge management</td><td>Doc locations</td></tr>
+                <tr><td>"Who approves enabling correlation searches?"</td><td>Know the approval chain</td><td>Approver names</td></tr>
+                <tr><td>"Is there a dev/test environment?"</td><td>Don't test in production</td><td>Test env details</td></tr>
+                <tr><td>"What are the maintenance windows?"</td><td>Plan deployments accordingly</td><td>MW schedule</td></tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- What to Validate -->
+        <!-- Validation Steps -->
         <div class="section">
           <h2 class="subsection-title">Validation Steps — What to Check First</h2>
           
-          <div class="card" style="padding:24px;background:var(--gray-50);overflow-x:auto;margin-bottom:24px;">
+          <div class="diagram-container">
             <div class="mermaid">
 flowchart TD
     A[Got Splunk Access] --> B{Can you log in?}
-    
-    B -->|No| B1[Troubleshoot: Check URL, VPN, credentials]
-    B -->|Yes| C{Can you search the target index?}
-    
-    C -->|No| C1[Request index permissions<br/>Contact Splunk admin]
-    C -->|Yes| D{Is data recent?}
-    
-    D -->|No recent data| D1[Data onboarding issue<br/>Escalate to data team]
-    D -->|Yes| E{Fields extracting?}
-    
-    E -->|No| E1[TA may not be installed<br/>or sourcetype misconfigured]
-    E -->|Yes| F{CIM fields present?}
-    
-    F -->|No| F1[CIM mapping needed<br/>Check TA configuration]
-    F -->|Yes| G{Data model accelerated?}
-    
-    G -->|No| G1[tstats may be slow<br/>Request acceleration if needed]
-    G -->|Yes| H[Environment validated ✓<br/>Ready to work]
+    B -->|No| B1[Check URL and VPN and credentials]
+    B -->|Yes| C{Can you search target index?}
+    C -->|No| C1[Request index permissions from admin]
+    C -->|Yes| D{Is data recent - last 24h?}
+    D -->|No| D1[Escalate to data onboarding team]
+    D -->|Yes| E{Are fields extracting correctly?}
+    E -->|No| E1[Check if TA is installed]
+    E -->|Yes| F{Are CIM fields present?}
+    F -->|No| F1[CIM field mapping needed]
+    F -->|Yes| G[Environment validated - Ready to work!]
     
     style A fill:#3b82f6,color:#fff
-    style H fill:#10b981,color:#fff
+    style G fill:#10b981,color:#fff
     style B1 fill:#ef4444,color:#fff
     style C1 fill:#f59e0b,color:#fff
     style D1 fill:#ef4444,color:#fff
+    style E1 fill:#f59e0b,color:#fff
+    style F1 fill:#f59e0b,color:#fff
             </div>
           </div>
 
-          <h4>Validation Commands to Run</h4>
-          <code style="display:block;padding:15px;background:var(--gray-900);color:var(--gray-100);border-radius:8px;overflow-x:auto;white-space:pre;">
-# 1. Check what indexes you can access
+          <h4 style="margin-top:32px;">Validation Commands to Run</h4>
+          <div class="code-block">
+            <div class="code-header"><span class="code-title">Day 1 Validation SPL Commands</span></div>
+            <div class="code-body">
+              <pre style="margin:0;font-size:0.85rem;line-height:1.6;"><code># 1. Check what indexes you can access
 | eventcount summarize=false index=* | table index count
 
 # 2. Check data recency for your index
@@ -387,17 +406,18 @@ index=YOUR_INDEX | head 10 | table src, dest, action, http_method, url
 | rest /services/apps/local | search disabled=0 | table title version
 
 # 7. Check your role/permissions
-| rest /services/authentication/current-context | table username roles
-          </code>
+| rest /services/authentication/current-context | table username roles</code></pre>
+            </div>
+          </div>
         </div>
 
         <!-- Day 1 Checklist -->
         <div class="section">
           <h2 class="subsection-title">Day 1 Printable Checklist</h2>
           
-          <div class="card" style="padding:24px;">
-            <h4 style="margin-top:0;">Morning Tasks</h4>
-            <ul style="list-style:none;padding:0;margin:0 0 20px 0;">
+          <div class="card" style="padding:28px;">
+            <h4 style="margin-top:0;color:#10b981;">Morning Tasks</h4>
+            <ul style="list-style:none;padding:0;margin:0 0 24px 0;font-size:0.95rem;line-height:2;">
               <li>☐ Arrive 15 minutes early</li>
               <li>☐ Set up laptop and verify network access</li>
               <li>☐ Get all required access (Splunk, email, Teams, documentation)</li>
@@ -406,8 +426,8 @@ index=YOUR_INDEX | head 10 | table src, dest, action, http_method, url
               <li>☐ Identify your primary point of contact</li>
             </ul>
 
-            <h4>Midday Tasks</h4>
-            <ul style="list-style:none;padding:0;margin:0 0 20px 0;">
+            <h4 style="color:#f59e0b;">Midday Tasks</h4>
+            <ul style="list-style:none;padding:0;margin:0 0 24px 0;font-size:0.95rem;line-height:2;">
               <li>☐ Ask all environment questions (documented above)</li>
               <li>☐ Ask all project questions (documented above)</li>
               <li>☐ Review existing project documentation</li>
@@ -415,8 +435,8 @@ index=YOUR_INDEX | head 10 | table src, dest, action, http_method, url
               <li>☐ Join all required meetings/channels</li>
             </ul>
 
-            <h4>Afternoon Tasks</h4>
-            <ul style="list-style:none;padding:0;margin:0 0 20px 0;">
+            <h4 style="color:#8b5cf6;">Afternoon Tasks</h4>
+            <ul style="list-style:none;padding:0;margin:0 0 24px 0;font-size:0.95rem;line-height:2;">
               <li>☐ Log into Splunk and validate access</li>
               <li>☐ Run validation commands (above)</li>
               <li>☐ Review existing correlation searches</li>
@@ -425,8 +445,8 @@ index=YOUR_INDEX | head 10 | table src, dest, action, http_method, url
               <li>☐ Plan your Day 2 priorities</li>
             </ul>
 
-            <h4 style="color:var(--success-600);">Day 1 Success Criteria</h4>
-            <ul style="list-style:none;padding:0;margin:0;">
+            <h4 style="color:#10b981;">Day 1 Success Criteria</h4>
+            <ul style="list-style:none;padding:0;margin:0;font-size:0.95rem;line-height:2;">
               <li>✓ You have working access to all systems</li>
               <li>✓ You know who to contact for questions</li>
               <li>✓ You understand current project status</li>
@@ -442,10 +462,11 @@ index=YOUR_INDEX | head 10 | table src, dest, action, http_method, url
           <h2 class="subsection-title">What NOT to Do on Day 1</h2>
           
           <div class="callout warning">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <div class="callout-content">
               <div class="callout-title">Avoid These Mistakes</div>
               <div class="callout-body">
-                <ul style="margin:0;padding-left:20px;">
+                <ul style="margin:0;padding-left:20px;line-height:2;">
                   <li><strong>Don't make changes</strong> — Day 1 is for learning, not doing</li>
                   <li><strong>Don't criticize existing work</strong> — You don't have context yet</li>
                   <li><strong>Don't promise deliverables</strong> — You don't know what's feasible</li>
@@ -476,6 +497,31 @@ index=YOUR_INDEX | head 10 | table src, dest, action, http_method, url
     </main>
   </div>
   <script src="../js/app.js"></script>
-  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      securityLevel: 'loose',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+        curve: 'basis',
+        padding: 15,
+        nodeSpacing: 50,
+        rankSpacing: 60,
+        diagramPadding: 8
+      },
+      themeVariables: {
+        fontSize: '16px',
+        fontFamily: 'Inter, sans-serif',
+        primaryColor: '#3b82f6',
+        primaryTextColor: '#fff',
+        primaryBorderColor: '#2563eb',
+        lineColor: '#64748b',
+        secondaryColor: '#f1f5f9',
+        tertiaryColor: '#e2e8f0'
+      }
+    });
+  </script>
 </body>
 </html>
