@@ -107,28 +107,234 @@
             <span class="breadcrumb-item current">MFA Use Cases</span>
           </div>
         </div>
-        <span class="badge cyberark">8 Detections</span>
+        <span class="badge" style="background:#16a34a;color:white;">6 MFA Detections</span>
       </header>
 
       <div class="page-content">
         <div class="section">
           <h1 class="section-title">MFA Detection Use Cases</h1>
-          <p class="section-subtitle">Click any use case for full implementation: Decision Tree → SPL (CyberArk + Entra) → ES Config → Response Procedures</p>
+          <p class="section-subtitle">MFA-specific detections focused on challenge/response anomalies — NOT general identity behaviors</p>
         </div>
 
+        <!-- Scope Clarification -->
         <div class="section">
-          <div class="priority-note">
-            <h4>🚨 Priority Order: UC2 → UC1 → UC3 → Rest</h4>
-            <p style="font-size:0.9rem;color:var(--gray-700);"><strong>UC2 (Breach Indicator)</strong> is your MOST IMPORTANT detection. It tells you an attack succeeded and the attacker is inside. Deploy UC2 first, then UC1, then the rest.</p>
+          <div class="card" style="padding:20px;background:linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);border:2px solid #16a34a;margin-bottom:24px;">
+            <h4 style="margin-top:0;color:#15803d;">🎯 Project Scope: MFA-Specific Detections Only</h4>
+            <p style="font-size:0.9rem;color:var(--gray-700);margin-bottom:12px;">These detections focus on <strong>how MFA challenges are handled</strong>, not general login behaviors. All use the same Entra ID Sign-in and Audit logs, but detect different patterns.</p>
+            <div style="display:flex;gap:24px;flex-wrap:wrap;">
+              <div>
+                <strong style="color:#15803d;">✓ In Scope (MFA):</strong>
+                <ul style="margin:4px 0 0 0;padding-left:20px;font-size:0.85rem;">
+                  <li>Push bombing / MFA fatigue</li>
+                  <li>MFA bypass attempts</li>
+                  <li>MFA disabled for users</li>
+                  <li>MFA device registration</li>
+                </ul>
+              </div>
+              <div>
+                <strong style="color:#dc2626;">✗ Out of Scope (Identity):</strong>
+                <ul style="margin:4px 0 0 0;padding-left:20px;font-size:0.85rem;color:var(--gray-500);">
+                  <li><s>Impossible travel</s></li>
+                  <li><s>Risky country login</s></li>
+                  <li><s>Brute force attacks</s></li>
+                  <li><s>After-hours login</s></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="section">
-          <h2 class="subsection-title">🔴 Critical - Deploy First</h2>
+          <div class="priority-note">
+            <h4>🚨 Priority Order: UC2 → UC1 → UC4 → Rest</h4>
+            <p style="font-size:0.9rem;color:var(--gray-700);"><strong>UC2 (Breach Indicator)</strong> is your MOST IMPORTANT detection. It tells you an attack succeeded. Deploy UC2 first, then UC1, then UC4 (MFA Disabled), then the rest.</p>
+          </div>
+        </div>
+
+        <!-- BEFORE YOU BUILD: Prerequisites Section -->
+        <div class="section">
+          <h2 class="subsection-title">📋 Before You Build: Prerequisites Checklist</h2>
+          
+          <div class="callout info" style="margin-bottom:20px;">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="callout-content">
+              <div class="callout-title">Same Logs, New Detections</div>
+              <div class="callout-body">All MFA detections use <strong>existing logs</strong> already in Splunk: Entra ID Sign-in Logs, Entra ID Audit Logs, and CyberArk Identity Audit logs. No new data onboarding required — just validate the data is flowing and fields are extracting.</div>
+            </div>
+          </div>
+
+          <!-- Data Sources Already Available -->
+          <div class="card" style="padding:20px;margin-bottom:20px;background:linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);border:2px solid #10b981;">
+            <h4 style="margin-top:0;color:#059669;">✅ Existing Log Sources (Already Onboarded)</h4>
+            <div class="grid grid-3" style="gap:16px;margin-top:12px;">
+              <div style="background:white;padding:12px;border-radius:8px;">
+                <strong style="color:#2563eb;">Entra ID Sign-in Logs</strong>
+                <p style="font-size:0.8rem;margin:4px 0 0 0;color:var(--gray-600);">index=azure sourcetype=azure:aad:signin</p>
+                <p style="font-size:0.75rem;color:#059669;margin:4px 0 0 0;">✓ MFA events, error codes, geo</p>
+              </div>
+              <div style="background:white;padding:12px;border-radius:8px;">
+                <strong style="color:#2563eb;">Entra ID Audit Logs</strong>
+                <p style="font-size:0.8rem;margin:4px 0 0 0;color:var(--gray-600);">index=azure sourcetype=azure:aad:audit</p>
+                <p style="font-size:0.75rem;color:#059669;margin:4px 0 0 0;">✓ MFA config changes, device reg</p>
+              </div>
+              <div style="background:white;padding:12px;border-radius:8px;">
+                <strong style="color:#7c3aed;">CyberArk Identity Audit</strong>
+                <p style="font-size:0.8rem;margin:4px 0 0 0;color:var(--gray-600);">index=cyberark sourcetype=cyberark:identity:audit</p>
+                <p style="font-size:0.75rem;color:#059669;margin:4px 0 0 0;">✓ Privileged user MFA events</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Validation Steps -->
+          <div class="card" style="padding:20px;margin-bottom:20px;">
+            <h4 style="margin-top:0;">Step 1: Validate Data is Flowing</h4>
+            <div class="code-block" style="margin-top:12px;">
+              <div class="code-header"><span class="code-title">Run These Validation Queries First</span></div>
+              <div class="code-body"><pre><code>``` Entra ID Sign-in Logs - Check MFA events exist
+index=azure sourcetype=azure:aad:signin earliest=-24h
+| spath path=properties.status.errorCode output=error_code
+| where error_code IN (0, 500121, 50074, 50076)
+| stats count BY error_code
+| eval event_type = case(error_code=0, "Success", error_code=500121, "MFA Denied", error_code=50074, "MFA Incomplete", error_code=50076, "MFA Failed")
+
+``` CyberArk - Check MFA events exist
+index=cyberark sourcetype=cyberark:identity:audit earliest=-24h
+| where EventType IN ("Cloud.Core.MfaDenied", "Cloud.Core.MfaAuthentication", "Cloud.Core.MfaTimeout")
+| stats count BY EventType Result
+
+``` Entra ID Audit Logs - Check for MFA config changes
+index=azure sourcetype=azure:aad:audit earliest=-7d
+| spath path=properties.operationType output=operation
+| search operation IN ("Add", "Update", "Delete") properties.targetResources{}.modifiedProperties{}.displayName="*MFA*" OR properties.targetResources{}.modifiedProperties{}.displayName="*Authentication*"
+| stats count</code></pre></div>
+            </div>
+          </div>
+
+          <!-- Required Lookups -->
+          <div class="card" style="padding:20px;margin-bottom:20px;">
+            <h4 style="margin-top:0;">Step 2: Create Required Lookups</h4>
+            <table style="width:100%;margin-top:12px;">
+              <thead>
+                <tr>
+                  <th>Lookup File</th>
+                  <th>Required For</th>
+                  <th>Source</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>privileged_users.csv</code></td>
+                  <td>UC1, UC2, UC4, UC5</td>
+                  <td>IAM Team</td>
+                  <td><span class="badge warning">Request from IAM</span></td>
+                </tr>
+                <tr>
+                  <td><code>mfa_method_strength.csv</code></td>
+                  <td>UC6 (Method Downgrade)</td>
+                  <td>Create manually</td>
+                  <td><span class="badge info">Template below</span></td>
+                </tr>
+                <tr>
+                  <td><code>service_accounts.csv</code></td>
+                  <td>Exclude from detections</td>
+                  <td>IAM Team</td>
+                  <td><span class="badge warning">Request from IAM</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="code-block" style="margin-top:16px;">
+              <div class="code-header"><span class="code-title">mfa_method_strength.csv (Create This)</span></div>
+              <div class="code-body"><pre><code>method,strength,risk_level
+microsoftAuthenticator,strong,low
+fido2,strong,low
+windowsHelloForBusiness,strong,low
+softwareOneTimePasscode,medium,medium
+sms,weak,high
+voice,weak,high
+email,weak,high</code></pre></div>
+            </div>
+          </div>
+
+          <!-- Field Extraction Validation -->
+          <div class="card" style="padding:20px;margin-bottom:20px;">
+            <h4 style="margin-top:0;">Step 3: Validate Field Extraction</h4>
+            <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;">Confirm these critical fields are extracting correctly for each use case:</p>
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th>Use Case</th>
+                  <th>Required Fields (Entra ID)</th>
+                  <th>Required Fields (CyberArk)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>UC1, UC2</strong><br><span style="font-size:0.75rem;color:var(--gray-500);">MFA Fatigue</span></td>
+                  <td><code>properties.status.errorCode</code>, <code>properties.userPrincipalName</code>, <code>properties.ipAddress</code></td>
+                  <td><code>EventType</code>, <code>Result</code>, <code>ActorId</code>, <code>ClientIP</code></td>
+                </tr>
+                <tr>
+                  <td><strong>UC3</strong><br><span style="font-size:0.75rem;color:var(--gray-500);">MFA Bypass</span></td>
+                  <td><code>properties.authenticationRequirement</code>, <code>properties.mfaDetail</code></td>
+                  <td>N/A</td>
+                </tr>
+                <tr>
+                  <td><strong>UC4</strong><br><span style="font-size:0.75rem;color:var(--gray-500);">MFA Disabled</span></td>
+                  <td><code>properties.targetResources{}.modifiedProperties</code> (Audit logs)</td>
+                  <td>N/A</td>
+                </tr>
+                <tr>
+                  <td><strong>UC5</strong><br><span style="font-size:0.75rem;color:var(--gray-500);">New Device</span></td>
+                  <td><code>properties.targetResources{}.displayName</code> (Audit logs)</td>
+                  <td><code>EventType</code> = "Cloud.Core.MfaDeviceRegistered"</td>
+                </tr>
+                <tr>
+                  <td><strong>UC6</strong><br><span style="font-size:0.75rem;color:var(--gray-500);">Method Downgrade</span></td>
+                  <td><code>properties.mfaDetail.authMethod</code></td>
+                  <td><code>AuthMethod</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Checklist -->
+          <div class="card" style="padding:20px;background:var(--gray-50);">
+            <h4 style="margin-top:0;">✅ Prerequisites Checklist (Complete Before Building)</h4>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+              <div>
+                <p style="font-weight:600;color:var(--gray-700);margin-bottom:8px;">Data Validation</p>
+                <label style="display:flex;align-items:center;gap:8px;font-size:0.875rem;margin-bottom:6px;"><input type="checkbox"> Entra ID Sign-in logs flowing (24h)</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:0.875rem;margin-bottom:6px;"><input type="checkbox"> Entra ID Audit logs flowing (7d)</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:0.875rem;margin-bottom:6px;"><input type="checkbox"> CyberArk logs flowing (24h)</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:0.875rem;margin-bottom:6px;"><input type="checkbox"> MFA error codes present (500121)</label>
+              </div>
+              <div>
+                <p style="font-weight:600;color:var(--gray-700);margin-bottom:8px;">Lookups & Config</p>
+                <label style="display:flex;align-items:center;gap:8px;font-size:0.875rem;margin-bottom:6px;"><input type="checkbox"> privileged_users.csv uploaded</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:0.875rem;margin-bottom:6px;"><input type="checkbox"> mfa_method_strength.csv created</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:0.875rem;margin-bottom:6px;"><input type="checkbox"> service_accounts.csv uploaded</label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:0.875rem;margin-bottom:6px;"><input type="checkbox"> Field extractions verified</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Critical MFA Detections -->
+        <div class="section">
+          <h2 class="subsection-title">🔴 Critical Priority — Active Attack / Breach Indicators</h2>
           <div class="uc-grid">
             <a href="mfa/uc2-breach.html" class="uc-card critical">
-              <h3>🚨 UC2: MFA Fatigue → Success (BREACH INDICATOR)</h3>
-              <p><strong>HIGHEST PRIORITY.</strong> Multiple MFA denials followed by SUCCESS = attacker likely got user to approve. This is active breach detection.</p>
+              <h3>🚨 MFA-UC2: MFA Denials → Success (BREACH)</h3>
+              <p><strong>HIGHEST PRIORITY.</strong> Multiple MFA denials followed by SUCCESS = attacker likely got user to approve. This is ACTIVE BREACH detection.</p>
+              <div style="background:#fef2f2;padding:8px;border-radius:6px;margin:8px 0;font-size:0.8rem;">
+                <strong style="color:#991b1b;">Before Steps:</strong>
+                <ul style="margin:4px 0 0 16px;color:#7f1d1d;">
+                  <li>Verify error_code 500121 events exist in Sign-in logs</li>
+                  <li>Confirm privileged_users.csv is uploaded</li>
+                  <li>Validate CyberArk MfaDenied events present</li>
+                </ul>
+              </div>
               <div class="uc-meta">
                 <span class="badge" style="background:#dc2626;color:white;">CRITICAL</span>
                 <span>T1621, T1078</span>
@@ -137,8 +343,16 @@
             </a>
             
             <a href="mfa/uc1-fatigue.html" class="uc-card critical">
-              <h3>UC1: MFA Fatigue / Push Bombing</h3>
-              <p>Attacker spams MFA push notifications hoping user accidentally approves. Used in Uber and Cisco breaches.</p>
+              <h3>MFA-UC1: MFA Fatigue / Push Bombing</h3>
+              <p>Attacker spams MFA push notifications hoping user accidentally approves. Used in Uber, Cisco, Microsoft breaches.</p>
+              <div style="background:#fef2f2;padding:8px;border-radius:6px;margin:8px 0;font-size:0.8rem;">
+                <strong style="color:#991b1b;">Before Steps:</strong>
+                <ul style="margin:4px 0 0 16px;color:#7f1d1d;">
+                  <li>Count 500121 (MFA Denied) events in last 24h</li>
+                  <li>Verify userPrincipalName field extracts</li>
+                  <li>Check CyberArk EventType=Cloud.Core.MfaDenied</li>
+                </ul>
+              </div>
               <div class="uc-meta">
                 <span class="badge" style="background:#dc2626;color:white;">CRITICAL</span>
                 <span>T1621</span>
@@ -148,95 +362,139 @@
           </div>
         </div>
 
+        <!-- High Priority MFA Detections -->
         <div class="section">
-          <h2 class="subsection-title">🟠 High Priority - Geographic & Travel</h2>
+          <h2 class="subsection-title">🟠 High Priority — MFA Security Weakening</h2>
           <div class="uc-grid">
-            <a href="mfa/uc3-travel.html" class="uc-card high">
-              <h3>UC3: Impossible Travel</h3>
-              <p>User logs in from Toronto then Moscow in 30 minutes. Unless they have a teleporter, this is credential theft.</p>
+            <a href="mfa/uc3-bypass.html" class="uc-card high">
+              <h3>MFA-UC3: MFA Satisfied Without Challenge</h3>
+              <p>Authentication succeeds with "MFA satisfied" but no actual challenge was presented to the user. Indicates MFA bypass or misconfiguration.</p>
+              <div style="background:#fff7ed;padding:8px;border-radius:6px;margin:8px 0;font-size:0.8rem;">
+                <strong style="color:#9a3412;">Before Steps:</strong>
+                <ul style="margin:4px 0 0 16px;color:#7c2d12;">
+                  <li>Verify authenticationRequirement field exists</li>
+                  <li>Check mfaDetail object is populated</li>
+                  <li>Baseline normal MFA skip scenarios (trusted device)</li>
+                </ul>
+              </div>
               <div class="uc-meta">
                 <span class="badge error">HIGH</span>
-                <span>T1078</span>
+                <span>T1556.006</span>
                 <span>Every 15 min</span>
               </div>
             </a>
             
-            <a href="mfa/uc4-location.html" class="uc-card high">
-              <h3>UC4: New Location Login</h3>
-              <p>First-time login from a country or city the user has never accessed from before.</p>
+            <a href="mfa/uc4-disabled.html" class="uc-card high">
+              <h3>MFA-UC4: MFA Disabled for Admin Account</h3>
+              <p>MFA requirement removed from a privileged user account. Critical security control weakened — could indicate insider threat or compromised admin.</p>
+              <div style="background:#fff7ed;padding:8px;border-radius:6px;margin:8px 0;font-size:0.8rem;">
+                <strong style="color:#9a3412;">Before Steps:</strong>
+                <ul style="margin:4px 0 0 16px;color:#7c2d12;">
+                  <li>Verify Entra ID Audit logs are flowing</li>
+                  <li>Confirm privileged_users.csv is current</li>
+                  <li>Test query: search for "StrongAuthenticationRequirement"</li>
+                </ul>
+              </div>
               <div class="uc-meta">
                 <span class="badge error">HIGH</span>
-                <span>T1078</span>
-                <span>Every 15 min</span>
+                <span>T1556</span>
+                <span>Real-time</span>
               </div>
             </a>
           </div>
         </div>
 
+        <!-- Medium Priority MFA Detections -->
         <div class="section">
-          <h2 class="subsection-title">🟠 High Priority - Account Anomalies</h2>
+          <h2 class="subsection-title">🟡 Medium Priority — MFA Persistence & Evasion</h2>
           <div class="uc-grid">
-            <a href="mfa/uc6-brute.html" class="uc-card high">
-              <h3>UC6: Privileged User Brute Force</h3>
-              <p>Multiple failed login attempts specifically targeting admin and privileged accounts.</p>
-              <div class="uc-meta">
-                <span class="badge error">HIGH</span>
-                <span>T1110</span>
-                <span>Every 5 min</span>
+            <a href="mfa/uc5-device.html" class="uc-card medium">
+              <h3>MFA-UC5: New MFA Device Registration</h3>
+              <p>Attacker with account access registers their own authenticator app or security key for persistent access even after password reset.</p>
+              <div style="background:#fefce8;padding:8px;border-radius:6px;margin:8px 0;font-size:0.8rem;">
+                <strong style="color:#854d0e;">Before Steps:</strong>
+                <ul style="margin:4px 0 0 16px;color:#713f12;">
+                  <li>Verify Audit log operations for device registration</li>
+                  <li>Search: "Register security info" or "Add authentication method"</li>
+                  <li>Baseline normal device registration patterns</li>
+                </ul>
               </div>
-            </a>
-            
-            <a href="mfa/uc8-dormant.html" class="uc-card high">
-              <h3>UC8: Dormant Account Activation</h3>
-              <p>Account inactive for 90+ days suddenly becomes active. Possible compromise of forgotten account.</p>
-              <div class="uc-meta">
-                <span class="badge error">HIGH</span>
-                <span>T1078</span>
-                <span>Every 1 hour</span>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="section">
-          <h2 class="subsection-title">🟡 Medium Priority - Behavioral</h2>
-          <div class="uc-grid">
-            <a href="mfa/uc5-hours.html" class="uc-card medium">
-              <h3>UC5: After-Hours Login</h3>
-              <p>Successful authentication outside normal business hours (nights, weekends).</p>
               <div class="uc-meta">
                 <span class="badge warning">MEDIUM</span>
-                <span>T1078</span>
+                <span>T1098.005</span>
                 <span>Every 15 min</span>
               </div>
             </a>
             
-            <a href="mfa/uc7-device.html" class="uc-card medium">
-              <h3>UC7: New MFA Device Registration</h3>
-              <p>Attacker with account access registers their own MFA device for persistence.</p>
+            <a href="mfa/uc6-downgrade.html" class="uc-card medium">
+              <h3>MFA-UC6: MFA Method Downgrade</h3>
+              <p>User's MFA method changed from strong (FIDO2, Authenticator) to weak (SMS, Voice call). May indicate attacker preparing for SIM swap.</p>
+              <div style="background:#fefce8;padding:8px;border-radius:6px;margin:8px 0;font-size:0.8rem;">
+                <strong style="color:#854d0e;">Before Steps:</strong>
+                <ul style="margin:4px 0 0 16px;color:#713f12;">
+                  <li>Create mfa_method_strength.csv lookup</li>
+                  <li>Verify mfaDetail.authMethod field extracts</li>
+                  <li>Baseline current MFA method distribution</li>
+                </ul>
+              </div>
               <div class="uc-meta">
                 <span class="badge warning">MEDIUM</span>
-                <span>T1098</span>
+                <span>T1556</span>
                 <span>Every 15 min</span>
               </div>
             </a>
           </div>
         </div>
 
+        <!-- Out of Scope Reference -->
+        <div class="section">
+          <h2 class="subsection-title">📋 Related but Out of Scope: Identity Detections</h2>
+          <div class="callout info">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="callout-content">
+              <div class="callout-title">These use the same logs but are a DIFFERENT project</div>
+              <div class="callout-body">The following detections are <strong>Identity Detections</strong>, not MFA Detections. They focus on login context (where, when, who) rather than MFA challenge handling:</div>
+            </div>
+          </div>
+          <div class="grid grid-4" style="margin-top:16px;">
+            <div class="card" style="padding:12px;background:#f1f5f9;opacity:0.7;">
+              <span class="badge" style="background:#64748b;">Identity</span>
+              <h4 style="margin-top:8px;font-size:0.85rem;color:#64748b;">Impossible Travel</h4>
+              <p style="font-size:0.75rem;color:#94a3b8;">Login from 2 locations too far apart</p>
+            </div>
+            <div class="card" style="padding:12px;background:#f1f5f9;opacity:0.7;">
+              <span class="badge" style="background:#64748b;">Identity</span>
+              <h4 style="margin-top:8px;font-size:0.85rem;color:#64748b;">Risky Country Login</h4>
+              <p style="font-size:0.75rem;color:#94a3b8;">First login from high-risk geo</p>
+            </div>
+            <div class="card" style="padding:12px;background:#f1f5f9;opacity:0.7;">
+              <span class="badge" style="background:#64748b;">Identity</span>
+              <h4 style="margin-top:8px;font-size:0.85rem;color:#64748b;">Brute Force</h4>
+              <p style="font-size:0.75rem;color:#94a3b8;">Multiple failed password attempts</p>
+            </div>
+            <div class="card" style="padding:12px;background:#f1f5f9;opacity:0.7;">
+              <span class="badge" style="background:#64748b;">Identity</span>
+              <h4 style="margin-top:8px;font-size:0.85rem;color:#64748b;">After-Hours Login</h4>
+              <p style="font-size:0.75rem;color:#94a3b8;">Access outside business hours</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Sources Reference -->
         <div class="section">
           <h2 class="subsection-title">Data Sources Reference</h2>
           <div class="grid grid-2">
             <div class="card" style="padding:20px;background:#f3e8ff;border-left:4px solid #7c3aed;">
-              <h4 style="color:#7c3aed;margin-bottom:8px;">🔐 CyberArk Identity = PRIMARY</h4>
-              <p style="font-size:0.85rem;color:var(--gray-700);margin-bottom:12px;">For privileged users, admins, IT staff, service accounts. Higher priority alerts.</p>
-              <p style="font-size:0.8rem;color:var(--gray-600);"><strong>Key EventTypes:</strong><br>
-              Cloud.Core.MfaDenied, Cloud.Core.MfaTimeout, Cloud.Core.MfaAuthentication, Cloud.Core.Login</p>
+              <h4 style="color:#7c3aed;margin-bottom:8px;">🔐 CyberArk Identity</h4>
+              <p style="font-size:0.85rem;color:var(--gray-700);margin-bottom:12px;">For privileged users: admins, IT staff, service accounts</p>
+              <p style="font-size:0.8rem;color:var(--gray-600);"><strong>MFA Events:</strong><br>
+              Cloud.Core.MfaDenied, Cloud.Core.MfaTimeout, Cloud.Core.MfaAuthentication</p>
             </div>
             <div class="card" style="padding:20px;background:#dbeafe;border-left:4px solid #2563eb;">
-              <h4 style="color:#2563eb;margin-bottom:8px;">☁️ Entra ID (Azure AD) = SECONDARY</h4>
-              <p style="font-size:0.85rem;color:var(--gray-700);margin-bottom:12px;">For standard employees, general workforce. Broader coverage.</p>
-              <p style="font-size:0.8rem;color:var(--gray-600);"><strong>Key Error Codes:</strong><br>
-              500121 = MFA Denied, 50074 = MFA Required, 50053 = Account Locked</p>
+              <h4 style="color:#2563eb;margin-bottom:8px;">☁️ Entra ID (Azure AD)</h4>
+              <p style="font-size:0.85rem;color:var(--gray-700);margin-bottom:12px;">For all users: Sign-in logs + Audit logs</p>
+              <p style="font-size:0.8rem;color:var(--gray-600);"><strong>MFA Fields:</strong><br>
+              authenticationRequirement, mfaDetail.authMethod, status.errorCode (500121=MFA Denied)</p>
             </div>
           </div>
         </div>

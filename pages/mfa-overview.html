@@ -104,9 +104,104 @@
       <div class="page-content">
         <div class="section">
           <h1 class="section-title">MFA Detection Project</h1>
-          <p class="section-subtitle">5 production-ready detections for privileged identity protection</p>
+          <p class="section-subtitle">Focused detections for MFA-specific attack patterns — a subset of broader Identity detections</p>
         </div>
 
+        <!-- CRITICAL: Identity vs MFA Detections -->
+        <div class="section">
+          <h2 class="subsection-title">Understanding the Scope: Identity vs MFA Detections</h2>
+          
+          <div class="callout warning" style="margin-bottom:24px;">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+            <div class="callout-content">
+              <div class="callout-title">🎯 This Project: MFA Detections ONLY</div>
+              <div class="callout-body">MFA Detections are a <strong>focused subset</strong> of Identity Detections. Both use the same log sources (Entra ID Sign-in/Audit logs) but detect DIFFERENT attack patterns. This project focuses exclusively on MFA-specific behaviors.</div>
+            </div>
+          </div>
+          
+          <!-- Comparison Table -->
+          <div class="card" style="padding:24px;margin-bottom:24px;">
+            <h4 style="margin-top:0;margin-bottom:16px;">Same Logs, Different Detection Categories</h4>
+            <table style="width:100%;">
+              <thead>
+                <tr>
+                  <th style="width:20%;background:#f1f5f9;">Category</th>
+                  <th style="width:35%;background:#dbeafe;">Identity Detections</th>
+                  <th style="width:35%;background:#dcfce7;">MFA Detections (THIS PROJECT)</th>
+                  <th style="width:10%;background:#f1f5f9;">In Scope?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Focus</strong></td>
+                  <td>WHO is logging in, WHERE from, WHEN</td>
+                  <td>HOW the MFA challenge was handled</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><strong>Example 1</strong></td>
+                  <td>Impossible Travel (Toronto → Moscow in 30 min)</td>
+                  <td>MFA Fatigue / Push Bombing (5+ denials)</td>
+                  <td style="color:#16a34a;font-weight:600;">✓ MFA</td>
+                </tr>
+                <tr>
+                  <td><strong>Example 2</strong></td>
+                  <td>Risky Country Login (first login from Russia)</td>
+                  <td>MFA Failed After Password Success</td>
+                  <td style="color:#16a34a;font-weight:600;">✓ MFA</td>
+                </tr>
+                <tr>
+                  <td><strong>Example 3</strong></td>
+                  <td>Brute Force (100 failed password attempts)</td>
+                  <td>MFA Satisfied Without Challenge (bypass)</td>
+                  <td style="color:#16a34a;font-weight:600;">✓ MFA</td>
+                </tr>
+                <tr>
+                  <td><strong>Example 4</strong></td>
+                  <td>After-Hours Login (3 AM access)</td>
+                  <td>MFA Disabled for Admin Account</td>
+                  <td style="color:#16a34a;font-weight:600;">✓ MFA</td>
+                </tr>
+                <tr>
+                  <td><strong>Example 5</strong></td>
+                  <td>Dormant Account Activation (90+ days)</td>
+                  <td>New MFA Device Registered</td>
+                  <td style="color:#16a34a;font-weight:600;">✓ MFA</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Visual Differentiation -->
+          <div class="grid grid-2" style="gap:20px;">
+            <div class="card" style="padding:20px;background:#dbeafe;border:2px solid #3b82f6;">
+              <h4 style="margin-top:0;color:#1d4ed8;">🔵 Identity Detections (Out of Scope)</h4>
+              <p style="font-size:0.85rem;color:var(--gray-700);margin-bottom:12px;">Focus on login context and behavior patterns</p>
+              <ul style="font-size:0.85rem;color:var(--gray-600);margin:0;padding-left:20px;">
+                <li>Impossible Travel</li>
+                <li>Risky Country / New Location</li>
+                <li>Brute Force Attacks</li>
+                <li>After-Hours / Weekend Access</li>
+                <li>Dormant Account Activation</li>
+                <li>Account Lockouts</li>
+              </ul>
+              <p style="font-size:0.75rem;color:#1d4ed8;margin-top:12px;margin-bottom:0;"><em>→ Covered by separate Identity Detection project</em></p>
+            </div>
+            <div class="card" style="padding:20px;background:#dcfce7;border:2px solid #16a34a;">
+              <h4 style="margin-top:0;color:#15803d;">🟢 MFA Detections (THIS PROJECT)</h4>
+              <p style="font-size:0.85rem;color:var(--gray-700);margin-bottom:12px;">Focus on MFA challenge/response anomalies</p>
+              <ul style="font-size:0.85rem;color:var(--gray-600);margin:0;padding-left:20px;">
+                <li><strong>MFA-UC1:</strong> MFA Fatigue / Push Bombing</li>
+                <li><strong>MFA-UC2:</strong> MFA Denials → Then Success (Breach)</li>
+                <li><strong>MFA-UC3:</strong> MFA Satisfied Without Challenge</li>
+                <li><strong>MFA-UC4:</strong> MFA Disabled for Privileged User</li>
+                <li><strong>MFA-UC5:</strong> New MFA Device Registration</li>
+                <li><strong>MFA-UC6:</strong> MFA Method Downgrade</li>
+              </ul>
+              <p style="font-size:0.75rem;color:#15803d;margin-top:12px;margin-bottom:0;"><em>→ Build these detections in this project</em></p>
+            </div>
+          </div>
+        </div>
 
         <!-- MFA Attack Chain -->
         <div class="section">
@@ -175,7 +270,7 @@ flowchart LR
 
         <!-- Use Cases Table -->
         <div class="section">
-          <h2 class="subsection-title">Use Cases Summary</h2>
+          <h2 class="subsection-title">MFA Detection Use Cases</h2>
           <div class="table-container">
             <table>
               <thead>
@@ -185,7 +280,7 @@ flowchart LR
                   <th>Severity</th>
                   <th>MITRE</th>
                   <th>Primary Source</th>
-                  <th>Description</th>
+                  <th>What It Detects</th>
                 </tr>
               </thead>
               <tbody>
@@ -194,40 +289,48 @@ flowchart LR
                   <td>MFA Fatigue / Push Bombing</td>
                   <td><span class="badge critical">Critical</span></td>
                   <td>T1621</td>
-                  <td>CyberArk</td>
-                  <td>5+ MFA denials in 10 minutes</td>
+                  <td>CyberArk + Entra</td>
+                  <td>5+ MFA denials in 10 minutes (attack in progress)</td>
                 </tr>
                 <tr>
                   <td class="highlight">MFA-UC2</td>
-                  <td>MFA Failure Burst → Success</td>
-                  <td><span class="badge error">High</span></td>
-                  <td>T1110, T1621</td>
-                  <td>CyberArk</td>
-                  <td>Multiple failures followed by success</td>
+                  <td>MFA Denials → Success (BREACH)</td>
+                  <td><span class="badge critical">Critical</span></td>
+                  <td>T1621, T1078</td>
+                  <td>CyberArk + Entra</td>
+                  <td>Multiple MFA failures followed by success (likely compromised)</td>
                 </tr>
                 <tr>
                   <td class="highlight">MFA-UC3</td>
-                  <td>New Location/Device</td>
-                  <td><span class="badge warning">Medium</span></td>
-                  <td>T1078</td>
-                  <td>Entra + CyberArk</td>
-                  <td>Login from new location or device</td>
+                  <td>MFA Satisfied Without Challenge</td>
+                  <td><span class="badge error">High</span></td>
+                  <td>T1556.006</td>
+                  <td>Entra ID</td>
+                  <td>MFA marked complete but no challenge sent (bypass attempt)</td>
                 </tr>
                 <tr>
                   <td class="highlight">MFA-UC4</td>
-                  <td>Impossible Travel</td>
+                  <td>MFA Disabled for Admin</td>
                   <td><span class="badge error">High</span></td>
-                  <td>T1078</td>
-                  <td>Entra ID</td>
-                  <td>Logins from impossible geo distance</td>
+                  <td>T1556</td>
+                  <td>Entra Audit</td>
+                  <td>MFA requirement removed from privileged account</td>
                 </tr>
                 <tr>
                   <td class="highlight">MFA-UC5</td>
+                  <td>New MFA Device Registration</td>
+                  <td><span class="badge warning">Medium</span></td>
+                  <td>T1098.005</td>
+                  <td>Entra Audit + CyberArk</td>
+                  <td>Attacker registers their own MFA device for persistence</td>
+                </tr>
+                <tr>
+                  <td class="highlight">MFA-UC6</td>
                   <td>MFA Method Downgrade</td>
-                  <td><span class="badge error">High</span></td>
+                  <td><span class="badge warning">Medium</span></td>
                   <td>T1556</td>
-                  <td>CyberArk</td>
-                  <td>Switch from secure to weak MFA method</td>
+                  <td>Entra Audit</td>
+                  <td>Switch from FIDO2/Authenticator to SMS (weaker method)</td>
                 </tr>
               </tbody>
             </table>
@@ -306,25 +409,25 @@ flowchart LR
         <div class="section">
           <h2 class="subsection-title">Quick Navigation</h2>
           <div class="grid grid-4">
-            <a href="mfa-usecases.html" class="card clickable">
+            <a href="mfa-usecases.html#uc2" class="card clickable">
+              <span class="badge critical">Critical</span>
+              <h4 style="margin-top:8px;font-size:0.9rem;">MFA-UC2</h4>
+              <p style="font-size:0.75rem;color:var(--gray-500);">Denials → Success (Breach)</p>
+            </a>
+            <a href="mfa-usecases.html#uc1" class="card clickable">
               <span class="badge critical">Critical</span>
               <h4 style="margin-top:8px;font-size:0.9rem;">MFA-UC1</h4>
               <p style="font-size:0.75rem;color:var(--gray-500);">Push Bombing</p>
             </a>
-            <a href="vendor-cyberark.html" class="card clickable">
-              <span class="badge cyberark">Vendor</span>
-              <h4 style="margin-top:8px;font-size:0.9rem;">CyberArk</h4>
-              <p style="font-size:0.75rem;color:var(--gray-500);">Field schema & SPL</p>
+            <a href="mfa-usecases.html#uc4" class="card clickable">
+              <span class="badge error">High</span>
+              <h4 style="margin-top:8px;font-size:0.9rem;">MFA-UC4</h4>
+              <p style="font-size:0.75rem;color:var(--gray-500);">MFA Disabled for Admin</p>
             </a>
-            <a href="vendor-entra.html" class="card clickable">
-              <span class="badge microsoft">Vendor</span>
-              <h4 style="margin-top:8px;font-size:0.9rem;">Entra ID</h4>
-              <p style="font-size:0.75rem;color:var(--gray-500);">Error codes & fields</p>
-            </a>
-            <a href="spl-reference.html#mfa" class="card clickable">
-              <span class="badge splunk">SPL</span>
-              <h4 style="margin-top:8px;font-size:0.9rem;">SPL Reference</h4>
-              <p style="font-size:0.75rem;color:var(--gray-500);">Copy-paste queries</p>
+            <a href="mfa-usecases.html" class="card clickable">
+              <span class="badge info">All</span>
+              <h4 style="margin-top:8px;font-size:0.9rem;">All MFA Use Cases</h4>
+              <p style="font-size:0.75rem;color:var(--gray-500);">6 MFA detections</p>
             </a>
           </div>
         </div>
