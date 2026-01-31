@@ -194,7 +194,7 @@ flowchart LR
                   <li>Open the alert in Incident Review</li>
                   <li>Review the deviation value (how many sigma above baseline)</li>
                   <li>Check if this matches a known maintenance window</li>
-                  <li><strong>If deviation &lt; 2:</strong> May be normal variance → Monitor</li>
+                  <li><strong>If deviation < 2:</strong> May be normal variance → Monitor</li>
                   <li><strong>If deviation ≥ 3:</strong> Likely real attack → Continue</li>
                 </ul>
               </div>
@@ -261,7 +261,7 @@ flowchart LR
                     <ul style="font-size:0.8125rem;color:var(--gray-600);margin-left:16px;">
                       <li>Evidence of successful exploitation</li>
                       <li>Application errors correlated with attacks</li>
-                      <li>Sustained attack &gt;1 hour</li>
+                      <li>Sustained attack > 1 hour</li>
                       <li>Customer-facing impact</li>
                     </ul>
                   </div>
@@ -424,8 +424,8 @@ flowchart LR
               <div class="accordion-content">
                 <p style="font-size:0.875rem;color:var(--gray-600);">Check the distance and time values:</p>
                 <ul style="font-size:0.875rem;color:var(--gray-600);margin-left:16px;">
-                  <li><strong>Speed &gt; 800 km/h:</strong> Faster than commercial flight = suspicious</li>
-                  <li><strong>Speed &gt; 500 km/h with short time:</strong> Very suspicious</li>
+                  <li><strong>Speed > 800 km/h:</strong> Faster than commercial flight = suspicious</li>
+                  <li><strong>Speed > 500 km/h with short time:</strong> Very suspicious</li>
                   <li><strong>VPN False Positive:</strong> Check if user commonly uses VPN</li>
                 </ul>
               </div>
@@ -593,7 +593,7 @@ flowchart LR
             <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:12px;"><strong>Do not enable production alerts until ALL items are checked:</strong></p>
             <div style="columns:2;font-size:0.875rem;column-gap:24px;">
               <p style="margin:4px 0;">☐ Silent mode 7+ days complete</p>
-              <p style="margin:4px 0;">☐ FP rate &lt;10% for all detections</p>
+              <p style="margin:4px 0;">☐ FP rate < 10% for all detections</p>
               <p style="margin:4px 0;">☐ Runbooks complete and reviewed</p>
               <p style="margin:4px 0;">☐ SOC team trained</p>
               <p style="margin:4px 0;">☐ Alert routing configured</p>
