@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
   <div class="app-container">
@@ -183,51 +182,63 @@
         <div class="section">
           <h2 class="subsection-title">Core Architecture Components</h2>
           
-          <div class="card" style="padding:24px;margin-bottom:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
-flowchart LR
-    subgraph Sources["Data Sources"]
-        A1[Servers/Apps]
-        A2[Cloud Services]
-        A3[Network Devices]
-        A4[Security Tools]
-    end
-    
-    subgraph Ingestion["Data Ingestion"]
-        B1[Universal Forwarder]
-        B2[Heavy Forwarder]
-        B3[HEC]
-        B4[Scripted/Modular Input]
-    end
-    
-    subgraph Processing["Data Processing"]
-        C1[Indexer]
-    end
-    
-    subgraph Storage["Storage"]
-        D1[Hot]
-        D2[Warm]
-        D3[Cold]
-        D4[Frozen]
-    end
-    
-    subgraph Search["Search Layer"]
-        E1[Search Head]
-    end
-    
-    A1 --> B1
-    A2 --> B3
-    A3 --> B2
-    A4 --> B3
-    B1 --> C1
-    B2 --> C1
-    B3 --> C1
-    B4 --> C1
-    C1 --> D1
-    D1 --> D2
-    D2 --> D3
-    D3 --> D4
-    C1 --> E1
+          <!-- Pure HTML/CSS Core Architecture Diagram -->
+          <div class="card" style="padding:30px;margin-bottom:24px;background:linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);overflow-x:auto;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:900px;">
+              
+              <!-- Data Sources -->
+              <div style="background:#f1f5f9;border:2px solid #6b7280;border-radius:12px;padding:12px;min-width:100px;">
+                <div style="text-align:center;font-size:0.7rem;color:#6b7280;font-weight:600;margin-bottom:8px;">DATA SOURCES</div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <div style="background:#6b7280;color:white;padding:6px 10px;border-radius:6px;font-size:0.8rem;text-align:center;">Servers</div>
+                  <div style="background:#6b7280;color:white;padding:6px 10px;border-radius:6px;font-size:0.8rem;text-align:center;">Cloud</div>
+                  <div style="background:#6b7280;color:white;padding:6px 10px;border-radius:6px;font-size:0.8rem;text-align:center;">Network</div>
+                  <div style="background:#6b7280;color:white;padding:6px 10px;border-radius:6px;font-size:0.8rem;text-align:center;">Security</div>
+                </div>
+              </div>
+              
+              <div style="font-size:24px;color:#64748b;">→</div>
+              
+              <!-- Data Ingestion -->
+              <div style="background:#eff6ff;border:2px solid #3b82f6;border-radius:12px;padding:12px;min-width:130px;">
+                <div style="text-align:center;font-size:0.7rem;color:#3b82f6;font-weight:600;margin-bottom:8px;">DATA INGESTION</div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <div style="background:#3b82f6;color:white;padding:6px 10px;border-radius:6px;font-size:0.8rem;text-align:center;">Universal Forwarder</div>
+                  <div style="background:#3b82f6;color:white;padding:6px 10px;border-radius:6px;font-size:0.8rem;text-align:center;">Heavy Forwarder</div>
+                  <div style="background:#3b82f6;color:white;padding:6px 10px;border-radius:6px;font-size:0.8rem;text-align:center;">HEC</div>
+                  <div style="background:#3b82f6;color:white;padding:6px 10px;border-radius:6px;font-size:0.8rem;text-align:center;">Modular Input</div>
+                </div>
+              </div>
+              
+              <div style="font-size:24px;color:#64748b;">→</div>
+              
+              <!-- Processing -->
+              <div style="background:#fef3c7;border:2px solid #f59e0b;border-radius:12px;padding:12px;min-width:100px;">
+                <div style="text-align:center;font-size:0.7rem;color:#d97706;font-weight:600;margin-bottom:8px;">PROCESSING</div>
+                <div style="background:#f59e0b;color:white;padding:12px 16px;border-radius:6px;font-size:0.9rem;text-align:center;font-weight:600;">Indexer</div>
+              </div>
+              
+              <div style="font-size:24px;color:#64748b;">→</div>
+              
+              <!-- Storage -->
+              <div style="background:#fef2f2;border:2px solid #ef4444;border-radius:12px;padding:12px;min-width:80px;">
+                <div style="text-align:center;font-size:0.7rem;color:#dc2626;font-weight:600;margin-bottom:8px;">STORAGE</div>
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                  <div style="background:#ef4444;color:white;padding:4px 8px;border-radius:4px;font-size:0.75rem;text-align:center;">Hot</div>
+                  <div style="background:#f59e0b;color:white;padding:4px 8px;border-radius:4px;font-size:0.75rem;text-align:center;">Warm</div>
+                  <div style="background:#3b82f6;color:white;padding:4px 8px;border-radius:4px;font-size:0.75rem;text-align:center;">Cold</div>
+                  <div style="background:#6b7280;color:white;padding:4px 8px;border-radius:4px;font-size:0.75rem;text-align:center;">Frozen</div>
+                </div>
+              </div>
+              
+              <div style="font-size:24px;color:#64748b;">⟷</div>
+              
+              <!-- Search -->
+              <div style="background:#ecfdf5;border:2px solid #10b981;border-radius:12px;padding:12px;min-width:100px;">
+                <div style="text-align:center;font-size:0.7rem;color:#059669;font-weight:600;margin-bottom:8px;">SEARCH LAYER</div>
+                <div style="background:#10b981;color:white;padding:12px 16px;border-radius:6px;font-size:0.9rem;text-align:center;font-weight:600;">Search Head</div>
+              </div>
+              
             </div>
           </div>
 
@@ -363,17 +374,57 @@ _indextime # When the event was indexed
         <div class="section">
           <h2 class="subsection-title">Data Storage — Bucket Lifecycle</h2>
           
-          <div class="card" style="padding:24px;margin-bottom:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
-flowchart LR
-    A[Hot Bucket<br/>Actively Written] -->|Roll when full<br/>or time limit| B[Warm Bucket<br/>Searchable, Read-only]
-    B -->|Age-based| C[Cold Bucket<br/>Searchable, Slower]
-    C -->|Retention policy| D[Frozen<br/>Archived/Deleted]
-    
-    style A fill:#ef4444,color:#fff
-    style B fill:#f59e0b,color:#fff
-    style C fill:#3b82f6,color:#fff
-    style D fill:#6b7280,color:#fff
+          <!-- Pure HTML/CSS Bucket Lifecycle -->
+          <div class="card" style="padding:30px;margin-bottom:24px;background:linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);overflow-x:auto;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;min-width:600px;">
+              <div style="background:#ef4444;color:white;padding:16px 24px;border-radius:10px;text-align:center;font-weight:600;">
+                Hot Bucket
+                <div style="font-size:0.75rem;font-weight:normal;opacity:0.9;margin-top:4px;">Actively Written</div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;">
+                <div style="font-size:20px;color:#64748b;">→</div>
+                <div style="font-size:0.65rem;color:#64748b;">Roll when full</div>
+              </div>
+              <div style="background:#f59e0b;color:white;padding:16px 24px;border-radius:10px;text-align:center;font-weight:600;">
+                Warm Bucket
+                <div style="font-size:0.75rem;font-weight:normal;opacity:0.9;margin-top:4px;">Read-only</div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;">
+                <div style="font-size:20px;color:#64748b;">→</div>
+                <div style="font-size:0.65rem;color:#64748b;">Age-based</div>
+              </div>
+              <div style="background:#3b82f6;color:white;padding:16px 24px;border-radius:10px;text-align:center;font-weight:600;">
+                Cold Bucket
+                <div style="font-size:0.75rem;font-weight:normal;opacity:0.9;margin-top:4px;">Slower Storage</div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;">
+                <div style="font-size:20px;color:#64748b;">→</div>
+                <div style="font-size:0.65rem;color:#64748b;">Retention</div>
+              </div>
+              <div style="background:#6b7280;color:white;padding:16px 24px;border-radius:10px;text-align:center;font-weight:600;">
+                Frozen
+                <div style="font-size:0.75rem;font-weight:normal;opacity:0.9;margin-top:4px;">Archived/Deleted</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Bucket Legend -->
+          <div class="grid-4" style="margin-bottom:24px;">
+            <div class="card" style="padding:12px;border-left:4px solid #ef4444;">
+              <strong style="color:#ef4444;">Hot</strong>
+              <p style="margin:4px 0 0 0;font-size:0.8rem;">Actively written, fastest access</p>
+            </div>
+            <div class="card" style="padding:12px;border-left:4px solid #f59e0b;">
+              <strong style="color:#f59e0b;">Warm</strong>
+              <p style="margin:4px 0 0 0;font-size:0.8rem;">Searchable, read-only</p>
+            </div>
+            <div class="card" style="padding:12px;border-left:4px solid #3b82f6;">
+              <strong style="color:#3b82f6;">Cold</strong>
+              <p style="margin:4px 0 0 0;font-size:0.8rem;">Searchable, slower storage</p>
+            </div>
+            <div class="card" style="padding:12px;border-left:4px solid #6b7280;">
+              <strong style="color:#6b7280;">Frozen</strong>
+              <p style="margin:4px 0 0 0;font-size:0.8rem;">Archived or deleted</p>
             </div>
           </div>
 
@@ -430,24 +481,94 @@ flowchart LR
         <div class="section">
           <h2 class="subsection-title">Search Architecture — How Searches Work</h2>
           
-          <div class="card" style="padding:24px;margin-bottom:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
-sequenceDiagram
-    participant User
-    participant SH as Search Head
-    participant IDX1 as Indexer 1
-    participant IDX2 as Indexer 2
-    
-    User->>SH: Submit search query
-    SH->>SH: Parse SPL
-    SH->>IDX1: Send search job
-    SH->>IDX2: Send search job
-    IDX1->>IDX1: Search local buckets
-    IDX2->>IDX2: Search local buckets
-    IDX1->>SH: Return partial results
-    IDX2->>SH: Return partial results
-    SH->>SH: Merge & process results
-    SH->>User: Return final results
+          <!-- Pure HTML/CSS Search Architecture -->
+          <div class="card" style="padding:30px;margin-bottom:24px;background:linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);overflow-x:auto;">
+            <div style="display:flex;flex-direction:column;gap:16px;min-width:600px;align-items:center;">
+              
+              <!-- User -->
+              <div style="background:#3b82f6;color:white;padding:14px 28px;border-radius:10px;font-weight:600;">
+                👤 User Submits Query
+              </div>
+              
+              <div style="font-size:20px;color:#64748b;">↓</div>
+              
+              <!-- Search Head Section -->
+              <div style="background:#ecfdf5;border:2px solid #10b981;border-radius:12px;padding:20px;width:100%;max-width:500px;">
+                <div style="text-align:center;color:#059669;font-size:0.75rem;font-weight:600;margin-bottom:12px;">SEARCH HEAD</div>
+                <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+                  <div style="background:#10b981;color:white;padding:8px 14px;border-radius:6px;font-size:0.85rem;">1. Parse SPL</div>
+                  <div style="background:#10b981;color:white;padding:8px 14px;border-radius:6px;font-size:0.85rem;">2. Distribute Search</div>
+                </div>
+              </div>
+              
+              <div style="font-size:20px;color:#64748b;">↓</div>
+              
+              <!-- Indexer Cluster -->
+              <div style="background:#fef3c7;border:2px solid #f59e0b;border-radius:12px;padding:20px;width:100%;max-width:500px;">
+                <div style="text-align:center;color:#d97706;font-size:0.75rem;font-weight:600;margin-bottom:12px;">INDEXER CLUSTER (Parallel Search)</div>
+                <div style="display:flex;justify-content:center;gap:16px;">
+                  <div style="background:#f59e0b;color:white;padding:10px 16px;border-radius:6px;font-size:0.85rem;text-align:center;">Indexer 1</div>
+                  <div style="background:#f59e0b;color:white;padding:10px 16px;border-radius:6px;font-size:0.85rem;text-align:center;">Indexer 2</div>
+                  <div style="background:#f59e0b;color:white;padding:10px 16px;border-radius:6px;font-size:0.85rem;text-align:center;">Indexer N...</div>
+                </div>
+              </div>
+              
+              <div style="font-size:20px;color:#64748b;">↕</div>
+              
+              <!-- SmartStore -->
+              <div style="background:#8b5cf6;color:white;padding:14px 28px;border-radius:10px;font-weight:600;">
+                💾 S3 SmartStore (Search Buckets)
+              </div>
+              
+              <div style="font-size:20px;color:#64748b;">↓</div>
+              
+              <!-- Search Head Merge -->
+              <div style="background:#ecfdf5;border:2px solid #10b981;border-radius:12px;padding:20px;width:100%;max-width:500px;">
+                <div style="text-align:center;color:#059669;font-size:0.75rem;font-weight:600;margin-bottom:12px;">SEARCH HEAD (Results Processing)</div>
+                <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+                  <div style="background:#10b981;color:white;padding:8px 14px;border-radius:6px;font-size:0.85rem;">3. Merge Results</div>
+                  <div style="background:#10b981;color:white;padding:8px 14px;border-radius:6px;font-size:0.85rem;">4. Transform (stats, eval)</div>
+                </div>
+              </div>
+              
+              <div style="font-size:20px;color:#64748b;">↓</div>
+              
+              <!-- Final Results -->
+              <div style="background:#3b82f6;color:white;padding:14px 28px;border-radius:10px;font-weight:600;">
+                ✅ Return Final Results to User
+              </div>
+              
+            </div>
+          </div>
+
+          <!-- Search Flow Step by Step -->
+          <div class="card" style="padding:24px;margin-bottom:24px;">
+            <h4 style="margin-top:0;">Search Flow Step-by-Step</h4>
+            <div class="grid-2" style="gap:16px;">
+              <div style="padding:12px;background:var(--gray-50);border-radius:8px;border-left:4px solid #3b82f6;">
+                <strong style="color:#3b82f6;">1. User Submits Query</strong>
+                <p style="margin:8px 0 0 0;font-size:0.875rem;">User enters SPL in Search & Reporting app</p>
+              </div>
+              <div style="padding:12px;background:var(--gray-50);border-radius:8px;border-left:4px solid #10b981;">
+                <strong style="color:#10b981;">2. Search Head Parses SPL</strong>
+                <p style="margin:8px 0 0 0;font-size:0.875rem;">Validates syntax, identifies search phases</p>
+              </div>
+              <div style="padding:12px;background:var(--gray-50);border-radius:8px;border-left:4px solid #f59e0b;">
+                <strong style="color:#f59e0b;">3. Distributed to Indexers</strong>
+                <p style="margin:8px 0 0 0;font-size:0.875rem;">Search job sent to all indexers in parallel</p>
+              </div>
+              <div style="padding:12px;background:var(--gray-50);border-radius:8px;border-left:4px solid #8b5cf6;">
+                <strong style="color:#8b5cf6;">4. Indexers Search Buckets</strong>
+                <p style="margin:8px 0 0 0;font-size:0.875rem;">Each indexer searches its local buckets + SmartStore</p>
+              </div>
+              <div style="padding:12px;background:var(--gray-50);border-radius:8px;border-left:4px solid #ec4899;">
+                <strong style="color:#ec4899;">5. Partial Results Returned</strong>
+                <p style="margin:8px 0 0 0;font-size:0.875rem;">Each indexer sends matching events to search head</p>
+              </div>
+              <div style="padding:12px;background:var(--gray-50);border-radius:8px;border-left:4px solid #06b6d4;">
+                <strong style="color:#06b6d4;">6. Search Head Merges & Processes</strong>
+                <p style="margin:8px 0 0 0;font-size:0.875rem;">Applies stats, eval, sort, etc. and returns final results</p>
+              </div>
             </div>
           </div>
 
@@ -589,30 +710,84 @@ sequenceDiagram
         <div class="section">
           <h2 class="subsection-title">Splunk Cloud Architecture (Victoria Experience)</h2>
           
-          <div class="card" style="padding:24px;margin-bottom:24px;background:var(--gray-50);overflow-x:auto;">
-            <div class="mermaid">
-flowchart TB
-    subgraph External["External Systems"]
-        A1[On-Prem Servers]
-        A2[Cloud Services<br/>AWS/Azure/GCP]
-        A3[SaaS Apps]
-    end
-    
-    subgraph Cloud["Splunk Cloud"]
-        B1[IDM<br/>Inputs Data Manager]
-        B2[HEC Endpoints]
-        C1[Search Heads]
-        C2[Indexer Cluster]
-        D1[S3 Storage<br/>SmartStore]
-    end
-    
-    A1 -->|Universal Forwarder| B1
-    A2 -->|HEC/APIs| B2
-    A3 -->|HEC| B2
-    B1 --> C2
-    B2 --> C2
-    C2 --> D1
-    C1 --> C2
+          <!-- Pure HTML/CSS Architecture Diagram -->
+          <div class="card" style="padding:30px;margin-bottom:24px;background:linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);overflow-x:auto;">
+            <div style="display:flex;flex-direction:column;gap:20px;min-width:700px;">
+              
+              <!-- Row 1: External Systems -->
+              <div style="display:flex;justify-content:center;gap:16px;">
+                <div style="background:#6b7280;color:white;padding:12px 20px;border-radius:8px;text-align:center;min-width:120px;">
+                  <strong>On-Prem Servers</strong>
+                </div>
+                <div style="background:#6b7280;color:white;padding:12px 20px;border-radius:8px;text-align:center;min-width:120px;">
+                  <strong>Cloud Services</strong>
+                  <div style="font-size:0.75rem;opacity:0.9;">AWS/Azure/GCP</div>
+                </div>
+                <div style="background:#6b7280;color:white;padding:12px 20px;border-radius:8px;text-align:center;min-width:120px;">
+                  <strong>SaaS Apps</strong>
+                </div>
+              </div>
+              
+              <!-- Arrows Down -->
+              <div style="display:flex;justify-content:center;gap:80px;">
+                <div style="text-align:center;">
+                  <div style="font-size:24px;color:#64748b;">↓</div>
+                  <div style="font-size:0.7rem;color:#64748b;">Universal Forwarder</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-size:24px;color:#64748b;">↓</div>
+                  <div style="font-size:0.7rem;color:#64748b;">HEC / APIs</div>
+                </div>
+              </div>
+              
+              <!-- Row 2: Ingestion Layer -->
+              <div style="background:#eff6ff;border:2px dashed #3b82f6;border-radius:12px;padding:16px;">
+                <div style="text-align:center;color:#3b82f6;font-size:0.75rem;font-weight:600;margin-bottom:12px;">DATA INGESTION LAYER</div>
+                <div style="display:flex;justify-content:center;gap:24px;">
+                  <div style="background:#3b82f6;color:white;padding:12px 20px;border-radius:8px;text-align:center;">
+                    <strong>IDM</strong>
+                    <div style="font-size:0.75rem;opacity:0.9;">Inputs Data Manager</div>
+                  </div>
+                  <div style="background:#3b82f6;color:white;padding:12px 20px;border-radius:8px;text-align:center;">
+                    <strong>HEC Endpoints</strong>
+                    <div style="font-size:0.75rem;opacity:0.9;">HTTP Event Collector</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Arrows Down -->
+              <div style="text-align:center;font-size:24px;color:#64748b;">↓</div>
+              
+              <!-- Row 3: Splunk Cloud Processing -->
+              <div style="background:#fef3c7;border:2px dashed #f59e0b;border-radius:12px;padding:16px;">
+                <div style="text-align:center;color:#d97706;font-size:0.75rem;font-weight:600;margin-bottom:12px;">SPLUNK CLOUD PROCESSING</div>
+                <div style="display:flex;justify-content:center;gap:24px;align-items:center;">
+                  <div style="background:#10b981;color:white;padding:12px 20px;border-radius:8px;text-align:center;">
+                    <strong>Search Heads</strong>
+                    <div style="font-size:0.75rem;opacity:0.9;">Query & UI</div>
+                  </div>
+                  <div style="font-size:24px;color:#64748b;">⟷</div>
+                  <div style="background:#f59e0b;color:white;padding:12px 20px;border-radius:8px;text-align:center;">
+                    <strong>Indexer Cluster</strong>
+                    <div style="font-size:0.75rem;opacity:0.9;">Index & Search</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Arrows Down -->
+              <div style="text-align:center;font-size:24px;color:#64748b;">↓</div>
+              
+              <!-- Row 4: Storage -->
+              <div style="background:#f3e8ff;border:2px dashed #8b5cf6;border-radius:12px;padding:16px;">
+                <div style="text-align:center;color:#7c3aed;font-size:0.75rem;font-weight:600;margin-bottom:12px;">STORAGE LAYER</div>
+                <div style="display:flex;justify-content:center;">
+                  <div style="background:#8b5cf6;color:white;padding:12px 30px;border-radius:8px;text-align:center;">
+                    <strong>S3 SmartStore</strong>
+                    <div style="font-size:0.75rem;opacity:0.9;">Warm/Cold bucket storage</div>
+                  </div>
+                </div>
+              </div>
+              
             </div>
           </div>
 
@@ -690,6 +865,5 @@ flowchart TB
     </main>
   </div>
   <script src="../js/app.js"></script>
-  <script>mermaid.initialize({startOnLoad:true, theme:'neutral'});</script>
 </body>
 </html>
