@@ -145,6 +145,16 @@
         <!-- Why This Matters -->
         <div class="section">
           <h2 class="section-title">Why This Detection is Critical</h2>
+
+        <!-- OBJECTIVE -->
+        <div class="callout info" style="margin:20px 0;">
+          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div class="callout-content">
+            <div class="callout-title">🎯 Objective</div>
+            <div class="callout-body">Detect attacks that successfully bypass WAF rules and reach the backend application, identified by WAF action=allow combined with backend error responses (5xx).</div>
+          </div>
+        </div>
+
           <div class="callout critical">
             <div class="callout-content">
               <div class="callout-title">⚠️ WAF Blocks ≠ Full Protection</div>
@@ -374,6 +384,54 @@ flowchart TD
             </div>
           </div>
         </div>
+
+      
+        <!-- OWNER & CHANGE HISTORY -->
+        <div class="section">
+          <h2 class="subsection-title">Owner & Change History</h2>
+          <div class="card" style="padding:20px;">
+            <table style="width:100%;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;width:150px;font-weight:600;">Owner</td>
+                <td style="padding:8px 0;">Detection Engineering Team</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Created</td>
+                <td style="padding:8px 0;">2026-01-15</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Last Updated</td>
+                <td style="padding:8px 0;">2026-02-02</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Version</td>
+                <td style="padding:8px 0;">1.1</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;font-weight:600;">Status</td>
+                <td style="padding:8px 0;"><span class="badge success">Production Ready</span></td>
+              </tr>
+            </table>
+            <div style="margin-top:16px;padding:12px;background:var(--gray-50);border-radius:6px;font-size:0.85rem;">
+              <strong>Change Log:</strong>
+              <ul style="margin:8px 0 0 20px;">
+                <li><strong>v1.1 (2026-02-02):</strong> Added Objective section, Owner information, standardized template</li>
+                <li><strong>v1.0 (2026-01-15):</strong> Initial release</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      
+        <!-- SITE FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
 
       </div>
     </main>

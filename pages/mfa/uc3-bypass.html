@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC3: MFA Bypass Detection | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="sidebar-logo-text"><h1>Splunk Reference</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Use Cases</div>
+          <a href="uc1-fatigue.html" class="nav-item">UC1: MFA Fatigue</a>
+          <a href="uc2-breach.html" class="nav-item">UC2: Credential Breach</a>
+          <a href="uc3-bypass.html" class="nav-item active">UC3: MFA Bypass</a>
+          <a href="uc4-disabled.html" class="nav-item">UC4: MFA Disabled</a>
+          <a href="uc5-device.html" class="nav-item">UC5: New Device</a>
+          <a href="uc6-downgrade.html" class="nav-item">UC6: Method Downgrade</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../mfa-usecases.html" class="breadcrumb-item">MFA Use Cases</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC3: MFA Bypass</span>
+          </div>
+        </div>
+        <span class="badge" style="background:#dc2626;">High Priority</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">MFA-UC3: MFA Bypass / Not Required Detection</h1>
+          <p class="section-subtitle">Detect successful authentications that bypassed MFA enforcement</p>
+        </div>
+
+        <!-- OBJECTIVE -->
+        <div class="callout info" style="margin:20px 0;">
+          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div class="callout-content">
+            <div class="callout-title">🎯 Objective</div>
+            <div class="callout-body">Detect successful authentications where MFA was not enforced despite policy requirements, indicating potential Conditional Access misconfiguration or bypass vulnerabilities.</div>
+          </div>
+        </div>
+
+
+        <!-- METADATA -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+          <table style="width:100%;">
+            <tr><td style="width:150px;font-weight:600;">UC ID:</td><td>MFA-BYPASS-003</td></tr>
+            <tr><td style="font-weight:600;">MITRE ATT&CK:</td><td>T1556.006 - Modify Authentication Process: MFA</td></tr>
+            <tr><td style="font-weight:600;">Severity:</td><td><span class="badge" style="background:#dc2626;">High</span></td></tr>
+            <tr><td style="font-weight:600;">Data Sources:</td><td>Entra ID Sign-in Logs, CyberArk Identity Audit</td></tr>
+          </table>
+        </div>
+
+        <!-- THREAT DESCRIPTION -->
+        <div class="section">
+          <h2 class="subsection-title">Threat Description</h2>
+          <div class="card" style="padding:24px;">
+            <p><strong>What we're detecting:</strong> Successful authentication where MFA was expected but not completed. This can indicate:</p>
+            <ul style="margin:12px 0 0 20px;">
+              <li>Attacker using legacy authentication protocols that bypass MFA</li>
+              <li>Misconfigured Conditional Access policies with gaps</li>
+              <li>Token replay/session hijacking attacks</li>
+              <li>Compromised service principal or app registration</li>
+            </ul>
+            <p style="margin-top:16px;"><strong>Business Impact:</strong> Account compromise without MFA challenge means attacker has persistent access. May indicate broader Conditional Access policy weakness.</p>
+          </div>
+        </div>
+
+        <!-- PREREQUISITES -->
+        <div class="section">
+          <h2 class="subsection-title">Prerequisites</h2>
+          <div class="card" style="padding:24px;background:var(--gray-50);">
+            <h4 style="margin:0 0 12px;">Required Data</h4>
+            <ul style="margin:0 0 16px 20px;">
+              <li>Entra ID sign-in logs with <code>authenticationRequirement</code> field</li>
+              <li>Conditional Access policy results in sign-in logs</li>
+              <li>MFA requirement status per user/application</li>
+            </ul>
+            <h4 style="margin:0 0 12px;">Required Fields</h4>
+            <code style="display:block;background:#1e293b;color:#e2e8f0;padding:12px;border-radius:6px;">
+user, src_ip, app, authenticationRequirement, mfaDetail.authMethod, 
+conditionalAccessStatus, status (success/failure)
+            </code>
+          </div>
+        </div>
+
+        <!-- DETECTION SPL -->
+        <div class="section">
+          <h2 class="subsection-title">Detection SPL</h2>
+          
+          <h4>Option 1: Entra ID - MFA Not Satisfied Despite Requirement</h4>
+          <div class="card" style="padding:20px;background:#1e293b;color:#e2e8f0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+index=azure sourcetype="azure:aad:signin" 
+    "properties.status.errorCode"=0
+    "properties.authenticationRequirement"="multiFactorAuthentication"
+| spath path=properties.authenticationDetails{} output=authDetails
+| eval mfa_completed = if(match(mvjoin(authDetails, ","), "(?i)mfa|multi"), 1, 0)
+| where mfa_completed=0
+| eval user = 'properties.userPrincipalName'
+| eval src_ip = 'properties.ipAddress'
+| eval app = 'properties.appDisplayName'
+| eval client = 'properties.clientAppUsed'
+| stats count, values(app) as apps, values(client) as clients by user, src_ip
+| where count >= 1
+| eval urgency = "high"
+| eval rule_name = "MFA-003 - MFA Bypass Detected"</pre>
+          </div>
+
+          <h4 style="margin-top:24px;">Option 2: Legacy Auth Protocol Detection</h4>
+          <div class="card" style="padding:20px;background:#1e293b;color:#e2e8f0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+# Legacy protocols bypass MFA - detect their use
+index=azure sourcetype="azure:aad:signin"
+    "properties.status.errorCode"=0
+| eval client = 'properties.clientAppUsed'
+| where match(client, "(?i)(IMAP|POP3|SMTP|Exchange ActiveSync|Other clients)")
+| eval user = 'properties.userPrincipalName'
+| eval src_ip = 'properties.ipAddress'
+| eval app = 'properties.appDisplayName'
+| stats count, values(client) as legacy_protocols, 
+    dc(app) as app_count by user, src_ip
+| where count >= 1
+| eval urgency = case(
+    count >= 10, "critical",
+    count >= 5, "high",
+    1=1, "medium"
+)
+| eval rule_name = "MFA-003 - Legacy Auth Protocol (MFA Bypass Risk)"</pre>
+          </div>
+        </div>
+
+        <!-- ES CONFIGURATION -->
+        <div class="section">
+          <h2 class="subsection-title">ES Correlation Search Settings</h2>
+          <div class="card" style="padding:24px;">
+            <table style="width:100%;">
+              <tr><td style="width:200px;font-weight:600;">Schedule:</td><td><code>*/15 * * * *</code> (every 15 minutes)</td></tr>
+              <tr><td style="font-weight:600;">Time Range:</td><td><code>earliest=-20m latest=-5m</code></td></tr>
+              <tr><td style="font-weight:600;">Throttle Field:</td><td><code>user</code></td></tr>
+              <tr><td style="font-weight:600;">Throttle Window:</td><td>4 hours</td></tr>
+              <tr><td style="font-weight:600;">Notable Title:</td><td><code>$urgency$ - MFA Bypass - $user$ via $client$</code></td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- TRIAGE RUNBOOK -->
+        <div class="section">
+          <h2 class="subsection-title">Triage Runbook</h2>
+          <div class="card" style="padding:24px;">
+            <h4 style="margin:0 0 16px;">Initial Assessment (5 min)</h4>
+            <ol style="margin:0 0 20px 20px;">
+              <li>Is this a known service account or application? Check against allowlist</li>
+              <li>What client/protocol was used? Legacy auth is common for mail clients</li>
+              <li>Is this user supposed to have MFA enforced?</li>
+              <li>Check Conditional Access - was a policy supposed to apply?</li>
+            </ol>
+
+            <h4 style="margin:0 0 12px;">Investigation Queries</h4>
+            <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;margin-bottom:16px;">
+              <pre style="margin:0;font-size:0.85rem;"># All auth activity for this user
+index=azure sourcetype="azure:aad:signin" 
+    "properties.userPrincipalName"="$user$" earliest=-24h
+| stats count by 'properties.clientAppUsed', 
+    'properties.authenticationRequirement', 
+    'properties.status.errorCode'</pre>
+            </div>
+
+            <h4 style="margin:0 0 12px;">Response Actions</h4>
+            <table style="width:100%;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;font-weight:600;">Finding</td>
+                <td style="padding:8px;">Action</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">Unexpected legacy auth</td>
+                <td style="padding:8px;">Block legacy auth in Conditional Access; investigate user</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">CA policy gap</td>
+                <td style="padding:8px;">Report to identity team for policy fix</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">Authorized exception</td>
+                <td style="padding:8px;">Document and add to allowlist</td>
+              </tr>
+              <tr>
+                <td style="padding:8px;">Suspected compromise</td>
+                <td style="padding:8px;">Revoke sessions, reset password, investigate fully</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- FALSE POSITIVES -->
+        <div class="section">
+          <h2 class="subsection-title">Known False Positives</h2>
+          <div class="card" style="padding:24px;">
+            <table style="width:100%;border-collapse:collapse;">
+              <thead>
+                <tr style="background:#f1f5f9;">
+                  <th style="padding:12px;text-align:left;">FP Pattern</th>
+                  <th style="padding:12px;text-align:left;">Identification</th>
+                  <th style="padding:12px;text-align:left;">Tuning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                  <td style="padding:12px;">Service accounts</td>
+                  <td style="padding:12px;">Non-interactive auth, specific app IDs</td>
+                  <td style="padding:12px;">Allowlist by user pattern or app ID</td>
+                </tr>
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                  <td style="padding:12px;">Mail clients (mobile)</td>
+                  <td style="padding:12px;">ActiveSync, specific user agents</td>
+                  <td style="padding:12px;">Allowlist if legacy auth permitted</td>
+                </tr>
+                <tr>
+                  <td style="padding:12px;">CA policy exceptions</td>
+                  <td style="padding:12px;">Documented business exceptions</td>
+                  <td style="padding:12px;">Allowlist with expiration dates</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <a href="uc2-breach.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Previous</div>
+              <div style="color:var(--primary-700);font-weight:600;">UC2: Credential Breach</div>
+            </a>
+            <a href="uc4-disabled.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Next →</div>
+              <div style="color:var(--primary-700);font-weight:600;">UC4: MFA Disabled</div>
+            </a>
+          </div>
+        </div>
+
+      
+        <!-- OWNER & CHANGE HISTORY -->
+        <div class="section">
+          <h2 class="subsection-title">Owner & Change History</h2>
+          <div class="card" style="padding:20px;">
+            <table style="width:100%;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;width:150px;font-weight:600;">Owner</td>
+                <td style="padding:8px 0;">Detection Engineering Team</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Created</td>
+                <td style="padding:8px 0;">2026-01-15</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Last Updated</td>
+                <td style="padding:8px 0;">2026-02-02</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Version</td>
+                <td style="padding:8px 0;">1.1</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;font-weight:600;">Status</td>
+                <td style="padding:8px 0;"><span class="badge success">Production Ready</span></td>
+              </tr>
+            </table>
+            <div style="margin-top:16px;padding:12px;background:var(--gray-50);border-radius:6px;font-size:0.85rem;">
+              <strong>Change Log:</strong>
+              <ul style="margin:8px 0 0 20px;">
+                <li><strong>v1.1 (2026-02-02):</strong> Added Objective section, Owner information, standardized template</li>
+                <li><strong>v1.0 (2026-01-15):</strong> Initial release</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      
+        <!-- SITE FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

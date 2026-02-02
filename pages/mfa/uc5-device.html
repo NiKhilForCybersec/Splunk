@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC5: New MFA Device Detection | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="sidebar-logo-text"><h1>Splunk Reference</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Use Cases</div>
+          <a href="uc1-fatigue.html" class="nav-item">UC1: MFA Fatigue</a>
+          <a href="uc2-breach.html" class="nav-item">UC2: Credential Breach</a>
+          <a href="uc3-bypass.html" class="nav-item">UC3: MFA Bypass</a>
+          <a href="uc4-disabled.html" class="nav-item">UC4: MFA Disabled</a>
+          <a href="uc5-device.html" class="nav-item active">UC5: New Device</a>
+          <a href="uc6-downgrade.html" class="nav-item">UC6: Method Downgrade</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../mfa-usecases.html" class="breadcrumb-item">MFA Use Cases</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC5: New Device</span>
+          </div>
+        </div>
+        <span class="badge" style="background:#f59e0b;">Medium Priority</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">MFA-UC5: New MFA Device Registration</h1>
+          <p class="section-subtitle">Detect when a new MFA device/method is registered - potential account takeover indicator</p>
+        </div>
+
+        <!-- OBJECTIVE -->
+        <div class="callout info" style="margin:20px 0;">
+          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div class="callout-content">
+            <div class="callout-title">🎯 Objective</div>
+            <div class="callout-body">Detect when a new MFA device (phone, authenticator app) is registered to a user account, which could indicate account takeover if the user didn't initiate the registration.</div>
+          </div>
+        </div>
+
+
+        <!-- METADATA -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+          <table style="width:100%;">
+            <tr><td style="width:150px;font-weight:600;">UC ID:</td><td>MFA-NEWDEVICE-005</td></tr>
+            <tr><td style="font-weight:600;">MITRE ATT&CK:</td><td>T1098.005 - Account Manipulation: Device Registration</td></tr>
+            <tr><td style="font-weight:600;">Severity:</td><td><span class="badge" style="background:#f59e0b;">Medium</span> (High if privileged user)</td></tr>
+            <tr><td style="font-weight:600;">Data Sources:</td><td>Entra ID Audit Logs, CyberArk Identity Audit</td></tr>
+          </table>
+        </div>
+
+        <!-- THREAT DESCRIPTION -->
+        <div class="section">
+          <h2 class="subsection-title">Threat Description</h2>
+          <div class="card" style="padding:24px;">
+            <p><strong>What we're detecting:</strong> Registration of new MFA devices or authentication methods. Attackers who compromise credentials often register their own MFA device to maintain persistent access.</p>
+            <ul style="margin:12px 0 0 20px;">
+              <li>New phone number registered for SMS/voice MFA</li>
+              <li>New authenticator app registered (Microsoft Authenticator, etc.)</li>
+              <li>New FIDO2 security key registered</li>
+              <li>New email address added as alternate verification</li>
+            </ul>
+            <p style="margin-top:16px;"><strong>Business Impact:</strong> If an attacker registers their MFA device, they can maintain access even after password reset. This is a common persistence technique.</p>
+          </div>
+        </div>
+
+        <!-- DETECTION SPL -->
+        <div class="section">
+          <h2 class="subsection-title">Detection SPL</h2>
+          
+          <h4>Option 1: Entra ID - New Authentication Method Registered</h4>
+          <div class="card" style="padding:20px;background:#1e293b;color:#e2e8f0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+index=azure sourcetype="azure:aad:audit"
+    ("properties.operationName"="User registered security info"
+     OR "properties.operationName"="Admin registered security info"
+     OR "properties.operationName"="Add authentication phone*"
+     OR "properties.operationName"="Add authentication email*"
+     OR "properties.operationName"="Add FIDO2 security key")
+| spath path=properties.targetResources{} output=targets
+| mvexpand targets
+| spath input=targets
+| eval user = userPrincipalName
+| eval actor = 'properties.initiatedBy.user.userPrincipalName'
+| eval method = 'properties.operationName'
+| eval src_ip = 'properties.initiatedBy.user.ipAddress'
+| lookup privileged_users.csv user OUTPUT is_privileged
+| eval urgency = case(
+    is_privileged="true", "high",
+    actor != user, "high",
+    1=1, "medium"
+)
+| stats count, values(method) as methods, values(src_ip) as src_ips 
+    by user, actor, urgency
+| eval rule_name = "MFA-005 - New MFA Device Registered"</pre>
+          </div>
+
+          <h4 style="margin-top:24px;">Option 2: CyberArk Identity - MFA Device Added</h4>
+          <div class="card" style="padding:20px;background:#1e293b;color:#e2e8f0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+index=cyberark sourcetype="cyberark:identity:audit"
+    (EventType="Cloud.Saas.Application.MfaDeviceAdded"
+     OR EventType="Cloud.Saas.Application.MobileDeviceEnrolled"
+     OR EventType="Cloud.Saas.Application.AuthenticatorRegistered")
+| eval user = NormalizedUser
+| eval actor = ActorName
+| eval method = EventType
+| eval src_ip = FromIPAddress
+| lookup privileged_users.csv user OUTPUT is_privileged
+| eval urgency = case(
+    is_privileged="true", "high",
+    actor != user, "high",
+    1=1, "medium"
+)
+| stats count, values(method) as methods by user, actor, src_ip, urgency
+| eval rule_name = "MFA-005 - New MFA Device Registered"</pre>
+          </div>
+
+          <h4 style="margin-top:24px;">RBA Option: Add Risk Instead of Notable</h4>
+          <div class="card" style="padding:20px;background:#1e293b;color:#e2e8f0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+# For high-volume environments, add risk score instead of direct notable
+index=azure sourcetype="azure:aad:audit"
+    "properties.operationName"="User registered security info"
+| eval user = 'properties.targetResources{}.userPrincipalName'
+| eval src_ip = 'properties.initiatedBy.user.ipAddress'
+| lookup privileged_users.csv user OUTPUT is_privileged
+| eval risk_score = case(
+    is_privileged="true", 40,
+    1=1, 20
+)
+| eval risk_object = user, risk_object_type = "user"
+| eval risk_message = "New MFA device registered from ".src_ip
+| collect index=risk</pre>
+          </div>
+        </div>
+
+        <!-- ES CONFIGURATION -->
+        <div class="section">
+          <h2 class="subsection-title">ES Correlation Search Settings</h2>
+          <div class="card" style="padding:24px;">
+            <table style="width:100%;">
+              <tr><td style="width:200px;font-weight:600;">Schedule:</td><td><code>*/15 * * * *</code> (every 15 minutes)</td></tr>
+              <tr><td style="font-weight:600;">Time Range:</td><td><code>earliest=-20m latest=-5m</code></td></tr>
+              <tr><td style="font-weight:600;">Throttle Field:</td><td><code>user</code></td></tr>
+              <tr><td style="font-weight:600;">Throttle Window:</td><td>24 hours</td></tr>
+              <tr><td style="font-weight:600;">Notable Title:</td><td><code>$urgency$ - New MFA Device - $user$</code></td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- TRIAGE RUNBOOK -->
+        <div class="section">
+          <h2 class="subsection-title">Triage Runbook</h2>
+          <div class="card" style="padding:24px;">
+            <h4 style="margin:0 0 16px;">Initial Assessment (5 min)</h4>
+            <ol style="margin:0 0 20px 20px;">
+              <li><strong>Contact the user</strong> - Did they register this device?</li>
+              <li>Check source IP - Is it expected location for this user?</li>
+              <li>Check timing - Was there recent suspicious activity before registration?</li>
+              <li>Is this a privileged account? Escalate if admin account</li>
+            </ol>
+
+            <h4 style="margin:0 0 12px;">Investigation Queries</h4>
+            <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;margin-bottom:16px;">
+              <pre style="margin:0;font-size:0.85rem;"># Activity leading up to device registration
+index=azure sourcetype="azure:aad:*"
+    "properties.userPrincipalName"="$user$" 
+    earliest=-24h latest=now()
+| sort _time
+| table _time, sourcetype, 'properties.operationName', 
+    'properties.ipAddress', 'properties.status.errorCode'
+
+# Check if IP is new for this user
+index=azure sourcetype="azure:aad:signin"
+    "properties.userPrincipalName"="$user$" earliest=-30d
+| stats dc('properties.ipAddress') as unique_ips, 
+    values('properties.ipAddress') as known_ips</pre>
+            </div>
+
+            <h4 style="margin:0 0 12px;">Response Actions</h4>
+            <table style="width:100%;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;font-weight:600;">Finding</td>
+                <td style="padding:8px;">Action</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">User confirms registration</td>
+                <td style="padding:8px;">Close as expected behavior</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">User denies registration</td>
+                <td style="padding:8px;"><strong>CRITICAL</strong> - Remove device, revoke sessions, reset password</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">Cannot reach user</td>
+                <td style="padding:8px;">Escalate to manager; consider temporary account disable</td>
+              </tr>
+              <tr>
+                <td style="padding:8px;">Suspicious preceding activity</td>
+                <td style="padding:8px;">Full investigation - assume compromise until proven otherwise</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- FALSE POSITIVES -->
+        <div class="section">
+          <h2 class="subsection-title">Known False Positives</h2>
+          <div class="card" style="padding:24px;">
+            <table style="width:100%;border-collapse:collapse;">
+              <thead>
+                <tr style="background:#f1f5f9;">
+                  <th style="padding:12px;text-align:left;">FP Pattern</th>
+                  <th style="padding:12px;text-align:left;">Identification</th>
+                  <th style="padding:12px;text-align:left;">Tuning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                  <td style="padding:12px;">New employee onboarding</td>
+                  <td style="padding:12px;">Account created within 7 days</td>
+                  <td style="padding:12px;">Correlate with HR data; lower urgency for new accounts</td>
+                </tr>
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                  <td style="padding:12px;">Phone replacement</td>
+                  <td style="padding:12px;">Delete + Add pattern same day</td>
+                  <td style="padding:12px;">Check for paired delete event</td>
+                </tr>
+                <tr>
+                  <td style="padding:12px;">Helpdesk-assisted setup</td>
+                  <td style="padding:12px;">Actor is helpdesk admin</td>
+                  <td style="padding:12px;">Lower urgency if ticketed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <a href="uc4-disabled.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Previous</div>
+              <div style="color:var(--primary-700);font-weight:600;">UC4: MFA Disabled</div>
+            </a>
+            <a href="uc6-downgrade.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Next →</div>
+              <div style="color:var(--primary-700);font-weight:600;">UC6: Method Downgrade</div>
+            </a>
+          </div>
+        </div>
+
+      
+        <!-- OWNER & CHANGE HISTORY -->
+        <div class="section">
+          <h2 class="subsection-title">Owner & Change History</h2>
+          <div class="card" style="padding:20px;">
+            <table style="width:100%;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;width:150px;font-weight:600;">Owner</td>
+                <td style="padding:8px 0;">Detection Engineering Team</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Created</td>
+                <td style="padding:8px 0;">2026-01-15</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Last Updated</td>
+                <td style="padding:8px 0;">2026-02-02</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Version</td>
+                <td style="padding:8px 0;">1.1</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;font-weight:600;">Status</td>
+                <td style="padding:8px 0;"><span class="badge success">Production Ready</span></td>
+              </tr>
+            </table>
+            <div style="margin-top:16px;padding:12px;background:var(--gray-50);border-radius:6px;font-size:0.85rem;">
+              <strong>Change Log:</strong>
+              <ul style="margin:8px 0 0 20px;">
+                <li><strong>v1.1 (2026-02-02):</strong> Added Objective section, Owner information, standardized template</li>
+                <li><strong>v1.0 (2026-01-15):</strong> Initial release</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      
+        <!-- SITE FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

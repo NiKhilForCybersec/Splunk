@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAF-UC14: Error Rate Anomaly Detection | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+  <style>
+    .impl-step{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .impl-step h4{color:var(--primary-700);margin-bottom:16px;font-size:1rem;}
+    .impl-step.warning{border-left-color:#f59e0b;}
+    .es-config{display:grid;grid-template-columns:220px 1fr;gap:10px;font-size:0.85rem;background:white;padding:16px;border-radius:6px;margin-top:12px;}
+    .es-config dt{font-weight:600;color:var(--gray-700);}
+    .es-config dd{color:var(--gray-600);margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+    .tuning-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .tuning-table th{background:var(--gray-100);padding:10px;text-align:left;border:1px solid var(--gray-200);}
+    .tuning-table td{padding:10px;border:1px solid var(--gray-200);}
+    .fp-table{width:100%;font-size:0.8rem;margin-top:12px;border-collapse:collapse;}
+    .fp-table th{background:#fef3c7;padding:10px;text-align:left;border:1px solid #fde68a;}
+    .fp-table td{padding:10px;border:1px solid var(--gray-200);}
+    .error-box{padding:12px 16px;border-radius:6px;margin:8px 0;}
+    .error-4xx{background:#fef3c7;border-left:4px solid #f59e0b;}
+    .error-5xx{background:#fee2e2;border-left:4px solid #dc2626;}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>Splunk Reference</h1>
+              <span>Log & Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">WAF Use Cases</div>
+          <a href="uc1-volume.html" class="nav-item">UC1: Volume Anomaly</a>
+          <a href="uc2-single-ip.html" class="nav-item">UC2: Single IP Flood</a>
+          <a href="uc3-auth.html" class="nav-item">UC3: Auth Attack</a>
+          <a href="uc4-sqli.html" class="nav-item">UC4: SQLi/XSS</a>
+          <a href="uc5-distributed.html" class="nav-item">UC5: Distributed</a>
+          <a href="uc6-geo.html" class="nav-item">UC6: Geo Anomaly</a>
+          <a href="uc7-bypass.html" class="nav-item">UC7: WAF Bypass</a>
+          <a href="uc8-bot.html" class="nav-item">UC8: Bot Detection</a>
+          <a href="uc9-api.html" class="nav-item">UC9: API Abuse</a>
+          <a href="uc10-path.html" class="nav-item">UC10: Path Traversal</a>
+          <a href="uc13-methods.html" class="nav-item">UC13: Rare Methods</a>
+          <a href="uc14-errors.html" class="nav-item active">UC14: Error Rate</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Navigation</div>
+          <a href="../waf-usecases.html" class="nav-item">← Back to WAF Overview</a>
+          <a href="../../index.html" class="nav-item">← Command Center</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="breadcrumb">
+          <a href="../../index.html" class="breadcrumb-item">Home</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="../waf-usecases.html" class="breadcrumb-item">WAF Use Cases</a>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-item current">UC14: Error Rate Anomaly</span>
+        </div>
+        <span class="badge error">High Priority</span>
+      </header>
+
+      <div class="page-content">
+        <!-- OBJECTIVE -->
+        <div class="section">
+          <h1 class="section-title">WAF-UC14: Error Rate Anomaly Detection</h1>
+          <div class="callout info" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">🎯 Objective</div>
+              <div class="callout-body">
+                Detect abnormal spikes in HTTP 4xx/5xx error rates that may indicate active exploitation, enumeration attacks, or application issues causing security blind spots.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- THREAT CONTEXT -->
+        <div class="section">
+          <h2 class="subsection-title">Threat Context</h2>
+          <div class="card" style="padding:20px;">
+            <h4 style="margin-top:0;">Why Error Rates Matter for Security</h4>
+            
+            <div class="error-box error-4xx">
+              <strong>4xx Errors (Client Errors) - Reconnaissance Indicators</strong>
+              <ul style="margin:8px 0 0 20px;">
+                <li><strong>401/403:</strong> Brute force, credential stuffing, authorization bypass attempts</li>
+                <li><strong>404:</strong> Directory/file enumeration, fuzzing for hidden resources</li>
+                <li><strong>400/422:</strong> Input validation attacks, malformed requests</li>
+                <li><strong>429:</strong> Rate limit evasion attempts</li>
+              </ul>
+            </div>
+            
+            <div class="error-box error-5xx">
+              <strong>5xx Errors (Server Errors) - Exploitation Indicators</strong>
+              <ul style="margin:8px 0 0 20px;">
+                <li><strong>500:</strong> Application crashes from malformed input (possible RCE)</li>
+                <li><strong>502/503:</strong> Backend overload from DoS, or successful backend compromise</li>
+                <li><strong>504:</strong> Timeout attacks, resource exhaustion</li>
+              </ul>
+            </div>
+            
+            <h4 style="margin-top:20px;">MITRE ATT&CK Mapping</h4>
+            <table style="width:100%;margin-top:8px;">
+              <tr><td style="width:120px;font-weight:600;">Tactic:</td><td>Discovery, Initial Access, Impact</td></tr>
+              <tr><td style="font-weight:600;">Technique:</td><td>T1595 (Active Scanning), T1190 (Exploit Public-Facing App), T1499 (Endpoint DoS)</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- PREREQUISITES -->
+        <div class="section">
+          <h2 class="subsection-title">Prerequisites</h2>
+          <div class="card" style="padding:20px;">
+            <table class="tuning-table">
+              <tr><th>Requirement</th><th>Details</th><th>Validation</th></tr>
+              <tr>
+                <td>Data Source</td>
+                <td>Akamai WAF (akamai:siem)</td>
+                <td><code>index=akamai sourcetype=akamai:siem | head 5</code></td>
+              </tr>
+              <tr>
+                <td>Required Field</td>
+                <td>httpMessage.status (HTTP response code)</td>
+                <td><code>| stats count by httpMessage.status</code></td>
+              </tr>
+              <tr>
+                <td>Baseline Needed</td>
+                <td>Normal error rate for comparison</td>
+                <td>Pre-compute hourly error rates</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- DETECTION SPL -->
+        <div class="section">
+          <h2 class="subsection-title">Detection SPL</h2>
+          
+          <div class="impl-step">
+            <h4>Option 1: Static Threshold (Simple)</h4>
+            <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;">
+              <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">
+index=akamai sourcetype=akamai:siem
+| spath path=httpMessage.status output=status
+| spath path=attackData.clientIP output=src
+| spath path=httpMessage.host output=dest
+| eval error_type = case(
+    status >= 500, "5xx_server",
+    status >= 400, "4xx_client",
+    1=1, "success"
+)
+| stats count AS total_requests,
+    sum(eval(if(error_type="4xx_client",1,0))) AS client_errors,
+    sum(eval(if(error_type="5xx_server",1,0))) AS server_errors
+  BY src, dest
+| eval error_rate_4xx = round((client_errors / total_requests) * 100, 2)
+| eval error_rate_5xx = round((server_errors / total_requests) * 100, 2)
+| where (error_rate_4xx >= 50 AND client_errors >= 100) 
+    OR (error_rate_5xx >= 10 AND server_errors >= 20)
+| eval urgency = case(
+    server_errors >= 50, "critical",
+    error_rate_5xx >= 20, "high",
+    error_rate_4xx >= 80, "high",
+    1=1, "medium"
+)
+| eval rule_name = "WAF-UC14 - Error Rate Anomaly"</pre>
+            </div>
+          </div>
+
+          <div class="impl-step warning">
+            <h4>Option 2: Baseline Comparison (Recommended for Production)</h4>
+            <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:12px;">
+              <strong>⚠️ Requires pre-computed baseline lookup.</strong> 
+              Create hourly baseline using summary indexing or scheduled search.
+            </p>
+            <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;">
+              <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">
+| Baseline lookup creation (run hourly) |
+index=akamai sourcetype=akamai:siem earliest=-7d@d latest=@d
+| spath path=httpMessage.status output=status
+| spath path=httpMessage.host output=dest
+| eval hour = strftime(_time, "%H")
+| eval is_error = if(status >= 400, 1, 0)
+| stats count AS requests, sum(is_error) AS errors BY dest, hour
+| eval error_rate = round((errors / requests) * 100, 2)
+| stats avg(error_rate) AS avg_error_rate, stdev(error_rate) AS stdev_error_rate BY dest, hour
+| outputlookup waf_error_baseline.csv
+
+| Detection using baseline |
+index=akamai sourcetype=akamai:siem earliest=-10m latest=-5m
+| spath path=httpMessage.status output=status
+| spath path=httpMessage.host output=dest
+| spath path=attackData.clientIP output=src
+| eval hour = strftime(_time, "%H")
+| eval is_error = if(status >= 400, 1, 0)
+| stats count AS requests, sum(is_error) AS errors BY src, dest, hour
+| eval current_error_rate = round((errors / requests) * 100, 2)
+| lookup waf_error_baseline.csv dest, hour OUTPUT avg_error_rate, stdev_error_rate
+| eval threshold = avg_error_rate + (3 * stdev_error_rate)
+| where current_error_rate > threshold AND errors >= 20
+| eval deviation = round((current_error_rate - avg_error_rate) / stdev_error_rate, 1)
+| eval urgency = case(deviation >= 5, "critical", deviation >= 3, "high", 1=1, "medium")</pre>
+            </div>
+          </div>
+
+          <div class="impl-step">
+            <h4>Option 3: 5xx Focus (Application Exploitation)</h4>
+            <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;">
+              <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">
+# Focus on 5xx errors - often indicate active exploitation
+index=akamai sourcetype=akamai:siem
+| spath path=httpMessage.status output=status
+| where status >= 500
+| spath path=attackData.clientIP output=src
+| spath path=httpMessage.host output=dest
+| spath path=httpMessage.path output=path
+| stats count AS error_count, 
+    dc(path) AS unique_paths,
+    values(status) AS status_codes,
+    earliest(_time) AS first_seen,
+    latest(_time) AS last_seen
+  BY src, dest
+| where error_count >= 10
+| eval attack_duration = last_seen - first_seen
+| eval urgency = case(
+    match(status_codes, "500") AND unique_paths >= 10, "critical",
+    error_count >= 50, "high",
+    1=1, "medium"
+)
+| eval rule_name = "WAF-UC14 - 5xx Error Spike"</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ES CONFIGURATION -->
+        <div class="section">
+          <h2 class="subsection-title">ES Correlation Search Configuration</h2>
+          <div class="card" style="padding:20px;">
+            <dl class="es-config">
+              <dt>Search Name:</dt>
+              <dd>Threat - WAF Error Rate Anomaly - Rule</dd>
+              <dt>Schedule:</dt>
+              <dd>*/5 * * * * (every 5 minutes)</dd>
+              <dt>Time Range:</dt>
+              <dd>earliest=-10m latest=-5m</dd>
+              <dt>Throttle Field:</dt>
+              <dd>src, dest</dd>
+              <dt>Throttle Window:</dt>
+              <dd>1800 seconds (30 min)</dd>
+              <dt>Notable Title:</dt>
+              <dd>$urgency$ - Error Rate Anomaly - $error_rate_4xx$% 4xx / $error_rate_5xx$% 5xx from $src$</dd>
+              <dt>Notable Severity:</dt>
+              <dd>Dynamic based on urgency field</dd>
+              <dt>Security Domain:</dt>
+              <dd>network</dd>
+              <dt>Drilldown Search:</dt>
+              <dd>index=akamai httpMessage.status>=400 src=$src$ dest=$dest$ earliest=$info_min_time$ latest=$info_max_time$ | stats count by httpMessage.status, httpMessage.path</dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- SUPPRESSION -->
+        <div class="section">
+          <h2 class="subsection-title">Suppression Guidance</h2>
+          <div class="card" style="padding:20px;">
+            <p><strong>When to Suppress:</strong></p>
+            <ul style="margin:8px 0 0 20px;">
+              <li>Scheduled maintenance windows (known outages)</li>
+              <li>Application deployments causing temporary 5xx</li>
+              <li>Health check endpoints returning 404 by design</li>
+            </ul>
+            <p style="margin-top:16px;"><strong>⚠️ Do NOT suppress error alerts long-term.</strong> If you're seeing persistent high error rates, investigate the root cause.</p>
+          </div>
+        </div>
+
+        <!-- TUNING -->
+        <div class="section">
+          <h2 class="subsection-title">Tuning Knobs</h2>
+          <div class="card" style="padding:20px;">
+            <table class="tuning-table">
+              <tr>
+                <th>Parameter</th>
+                <th>Default</th>
+                <th>Tune When</th>
+                <th>Range</th>
+              </tr>
+              <tr>
+                <td>4xx error rate threshold</td>
+                <td>≥ 50%</td>
+                <td>APIs with strict validation have higher 4xx</td>
+                <td>30-80%</td>
+              </tr>
+              <tr>
+                <td>5xx error rate threshold</td>
+                <td>≥ 10%</td>
+                <td>Unstable apps may have baseline 5xx</td>
+                <td>5-20%</td>
+              </tr>
+              <tr>
+                <td>Minimum error count</td>
+                <td>20-100</td>
+                <td>Low-traffic apps may need lower threshold</td>
+                <td>10-500</td>
+              </tr>
+              <tr>
+                <td>Baseline std deviation</td>
+                <td>3σ</td>
+                <td>Too many FP = increase, missing attacks = decrease</td>
+                <td>2-4σ</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- FALSE POSITIVES -->
+        <div class="section">
+          <h2 class="subsection-title">Common False Positives</h2>
+          <div class="card" style="padding:20px;">
+            <table class="fp-table">
+              <tr>
+                <th>Pattern</th>
+                <th>Identification</th>
+                <th>Action</th>
+              </tr>
+              <tr>
+                <td>Application deployment</td>
+                <td>Sudden 5xx spike correlates with change window</td>
+                <td>Suppress during change windows, still notify AppDev</td>
+              </tr>
+              <tr>
+                <td>Broken client application</td>
+                <td>Single src with high 4xx, consistent over time</td>
+                <td>Notify application owner, may need client fix</td>
+              </tr>
+              <tr>
+                <td>CDN/cache invalidation</td>
+                <td>Temporary 5xx during cache refresh</td>
+                <td>Short-term suppress, verify CDN health</td>
+              </tr>
+              <tr>
+                <td>Rate limiting working as intended</td>
+                <td>429 errors during legitimate traffic spike</td>
+                <td>Exclude 429 from 4xx count if expected</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- TRIAGE RUNBOOK -->
+        <div class="section">
+          <h2 class="subsection-title">Triage Runbook</h2>
+          <div class="card" style="padding:20px;">
+            <h4 style="margin-top:0;">Initial Assessment (5 min)</h4>
+            <ol style="margin:8px 0 16px 20px;">
+              <li>Check if 5xx or 4xx dominant - 5xx = higher priority</li>
+              <li>Identify top error codes (401? 403? 500?)</li>
+              <li>Check for correlation with deployment/change windows</li>
+              <li>Verify source IP reputation</li>
+            </ol>
+            
+            <h4>Investigation Queries</h4>
+            <div style="background:#1e293b;color:#e2e8f0;padding:12px;border-radius:6px;margin-bottom:16px;">
+              <pre style="margin:0;font-size:0.8rem;"># Error breakdown by status code
+index=akamai sourcetype=akamai:siem attackData.clientIP="$src$" httpMessage.host="$dest$" earliest=-1h
+| spath path=httpMessage.status output=status
+| spath path=httpMessage.path output=path
+| stats count BY status, path
+| sort - count
+
+# Timeline of errors
+index=akamai sourcetype=akamai:siem attackData.clientIP="$src$" httpMessage.status>=400 earliest=-1h
+| timechart span=1m count BY httpMessage.status</pre>
+            </div>
+            
+            <h4>Response Actions</h4>
+            <table class="tuning-table">
+              <tr><th>Finding</th><th>Action</th></tr>
+              <tr><td>High 401/403 with password spray pattern</td><td>🔴 Block IP, check for successful auth</td></tr>
+              <tr><td>High 404 with directory fuzzing</td><td>🟡 Monitor, consider rate limit</td></tr>
+              <tr><td>High 500 from single src</td><td>🔴 Investigate for exploitation, block if malicious</td></tr>
+              <tr><td>5xx correlates with deployment</td><td>🟢 Notify AppDev, monitor recovery</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- VALIDATION -->
+        <div class="section">
+          <h2 class="subsection-title">Validation Steps</h2>
+          <div class="card" style="padding:20px;">
+            <h4 style="margin-top:0;">Test Before Production</h4>
+            <ol style="margin:8px 0 0 20px;">
+              <li>Analyze current error rate distribution: <code>| stats count by eval(floor(httpMessage.status/100)) | sort - count</code></li>
+              <li>Identify normal error patterns per destination</li>
+              <li>Build baseline lookup if using Option 2</li>
+              <li>Run in silent mode for 7 days to validate thresholds</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- OWNER -->
+        <div class="section">
+          <h2 class="subsection-title">Owner & Change History</h2>
+          <div class="card" style="padding:20px;">
+            <table class="tuning-table">
+              <tr><th>Field</th><th>Value</th></tr>
+              <tr><td>Owner</td><td>Detection Engineering Team</td></tr>
+              <tr><td>Created</td><td>2026-02-02</td></tr>
+              <tr><td>Last Updated</td><td>2026-02-02</td></tr>
+              <tr><td>Version</td><td>1.0</td></tr>
+              <tr><td>Status</td><td>Ready for UAT</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- NAVIGATION -->
+        <div style="display:flex;justify-content:space-between;margin-top:32px;">
+          <a href="uc13-methods.html" class="btn btn-secondary">← Previous: UC13 Rare Methods</a>
+          <a href="../waf-usecases.html" class="btn btn-primary">Back to WAF Overview →</a>
+        </div>
+
+      
+        <!-- SITE FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>

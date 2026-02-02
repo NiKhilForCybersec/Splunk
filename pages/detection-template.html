@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Use Case Template | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .template-section{background:white;border-radius:16px;padding:32px;margin-bottom:24px;border:1px solid var(--gray-200)}
+    .template-section h2{display:flex;align-items:center;gap:12px;margin:0 0 16px;font-size:1.25rem}
+    .section-number{background:var(--primary-500);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem}
+    .field-table{width:100%;border-collapse:collapse;margin:16px 0}
+    .field-table th,.field-table td{padding:12px 16px;text-align:left;border-bottom:1px solid #e2e8f0}
+    .field-table th{background:#f1f5f9;font-weight:600;width:200px}
+    .field-table td input,.field-table td textarea{width:100%;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit}
+    .field-table td textarea{min-height:80px;resize:vertical}
+    .code-template{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:20px;margin:16px 0;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:0.85rem;line-height:1.6}
+    .mandatory{color:#dc2626}
+    .optional{color:#6b7280;font-size:0.85rem}
+    .example-box{background:#ecfdf5;border:1px solid #10b981;border-radius:8px;padding:16px;margin:12px 0}
+    .example-box h4{color:#065f46;margin:0 0 8px;font-size:0.9rem}
+    .warning-box{background:#fef3c7;border-left:4px solid #f59e0b;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0}
+    .checklist{background:#f8fafc;border-radius:8px;padding:16px 20px;margin:16px 0}
+    .checklist-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0}
+    .check-box{width:18px;height:18px;border:2px solid #cbd5e1;border-radius:4px;flex-shrink:0;margin-top:2px}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="sidebar-logo-text"><h1>Splunk Reference</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Client Delivery</div>
+          <a href="client-delivery.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Delivery Playbook</span></a>
+          <a href="detection-template.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Case Template</span></a>
+          <a href="rba-design.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg><span>RBA Design Guide</span></a>
+          <a href="cim-mapping.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>CIM Mapping Guide</span></a>
+          <a href="es-mechanics.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>ES Mechanics</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Platform</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
+          <a href="splunk-architecture.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Architecture</span></a>
+          <a href="splunk-apps.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Apps & Add-ons</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Log Engineering</div>
+          <a href="log-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="data-inputs.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Data Inputs</span></a>
+          <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">SPL Mastery</div>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>SPL How-To</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>SPL Reference</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Detection Development</div>
+          <a href="correlation-searches.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Correlation Searches</span></a>
+          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Troubleshooting</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Active Projects</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>WAF/DDoS Project</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>WAF Use Cases</span></a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>MFA Project</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>MFA Use Cases</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span>Splunk Cloud Admin</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Client Comms</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Runbooks</span></a>
+          <a href="cheat-sheets.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Cheat Sheets</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Use Case Template</span>
+          </div>
+        </div>
+        <span class="badge critical">Standard Template</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Standard Use Case Template</h1>
+          <p class="section-subtitle">Every detection MUST include these sections for client delivery readiness</p>
+        </div>
+
+        <!-- SECTION 1: METADATA -->
+        <div class="template-section">
+          <h2><span class="section-number">1</span> Use Case Metadata</h2>
+          
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+            <tr>
+              <td><strong>UC ID</strong> <span class="mandatory">*</span></td>
+              <td><code>[PROJECT]-[CATEGORY]-[NUMBER]</code> (e.g., WAF-DDOS-001)</td>
+            </tr>
+            <tr>
+              <td><strong>UC Name</strong> <span class="mandatory">*</span></td>
+              <td>Human-readable name (e.g., "WAF Volume Spike Detection")</td>
+            </tr>
+            <tr>
+              <td><strong>Version</strong> <span class="mandatory">*</span></td>
+              <td>v1.0, v1.1, etc.</td>
+            </tr>
+            <tr>
+              <td><strong>Author</strong></td>
+              <td>Your name/team</td>
+            </tr>
+            <tr>
+              <td><strong>Created Date</strong></td>
+              <td>YYYY-MM-DD</td>
+            </tr>
+            <tr>
+              <td><strong>Last Updated</strong></td>
+              <td>YYYY-MM-DD</td>
+            </tr>
+            <tr>
+              <td><strong>Status</strong> <span class="mandatory">*</span></td>
+              <td>Draft | In Development | UAT | Production | Retired</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- SECTION 2: THREAT CONTEXT -->
+        <div class="template-section">
+          <h2><span class="section-number">2</span> Threat Context</h2>
+          
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+            <tr>
+              <td><strong>Threat Description</strong> <span class="mandatory">*</span></td>
+              <td>What attack/threat does this detect? (2-3 sentences)</td>
+            </tr>
+            <tr>
+              <td><strong>Business Impact</strong> <span class="mandatory">*</span></td>
+              <td>What happens if this attack succeeds?</td>
+            </tr>
+            <tr>
+              <td><strong>MITRE ATT&CK</strong> <span class="mandatory">*</span></td>
+              <td>Tactic: [Tactic] | Technique: [T####] | Sub-technique: [T####.###]</td>
+            </tr>
+            <tr>
+              <td><strong>Kill Chain Phase</strong></td>
+              <td>Reconnaissance | Weaponization | Delivery | Exploitation | Installation | C2 | Actions</td>
+            </tr>
+          </table>
+
+          <div class="example-box">
+            <h4>Example - WAF Volume Spike</h4>
+            <p><strong>Threat:</strong> Attacker launches automated attack (DDoS, brute force, or scanning) against web applications, generating high volume of blocked requests.</p>
+            <p><strong>Impact:</strong> Service degradation, potential for successful exploitation if WAF bypassed, resource exhaustion.</p>
+            <p><strong>MITRE:</strong> Tactic: Initial Access | Technique: T1190 (Exploit Public-Facing App)</p>
+          </div>
+        </div>
+
+        <!-- SECTION 3: DATA REQUIREMENTS -->
+        <div class="template-section">
+          <h2><span class="section-number">3</span> Data Requirements (Prerequisites)</h2>
+          
+          <table class="field-table">
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+            <tr>
+              <td><strong>Data Source(s)</strong> <span class="mandatory">*</span></td>
+              <td>Akamai WAF / CyberArk Identity / Entra ID / etc.</td>
+            </tr>
+            <tr>
+              <td><strong>Index</strong> <span class="mandatory">*</span></td>
+              <td>index name (e.g., akamai, azure, cyberark)</td>
+            </tr>
+            <tr>
+              <td><strong>Sourcetype</strong> <span class="mandatory">*</span></td>
+              <td>Exact sourcetype (e.g., akamai:siem)</td>
+            </tr>
+            <tr>
+              <td><strong>Required Fields</strong> <span class="mandatory">*</span></td>
+              <td>List all fields SPL depends on</td>
+            </tr>
+            <tr>
+              <td><strong>CIM Data Model</strong></td>
+              <td>Web / Authentication / Network Traffic / etc.</td>
+            </tr>
+            <tr>
+              <td><strong>Min Data Volume</strong></td>
+              <td>Minimum days of data needed for baseline</td>
+            </tr>
+          </table>
+
+          <div class="warning-box">
+            <h4>⚠️ Validation Queries (Run Before Development)</h4>
+            <pre style="background:#1e293b;color:#e2e8f0;padding:12px;border-radius:6px;overflow-x:auto;margin:8px 0;">
+# 1. Verify data exists
+index=YOUR_INDEX sourcetype=YOUR_SOURCETYPE earliest=-7d | stats count
+
+# 2. Verify required fields populated
+index=YOUR_INDEX sourcetype=YOUR_SOURCETYPE earliest=-24h
+| stats count(src) as src_count, count(dest) as dest_count, count(action) as action_count
+| where src_count > 0 AND dest_count > 0
+
+# 3. Verify CIM mapping (if applicable)
+| tstats count FROM datamodel=Web WHERE index=YOUR_INDEX BY Web.src | head 10
+            </pre>
+          </div>
+        </div>
+
+        <!-- SECTION 4: DETECTION LOGIC -->
+        <div class="template-section">
+          <h2><span class="section-number">4</span> Detection Logic (SPL)</h2>
+          
+          <h3>4a. Production SPL <span class="mandatory">*</span></h3>
+          <div class="code-template">
+<pre># === UC: [UC_ID] - [UC_NAME] ===
+# Version: [VERSION]
+# Author: [AUTHOR]
+# Description: [BRIEF DESCRIPTION]
+# Schedule: [CRON] (e.g., */5 * * * *)
+# Time Range: [EARLIEST] to [LATEST]
+
+# --- Data Collection ---
+| tstats summariesonly=true count 
+    FROM datamodel=Web 
+    WHERE Web.action="blocked" AND index=akamai 
+    BY Web.src, Web.dest span=5m
+
+# --- Threshold Application ---
+| where count >= `waf_volume_threshold`
+
+# --- Field Normalization ---
+| rename Web.src as src, Web.dest as dest
+
+# --- Enrichment ---
+| lookup asset_lookup.csv dest OUTPUT criticality, owner
+| lookup ip_allowlist.csv src OUTPUT allowed
+| where isnull(allowed) OR allowed!="true"
+
+# --- Output Fields for Notable ---
+| eval rule_name="[UC_ID] - [UC_NAME]"
+| eval urgency=case(count>=1000,"critical", count>=500,"high", 1=1,"medium")
+| table _time, src, dest, count, urgency, rule_name, criticality, owner</pre>
+          </div>
+
+          <h3>4b. Threshold Configuration</h3>
+          <table class="field-table">
+            <tr><th>Threshold</th><th>Default Value</th><th>Rationale</th></tr>
+            <tr>
+              <td>Primary threshold</td>
+              <td>e.g., 100 blocked requests in 5 min</td>
+              <td>How was this determined? (baseline analysis, vendor guidance, etc.)</td>
+            </tr>
+          </table>
+
+          <h3>4c. Scalable Baseline Strategy <span class="mandatory">*</span></h3>
+          <div class="warning-box">
+            <h4>⚠️ Do NOT compute baselines in the detection search</h4>
+            <p>Running <code>earliest=-7d</code> every 5 minutes is expensive and will cause scheduler skips.</p>
+          </div>
+
+          <div class="code-template">
+<pre># OPTION 1: Pre-computed baseline lookup (RECOMMENDED)
+# Run this HOURLY to update baseline lookup:
+index=akamai action=blocked earliest=-7d latest=-1h
+| timechart span=5m count by src
+| stats avg(count) as baseline_avg, stdev(count) as baseline_stdev by src
+| eval threshold = baseline_avg + (3 * baseline_stdev)
+| outputlookup waf_baseline_by_src.csv
+
+# Then in your 5-minute detection:
+| lookup waf_baseline_by_src.csv src OUTPUT threshold
+| where count > threshold
+
+# OPTION 2: Summary index for metrics
+# Run HOURLY:
+index=akamai action=blocked earliest=-1h
+| timechart span=5m count by src
+| collect index=waf_summary marker="baseline"
+
+# OPTION 3: Data Model Acceleration
+# Use tstats against accelerated Web data model
+| tstats summariesonly=true count FROM datamodel=Web 
+  WHERE Web.action="blocked" BY Web.src span=5m</pre>
+          </div>
+        </div>
+
+        <!-- SECTION 5: ES CONFIGURATION -->
+        <div class="template-section">
+          <h2><span class="section-number">5</span> ES Correlation Search Configuration</h2>
+          
+          <table class="field-table">
+            <tr><th>Setting</th><th>Value</th></tr>
+            <tr>
+              <td><strong>Search Name</strong></td>
+              <td><code>Threat - [UC_NAME] - Rule</code></td>
+            </tr>
+            <tr>
+              <td><strong>App Context</strong></td>
+              <td>SplunkEnterpriseSecuritySuite (or custom app)</td>
+            </tr>
+            <tr>
+              <td><strong>Schedule</strong></td>
+              <td>Cron: <code>*/5 * * * *</code> (every 5 min)</td>
+            </tr>
+            <tr>
+              <td><strong>Earliest</strong></td>
+              <td><code>-6m@m</code> (overlap for latency)</td>
+            </tr>
+            <tr>
+              <td><strong>Latest</strong></td>
+              <td><code>-1m@m</code> (buffer for indexing)</td>
+            </tr>
+            <tr>
+              <td><strong>Throttle</strong></td>
+              <td>Field: <code>src</code> | Window: <code>1h</code></td>
+            </tr>
+          </table>
+
+          <h3>Notable Event Configuration</h3>
+          <table class="field-table">
+            <tr><th>Notable Field</th><th>Value/Token</th></tr>
+            <tr><td>Title</td><td><code>[URGENCY] - [UC_NAME] - $src$</code></td></tr>
+            <tr><td>Description</td><td><code>$count$ blocked requests from $src$ targeting $dest$ in 5 minutes</code></td></tr>
+            <tr><td>Security Domain</td><td>Network / Access / Endpoint / etc.</td></tr>
+            <tr><td>Severity</td><td><code>$urgency$</code></td></tr>
+            <tr><td>Drilldown Search</td><td><code>index=akamai src=$src$ earliest=$_time$ latest=+1h</code></td></tr>
+          </table>
+
+          <h3>Required Notable Fields for SOC</h3>
+          <div class="checklist">
+            <div class="checklist-item"><div class="check-box"></div><code>src</code> - Source IP/user</div>
+            <div class="checklist-item"><div class="check-box"></div><code>dest</code> - Target system/app</div>
+            <div class="checklist-item"><div class="check-box"></div><code>user</code> - Associated user (if applicable)</div>
+            <div class="checklist-item"><div class="check-box"></div><code>urgency</code> - critical/high/medium/low</div>
+            <div class="checklist-item"><div class="check-box"></div><code>rule_name</code> - Detection identifier</div>
+            <div class="checklist-item"><div class="check-box"></div><code>count</code> - Event count/metric</div>
+            <div class="checklist-item"><div class="check-box"></div>Drilldown search that works</div>
+          </div>
+        </div>
+
+        <!-- SECTION 6: TRIAGE RUNBOOK -->
+        <div class="template-section">
+          <h2><span class="section-number">6</span> Triage Runbook <span class="mandatory">*</span></h2>
+          
+          <h3>6a. Initial Triage (5 minutes)</h3>
+          <div class="checklist">
+            <div class="checklist-item"><div class="check-box"></div>Is source IP in known allowlist? → Close as FP if yes</div>
+            <div class="checklist-item"><div class="check-box"></div>Check threat intel (VirusTotal, AbuseIPDB)</div>
+            <div class="checklist-item"><div class="check-box"></div>Review attack patterns (what WAF rules triggered?)</div>
+            <div class="checklist-item"><div class="check-box"></div>Check if any requests were ALLOWED (not blocked)</div>
+          </div>
+
+          <h3>6b. Investigation Queries</h3>
+          <div class="code-template">
+<pre># Deep dive on source IP
+index=akamai src="$src$" earliest=-24h
+| stats count by action, rule_name, http_uri, http_method
+| sort -count
+
+# Check for successful (non-blocked) requests
+index=akamai src="$src$" action!="blocked" earliest=-24h
+| stats count by http_uri, status
+
+# Timeline of attack
+index=akamai src="$src$" earliest=-24h
+| timechart span=5m count by action</pre>
+          </div>
+
+          <h3>6c. Enrichment Sources</h3>
+          <table class="field-table">
+            <tr><th>Enrichment</th><th>Source</th><th>What to Look For</th></tr>
+            <tr><td>IP Reputation</td><td>VirusTotal, AbuseIPDB, Threat Intel</td><td>Known malicious? Tor exit? VPN?</td></tr>
+            <tr><td>Asset Context</td><td>Asset Lookup</td><td>Is target critical? PCI scope?</td></tr>
+            <tr><td>Geographic</td><td>iplocation</td><td>Expected country for this traffic?</td></tr>
+            <tr><td>Historical</td><td>Previous notables</td><td>Have we seen this IP before?</td></tr>
+          </table>
+
+          <h3>6d. Response Actions</h3>
+          <table class="field-table">
+            <tr><th>Finding</th><th>Action</th></tr>
+            <tr><td>Confirmed malicious + attack blocked</td><td>Request permanent IP block, close notable as TP</td></tr>
+            <tr><td>Confirmed malicious + some requests allowed</td><td>ESCALATE - potential breach, engage IR</td></tr>
+            <tr><td>Known scanner (authorized)</td><td>Add to allowlist, close as FP, tune detection</td></tr>
+            <tr><td>CDN/Proxy IP (multi-user)</td><td>Document, consider raising threshold for this IP</td></tr>
+            <tr><td>Uncertain</td><td>Add to watchlist, monitor for 24h</td></tr>
+          </table>
+        </div>
+
+        <!-- SECTION 7: FALSE POSITIVES -->
+        <div class="template-section">
+          <h2><span class="section-number">7</span> Known False Positives & Tuning</h2>
+          
+          <table class="field-table">
+            <tr><th>FP Pattern</th><th>Identification</th><th>Tuning Action</th></tr>
+            <tr>
+              <td>Health check monitors</td>
+              <td>Same UA, regular interval, single URI</td>
+              <td>Add to allowlist by user-agent or src</td>
+            </tr>
+            <tr>
+              <td>Authorized scanners</td>
+              <td>Known scanner IPs during test windows</td>
+              <td>Time-based exception or IP allowlist</td>
+            </tr>
+            <tr>
+              <td>CDN/Proxy IPs</td>
+              <td>Multiple users behind single IP</td>
+              <td>Raise threshold for known proxies</td>
+            </tr>
+          </table>
+
+          <h3>Allowlist Management</h3>
+          <div class="code-template">
+<pre># Allowlist lookup structure: waf_allowlist.csv
+# Columns: ip, reason, owner, created_date, expiry_date
+# Example:
+# 10.0.0.100,Health check monitor,IT-Ops,2024-01-15,permanent
+# 192.168.1.50,Authorized scanner,Security-Team,2024-01-20,2024-12-31
+
+# In SPL:
+| lookup waf_allowlist.csv ip AS src OUTPUT reason as allowlist_reason
+| where isnull(allowlist_reason)</pre>
+          </div>
+        </div>
+
+        <!-- SECTION 8: TESTING -->
+        <div class="template-section">
+          <h2><span class="section-number">8</span> Testing Checklist</h2>
+          
+          <h3>Positive Tests (Should Fire)</h3>
+          <div class="checklist">
+            <div class="checklist-item"><div class="check-box"></div>Test with synthetic data matching criteria</div>
+            <div class="checklist-item"><div class="check-box"></div>Verify against known historical incident</div>
+            <div class="checklist-item"><div class="check-box"></div>Confirm notable created with correct fields</div>
+            <div class="checklist-item"><div class="check-box"></div>Verify drilldown search works</div>
+          </div>
+
+          <h3>Negative Tests (Should NOT Fire)</h3>
+          <div class="checklist">
+            <div class="checklist-item"><div class="check-box"></div>Normal traffic below threshold</div>
+            <div class="checklist-item"><div class="check-box"></div>Allowlisted sources excluded</div>
+            <div class="checklist-item"><div class="check-box"></div>Throttling prevents duplicate notables</div>
+          </div>
+
+          <h3>Performance Tests</h3>
+          <div class="checklist">
+            <div class="checklist-item"><div class="check-box"></div>Search completes in &lt;60 seconds</div>
+            <div class="checklist-item"><div class="check-box"></div>No scheduler skips over 24h monitoring period</div>
+            <div class="checklist-item"><div class="check-box"></div>Works at expected data volume</div>
+          </div>
+        </div>
+
+        <!-- SECTION 9: ROLLOUT -->
+        <div class="template-section">
+          <h2><span class="section-number">9</span> Rollout Plan</h2>
+          
+          <table class="field-table">
+            <tr><th>Phase</th><th>Duration</th><th>Activities</th></tr>
+            <tr>
+              <td><strong>Dev</strong></td>
+              <td>1-2 weeks</td>
+              <td>SPL development, threshold analysis, testing</td>
+            </tr>
+            <tr>
+              <td><strong>UAT (Silent Mode)</strong></td>
+              <td>7+ days</td>
+              <td>Enabled but notables not actioned; measure FP rate</td>
+            </tr>
+            <tr>
+              <td><strong>Tuning</strong></td>
+              <td>As needed</td>
+              <td>Adjust thresholds, add allowlists based on UAT</td>
+            </tr>
+            <tr>
+              <td><strong>Production</strong></td>
+              <td>Ongoing</td>
+              <td>Full alerting enabled, SOC triage</td>
+            </tr>
+            <tr>
+              <td><strong>Review</strong></td>
+              <td>30 days post-prod</td>
+              <td>FP rate review, threshold adjustment, effectiveness</td>
+            </tr>
+          </table>
+        </div>
+
+      
+        <!-- SITE FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

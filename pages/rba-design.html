@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RBA Design Guide | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .rba-section{background:white;border-radius:16px;padding:32px;margin-bottom:24px;border:1px solid var(--gray-200)}
+    .rba-section h2{margin:0 0 16px;color:#0f172a}
+    .decision-card{background:#f8fafc;border-radius:12px;padding:20px;margin:16px 0;border-left:4px solid var(--primary-500)}
+    .decision-card h4{margin:0 0 12px;color:#1e293b}
+    .decision-card ul{margin:0;padding-left:20px}
+    .score-table{width:100%;border-collapse:collapse;margin:16px 0}
+    .score-table th,.score-table td{padding:12px 16px;text-align:left;border-bottom:1px solid #e2e8f0}
+    .score-table th{background:#f1f5f9;font-weight:600}
+    .score-table .score{font-weight:700;text-align:center}
+    .score-low{color:#059669}
+    .score-med{color:#d97706}
+    .score-high{color:#dc2626}
+    .code-block{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:20px;margin:16px 0;overflow-x:auto}
+    .code-block pre{margin:0;font-size:0.85rem;line-height:1.6}
+    .vs-table{width:100%;border-collapse:collapse;margin:16px 0}
+    .vs-table th,.vs-table td{padding:14px 16px;border:1px solid #e2e8f0}
+    .vs-table th{background:#f1f5f9}
+    .vs-table .notable{background:#fef3c7}
+    .vs-table .risk{background:#dbeafe}
+    .warning-box{background:#fef3c7;border-left:4px solid #f59e0b;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0}
+    .info-box{background:#eff6ff;border-left:4px solid #3b82f6;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0}
+    .example-card{background:#ecfdf5;border:1px solid #10b981;border-radius:12px;padding:20px;margin:16px 0}
+    .example-card h4{color:#065f46;margin:0 0 12px}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="sidebar-logo-text"><h1>Splunk Reference</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Client Delivery</div>
+          <a href="client-delivery.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Delivery Playbook</span></a>
+          <a href="detection-template.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Case Template</span></a>
+          <a href="rba-design.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg><span>RBA Design Guide</span></a>
+          <a href="cim-mapping.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>CIM Mapping Guide</span></a>
+          <a href="es-mechanics.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>ES Mechanics</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Platform</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
+          <a href="splunk-architecture.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Architecture</span></a>
+          <a href="splunk-apps.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Apps & Add-ons</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Log Engineering</div>
+          <a href="log-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="data-inputs.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Data Inputs</span></a>
+          <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">SPL Mastery</div>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>SPL How-To</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>SPL Reference</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Detection Development</div>
+          <a href="correlation-searches.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Correlation Searches</span></a>
+          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Troubleshooting</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Active Projects</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>WAF/DDoS Project</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>WAF Use Cases</span></a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>MFA Project</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>MFA Use Cases</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span>Splunk Cloud Admin</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Client Comms</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Runbooks</span></a>
+          <a href="cheat-sheets.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Cheat Sheets</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">RBA Design Guide</span>
+          </div>
+        </div>
+        <span class="badge critical">ES Required</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Risk-Based Alerting (RBA) Design Guide</h1>
+          <p class="section-subtitle">When to use Notable vs Risk-only, risk object selection, scoring strategies, and escalation thresholds</p>
+        </div>
+
+        <!-- NOTABLE VS RISK -->
+        <div class="rba-section">
+          <h2>Notable vs Risk-Only: When to Use Each</h2>
+          
+          <table class="vs-table">
+            <thead>
+              <tr>
+                <th>Criteria</th>
+                <th class="notable">Create Notable Directly</th>
+                <th class="risk">Risk-Only (Aggregate Later)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Confidence level</strong></td>
+                <td class="notable">High confidence - this IS malicious</td>
+                <td class="risk">Low/medium confidence - suspicious but uncertain</td>
+              </tr>
+              <tr>
+                <td><strong>Alert volume</strong></td>
+                <td class="notable">Low volume (&lt;10/day expected)</td>
+                <td class="risk">High volume - would overwhelm SOC</td>
+              </tr>
+              <tr>
+                <td><strong>Standalone value</strong></td>
+                <td class="notable">Actionable on its own</td>
+                <td class="risk">Needs context from other signals</td>
+              </tr>
+              <tr>
+                <td><strong>False positive rate</strong></td>
+                <td class="notable">Very low (&lt;10%)</td>
+                <td class="risk">Moderate to high</td>
+              </tr>
+              <tr>
+                <td><strong>SOC action</strong></td>
+                <td class="notable">Immediate investigation required</td>
+                <td class="risk">Only if combined with other risks</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="decision-card">
+            <h4>🔴 Use Notable Directly When:</h4>
+            <ul>
+              <li>Known malicious indicator (confirmed IOC match)</li>
+              <li>Critical security control bypass (MFA disabled for admin)</li>
+              <li>Data exfiltration detected</li>
+              <li>Ransomware behavior identified</li>
+              <li>Privileged account compromise confirmed</li>
+            </ul>
+          </div>
+
+          <div class="decision-card">
+            <h4>🔵 Use Risk-Only When:</h4>
+            <ul>
+              <li>Anomaly detection (deviation from baseline)</li>
+              <li>Geographic anomalies (new country, but could be VPN)</li>
+              <li>Failed authentication (suspicious but common)</li>
+              <li>WAF blocks (expected to be noisy)</li>
+              <li>User behavior analytics signals</li>
+              <li>Reconnaissance activity</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- RISK OBJECT SELECTION -->
+        <div class="rba-section">
+          <h2>Risk Object Selection Rules</h2>
+          <p>Choose the risk object based on <strong>what you're investigating</strong>, not what triggered the alert.</p>
+
+          <table class="score-table">
+            <thead>
+              <tr><th>Detection Type</th><th>Primary Risk Object</th><th>Secondary Risk Object</th><th>Why</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>MFA Push Bombing</strong></td>
+                <td><code>user</code></td>
+                <td><code>src_ip</code> (attacker)</td>
+                <td>User account is target; correlate other attacks on same user</td>
+              </tr>
+              <tr>
+                <td><strong>Impossible Travel</strong></td>
+                <td><code>user</code></td>
+                <td><code>src_ip</code> (both locations)</td>
+                <td>User account may be compromised</td>
+              </tr>
+              <tr>
+                <td><strong>WAF SQLi Attempt</strong></td>
+                <td><code>src_ip</code></td>
+                <td><code>dest</code> (target app)</td>
+                <td>Attacker IP is threat; may attack multiple apps</td>
+              </tr>
+              <tr>
+                <td><strong>WAF Volume Spike</strong></td>
+                <td><code>src_ip</code></td>
+                <td><code>dest</code></td>
+                <td>Source is generating abuse</td>
+              </tr>
+              <tr>
+                <td><strong>Privilege Escalation</strong></td>
+                <td><code>user</code> (target)</td>
+                <td><code>user</code> (actor if different)</td>
+                <td>Whose privileges changed matters most</td>
+              </tr>
+              <tr>
+                <td><strong>Malware Detection</strong></td>
+                <td><code>dest</code> (host)</td>
+                <td><code>user</code> (if known)</td>
+                <td>Host needs investigation/remediation</td>
+              </tr>
+              <tr>
+                <td><strong>Lateral Movement</strong></td>
+                <td><code>src</code> (source host)</td>
+                <td><code>dest</code>, <code>user</code></td>
+                <td>Source is likely compromised</td>
+              </tr>
+              <tr>
+                <td><strong>Data Exfiltration</strong></td>
+                <td><code>src</code> (source host)</td>
+                <td><code>user</code>, <code>dest</code></td>
+                <td>Where data came from is primary</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="warning-box">
+            <h4>⚠️ Common Mistake</h4>
+            <p>Don't always use <code>src_ip</code> as risk object. For identity attacks, the <code>user</code> is what you're protecting. For infrastructure attacks, the <code>dest</code> (target system) or <code>src</code> (compromised host) matters more.</p>
+          </div>
+        </div>
+
+        <!-- RISK SCORING -->
+        <div class="rba-section">
+          <h2>Risk Score Design</h2>
+          
+          <h3>Base Score Guidelines</h3>
+          <table class="score-table">
+            <thead>
+              <tr><th>Category</th><th>Score Range</th><th>Examples</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Informational</strong></td>
+                <td class="score score-low">5-10</td>
+                <td>Login from new device, password change, normal recon</td>
+              </tr>
+              <tr>
+                <td><strong>Low Risk</strong></td>
+                <td class="score score-low">10-20</td>
+                <td>Failed login (few), WAF block (single), new location</td>
+              </tr>
+              <tr>
+                <td><strong>Medium Risk</strong></td>
+                <td class="score score-med">20-40</td>
+                <td>Multiple failed logins, WAF attack pattern, suspicious process</td>
+              </tr>
+              <tr>
+                <td><strong>High Risk</strong></td>
+                <td class="score score-high">40-60</td>
+                <td>MFA bombing, privilege escalation attempt, SQLi/RCE attempt</td>
+              </tr>
+              <tr>
+                <td><strong>Critical Risk</strong></td>
+                <td class="score score-high">60-100</td>
+                <td>Confirmed malware, credential theft, data exfil indicators</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Score Modifiers</h3>
+          <table class="score-table">
+            <thead>
+              <tr><th>Factor</th><th>Modifier</th><th>Rationale</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Target is privileged user</td>
+                <td class="score score-high">+20</td>
+                <td>Higher impact if compromised</td>
+              </tr>
+              <tr>
+                <td>Target is critical asset</td>
+                <td class="score score-high">+15</td>
+                <td>Production, PCI, crown jewels</td>
+              </tr>
+              <tr>
+                <td>Attack succeeded (not blocked)</td>
+                <td class="score score-high">+25</td>
+                <td>Actual impact vs attempt</td>
+              </tr>
+              <tr>
+                <td>Multiple techniques observed</td>
+                <td class="score score-med">+10 per</td>
+                <td>Attacker sophistication</td>
+              </tr>
+              <tr>
+                <td>Off-hours activity</td>
+                <td class="score score-med">+10</td>
+                <td>Anomalous timing</td>
+              </tr>
+              <tr>
+                <td>Known threat intel match</td>
+                <td class="score score-high">+30</td>
+                <td>Confirmed bad actor</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- RISK THRESHOLDS -->
+        <div class="rba-section">
+          <h2>Risk Threshold Configuration</h2>
+          
+          <h3>Recommended Thresholds for Risk Notables</h3>
+          <table class="score-table">
+            <thead>
+              <tr><th>Risk Object Type</th><th>Time Window</th><th>Threshold</th><th>Notable Urgency</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>user</code></td>
+                <td>24 hours</td>
+                <td>≥100</td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td><code>user</code></td>
+                <td>24 hours</td>
+                <td>≥150</td>
+                <td>Critical</td>
+              </tr>
+              <tr>
+                <td><code>src</code> (system)</td>
+                <td>24 hours</td>
+                <td>≥80</td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td><code>src</code> (system)</td>
+                <td>24 hours</td>
+                <td>≥120</td>
+                <td>Critical</td>
+              </tr>
+              <tr>
+                <td><code>dest</code> (target)</td>
+                <td>24 hours</td>
+                <td>≥100</td>
+                <td>High</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="info-box">
+            <h4>ℹ️ Threshold Tuning</h4>
+            <p>Start with these defaults, then tune based on your environment. If you're getting &gt;10 risk notables/day, raise thresholds. If you're missing known incidents, lower them. Track the risk scores of true positives to calibrate.</p>
+          </div>
+
+          <h3>Risk Notable Correlation Search</h3>
+          <div class="code-block">
+            <pre># ATT&CK Tactic Threshold: Risk Notable for User
+| tstats summariesonly=t sum(All_Risk.calculated_risk_score) as risk_score, 
+  dc(All_Risk.risk_message) as risk_event_count,
+  values(All_Risk.risk_message) as risk_messages
+  FROM datamodel=Risk.All_Risk 
+  WHERE All_Risk.risk_object_type="user" 
+  BY All_Risk.risk_object
+| rename All_Risk.risk_object as user
+| where risk_score >= 100
+| eval risk_messages = mvjoin(risk_messages, " | ")
+
+# Fields for Notable:
+# - rule_name: "Risk Threshold Exceeded - User"
+# - user: $user$
+# - risk_score: $risk_score$
+# - risk_event_count: $risk_event_count$
+# - urgency: case(risk_score>=150, "critical", risk_score>=100, "high", 1=1, "medium")</pre>
+          </div>
+        </div>
+
+        <!-- WAF RBA EXAMPLES -->
+        <div class="rba-section">
+          <h2>WAF Project: RBA Implementation Examples</h2>
+          
+          <div class="example-card">
+            <h4>Example 1: WAF Volume Spike → Risk to src_ip</h4>
+            <p><strong>Scenario:</strong> High volume of blocks from single IP</p>
+            <p><strong>Risk Object:</strong> <code>src_ip</code></p>
+            <p><strong>Base Score:</strong> 25</p>
+            <p><strong>Modifiers:</strong> +15 if SQLi/RCE attack type, +10 if &gt;1000 blocks</p>
+            <div class="code-block">
+              <pre>index=waf sourcetype=akamai:siem action=deny earliest=-5m
+| stats count as block_count, dc(attack_type) as attack_types, 
+  values(attack_type) as attacks by src_ip
+| where block_count >= 100
+| eval risk_score = 25 
+  + if(match(attacks, "(?i)(sqli|rce|injection)"), 15, 0)
+  + if(block_count > 1000, 10, 0)
+| eval risk_object = src_ip, risk_object_type = "system"
+| eval risk_message = "WAF blocked ".block_count." requests from ".src_ip
+| collect index=risk</pre>
+            </div>
+          </div>
+
+          <div class="example-card">
+            <h4>Example 2: WAF Attack on Critical App → Risk to dest</h4>
+            <p><strong>Scenario:</strong> Attack targeting PCI application</p>
+            <p><strong>Risk Object:</strong> <code>dest</code> (target app)</p>
+            <p><strong>Base Score:</strong> 30</p>
+            <p><strong>Modifiers:</strong> +20 if PCI app, +15 if attack not blocked</p>
+            <div class="code-block">
+              <pre>index=waf sourcetype=akamai:siem 
+| lookup asset_criticality.csv dest OUTPUT criticality
+| stats count, dc(src_ip) as unique_attackers, 
+  sum(eval(if(action="allow", 1, 0))) as allowed by dest, criticality
+| where count >= 50
+| eval risk_score = 30
+  + if(criticality="pci", 20, if(criticality="critical", 15, 0))
+  + if(allowed > 0, 15, 0)
+| eval risk_object = dest, risk_object_type = "system"
+| collect index=risk</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- MFA RBA EXAMPLES -->
+        <div class="rba-section">
+          <h2>MFA Project: RBA Implementation Examples</h2>
+          
+          <div class="example-card">
+            <h4>Example 1: MFA Push Bombing → Risk to user</h4>
+            <p><strong>Scenario:</strong> Multiple MFA denials followed by success</p>
+            <p><strong>Risk Object:</strong> <code>user</code></p>
+            <p><strong>Base Score:</strong> 50</p>
+            <p><strong>Modifiers:</strong> +30 if success after denials, +20 if privileged user</p>
+            <div class="code-block">
+              <pre>index=mfa sourcetype="cyberark:identity" OR sourcetype="azure:aad:signin"
+| transaction user maxspan=10m
+| stats count(eval(mfa_result="denied")) as denials,
+  count(eval(mfa_result="success")) as successes by user
+| where denials >= 5
+| lookup privileged_users.csv user OUTPUT is_privileged
+| eval risk_score = 50
+  + if(successes > 0 AND denials >= 5, 30, 0)
+  + if(is_privileged="true", 20, 0)
+| eval risk_object = user, risk_object_type = "user"
+| eval risk_message = "MFA push bombing: ".denials." denials".if(successes>0, " WITH SUCCESS", "")
+| collect index=risk</pre>
+            </div>
+          </div>
+
+          <div class="example-card">
+            <h4>Example 2: Impossible Travel → Risk to user</h4>
+            <p><strong>Scenario:</strong> Login from distant location within impossible time</p>
+            <p><strong>Risk Object:</strong> <code>user</code></p>
+            <p><strong>Base Score:</strong> 35</p>
+            <p><strong>Modifiers:</strong> +20 if privileged, +15 if known risky country</p>
+            <div class="code-block">
+              <pre># After detecting impossible travel...
+| eval risk_score = 35
+  + if(is_privileged="true", 20, 0)
+  + if(match(country, "(RU|CN|KP|IR)"), 15, 0)
+| eval risk_object = user, risk_object_type = "user"
+| eval risk_message = "Impossible travel: ".src_country." to ".dest_country." in ".time_diff_hours." hours"
+| collect index=risk</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- WHEN NOT TO USE RBA -->
+        <div class="rba-section">
+          <h2>When NOT to Use RBA</h2>
+          
+          <div class="warning-box">
+            <h4>⚠️ Skip RBA and Create Notable Directly When:</h4>
+            <ul style="margin:8px 0 0 20px;">
+              <li><strong>Confirmed threat intel match</strong> - Known bad IP/hash/domain → Notable immediately</li>
+              <li><strong>Critical control failure</strong> - MFA disabled for admin → Notable immediately</li>
+              <li><strong>Data breach indicators</strong> - Large data transfer to external → Notable immediately</li>
+              <li><strong>Ransomware behavior</strong> - Mass file encryption → Notable immediately</li>
+              <li><strong>Single high-fidelity detection</strong> - If one signal is enough, don't complicate it</li>
+            </ul>
+          </div>
+
+          <div class="info-box">
+            <h4>💡 RBA Best Practice</h4>
+            <p>Use RBA for <strong>aggregation and correlation</strong>, not as a replacement for high-fidelity detections. The goal is to surface entities that have accumulated suspicious activity, not to bury critical alerts in risk scores.</p>
+          </div>
+        </div>
+
+      
+        <!-- SITE FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

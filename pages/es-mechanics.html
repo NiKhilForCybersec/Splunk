@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ES Correlation Search Mechanics | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .mechanics-section{background:white;border-radius:16px;padding:32px;margin-bottom:24px;border:1px solid var(--gray-200)}
+    .mechanics-section h2{margin:0 0 16px;color:#0f172a}
+    .code-block{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:20px;margin:16px 0;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:0.85rem;line-height:1.6}
+    .warning-box{background:#fef3c7;border-left:4px solid #f59e0b;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0}
+    .danger-box{background:#fef2f2;border-left:4px solid #ef4444;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0}
+    .info-box{background:#eff6ff;border-left:4px solid #3b82f6;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0}
+    .success-box{background:#ecfdf5;border-left:4px solid #10b981;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0}
+    .comparison-table{width:100%;border-collapse:collapse;margin:16px 0}
+    .comparison-table th,.comparison-table td{padding:12px 16px;text-align:left;border:1px solid #e2e8f0}
+    .comparison-table th{background:#f1f5f9;font-weight:600}
+    .timeline-box{background:#f8fafc;border-radius:12px;padding:24px;margin:16px 0}
+    .timeline-item{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid #e2e8f0}
+    .timeline-item:last-child{border-bottom:none}
+    .timeline-time{font-family:'JetBrains Mono',monospace;font-weight:600;color:#3b82f6;min-width:80px}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="sidebar-logo-text"><h1>Splunk Reference</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Command Center</span></a>
+          <a href="day1.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg><span>Day 1 Checklist</span></a>
+          <a href="professional-excellence.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Professional Excellence</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Client Delivery</div>
+          <a href="client-delivery.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Delivery Playbook</span></a>
+          <a href="detection-template.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Use Case Template</span></a>
+          <a href="rba-design.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg><span>RBA Design Guide</span></a>
+          <a href="cim-mapping.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>CIM Mapping Guide</span></a>
+          <a href="es-mechanics.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>ES Mechanics</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Splunk Platform</div>
+          <a href="splunk-fundamentals.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Splunk 101</span></a>
+          <a href="splunk-architecture.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Architecture</span></a>
+          <a href="splunk-apps.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Apps & Add-ons</span></a>
+          <a href="splunk-es.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Enterprise Security</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Log Engineering</div>
+          <a href="log-onboarding.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Log Onboarding</span></a>
+          <a href="data-inputs.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Data Inputs</span></a>
+          <a href="data-flow.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Data Flow</span></a>
+          <a href="parsing-cim.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Parsing & CIM</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">SPL Mastery</div>
+          <a href="splunk-howto.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>SPL How-To</span></a>
+          <a href="spl-reference.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>SPL Reference</span></a>
+          <a href="lookups.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Lookups</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Detection Development</div>
+          <a href="correlation-searches.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Correlation Searches</span></a>
+          <a href="detection-lifecycle.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg><span>Detection Lifecycle</span></a>
+          <a href="decision-trees.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg><span>Decision Trees</span></a>
+          <a href="troubleshooting.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Troubleshooting</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Data Sources</div>
+          <a href="vendor-akamai.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Akamai WAF</span></a>
+          <a href="vendor-entra.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Entra ID</span></a>
+          <a href="vendor-cyberark.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>CyberArk</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Active Projects</div>
+          <a href="waf-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>WAF/DDoS Project</span></a>
+          <a href="waf-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>WAF Use Cases</span></a>
+          <a href="mfa-overview.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>MFA Project</span></a>
+          <a href="mfa-usecases.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>MFA Use Cases</span></a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="splunk-ops.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg><span>Splunk Cloud Admin</span></a>
+          <a href="client-comm.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Client Comms</span></a>
+          <a href="runbooks.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span>Runbooks</span></a>
+          <a href="cheat-sheets.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Cheat Sheets</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">ES Correlation Search Mechanics</span>
+          </div>
+        </div>
+        <span class="badge critical">Production Pitfalls</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Enterprise Security Mechanics Deep Dive</h1>
+          <p class="section-subtitle">Understanding how correlation searches actually work - and what breaks in production</p>
+        </div>
+
+        <!-- SCHEDULING -->
+        <div class="mechanics-section">
+          <h2>1. Schedule vs Time Range vs Data Latency</h2>
+          <p>This is the #1 source of confusion and detection gaps.</p>
+
+          <h3>The Three Time Concepts</h3>
+          <table class="comparison-table">
+            <tr>
+              <th>Concept</th>
+              <th>What It Means</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td><strong>Schedule (cron)</strong></td>
+              <td>When the search RUNS</td>
+              <td><code>*/5 * * * *</code> = runs every 5 minutes</td>
+            </tr>
+            <tr>
+              <td><strong>Time Range</strong></td>
+              <td>What data the search LOOKS AT</td>
+              <td><code>earliest=-6m latest=-1m</code> = last 6 min excluding last 1 min</td>
+            </tr>
+            <tr>
+              <td><strong>Data Latency</strong></td>
+              <td>Delay between event occurrence and availability in Splunk</td>
+              <td>Akamai: 2-5 min | Event Hub: 1-3 min | HEC: &lt;1 min</td>
+            </tr>
+          </table>
+
+          <div class="timeline-box">
+            <h4 style="margin:0 0 16px;">Example Timeline: Search runs at 10:05</h4>
+            <div class="timeline-item">
+              <div class="timeline-time">10:00:00</div>
+              <div>Event occurs in Akamai</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">10:02:30</div>
+              <div>Event available via Akamai SIEM API (2.5 min latency)</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">10:03:00</div>
+              <div>Splunk Add-on polls API, ingests event</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">10:03:05</div>
+              <div>Event indexed in Splunk (_indextime)</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">10:05:00</div>
+              <div>Correlation search runs with <code>earliest=-6m latest=-1m</code></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">—</div>
+              <div>Search looks at: 09:59:00 to 10:04:00 → ✅ Event is included</div>
+            </div>
+          </div>
+
+          <div class="warning-box">
+            <h4>⚠️ Why <code>latest=-1m</code> is Critical</h4>
+            <p>Without the 1-minute buffer, you might miss events still being indexed. With high-latency sources (Akamai, Event Hub), increase this to <code>latest=-2m</code> or <code>latest=-3m</code>.</p>
+          </div>
+
+          <h3>Recommended Time Range Configurations</h3>
+          <table class="comparison-table">
+            <tr>
+              <th>Schedule</th>
+              <th>Time Range</th>
+              <th>Overlap</th>
+              <th>When to Use</th>
+            </tr>
+            <tr>
+              <td><code>*/5 * * * *</code></td>
+              <td><code>earliest=-6m latest=-1m</code></td>
+              <td>1 minute</td>
+              <td>Standard, low-latency data</td>
+            </tr>
+            <tr>
+              <td><code>*/5 * * * *</code></td>
+              <td><code>earliest=-8m latest=-3m</code></td>
+              <td>3 minutes</td>
+              <td>High-latency sources (Akamai, Event Hub)</td>
+            </tr>
+            <tr>
+              <td><code>*/15 * * * *</code></td>
+              <td><code>earliest=-20m latest=-5m</code></td>
+              <td>5 minutes</td>
+              <td>Aggregation-based detections</td>
+            </tr>
+            <tr>
+              <td><code>0 * * * *</code> (hourly)</td>
+              <td><code>earliest=-65m latest=-5m</code></td>
+              <td>5 minutes</td>
+              <td>Expensive searches, baselines</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- THROTTLING VS SUPPRESSION -->
+        <div class="mechanics-section">
+          <h2>2. Throttling vs Suppression vs Aggregation</h2>
+          <p>Three different ways to reduce alert noise - each works differently.</p>
+
+          <table class="comparison-table">
+            <tr>
+              <th>Mechanism</th>
+              <th>Where Configured</th>
+              <th>How It Works</th>
+              <th>Use Case</th>
+            </tr>
+            <tr>
+              <td><strong>Throttling</strong></td>
+              <td>Correlation search settings</td>
+              <td>Prevents duplicate notables for same field values within window</td>
+              <td>"Don't alert on same IP more than once per hour"</td>
+            </tr>
+            <tr>
+              <td><strong>Suppression</strong></td>
+              <td>ES Notable Suppression editor</td>
+              <td>Hides/suppresses notables matching criteria (still created but hidden)</td>
+              <td>"Hide all alerts from this known scanner IP"</td>
+            </tr>
+            <tr>
+              <td><strong>Aggregation</strong></td>
+              <td>In SPL (stats, transaction)</td>
+              <td>Groups multiple events into single alert</td>
+              <td>"Alert once for all failed logins from same user"</td>
+            </tr>
+          </table>
+
+          <h3>Throttling Configuration</h3>
+          <div class="code-block">
+<pre># In correlation search settings:
+# Throttle field: src
+# Throttle window: 3600 (seconds = 1 hour)
+
+# What this means:
+# If search fires for src=10.0.0.1, it won't create another
+# notable for src=10.0.0.1 for the next hour, even if
+# the search matches again.
+
+# PITFALL: Throttle is per-field-value, not per-search
+# If src=10.0.0.1 fires, src=10.0.0.2 can STILL fire immediately</pre>
+          </div>
+
+          <div class="danger-box">
+            <h4>🚨 Throttling Gotcha: Field Must Be in Results</h4>
+            <p>The throttle field (e.g., <code>src</code>) MUST be in your search results. If your SPL renames the field after stats, use the renamed field name in throttle config.</p>
+          </div>
+
+          <h3>Suppression Rules</h3>
+          <div class="code-block">
+<pre># Suppression is managed in: 
+# Configure → Content → Content Management → Notable Event Suppressions
+
+# Example suppression:
+# Name: Suppress known scanner
+# Filter: rule_name="WAF Volume Spike*" AND src="192.168.1.100"
+# Expiration: 2024-12-31
+
+# IMPORTANT: Suppressed notables ARE created, just hidden
+# They count toward license and still exist in notable index
+# Use throttling to prevent creation entirely</pre>
+          </div>
+        </div>
+
+        <!-- NOTABLE FIELDS -->
+        <div class="mechanics-section">
+          <h2>3. Notable Event Fields (What SOC Needs)</h2>
+          
+          <h3>Required Fields for Effective Triage</h3>
+          <table class="comparison-table">
+            <tr>
+              <th>Field</th>
+              <th>Purpose</th>
+              <th>SPL Example</th>
+            </tr>
+            <tr>
+              <td><code>rule_name</code></td>
+              <td>Identifies which detection fired</td>
+              <td><code>| eval rule_name="WAF-001 Volume Spike"</code></td>
+            </tr>
+            <tr>
+              <td><code>rule_description</code></td>
+              <td>Human-readable context</td>
+              <td><code>| eval rule_description="High volume of blocked requests detected"</code></td>
+            </tr>
+            <tr>
+              <td><code>src</code></td>
+              <td>Source (IP, user, host)</td>
+              <td><code>| rename Web.src as src</code></td>
+            </tr>
+            <tr>
+              <td><code>dest</code></td>
+              <td>Target (system, app, URL)</td>
+              <td><code>| rename Web.dest as dest</code></td>
+            </tr>
+            <tr>
+              <td><code>user</code></td>
+              <td>Associated user (if applicable)</td>
+              <td><code>| rename Authentication.user as user</code></td>
+            </tr>
+            <tr>
+              <td><code>urgency</code></td>
+              <td>Alert priority</td>
+              <td><code>| eval urgency=case(count>1000,"critical",count>500,"high",1=1,"medium")</code></td>
+            </tr>
+            <tr>
+              <td><code>count</code></td>
+              <td>Numeric metric that triggered</td>
+              <td><code>| stats count as count</code></td>
+            </tr>
+          </table>
+
+          <h3>Notable Title Best Practices</h3>
+          <div class="code-block">
+<pre># BAD: Generic title
+rule_title = "Security Alert"
+
+# BAD: No dynamic context
+rule_title = "WAF Volume Spike Detected"
+
+# GOOD: Includes key context + dynamic field
+rule_title = "HIGH - WAF Volume Spike - $src$ targeting $dest$"
+
+# BEST: Urgency + type + primary entity + secondary context
+rule_title = "$urgency$ - WAF Volume Spike - $count$ blocks from $src$"</pre>
+          </div>
+        </div>
+
+        <!-- DRILLDOWN SEARCH -->
+        <div class="mechanics-section">
+          <h2>4. Drilldown Search (Investigation Link)</h2>
+          
+          <p>The drilldown search is what analysts click to investigate. It MUST work correctly.</p>
+
+          <div class="code-block">
+<pre># Drilldown search configuration in correlation search:
+# Settings → Alert Actions → Create Notable → Drilldown Search
+
+# Template:
+index=akamai src=$src$ earliest=$info_min_time$ latest=$info_max_time$
+
+# Available tokens:
+# $src$, $dest$, $user$ - from search results
+# $info_min_time$ - start of detection time range
+# $info_max_time$ - end of detection time range
+# $_time$ - timestamp of the notable event
+
+# PITFALL: Token must exist in results
+# If your SPL has "| stats count by Web.src" without rename,
+# then $src$ won't work - use $Web.src$ instead</pre>
+          </div>
+
+          <div class="warning-box">
+            <h4>⚠️ Always Test Drilldown Searches</h4>
+            <p>Create a test notable, click the drilldown link, and verify it returns expected results. Common failures: wrong index, token not populated, time range too narrow.</p>
+          </div>
+
+          <h3>Drilldown Search Patterns</h3>
+          <table class="comparison-table">
+            <tr>
+              <th>Pattern</th>
+              <th>Drilldown Search</th>
+              <th>Use Case</th>
+            </tr>
+            <tr>
+              <td>Source IP deep dive</td>
+              <td><code>index=akamai src=$src$ earliest=-24h | stats count by action, rule_name</code></td>
+              <td>See all activity from attacking IP</td>
+            </tr>
+            <tr>
+              <td>User activity</td>
+              <td><code>index=* user=$user$ earliest=$info_min_time$ latest=+1h | table _time, index, sourcetype, action</code></td>
+              <td>All actions by suspicious user</td>
+            </tr>
+            <tr>
+              <td>Time-bounded raw</td>
+              <td><code>index=akamai src=$src$ earliest=$_time$ latest=+1h</code></td>
+              <td>Events around detection time</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- COMMON PITFALLS -->
+        <div class="mechanics-section">
+          <h2>5. Common Production Pitfalls</h2>
+
+          <div class="danger-box">
+            <h4>🚨 Pitfall 1: Duplicate Notables</h4>
+            <p><strong>Symptom:</strong> Same incident creates multiple notables</p>
+            <p><strong>Causes:</strong></p>
+            <ul style="margin:8px 0 0 20px;">
+              <li>No throttling configured</li>
+              <li>Throttle field not in results</li>
+              <li>Search time range overlaps too much</li>
+            </ul>
+            <p><strong>Fix:</strong> Add appropriate throttle field and window</p>
+          </div>
+
+          <div class="danger-box">
+            <h4>🚨 Pitfall 2: Missing Events (Gap in Detection)</h4>
+            <p><strong>Symptom:</strong> Known incidents not detected</p>
+            <p><strong>Causes:</strong></p>
+            <ul style="margin:8px 0 0 20px;">
+              <li>Time range doesn't account for data latency</li>
+              <li>Schedule interval > time range (gaps between searches)</li>
+              <li>Scheduler skipping runs (search too slow)</li>
+            </ul>
+            <p><strong>Fix:</strong> Time range should overlap previous run by 1-2 min; ensure search &lt;60 sec</p>
+          </div>
+
+          <div class="danger-box">
+            <h4>🚨 Pitfall 3: Scheduler Skips</h4>
+            <p><strong>Symptom:</strong> Detection doesn't fire during high-load periods</p>
+            <p><strong>Causes:</strong></p>
+            <ul style="margin:8px 0 0 20px;">
+              <li>Search takes longer than schedule interval</li>
+              <li>Too many concurrent searches</li>
+              <li>Search head overloaded</li>
+            </ul>
+            <p><strong>Fix:</strong> Optimize SPL (use tstats), reduce time range, stagger schedules</p>
+          </div>
+
+          <div class="danger-box">
+            <h4>🚨 Pitfall 4: Broken Drilldown</h4>
+            <p><strong>Symptom:</strong> Clicking notable drilldown returns no results or errors</p>
+            <p><strong>Causes:</strong></p>
+            <ul style="margin:8px 0 0 20px;">
+              <li>Token not in search results (e.g., $src$ but field is Web.src)</li>
+              <li>Wrong index in drilldown</li>
+              <li>Time range too narrow</li>
+            </ul>
+            <p><strong>Fix:</strong> Test drilldown manually; ensure tokens match result fields</p>
+          </div>
+
+          <div class="warning-box">
+            <h4>⚠️ Pitfall 5: Urgency Not Dynamic</h4>
+            <p><strong>Symptom:</strong> All notables have same urgency regardless of severity</p>
+            <p><strong>Cause:</strong> Urgency hardcoded instead of calculated</p>
+            <p><strong>Fix:</strong> Use <code>| eval urgency=case(...)</code> in SPL</p>
+          </div>
+        </div>
+
+        <!-- SCHEDULER MONITORING -->
+        <div class="mechanics-section">
+          <h2>6. Monitoring Correlation Search Health</h2>
+          
+          <div class="code-block">
+<pre># Check scheduler status for your searches
+index=_internal sourcetype=scheduler 
+    savedsearch_name="*WAF*" OR savedsearch_name="*MFA*"
+| stats count by savedsearch_name, status
+| sort savedsearch_name
+
+# Check for skipped/deferred searches
+index=_internal sourcetype=scheduler status!=success
+| stats count by savedsearch_name, status, reason
+| sort -count
+
+# Check search run times
+index=_internal sourcetype=scheduler status=success
+| stats avg(run_time) as avg_runtime, max(run_time) as max_runtime 
+    by savedsearch_name
+| where avg_runtime > 30
+| sort -avg_runtime
+
+# Check for correlation searches not running
+| rest /services/saved/searches
+| search action.correlationsearch.enabled=1
+| eval last_run_diff = now() - strptime(next_scheduled_time, "%Y-%m-%dT%H:%M:%S")
+| where last_run_diff > 600
+| table title, cron_schedule, next_scheduled_time, last_run_diff</pre>
+          </div>
+
+          <h3>Health KPIs to Track</h3>
+          <table class="comparison-table">
+            <tr>
+              <th>KPI</th>
+              <th>Target</th>
+              <th>Query</th>
+            </tr>
+            <tr>
+              <td>Scheduler success rate</td>
+              <td>&gt;99%</td>
+              <td><code>| stats count(eval(status="success")) as success, count as total</code></td>
+            </tr>
+            <tr>
+              <td>Average run time</td>
+              <td>&lt;60 seconds</td>
+              <td><code>| stats avg(run_time)</code></td>
+            </tr>
+            <tr>
+              <td>Skipped searches (24h)</td>
+              <td>0</td>
+              <td><code>| stats count by status | where status="skipped"</code></td>
+            </tr>
+            <tr>
+              <td>Notable creation rate</td>
+              <td>As expected</td>
+              <td><code>index=notable | timechart count by rule_name</code></td>
+            </tr>
+          </table>
+        </div>
+
+      
+        <!-- SITE FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC4: MFA Disabled Detection | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="sidebar-logo-text"><h1>Splunk Reference</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Use Cases</div>
+          <a href="uc1-fatigue.html" class="nav-item">UC1: MFA Fatigue</a>
+          <a href="uc2-breach.html" class="nav-item">UC2: Credential Breach</a>
+          <a href="uc3-bypass.html" class="nav-item">UC3: MFA Bypass</a>
+          <a href="uc4-disabled.html" class="nav-item active">UC4: MFA Disabled</a>
+          <a href="uc5-device.html" class="nav-item">UC5: New Device</a>
+          <a href="uc6-downgrade.html" class="nav-item">UC6: Method Downgrade</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../mfa-usecases.html" class="breadcrumb-item">MFA Use Cases</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC4: MFA Disabled</span>
+          </div>
+        </div>
+        <span class="badge" style="background:#dc2626;">High Priority</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">MFA-UC4: MFA Disabled for User Detection</h1>
+          <p class="section-subtitle">Detect when MFA is disabled or removed for user accounts - a critical security control change</p>
+        </div>
+
+        <!-- OBJECTIVE -->
+        <div class="callout info" style="margin:20px 0;">
+          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div class="callout-content">
+            <div class="callout-title">🎯 Objective</div>
+            <div class="callout-body">Detect when MFA is disabled or removed for a user account, which could indicate an attacker with admin access weakening security controls for persistence.</div>
+          </div>
+        </div>
+
+
+        <!-- METADATA -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+          <table style="width:100%;">
+            <tr><td style="width:150px;font-weight:600;">UC ID:</td><td>MFA-DISABLED-004</td></tr>
+            <tr><td style="font-weight:600;">MITRE ATT&CK:</td><td>T1556.006 - Modify Authentication Process: MFA</td></tr>
+            <tr><td style="font-weight:600;">Severity:</td><td><span class="badge" style="background:#dc2626;">High</span></td></tr>
+            <tr><td style="font-weight:600;">Data Sources:</td><td>Entra ID Audit Logs, CyberArk Identity Audit</td></tr>
+          </table>
+        </div>
+
+        <!-- THREAT DESCRIPTION -->
+        <div class="section">
+          <h2 class="subsection-title">Threat Description</h2>
+          <div class="card" style="padding:24px;">
+            <p><strong>What we're detecting:</strong> Administrative actions that disable, remove, or weaken MFA requirements for user accounts. This includes:</p>
+            <ul style="margin:12px 0 0 20px;">
+              <li>MFA registration deleted for a user</li>
+              <li>User removed from MFA-required group/policy</li>
+              <li>Conditional Access policy modified to exclude users</li>
+              <li>Per-user MFA disabled in legacy settings</li>
+              <li>Authentication methods removed from user account</li>
+            </ul>
+            <p style="margin-top:16px;"><strong>Business Impact:</strong> Disabling MFA for an account is often a precursor to account takeover. An attacker with admin access may disable MFA before compromising a target account.</p>
+          </div>
+        </div>
+
+        <!-- PREREQUISITES -->
+        <div class="section">
+          <h2 class="subsection-title">Prerequisites</h2>
+          <div class="card" style="padding:24px;background:var(--gray-50);">
+            <h4 style="margin:0 0 12px;">Required Data</h4>
+            <ul style="margin:0 0 16px 20px;">
+              <li>Entra ID <strong>Audit Logs</strong> (not sign-in logs) - Category: UserManagement</li>
+              <li>Operations: "Delete authentication method", "Update user", "Remove member from group"</li>
+            </ul>
+            <h4 style="margin:0 0 12px;">Key Audit Log Operations</h4>
+            <code style="display:block;background:#1e293b;color:#e2e8f0;padding:12px;border-radius:6px;font-size:0.85rem;">
+"Delete authentication method for user"
+"Disable Strong Authentication"
+"Remove member from group" (where group = MFA-required)
+"Update conditional access policy"
+"Delete authentication phone method"
+"Delete authentication email method"
+            </code>
+          </div>
+        </div>
+
+        <!-- DETECTION SPL -->
+        <div class="section">
+          <h2 class="subsection-title">Detection SPL</h2>
+          
+          <h4>Option 1: Entra ID - MFA Method Deletion</h4>
+          <div class="card" style="padding:20px;background:#1e293b;color:#e2e8f0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+index=azure sourcetype="azure:aad:audit" 
+    ("properties.operationName"="Delete authentication method*" 
+     OR "properties.operationName"="Disable Strong Authentication"
+     OR "properties.operationName"="Delete authentication phone*"
+     OR "properties.operationName"="Delete authentication email*")
+| spath path=properties.targetResources{} output=targets
+| mvexpand targets
+| spath input=targets
+| eval target_user = userPrincipalName
+| eval actor = 'properties.initiatedBy.user.userPrincipalName'
+| eval operation = 'properties.operationName'
+| eval result = 'properties.result'
+| where result="success"
+| stats count, values(operation) as operations by actor, target_user
+| eval urgency = case(
+    actor != target_user, "critical",
+    1=1, "high"
+)
+| eval rule_name = "MFA-004 - MFA Disabled/Removed"
+| eval rule_description = actor." removed MFA method for ".target_user</pre>
+          </div>
+
+          <h4 style="margin-top:24px;">Option 2: Removal from MFA-Required Group</h4>
+          <div class="card" style="padding:20px;background:#1e293b;color:#e2e8f0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+# Detect removal from groups that enforce MFA
+index=azure sourcetype="azure:aad:audit"
+    "properties.operationName"="Remove member from group"
+| spath path=properties.targetResources{} output=targets
+| mvexpand targets
+| spath input=targets
+| search displayName IN ("MFA-Required-Users", "Require-MFA-*", "CA-MFA-*")
+| eval target_user = 'properties.targetResources{}.userPrincipalName'
+| eval actor = 'properties.initiatedBy.user.userPrincipalName'
+| eval group_name = displayName
+| stats count by actor, target_user, group_name
+| eval urgency = "high"
+| eval rule_name = "MFA-004 - User Removed from MFA Group"</pre>
+          </div>
+
+          <h4 style="margin-top:24px;">Option 3: CyberArk Identity - MFA Config Change</h4>
+          <div class="card" style="padding:20px;background:#1e293b;color:#e2e8f0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+index=cyberark sourcetype="cyberark:identity:audit"
+    (EventType="Cloud.Saas.Application.UserMfaDisabled"
+     OR EventType="Cloud.Saas.Application.MfaDeviceDeleted"
+     OR EventType="Cloud.Saas.Application.AuthenticationProfileChanged")
+| eval actor = ActorName
+| eval target_user = coalesce(TargetName, NormalizedUser)
+| eval operation = EventType
+| stats count, values(operation) as operations by actor, target_user
+| eval urgency = case(
+    actor != target_user, "critical",
+    1=1, "high"
+)
+| eval rule_name = "MFA-004 - MFA Configuration Changed"</pre>
+          </div>
+        </div>
+
+        <!-- ES CONFIGURATION -->
+        <div class="section">
+          <h2 class="subsection-title">ES Correlation Search Settings</h2>
+          <div class="card" style="padding:24px;">
+            <table style="width:100%;">
+              <tr><td style="width:200px;font-weight:600;">Schedule:</td><td><code>*/10 * * * *</code> (every 10 minutes)</td></tr>
+              <tr><td style="font-weight:600;">Time Range:</td><td><code>earliest=-15m latest=-5m</code></td></tr>
+              <tr><td style="font-weight:600;">Throttle Field:</td><td><code>target_user</code></td></tr>
+              <tr><td style="font-weight:600;">Throttle Window:</td><td>24 hours</td></tr>
+              <tr><td style="font-weight:600;">Notable Title:</td><td><code>$urgency$ - MFA Disabled - $target_user$ by $actor$</code></td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- TRIAGE RUNBOOK -->
+        <div class="section">
+          <h2 class="subsection-title">Triage Runbook</h2>
+          <div class="card" style="padding:24px;">
+            <h4 style="margin:0 0 16px;">Initial Assessment (5 min)</h4>
+            <ol style="margin:0 0 20px 20px;">
+              <li><strong>Who made the change?</strong> Was it the user themselves or an admin?</li>
+              <li><strong>Is there a change ticket?</strong> Check ServiceNow/ITSM for approved change</li>
+              <li><strong>Is the actor a legitimate admin?</strong> Verify in admin group membership</li>
+              <li><strong>Was the target account compromised?</strong> Check for recent suspicious logins</li>
+            </ol>
+
+            <h4 style="margin:0 0 12px;">Investigation Queries</h4>
+            <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;margin-bottom:16px;">
+              <pre style="margin:0;font-size:0.85rem;"># All admin actions by this actor
+index=azure sourcetype="azure:aad:audit"
+    "properties.initiatedBy.user.userPrincipalName"="$actor$" earliest=-24h
+| stats count by 'properties.operationName', 'properties.result'
+
+# Recent logins for target user
+index=azure sourcetype="azure:aad:signin"
+    "properties.userPrincipalName"="$target_user$" earliest=-24h
+| stats count by 'properties.ipAddress', 'properties.status.errorCode'</pre>
+            </div>
+
+            <h4 style="margin:0 0 12px;">Response Actions</h4>
+            <table style="width:100%;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;font-weight:600;">Finding</td>
+                <td style="padding:8px;">Action</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">No change ticket</td>
+                <td style="padding:8px;"><strong>ESCALATE</strong> - Unauthorized admin action</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">Actor != target + no ticket</td>
+                <td style="padding:8px;"><strong>CRITICAL</strong> - Potential insider threat or compromised admin</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">User removed own MFA</td>
+                <td style="padding:8px;">Verify with user; may indicate account takeover in progress</td>
+              </tr>
+              <tr>
+                <td style="padding:8px;">Approved change</td>
+                <td style="padding:8px;">Document and close; verify MFA re-enabled per policy</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- FALSE POSITIVES -->
+        <div class="section">
+          <h2 class="subsection-title">Known False Positives</h2>
+          <div class="card" style="padding:24px;">
+            <table style="width:100%;border-collapse:collapse;">
+              <thead>
+                <tr style="background:#f1f5f9;">
+                  <th style="padding:12px;text-align:left;">FP Pattern</th>
+                  <th style="padding:12px;text-align:left;">Identification</th>
+                  <th style="padding:12px;text-align:left;">Tuning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                  <td style="padding:12px;">User replacing MFA device</td>
+                  <td style="padding:12px;">Delete followed by add within 30 min</td>
+                  <td style="padding:12px;">Check for add operation after delete</td>
+                </tr>
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                  <td style="padding:12px;">Helpdesk-assisted reset</td>
+                  <td style="padding:12px;">Known helpdesk admin accounts</td>
+                  <td style="padding:12px;">Still alert but lower urgency if ticketed</td>
+                </tr>
+                <tr>
+                  <td style="padding:12px;">User offboarding</td>
+                  <td style="padding:12px;">Account disabled same day</td>
+                  <td style="padding:12px;">Correlate with HR termination data</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <a href="uc3-bypass.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Previous</div>
+              <div style="color:var(--primary-700);font-weight:600;">UC3: MFA Bypass</div>
+            </a>
+            <a href="uc5-device.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Next →</div>
+              <div style="color:var(--primary-700);font-weight:600;">UC5: New Device</div>
+            </a>
+          </div>
+        </div>
+
+      
+        <!-- OWNER & CHANGE HISTORY -->
+        <div class="section">
+          <h2 class="subsection-title">Owner & Change History</h2>
+          <div class="card" style="padding:20px;">
+            <table style="width:100%;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;width:150px;font-weight:600;">Owner</td>
+                <td style="padding:8px 0;">Detection Engineering Team</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Created</td>
+                <td style="padding:8px 0;">2026-01-15</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Last Updated</td>
+                <td style="padding:8px 0;">2026-02-02</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Version</td>
+                <td style="padding:8px 0;">1.1</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;font-weight:600;">Status</td>
+                <td style="padding:8px 0;"><span class="badge success">Production Ready</span></td>
+              </tr>
+            </table>
+            <div style="margin-top:16px;padding:12px;background:var(--gray-50);border-radius:6px;font-size:0.85rem;">
+              <strong>Change Log:</strong>
+              <ul style="margin:8px 0 0 20px;">
+                <li><strong>v1.1 (2026-02-02):</strong> Added Objective section, Owner information, standardized template</li>
+                <li><strong>v1.0 (2026-01-15):</strong> Initial release</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      
+        <!-- SITE FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+  <script src="../../js/app.js"></script>
+</body>
+</html>

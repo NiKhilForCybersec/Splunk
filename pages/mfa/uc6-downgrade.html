@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC6: MFA Method Downgrade | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="sidebar-logo-text"><h1>Splunk Reference</h1><span>Detection Engineering</span></div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Use Cases</div>
+          <a href="uc1-fatigue.html" class="nav-item">UC1: MFA Fatigue</a>
+          <a href="uc2-breach.html" class="nav-item">UC2: Credential Breach</a>
+          <a href="uc3-bypass.html" class="nav-item">UC3: MFA Bypass</a>
+          <a href="uc4-disabled.html" class="nav-item">UC4: MFA Disabled</a>
+          <a href="uc5-device.html" class="nav-item">UC5: New Device</a>
+          <a href="uc6-downgrade.html" class="nav-item active">UC6: Method Downgrade</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <div class="breadcrumb">
+            <a href="../../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="../mfa-usecases.html" class="breadcrumb-item">MFA Use Cases</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">UC6: Method Downgrade</span>
+          </div>
+        </div>
+        <span class="badge" style="background:#f59e0b;">Medium Priority</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">MFA-UC6: MFA Method Downgrade Detection</h1>
+          <p class="section-subtitle">Detect when users switch from stronger to weaker MFA methods (e.g., App → SMS)</p>
+        </div>
+
+        <!-- OBJECTIVE -->
+        <div class="callout info" style="margin:20px 0;">
+          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div class="callout-content">
+            <div class="callout-title">🎯 Objective</div>
+            <div class="callout-body">Detect when a user's MFA method is changed from a stronger method (FIDO2, Authenticator) to a weaker method (SMS, phone call), potentially indicating social engineering or account compromise.</div>
+          </div>
+        </div>
+
+
+        <!-- METADATA -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+          <table style="width:100%;">
+            <tr><td style="width:150px;font-weight:600;">UC ID:</td><td>MFA-DOWNGRADE-006</td></tr>
+            <tr><td style="font-weight:600;">MITRE ATT&CK:</td><td>T1556.006 - Modify Authentication Process: MFA</td></tr>
+            <tr><td style="font-weight:600;">Severity:</td><td><span class="badge" style="background:#f59e0b;">Medium</span></td></tr>
+            <tr><td style="font-weight:600;">Data Sources:</td><td>Entra ID Sign-in & Audit Logs</td></tr>
+          </table>
+        </div>
+
+        <!-- THREAT DESCRIPTION -->
+        <div class="section">
+          <h2 class="subsection-title">Threat Description</h2>
+          <div class="card" style="padding:24px;">
+            <p><strong>What we're detecting:</strong> Users or attackers switching from phishing-resistant MFA methods to weaker methods that can be intercepted or social-engineered.</p>
+            
+            <h4 style="margin:16px 0 8px;">MFA Method Strength Hierarchy</h4>
+            <table style="width:100%;border-collapse:collapse;">
+              <tr style="background:#ecfdf5;">
+                <td style="padding:8px;font-weight:600;">🟢 Strongest</td>
+                <td style="padding:8px;">FIDO2/Hardware key, Windows Hello, Certificate-based</td>
+              </tr>
+              <tr style="background:#fef3c7;">
+                <td style="padding:8px;font-weight:600;">🟡 Strong</td>
+                <td style="padding:8px;">Microsoft Authenticator (push), Software TOTP</td>
+              </tr>
+              <tr style="background:#fef2f2;">
+                <td style="padding:8px;font-weight:600;">🔴 Weak</td>
+                <td style="padding:8px;">SMS, Voice call, Email OTP</td>
+              </tr>
+            </table>
+
+            <p style="margin-top:16px;"><strong>Business Impact:</strong> SMS/Voice MFA is vulnerable to SIM swapping and social engineering. Downgrading from app-based to SMS weakens the security posture.</p>
+          </div>
+        </div>
+
+        <!-- DETECTION SPL -->
+        <div class="section">
+          <h2 class="subsection-title">Detection SPL</h2>
+          
+          <h4>Option 1: Compare Current vs Historical MFA Method</h4>
+          <div class="card" style="padding:20px;background:#1e293b;color:#e2e8f0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+# Define method strength
+index=azure sourcetype="azure:aad:signin" 
+    "properties.status.errorCode"=0
+    earliest=-24h
+| spath path=properties.authenticationDetails{} output=authDetails
+| mvexpand authDetails
+| spath input=authDetails
+| where authenticationStepResultDetail="MFA completed"
+| eval user = 'properties.userPrincipalName'
+| eval mfa_method = authenticationMethod
+| eval method_strength = case(
+    match(mfa_method, "(?i)(fido|windows hello|certificate|passwordless)"), 3,
+    match(mfa_method, "(?i)(microsoft authenticator|software token|totp)"), 2,
+    match(mfa_method, "(?i)(sms|text|voice|phone|email)"), 1,
+    1=1, 0
+)
+| stats latest(mfa_method) as current_method, 
+    latest(method_strength) as current_strength,
+    earliest(mfa_method) as previous_method,
+    earliest(method_strength) as previous_strength by user
+| where current_strength < previous_strength AND previous_strength >= 2
+| eval urgency = case(
+    previous_strength=3 AND current_strength=1, "high",
+    1=1, "medium"
+)
+| eval rule_name = "MFA-006 - Method Downgrade Detected"
+| eval rule_description = user." changed from ".previous_method." to ".current_method</pre>
+          </div>
+
+          <h4 style="margin-top:24px;">Option 2: Direct SMS/Voice Usage After App Registration</h4>
+          <div class="card" style="padding:20px;background:#1e293b;color:#e2e8f0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+# Find users who have app-based MFA but used SMS/Voice
+index=azure sourcetype="azure:aad:signin"
+    "properties.status.errorCode"=0
+| spath path=properties.authenticationDetails{} output=authDetails
+| mvexpand authDetails
+| spath input=authDetails
+| where authenticationStepResultDetail="MFA completed"
+| eval user = 'properties.userPrincipalName'
+| eval mfa_method = authenticationMethod
+| eval is_weak = if(match(mfa_method, "(?i)(sms|text|voice|phone)"), 1, 0)
+| stats sum(is_weak) as weak_count, count as total_count,
+    values(mfa_method) as methods_used by user
+| where weak_count > 0 AND mvcount(methods_used) > 1
+| search methods_used="*authenticator*" OR methods_used="*software token*"
+| eval weak_pct = round(weak_count/total_count*100, 1)
+| where weak_pct > 20
+| eval urgency = "medium"
+| eval rule_name = "MFA-006 - User Using Weak MFA Despite Stronger Available"</pre>
+          </div>
+
+          <h4 style="margin-top:24px;">Option 3: Audit Log - Default Method Changed to SMS</h4>
+          <div class="card" style="padding:20px;background:#1e293b;color:#e2e8f0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+index=azure sourcetype="azure:aad:audit"
+    "properties.operationName"="User changed default security info"
+| spath path=properties.targetResources{}.modifiedProperties{} output=changes
+| mvexpand changes
+| spath input=changes
+| where displayName="StrongAuthenticationPhoneAppDetail" 
+    OR displayName="StrongAuthenticationMethod"
+| eval user = 'properties.targetResources{}.userPrincipalName'
+| eval old_value = oldValue
+| eval new_value = newValue
+| where match(new_value, "(?i)(sms|phone|voice)") 
+    AND NOT match(old_value, "(?i)(sms|phone|voice)")
+| eval urgency = "medium"
+| eval rule_name = "MFA-006 - Default MFA Changed to SMS/Voice"</pre>
+          </div>
+        </div>
+
+        <!-- ES CONFIGURATION -->
+        <div class="section">
+          <h2 class="subsection-title">ES Correlation Search Settings</h2>
+          <div class="card" style="padding:24px;">
+            <table style="width:100%;">
+              <tr><td style="width:200px;font-weight:600;">Schedule:</td><td><code>0 */4 * * *</code> (every 4 hours)</td></tr>
+              <tr><td style="font-weight:600;">Time Range:</td><td><code>earliest=-5h latest=-1h</code></td></tr>
+              <tr><td style="font-weight:600;">Throttle Field:</td><td><code>user</code></td></tr>
+              <tr><td style="font-weight:600;">Throttle Window:</td><td>24 hours</td></tr>
+              <tr><td style="font-weight:600;">Notable Title:</td><td><code>$urgency$ - MFA Method Downgrade - $user$</code></td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- TRIAGE RUNBOOK -->
+        <div class="section">
+          <h2 class="subsection-title">Triage Runbook</h2>
+          <div class="card" style="padding:24px;">
+            <h4 style="margin:0 0 16px;">Initial Assessment (5 min)</h4>
+            <ol style="margin:0 0 20px 20px;">
+              <li>Why did the user switch? Lost phone? Traveling?</li>
+              <li>Was there preceding suspicious activity?</li>
+              <li>Is this a privileged account? (higher risk)</li>
+              <li>Was the original strong method removed or just unused?</li>
+            </ol>
+
+            <h4 style="margin:0 0 12px;">Investigation Queries</h4>
+            <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;margin-bottom:16px;">
+              <pre style="margin:0;font-size:0.85rem;"># Check all MFA methods used by this user
+index=azure sourcetype="azure:aad:signin"
+    "properties.userPrincipalName"="$user$" earliest=-7d
+| spath path=properties.authenticationDetails{} output=authDetails
+| mvexpand authDetails
+| spath input=authDetails
+| stats count by authenticationMethod
+| sort -count
+
+# Check if strong method was removed
+index=azure sourcetype="azure:aad:audit"
+    "properties.targetResources{}.userPrincipalName"="$user$"
+    "properties.operationName"="*delete*authentication*" earliest=-7d
+| table _time, 'properties.operationName'</pre>
+            </div>
+
+            <h4 style="margin:0 0 12px;">Response Actions</h4>
+            <table style="width:100%;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;font-weight:600;">Finding</td>
+                <td style="padding:8px;">Action</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">User confirms lost/broken phone</td>
+                <td style="padding:8px;">Close; remind to re-register app when possible</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">User doesn't remember changing</td>
+                <td style="padding:8px;">Investigate as potential compromise</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px;">Privileged account using SMS</td>
+                <td style="padding:8px;">Enforce strong MFA via Conditional Access</td>
+              </tr>
+              <tr>
+                <td style="padding:8px;">Pattern across multiple users</td>
+                <td style="padding:8px;">Check for SIM swap attack campaign</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- FALSE POSITIVES -->
+        <div class="section">
+          <h2 class="subsection-title">Known False Positives</h2>
+          <div class="card" style="padding:24px;">
+            <table style="width:100%;border-collapse:collapse;">
+              <thead>
+                <tr style="background:#f1f5f9;">
+                  <th style="padding:12px;text-align:left;">FP Pattern</th>
+                  <th style="padding:12px;text-align:left;">Identification</th>
+                  <th style="padding:12px;text-align:left;">Tuning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                  <td style="padding:12px;">Traveling users</td>
+                  <td style="padding:12px;">International IP, SMS fallback common</td>
+                  <td style="padding:12px;">Lower urgency during known travel</td>
+                </tr>
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                  <td style="padding:12px;">Phone replacement</td>
+                  <td style="padding:12px;">New device event nearby</td>
+                  <td style="padding:12px;">Correlate with device registration</td>
+                </tr>
+                <tr>
+                  <td style="padding:12px;">App push failures</td>
+                  <td style="padding:12px;">App push timeout before SMS</td>
+                  <td style="padding:12px;">Ignore if followed by app success</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="section" style="margin-top:48px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <a href="uc5-device.html" class="card" style="padding:20px;text-decoration:none;">
+              <div style="color:var(--gray-500);font-size:14px;">← Previous</div>
+              <div style="color:var(--primary-700);font-weight:600;">UC5: New Device</div>
+            </a>
+            <a href="../mfa-usecases.html" class="card" style="padding:20px;text-decoration:none;text-align:right;">
+              <div style="color:var(--gray-500);font-size:14px;">Back to →</div>
+              <div style="color:var(--primary-700);font-weight:600;">All MFA Use Cases</div>
+            </a>
+          </div>
+        </div>
+
+      
+        <!-- OWNER & CHANGE HISTORY -->
+        <div class="section">
+          <h2 class="subsection-title">Owner & Change History</h2>
+          <div class="card" style="padding:20px;">
+            <table style="width:100%;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;width:150px;font-weight:600;">Owner</td>
+                <td style="padding:8px 0;">Detection Engineering Team</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Created</td>
+                <td style="padding:8px 0;">2026-01-15</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Last Updated</td>
+                <td style="padding:8px 0;">2026-02-02</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px 0;font-weight:600;">Version</td>
+                <td style="padding:8px 0;">1.1</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;font-weight:600;">Status</td>
+                <td style="padding:8px 0;"><span class="badge success">Production Ready</span></td>
+              </tr>
+            </table>
+            <div style="margin-top:16px;padding:12px;background:var(--gray-50);border-radius:6px;font-size:0.85rem;">
+              <strong>Change Log:</strong>
+              <ul style="margin:8px 0 0 20px;">
+                <li><strong>v1.1 (2026-02-02):</strong> Added Objective section, Owner information, standardized template</li>
+                <li><strong>v1.0 (2026-01-15):</strong> Initial release</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      
+        <!-- SITE FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+  <script src="../../js/app.js"></script>
+</body>
+</html>
