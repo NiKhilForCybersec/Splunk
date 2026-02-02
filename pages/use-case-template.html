@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Standard Use Case Template | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .template-section{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .template-section h4{color:var(--primary-700);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+    .section-number{background:var(--primary-500);color:white;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;}
+    .required{color:#dc2626;font-weight:600;}
+    .field-table{width:100%;border-collapse:collapse;margin:12px 0;}
+    .field-table th,.field-table td{padding:10px;border:1px solid var(--gray-200);text-align:left;font-size:0.85rem;}
+    .field-table th{background:var(--gray-100);}
+    .copy-btn{background:var(--primary-500);color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:0.75rem;margin-left:8px;}
+    .copy-btn:hover{background:var(--primary-600);}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>Splunk Reference</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Client Delivery</div>
+          <a href="client-delivery.html" class="nav-item">Delivery Playbook</a>
+          <a href="use-case-template.html" class="nav-item active">Use Case Template</a>
+          <a href="single-environment-lifecycle.html" class="nav-item">Single-Env Lifecycle</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="breadcrumb">
+          <a href="../index.html" class="breadcrumb-item">Home</a>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-item current">Use Case Template</span>
+        </div>
+        <span class="badge error">MANDATORY FORMAT</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Standard Detection Use Case Template</h1>
+          <p class="section-subtitle">Every WAF and MFA detection MUST follow this exact 12-section format</p>
+        </div>
+
+        <div class="callout warning" style="margin:24px 0;">
+          <div class="callout-content">
+            <div class="callout-title">⚠️ Non-Negotiable Standard</div>
+            <div class="callout-body">
+              This template ensures consistency across all deliverables. Missing sections = incomplete detection. All 12 sections are <span class="required">REQUIRED</span>.
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 1: OBJECTIVE -->
+        <div class="template-section">
+          <h4><span class="section-number">1</span> Objective <span class="required">(REQUIRED)</span></h4>
+          <p>One sentence describing what the detection does and why it matters.</p>
+          <div style="background:white;padding:12px;border-radius:6px;margin-top:12px;">
+            <strong>Example:</strong> "Detect MFA fatigue attacks where attackers repeatedly send push notifications hoping the user will accidentally approve, indicating potential account compromise in progress."
+          </div>
+        </div>
+
+        <!-- SECTION 2: THREAT INTENT -->
+        <div class="template-section">
+          <h4><span class="section-number">2</span> Threat Intent <span class="required">(REQUIRED)</span></h4>
+          <p>What is the attacker trying to accomplish? Include MITRE ATT&CK mapping.</p>
+          <table class="field-table">
+            <tr><th style="width:150px;">Field</th><th>Content</th></tr>
+            <tr><td>Attack Goal</td><td>What the attacker achieves if successful</td></tr>
+            <tr><td>MITRE Tactic</td><td>e.g., Credential Access, Initial Access</td></tr>
+            <tr><td>MITRE Technique</td><td>e.g., T1621 (MFA Request Generation)</td></tr>
+          </table>
+        </div>
+
+        <!-- SECTION 3: PREREQUISITES -->
+        <div class="template-section">
+          <h4><span class="section-number">3</span> Prerequisites <span class="required">(REQUIRED)</span></h4>
+          <p>Log sources and CIM expectations required for this detection to work.</p>
+          <table class="field-table">
+            <tr><th style="width:150px;">Requirement</th><th>Details</th><th>Validation Query</th></tr>
+            <tr><td>Data Source</td><td>e.g., Entra ID Sign-in Logs</td><td><code>index=azure sourcetype=azure:aad:signin | head 5</code></td></tr>
+            <tr><td>Index</td><td>e.g., azure</td><td><code>| metadata type=sourcetypes index=azure</code></td></tr>
+            <tr><td>Sourcetype</td><td>e.g., azure:aad:signin</td><td>-</td></tr>
+            <tr><td>CIM Model</td><td>e.g., Authentication</td><td><code>| tstats count FROM datamodel=Authentication</code></td></tr>
+            <tr><td>Retention</td><td>Minimum days of data needed</td><td>-</td></tr>
+          </table>
+        </div>
+
+        <!-- SECTION 4: FIELDS USED -->
+        <div class="template-section">
+          <h4><span class="section-number">4</span> Fields Used <span class="required">(REQUIRED)</span></h4>
+          <p>Both CIM-compliant fields AND vendor-specific fallback fields.</p>
+          <table class="field-table">
+            <tr><th>Purpose</th><th>CIM Field</th><th>Vendor Raw Field</th><th>Example Value</th></tr>
+            <tr><td>User identity</td><td><code>user</code></td><td><code>properties.userPrincipalName</code></td><td>jane.doe@corp.com</td></tr>
+            <tr><td>Source IP</td><td><code>src</code></td><td><code>properties.ipAddress</code></td><td>203.0.113.50</td></tr>
+            <tr><td>Auth result</td><td><code>action</code></td><td><code>properties.status.errorCode</code></td><td>0 (success)</td></tr>
+          </table>
+          <p style="margin-top:12px;font-size:0.85rem;color:var(--gray-600);">
+            <strong>Note:</strong> Always provide BOTH versions. CIM is preferred for tstats performance. Raw fallback ensures detection works even without CIM compliance.
+          </p>
+        </div>
+
+        <!-- SECTION 5: DETECTION LOGIC -->
+        <div class="template-section">
+          <h4><span class="section-number">5</span> Detection Logic (SPL) <span class="required">(REQUIRED)</span></h4>
+          <p>Provide BOTH versions of the SPL:</p>
+          
+          <h5 style="margin-top:16px;">5a. CIM / tstats Version (Preferred for Performance)</h5>
+          <div style="background:#1e293b;color:#e2e8f0;padding:12px;border-radius:6px;margin:8px 0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">| tstats count FROM datamodel=Authentication 
+  WHERE Authentication.action="failure" AND Authentication.app="Azure MFA"
+  BY Authentication.user, Authentication.src, _time span=5m
+| where count >= 5</pre>
+          </div>
+          
+          <h5 style="margin-top:16px;">5b. Raw Index Fallback Version</h5>
+          <div style="background:#1e293b;color:#e2e8f0;padding:12px;border-radius:6px;margin:8px 0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">index=azure sourcetype=azure:aad:signin
+| spath path=properties.status.errorCode output=error_code
+| where error_code=500121
+| stats count BY user, src
+| where count >= 5</pre>
+          </div>
+        </div>
+
+        <!-- SECTION 6: TESTING APPROACH -->
+        <div class="template-section">
+          <h4><span class="section-number">6</span> Testing Approach <span class="required">(REQUIRED)</span></h4>
+          <p>How to validate this detection in a SINGLE Splunk Cloud environment (no DEV/UAT).</p>
+          
+          <h5>6a. Backtesting (Historical Data)</h5>
+          <ul style="margin:8px 0 16px 20px;font-size:0.9rem;">
+            <li>Run SPL in Search & Reporting with <code>earliest=-14d latest=now</code></li>
+            <li>Review each result: Would this be a TRUE positive?</li>
+            <li>Document expected volume and false positive rate</li>
+          </ul>
+          
+          <h5>6b. Monitoring-Only Validation (Live Data)</h5>
+          <ul style="margin:8px 0 0 20px;font-size:0.9rem;">
+            <li>Configure correlation search with Notable = OFF</li>
+            <li>Run for 7-14 days minimum</li>
+            <li>Review what WOULD have fired using: <code>index=risk source="search_name"</code></li>
+            <li>Tune thresholds based on live patterns</li>
+          </ul>
+        </div>
+
+        <!-- SECTION 7: ES CONFIGURATION -->
+        <div class="template-section">
+          <h4><span class="section-number">7</span> Splunk ES Configuration <span class="required">(REQUIRED)</span></h4>
+          <table class="field-table">
+            <tr><th style="width:180px;">Setting</th><th>Monitoring-Only</th><th>Production</th></tr>
+            <tr><td>Schedule</td><td colspan="2"><code>*/5 * * * *</code> (every 5 min)</td></tr>
+            <tr><td>Earliest/Latest</td><td colspan="2"><code>-10m</code> to <code>-5m</code></td></tr>
+            <tr><td>Create Notable</td><td><code>OFF</code></td><td><code>ON</code></td></tr>
+            <tr><td>Throttle Field</td><td colspan="2"><code>user</code></td></tr>
+            <tr><td>Throttle Window</td><td><code>86400</code> (24h)</td><td><code>3600</code> (1h)</td></tr>
+            <tr><td>Notable Severity</td><td>-</td><td><code>High</code></td></tr>
+            <tr><td>Security Domain</td><td colspan="2"><code>access</code></td></tr>
+          </table>
+        </div>
+
+        <!-- SECTION 8: TUNING KNOBS -->
+        <div class="template-section">
+          <h4><span class="section-number">8</span> Tuning Knobs <span class="required">(REQUIRED)</span></h4>
+          <p>Adjustable parameters with guidance on when/how to tune.</p>
+          <table class="field-table">
+            <tr><th>Parameter</th><th>Default</th><th>Range</th><th>Tune When</th></tr>
+            <tr><td>Count threshold</td><td>≥5</td><td>3-20</td><td>Too many FPs → increase; missing TPs → decrease</td></tr>
+            <tr><td>Time window</td><td>5 min</td><td>5-15 min</td><td>Attackers spread attempts → increase window</td></tr>
+            <tr><td>Throttle window</td><td>1 hour</td><td>30min-4hr</td><td>Duplicate alerts → increase</td></tr>
+          </table>
+        </div>
+
+        <!-- SECTION 9: COMMON FALSE POSITIVES -->
+        <div class="template-section">
+          <h4><span class="section-number">9</span> Common False Positives <span class="required">(REQUIRED)</span></h4>
+          <table class="field-table">
+            <tr><th>Pattern</th><th>Identification</th><th>Mitigation</th></tr>
+            <tr><td>Helpdesk password resets</td><td>User in IT group, during business hours</td><td>Allowlist helpdesk accounts or add business hours filter</td></tr>
+            <tr><td>Mobile app re-auth</td><td>Same device ID, successful auth follows</td><td>Exclude if successful auth within 60 seconds</td></tr>
+            <tr><td>VPN reconnection</td><td>MFA prompt during VPN negotiation</td><td>Allowlist VPN authentication app IDs</td></tr>
+          </table>
+        </div>
+
+        <!-- SECTION 10: TRIAGE RUNBOOK -->
+        <div class="template-section">
+          <h4><span class="section-number">10</span> Triage & Analyst Runbook <span class="required">(REQUIRED)</span></h4>
+          
+          <h5>Initial Assessment (5 min)</h5>
+          <ol style="margin:8px 0 16px 20px;font-size:0.9rem;">
+            <li>Check user identity - is this a privileged account?</li>
+            <li>Check source IP - expected location? VPN? Known bad?</li>
+            <li>Check timing - business hours? Weekend?</li>
+            <li>Check if successful auth followed the failures</li>
+          </ol>
+          
+          <h5>Investigation Query</h5>
+          <div style="background:#1e293b;color:#e2e8f0;padding:12px;border-radius:6px;margin:8px 0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">index=azure sourcetype=azure:aad:signin user="$user$" earliest=-24h
+| table _time, user, src, action, app, authenticationMethod, status
+| sort _time</pre>
+          </div>
+          
+          <h5>Response Actions</h5>
+          <table class="field-table">
+            <tr><th>Finding</th><th>Action</th></tr>
+            <tr><td>Successful auth after failures</td><td>🔴 ESCALATE - Potential compromise</td></tr>
+            <tr><td>All failures, no success</td><td>🟡 Monitor - Attack blocked</td></tr>
+            <tr><td>User confirms legitimate</td><td>🟢 Close - Document for tuning</td></tr>
+          </table>
+        </div>
+
+        <!-- SECTION 11: PRODUCTION CRITERIA -->
+        <div class="template-section">
+          <h4><span class="section-number">11</span> Production Enablement Criteria <span class="required">(REQUIRED)</span></h4>
+          <p>ALL criteria must be met before enabling Notable creation:</p>
+          <div style="background:white;padding:16px;border-radius:6px;margin-top:12px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div>
+                <strong>Technical Readiness</strong>
+                <ul style="margin:8px 0 0 20px;font-size:0.9rem;">
+                  <li>☐ Backtest completed (14+ days)</li>
+                  <li>☐ Monitoring-only completed (7+ days)</li>
+                  <li>☐ False positive rate &lt;20%</li>
+                  <li>☐ Alert volume sustainable (&lt;10/day)</li>
+                </ul>
+              </div>
+              <div>
+                <strong>Operational Readiness</strong>
+                <ul style="margin:8px 0 0 20px;font-size:0.9rem;">
+                  <li>☐ Runbook reviewed by SOC</li>
+                  <li>☐ Escalation path confirmed</li>
+                  <li>☐ Client notified of go-live</li>
+                  <li>☐ Post-go-live monitoring plan</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 12: OWNER -->
+        <div class="template-section">
+          <h4><span class="section-number">12</span> Owner + Change History <span class="required">(REQUIRED)</span></h4>
+          <table class="field-table">
+            <tr><th style="width:150px;">Field</th><th>Value</th></tr>
+            <tr><td>Detection ID</td><td>e.g., MFA-UC1</td></tr>
+            <tr><td>Owner</td><td>Detection Engineering Team</td></tr>
+            <tr><td>Created</td><td>YYYY-MM-DD</td></tr>
+            <tr><td>Last Updated</td><td>YYYY-MM-DD</td></tr>
+            <tr><td>Version</td><td>1.0</td></tr>
+            <tr><td>Status</td><td>Backtest / Monitoring / Production</td></tr>
+          </table>
+          <div style="margin-top:12px;padding:12px;background:white;border-radius:6px;">
+            <strong>Change Log:</strong>
+            <ul style="margin:8px 0 0 20px;font-size:0.85rem;">
+              <li><strong>v1.0 (YYYY-MM-DD):</strong> Initial release</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>

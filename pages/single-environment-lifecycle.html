@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detection Lifecycle in Single Splunk Cloud | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .lifecycle-phase{margin:32px 0;padding:24px;border-radius:12px;border-left:6px solid;}
+    .phase-backtest{background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);border-color:#3b82f6;}
+    .phase-monitor{background:linear-gradient(135deg,#fefce8 0%,#fef9c3 100%);border-color:#eab308;}
+    .phase-prod{background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);border-color:#22c55e;}
+    .phase-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .phase-number{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;}
+    .backtest .phase-number{background:#3b82f6;}
+    .monitor .phase-number{background:#eab308;}
+    .prod .phase-number{background:#22c55e;}
+    .criteria-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px;}
+    .criteria-box{background:white;padding:16px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);}
+    .criteria-box h5{margin:0 0 12px 0;font-size:0.9rem;color:var(--gray-700);}
+    .criteria-box ul{margin:0;padding-left:20px;font-size:0.875rem;}
+    .criteria-box li{margin-bottom:6px;}
+    .warning-box{background:#fef3c7;border:2px solid #f59e0b;border-radius:8px;padding:16px;margin:24px 0;}
+    .critical-box{background:#fee2e2;border:2px solid #dc2626;border-radius:8px;padding:16px;margin:24px 0;}
+    .flow-diagram{background:white;padding:24px;border-radius:8px;margin:24px 0;text-align:center;}
+    .flow-step{display:inline-block;padding:12px 20px;margin:8px;border-radius:8px;font-weight:600;}
+    .flow-arrow{display:inline-block;margin:0 8px;color:var(--gray-400);font-size:1.5rem;}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>Splunk Reference</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Getting Started</div>
+          <a href="../index.html" class="nav-item">Command Center</a>
+          <a href="day1.html" class="nav-item">Day 1 Checklist</a>
+          <a href="single-environment-lifecycle.html" class="nav-item active">Single-Env Lifecycle</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Client Delivery</div>
+          <a href="client-delivery.html" class="nav-item">Delivery Playbook</a>
+          <a href="detection-template.html" class="nav-item">Use Case Template</a>
+          <a href="rba-design.html" class="nav-item">RBA Design</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Active Projects</div>
+          <a href="waf-overview.html" class="nav-item">WAF/DDoS Project</a>
+          <a href="mfa-overview.html" class="nav-item">MFA Project</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <a href="troubleshooting.html" class="nav-item">Troubleshooting</a>
+          <a href="runbooks.html" class="nav-item">Runbooks</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="breadcrumb">
+          <a href="../index.html" class="breadcrumb-item">Home</a>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-item current">Single-Environment Lifecycle</span>
+        </div>
+        <span class="badge error">CRITICAL REFERENCE</span>
+      </header>
+
+      <div class="page-content">
+        <div class="section">
+          <h1 class="section-title">Detection Lifecycle in Single Splunk Cloud (No DEV Environment)</h1>
+          <p class="section-subtitle">The definitive operating model for detection engineering when you have ONE Splunk Cloud instance</p>
+        </div>
+
+        <!-- CRITICAL CONTEXT -->
+        <div class="critical-box">
+          <h4 style="margin-top:0;color:#dc2626;">⚠️ CRITICAL: Operating Reality</h4>
+          <ul style="margin:8px 0 0 20px;">
+            <li><strong>There is ONE Splunk Cloud environment.</strong> No separate DEV. No separate UAT.</li>
+            <li><strong>All testing happens on production data.</strong> You are working with live logs.</li>
+            <li><strong>Mistakes create real alerts.</strong> SOC will see them. Clients will ask questions.</li>
+            <li><strong>This is normal.</strong> Most Splunk Cloud customers operate this way.</li>
+          </ul>
+        </div>
+
+        <!-- OPERATING MODEL OVERVIEW -->
+        <div class="section">
+          <h2 class="subsection-title">The Three-Phase Testing Model</h2>
+          
+          <div class="flow-diagram">
+            <span class="flow-step" style="background:#dbeafe;color:#1e40af;">① BACKTEST</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-step" style="background:#fef9c3;color:#854d0e;">② MONITOR-ONLY</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-step" style="background:#dcfce7;color:#166534;">③ PRODUCTION</span>
+          </div>
+          
+          <p>Every detection moves through these three phases <strong>in the same Splunk instance</strong>. The difference is not WHERE you test, but HOW you configure the correlation search.</p>
+        </div>
+
+        <!-- PHASE 1: BACKTESTING -->
+        <div class="lifecycle-phase phase-backtest backtest">
+          <div class="phase-title">
+            <span class="phase-number">1</span>
+            BACKTESTING (Historical Data Validation)
+          </div>
+          
+          <p><strong>What it is:</strong> Running ad-hoc SPL queries against historical data to validate detection logic BEFORE creating any correlation search.</p>
+          
+          <div class="criteria-grid">
+            <div class="criteria-box">
+              <h5>📋 Entry Criteria</h5>
+              <ul>
+                <li>Detection SPL drafted</li>
+                <li>Data source confirmed available</li>
+                <li>Fields identified (CIM or raw)</li>
+              </ul>
+            </div>
+            <div class="criteria-box">
+              <h5>🔍 What You're Testing</h5>
+              <ul>
+                <li>SPL syntax correctness</li>
+                <li>Field extraction working</li>
+                <li>Threshold appropriateness</li>
+                <li>Search performance (&lt;60s)</li>
+              </ul>
+            </div>
+            <div class="criteria-box">
+              <h5>⏱️ Time Windows</h5>
+              <ul>
+                <li><strong>Minimum:</strong> 7 days of data</li>
+                <li><strong>Recommended:</strong> 14-30 days</li>
+                <li><strong>Include:</strong> Weekends + business hours</li>
+              </ul>
+            </div>
+            <div class="criteria-box">
+              <h5>✅ Exit Criteria</h5>
+              <ul>
+                <li>SPL returns expected results</li>
+                <li>False positive rate estimated</li>
+                <li>Threshold documented with rationale</li>
+                <li>No syntax errors or timeouts</li>
+              </ul>
+            </div>
+          </div>
+          
+          <h4 style="margin-top:24px;">How to Backtest</h4>
+          <div style="background:white;padding:16px;border-radius:8px;margin-top:12px;">
+            <ol style="margin:0;padding-left:20px;">
+              <li><strong>Open Search & Reporting</strong> (not the ES correlation search editor)</li>
+              <li><strong>Set time range</strong> to earliest=-14d latest=now</li>
+              <li><strong>Run your SPL</strong> and review results</li>
+              <li><strong>Refine thresholds</strong> until FP rate is acceptable</li>
+              <li><strong>Document findings</strong> in the use case template</li>
+            </ol>
+          </div>
+          
+          <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;margin-top:16px;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">
+# BACKTEST TEMPLATE - Run in Search & Reporting
+# Set time picker to: earliest=-14d latest=now
+
+index=akamai sourcetype=akamai:siem
+| spath path=attackData.clientIP output=src
+| spath path=httpMessage.host output=dest  
+| stats count AS block_count BY src, dest
+| where block_count > 100
+| table src, dest, block_count
+
+# EXPECTED OUTPUT: Review each row. Would this be a TRUE alert?
+# If >20% would be false positives, increase threshold.</pre>
+          </div>
+        </div>
+
+        <!-- PHASE 2: MONITORING-ONLY -->
+        <div class="lifecycle-phase phase-monitor monitor">
+          <div class="phase-title">
+            <span class="phase-number">2</span>
+            MONITORING-ONLY MODE (Live Validation)
+          </div>
+          
+          <p><strong>What it is:</strong> The correlation search is scheduled and running, but notables are either DISABLED or heavily throttled so they don't reach the SOC queue.</p>
+          
+          <div class="warning-box">
+            <h4 style="margin-top:0;color:#92400e;">⚠️ Why This Phase Exists</h4>
+            <p style="margin:8px 0 0 0;">Backtesting uses historical patterns. Live traffic may differ. Monitoring-only mode catches issues that only appear in real-time operation without creating SOC noise.</p>
+          </div>
+          
+          <div class="criteria-grid">
+            <div class="criteria-box">
+              <h5>📋 Entry Criteria</h5>
+              <ul>
+                <li>Backtest completed successfully</li>
+                <li>Initial threshold set</li>
+                <li>Runbook drafted (can be incomplete)</li>
+              </ul>
+            </div>
+            <div class="criteria-box">
+              <h5>⚙️ ES Configuration</h5>
+              <ul>
+                <li><strong>Scheduled:</strong> Yes (normal cron)</li>
+                <li><strong>Notable:</strong> OFF or throttled to 1/day</li>
+                <li><strong>Risk Score:</strong> Can be enabled</li>
+                <li><strong>Alert Action:</strong> Log only</li>
+              </ul>
+            </div>
+            <div class="criteria-box">
+              <h5>⏱️ Duration</h5>
+              <ul>
+                <li><strong>Minimum:</strong> 3-5 business days</li>
+                <li><strong>Recommended:</strong> 7-14 days</li>
+                <li><strong>High-risk detections:</strong> 14+ days</li>
+              </ul>
+            </div>
+            <div class="criteria-box">
+              <h5>🔍 What You're Measuring</h5>
+              <ul>
+                <li>Alert volume per day</li>
+                <li>False positive patterns</li>
+                <li>True positive confirmation</li>
+                <li>Search performance stability</li>
+              </ul>
+            </div>
+          </div>
+          
+          <h4 style="margin-top:24px;">How to Configure Monitoring-Only Mode</h4>
+          <div style="background:white;padding:16px;border-radius:8px;margin-top:12px;">
+            <table style="width:100%;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px;font-weight:600;width:200px;">Setting</td>
+                <td style="padding:8px;">Monitoring-Only Value</td>
+                <td style="padding:8px;">Why</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px;font-weight:600;">Create Notable</td>
+                <td style="padding:8px;"><code>Disabled</code> OR heavily throttled</td>
+                <td style="padding:8px;">Prevents SOC queue pollution</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px;font-weight:600;">Throttle Window</td>
+                <td style="padding:8px;"><code>86400</code> (24 hours)</td>
+                <td style="padding:8px;">Max 1 alert/day if notable enabled</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:8px;font-weight:600;">Send to Index</td>
+                <td style="padding:8px;"><code>Enabled</code></td>
+                <td style="padding:8px;">Track what WOULD have fired</td>
+              </tr>
+              <tr>
+                <td style="padding:8px;font-weight:600;">Risk Score</td>
+                <td style="padding:8px;"><code>Optional</code></td>
+                <td style="padding:8px;">Adds to risk without notable</td>
+              </tr>
+            </table>
+          </div>
+          
+          <h4 style="margin-top:24px;">Review Query (Check What Would Have Fired)</h4>
+          <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;margin-top:12px;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">
+# Run this to see what the detection WOULD have generated
+index=notable_audit search_name="YOUR_CORRELATION_SEARCH_NAME" earliest=-7d
+| stats count BY search_name, _time
+| timechart span=1d count BY search_name
+
+# Alternative: Check risk events if risk-only mode
+index=risk earliest=-7d source="YOUR_CORRELATION_SEARCH_NAME"
+| stats count BY risk_object, risk_score</pre>
+          </div>
+        </div>
+
+        <!-- PHASE 3: PRODUCTION -->
+        <div class="lifecycle-phase phase-prod prod">
+          <div class="phase-title">
+            <span class="phase-number">3</span>
+            PRODUCTION ENABLEMENT (Go-Live)
+          </div>
+          
+          <p><strong>What it is:</strong> Notable creation enabled. Alerts reach SOC queue. Detection is fully operational.</p>
+          
+          <div class="criteria-grid">
+            <div class="criteria-box">
+              <h5>📋 Entry Criteria (ALL Required)</h5>
+              <ul>
+                <li>✅ Monitoring phase completed (7+ days)</li>
+                <li>✅ False positive rate &lt;20%</li>
+                <li>✅ Alert volume sustainable (&lt;10/day typical)</li>
+                <li>✅ Runbook complete and approved</li>
+                <li>✅ SOC walkthrough completed</li>
+              </ul>
+            </div>
+            <div class="criteria-box">
+              <h5>⚙️ ES Configuration</h5>
+              <ul>
+                <li><strong>Create Notable:</strong> Enabled</li>
+                <li><strong>Throttle:</strong> Production value (1-4 hrs)</li>
+                <li><strong>Severity:</strong> Set appropriately</li>
+                <li><strong>Drilldown:</strong> Configured</li>
+              </ul>
+            </div>
+            <div class="criteria-box">
+              <h5>📢 Communication</h5>
+              <ul>
+                <li>Client notified of go-live date</li>
+                <li>SOC briefed on new detection</li>
+                <li>Escalation path confirmed</li>
+              </ul>
+            </div>
+            <div class="criteria-box">
+              <h5>📊 Post-Go-Live (First 7 Days)</h5>
+              <ul>
+                <li>Daily check on alert volume</li>
+                <li>Track true/false positive ratio</li>
+                <li>Tune thresholds if needed</li>
+                <li>Document any adjustments</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK REFERENCE -->
+        <div class="section">
+          <h2 class="subsection-title">Quick Reference: Phase Comparison</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>① Backtest</th>
+                  <th>② Monitor-Only</th>
+                  <th>③ Production</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Where</strong></td>
+                  <td>Search & Reporting</td>
+                  <td>ES Correlation Search</td>
+                  <td>ES Correlation Search</td>
+                </tr>
+                <tr>
+                  <td><strong>Data</strong></td>
+                  <td>Historical (14d+)</td>
+                  <td>Live (real-time)</td>
+                  <td>Live (real-time)</td>
+                </tr>
+                <tr>
+                  <td><strong>Notable Creation</strong></td>
+                  <td>N/A</td>
+                  <td>OFF or 1/day max</td>
+                  <td>ON</td>
+                </tr>
+                <tr>
+                  <td><strong>SOC Sees It?</strong></td>
+                  <td>No</td>
+                  <td>No (or minimal)</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td><strong>Duration</strong></td>
+                  <td>1-3 days</td>
+                  <td>7-14 days</td>
+                  <td>Ongoing</td>
+                </tr>
+                <tr>
+                  <td><strong>Purpose</strong></td>
+                  <td>Logic validation</td>
+                  <td>FP reduction</td>
+                  <td>Active detection</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- COMMON MISTAKES -->
+        <div class="section">
+          <h2 class="subsection-title">Common Mistakes to Avoid</h2>
+          <div class="card" style="padding:20px;">
+            <table style="width:100%;">
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:12px;width:40%;color:#dc2626;font-weight:600;">❌ Mistake</td>
+                <td style="padding:12px;color:#16a34a;font-weight:600;">✅ Correct Approach</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:12px;">Skipping backtest, going straight to correlation search</td>
+                <td style="padding:12px;">Always validate SPL in Search & Reporting first</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:12px;">Enabling notables immediately in "test mode"</td>
+                <td style="padding:12px;">Use monitoring-only (notable OFF) for 7+ days</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:12px;">Testing for only 1-2 days</td>
+                <td style="padding:12px;">Minimum 7 days monitoring to catch weekly patterns</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--gray-200);">
+                <td style="padding:12px;">Not documenting threshold rationale</td>
+                <td style="padding:12px;">Always write WHY you chose a number</td>
+              </tr>
+              <tr>
+                <td style="padding:12px;">Assuming "no alerts" = working correctly</td>
+                <td style="padding:12px;">Verify with positive test cases or known-bad data</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>

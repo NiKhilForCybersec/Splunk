@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MFA-UC7: Conditional Access Policy Weakening | Splunk Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+  <style>
+    .template-section{margin:24px 0;padding:20px;background:var(--gray-50);border-radius:8px;border-left:4px solid var(--primary-500);}
+    .template-section h4{color:var(--primary-700);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+    .section-number{background:var(--primary-500);color:white;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;}
+    .field-table{width:100%;border-collapse:collapse;margin:12px 0;}
+    .field-table th,.field-table td{padding:10px;border:1px solid var(--gray-200);text-align:left;font-size:0.85rem;}
+    .field-table th{background:var(--gray-100);}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+            <div class="sidebar-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="sidebar-logo-text">
+              <h1>Splunk Reference</h1>
+              <span>Detection Engineering</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">MFA Use Cases</div>
+          <a href="uc1-fatigue.html" class="nav-item">UC1: MFA Fatigue</a>
+          <a href="uc2-breach.html" class="nav-item">UC2: Credential Breach</a>
+          <a href="uc3-bypass.html" class="nav-item">UC3: MFA Bypass</a>
+          <a href="uc4-disabled.html" class="nav-item">UC4: MFA Disabled</a>
+          <a href="uc5-device.html" class="nav-item">UC5: New Device</a>
+          <a href="uc6-downgrade.html" class="nav-item">UC6: Method Downgrade</a>
+          <a href="uc7-ca-policy.html" class="nav-item active">UC7: CA Policy Change</a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Navigation</div>
+          <a href="../mfa-usecases.html" class="nav-item">← Back to MFA Overview</a>
+          <a href="../../index.html" class="nav-item">← Command Center</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="breadcrumb">
+          <a href="../../index.html" class="breadcrumb-item">Home</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="../mfa-usecases.html" class="breadcrumb-item">MFA Use Cases</a>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-item current">UC7: CA Policy Weakening</span>
+        </div>
+        <span class="badge error">Control Integrity</span>
+      </header>
+
+      <div class="page-content">
+        <!-- SECTION 1: OBJECTIVE -->
+        <div class="template-section">
+          <h4><span class="section-number">1</span> Objective</h4>
+          <h1 style="font-size:1.5rem;margin:8px 0;">MFA-UC7: Conditional Access Policy Weakening Detection</h1>
+          <p>Detect when Conditional Access policies are modified to weaken MFA requirements, reduce scope, or exclude high-risk users—indicating potential attacker persistence or insider threat activity.</p>
+        </div>
+
+        <!-- SECTION 2: THREAT INTENT -->
+        <div class="template-section">
+          <h4><span class="section-number">2</span> Threat Intent</h4>
+          <table class="field-table">
+            <tr><th style="width:150px;">Field</th><th>Details</th></tr>
+            <tr><td>Attack Goal</td><td>Weaken security controls to enable future unauthorized access without triggering MFA</td></tr>
+            <tr><td>MITRE Tactic</td><td>Defense Evasion, Persistence</td></tr>
+            <tr><td>MITRE Technique</td><td>T1562.001 (Impair Defenses: Disable or Modify Tools)</td></tr>
+            <tr><td>Attack Scenario</td><td>Attacker with admin access modifies CA policy to exclude their compromised account from MFA requirements</td></tr>
+          </table>
+          <div class="callout warning" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">⚠️ Why This is Critical</div>
+              <div class="callout-body">
+                CA policies are the foundation of Zero Trust. Weakening them quietly allows attackers to maintain access even after password resets. This is a CONTROL INTEGRITY detection—you're protecting the protection itself.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: PREREQUISITES -->
+        <div class="template-section">
+          <h4><span class="section-number">3</span> Prerequisites</h4>
+          <table class="field-table">
+            <tr><th style="width:150px;">Requirement</th><th>Details</th><th>Validation Query</th></tr>
+            <tr>
+              <td>Data Source</td>
+              <td>Entra ID Audit Logs (NOT Sign-in logs)</td>
+              <td><code>index=azure sourcetype=azure:aad:audit | head 5</code></td>
+            </tr>
+            <tr>
+              <td>Index</td>
+              <td>azure (verify in your environment)</td>
+              <td><code>| metadata type=sourcetypes index=azure</code></td>
+            </tr>
+            <tr>
+              <td>Sourcetype</td>
+              <td>azure:aad:audit</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Required Events</td>
+              <td>Category = "Policy" with conditionalAccessPolicy operations</td>
+              <td><code>sourcetype=azure:aad:audit category=Policy | stats count by operationName</code></td>
+            </tr>
+            <tr>
+              <td>Retention</td>
+              <td>90+ days recommended for baseline comparison</td>
+              <td>-</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- SECTION 4: FIELDS USED -->
+        <div class="template-section">
+          <h4><span class="section-number">4</span> Fields Used</h4>
+          <table class="field-table">
+            <tr><th>Purpose</th><th>CIM Field</th><th>Vendor Raw Field</th><th>Example Value</th></tr>
+            <tr>
+              <td>Actor (who changed)</td>
+              <td><code>user</code></td>
+              <td><code>properties.initiatedBy.user.userPrincipalName</code></td>
+              <td>admin@corp.com</td>
+            </tr>
+            <tr>
+              <td>Operation</td>
+              <td><code>action</code></td>
+              <td><code>operationName</code></td>
+              <td>Update conditional access policy</td>
+            </tr>
+            <tr>
+              <td>Policy Name</td>
+              <td>-</td>
+              <td><code>properties.targetResources{}.displayName</code></td>
+              <td>Require MFA for All Users</td>
+            </tr>
+            <tr>
+              <td>Modified Properties</td>
+              <td>-</td>
+              <td><code>properties.targetResources{}.modifiedProperties{}</code></td>
+              <td>(old/new values)</td>
+            </tr>
+            <tr>
+              <td>Timestamp</td>
+              <td><code>_time</code></td>
+              <td><code>time</code></td>
+              <td>2026-02-02T10:15:30Z</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- SECTION 5: DETECTION LOGIC -->
+        <div class="template-section">
+          <h4><span class="section-number">5</span> Detection Logic (SPL)</h4>
+          
+          <h5 style="margin-top:12px;">5a. Primary Detection: Any CA Policy Modification</h5>
+          <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;margin:12px 0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">
+index=azure sourcetype=azure:aad:audit category=Policy
+| spath path=operationName output=operation
+| where match(operation, "(?i)conditional access policy")
+| spath path=properties.initiatedBy.user.userPrincipalName output=actor
+| spath path=properties.targetResources{}.displayName output=policy_name
+| spath path=properties.result output=result
+| where result="success"
+| eval change_type=case(
+    match(operation, "(?i)delete"), "DELETED",
+    match(operation, "(?i)update"), "MODIFIED", 
+    match(operation, "(?i)add"), "CREATED",
+    1=1, operation
+)
+| stats count, 
+    values(change_type) AS changes,
+    values(policy_name) AS policies_affected
+  BY actor
+| eval urgency=case(
+    match(changes, "DELETED"), "critical",
+    count >= 3, "high",
+    1=1, "medium"
+)
+| eval rule_name="MFA-UC7: CA Policy Change by " . actor</pre>
+          </div>
+
+          <h5 style="margin-top:16px;">5b. Enhanced: Detect Specific Weakening Patterns</h5>
+          <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;margin:12px 0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">
+index=azure sourcetype=azure:aad:audit category=Policy operationName="Update conditional access policy"
+| spath path=properties.targetResources{}.modifiedProperties{} output=mods
+| mvexpand mods
+| spath input=mods path=displayName output=property_changed
+| spath input=mods path=oldValue output=old_val
+| spath input=mods path=newValue output=new_val
+| spath path=properties.initiatedBy.user.userPrincipalName output=actor
+| spath path=properties.targetResources{}.displayName output=policy_name
+| eval weakening_indicator=case(
+    property_changed="State" AND old_val="\"enabled\"" AND new_val="\"disabled\"", "Policy DISABLED",
+    property_changed="State" AND old_val="\"enabledForReportingButNotEnforced\"", "Report-only (already weak)",
+    match(property_changed, "(?i)excludeUsers") AND len(new_val) > len(old_val), "Users EXCLUDED from policy",
+    match(property_changed, "(?i)excludeGroups") AND len(new_val) > len(old_val), "Groups EXCLUDED from policy",
+    match(property_changed, "(?i)grantControls") AND NOT match(new_val, "mfa"), "MFA requirement REMOVED",
+    1=1, null()
+)
+| where isnotnull(weakening_indicator)
+| stats count,
+    values(weakening_indicator) AS weakening_actions,
+    values(policy_name) AS policies
+  BY actor
+| eval urgency="critical"
+| eval rule_name="MFA-UC7: CA Policy WEAKENED"</pre>
+          </div>
+        </div>
+
+        <!-- SECTION 6: TESTING APPROACH -->
+        <div class="template-section">
+          <h4><span class="section-number">6</span> Testing Approach</h4>
+          
+          <h5>6a. Backtesting (Historical Data)</h5>
+          <ul style="margin:8px 0 16px 20px;font-size:0.9rem;">
+            <li>Run detection SPL with <code>earliest=-90d latest=now</code> in Search & Reporting</li>
+            <li>Review each result: Was this a legitimate admin change?</li>
+            <li>Document baseline: How often do CA policies change legitimately?</li>
+            <li>Identify which admins regularly make changes (for allowlist consideration)</li>
+          </ul>
+          
+          <h5>6b. Monitoring-Only Validation (Live Data)</h5>
+          <ul style="margin:8px 0 0 20px;font-size:0.9rem;">
+            <li>Configure correlation search with Notable = OFF</li>
+            <li>Run for 14+ days (CA changes are infrequent)</li>
+            <li>Verify with client: Were the detected changes authorized?</li>
+            <li>Build allowlist of expected change patterns if needed</li>
+          </ul>
+          
+          <div class="callout info" style="margin-top:16px;">
+            <div class="callout-content">
+              <div class="callout-title">💡 Expected Volume</div>
+              <div class="callout-body">
+                CA policy changes should be RARE (0-2 per month in stable environments). If you see daily changes, investigate whether this is normal for the client's change management process.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 7: ES CONFIGURATION -->
+        <div class="template-section">
+          <h4><span class="section-number">7</span> Splunk ES Configuration</h4>
+          <table class="field-table">
+            <tr><th style="width:180px;">Setting</th><th>Monitoring-Only</th><th>Production</th></tr>
+            <tr><td>Schedule</td><td colspan="2"><code>*/15 * * * *</code> (every 15 min)</td></tr>
+            <tr><td>Earliest/Latest</td><td colspan="2"><code>-20m</code> to <code>-5m</code></td></tr>
+            <tr><td>Create Notable</td><td><code>OFF</code></td><td><code>ON</code></td></tr>
+            <tr><td>Throttle Field</td><td colspan="2"><code>actor</code></td></tr>
+            <tr><td>Throttle Window</td><td><code>86400</code> (24h)</td><td><code>3600</code> (1h)</td></tr>
+            <tr><td>Notable Severity</td><td>-</td><td><code>Critical</code> (for weakening), <code>High</code> (for any change)</td></tr>
+            <tr><td>Security Domain</td><td colspan="2"><code>access</code></td></tr>
+            <tr><td>Risk Score</td><td colspan="2"><code>80</code> (weakening), <code>40</code> (any change)</td></tr>
+          </table>
+        </div>
+
+        <!-- SECTION 8: TUNING KNOBS -->
+        <div class="template-section">
+          <h4><span class="section-number">8</span> Tuning Knobs</h4>
+          <table class="field-table">
+            <tr><th>Parameter</th><th>Default</th><th>Range</th><th>Tune When</th></tr>
+            <tr>
+              <td>Alert on ALL changes vs weakening only</td>
+              <td>All changes</td>
+              <td>All / Weakening only</td>
+              <td>High change volume → focus on weakening patterns only</td>
+            </tr>
+            <tr>
+              <td>Admin allowlist</td>
+              <td>None</td>
+              <td>List of UPNs</td>
+              <td>Specific admins make regular approved changes</td>
+            </tr>
+            <tr>
+              <td>Business hours filter</td>
+              <td>None</td>
+              <td>Time-based exclusion</td>
+              <td>After-hours changes more suspicious</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- SECTION 9: FALSE POSITIVES -->
+        <div class="template-section">
+          <h4><span class="section-number">9</span> Common False Positives</h4>
+          <table class="field-table">
+            <tr><th>Pattern</th><th>Identification</th><th>Mitigation</th></tr>
+            <tr>
+              <td>Planned security rollout</td>
+              <td>Multiple policies modified in short window, matches change ticket</td>
+              <td>Suppress during planned change windows, verify with change management</td>
+            </tr>
+            <tr>
+              <td>New policy creation</td>
+              <td>Operation = "Add conditional access policy"</td>
+              <td>Lower severity for creates vs modifies/deletes</td>
+            </tr>
+            <tr>
+              <td>Report-only mode testing</td>
+              <td>Policy state changed to "enabledForReportingButNotEnforced"</td>
+              <td>Document as expected testing pattern</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- SECTION 10: TRIAGE RUNBOOK -->
+        <div class="template-section">
+          <h4><span class="section-number">10</span> Triage & Analyst Runbook</h4>
+          
+          <h5>Initial Assessment (5 min)</h5>
+          <ol style="margin:8px 0 16px 20px;font-size:0.9rem;">
+            <li>Who made the change? (actor field) - Are they a known security admin?</li>
+            <li>What policy was modified? - Is this a critical policy (MFA for all users)?</li>
+            <li>What specifically changed? - Was MFA removed? Users excluded?</li>
+            <li>Is there a corresponding change ticket?</li>
+          </ol>
+          
+          <h5>Investigation Query</h5>
+          <div style="background:#1e293b;color:#e2e8f0;padding:12px;border-radius:6px;margin:8px 0;overflow-x:auto;">
+            <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:0.8rem;">
+# Full detail on the policy change
+index=azure sourcetype=azure:aad:audit category=Policy 
+  "properties.initiatedBy.user.userPrincipalName"="$actor$"
+  earliest=-1h
+| spath path=properties.targetResources{}.modifiedProperties{} output=mods
+| table _time, operationName, properties.targetResources{}.displayName, mods
+
+# What else has this admin done recently?
+index=azure sourcetype=azure:aad:audit 
+  "properties.initiatedBy.user.userPrincipalName"="$actor$"
+  earliest=-24h
+| stats count by operationName | sort - count</pre>
+          </div>
+          
+          <h5>Response Actions</h5>
+          <table class="field-table">
+            <tr><th>Finding</th><th>Action</th></tr>
+            <tr><td>Policy deleted or MFA removed without change ticket</td><td>🔴 CRITICAL - Escalate to security leadership immediately</td></tr>
+            <tr><td>Users/groups excluded, no justification</td><td>🔴 HIGH - Contact admin, verify intent, check for compromise</td></tr>
+            <tr><td>Change matches approved change ticket</td><td>🟢 Close - Document verification</td></tr>
+            <tr><td>Admin account showing signs of compromise</td><td>🔴 CRITICAL - Disable account, restore policy, full IR</td></tr>
+          </table>
+        </div>
+
+        <!-- SECTION 11: PRODUCTION CRITERIA -->
+        <div class="template-section">
+          <h4><span class="section-number">11</span> Production Enablement Criteria</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div style="background:white;padding:16px;border-radius:6px;">
+              <strong>Technical Readiness</strong>
+              <ul style="margin:8px 0 0 20px;font-size:0.9rem;">
+                <li>☐ Backtest completed (90+ days)</li>
+                <li>☐ Baseline change frequency documented</li>
+                <li>☐ Monitoring-only completed (14+ days)</li>
+                <li>☐ Zero unverified changes in monitoring period</li>
+              </ul>
+            </div>
+            <div style="background:white;padding:16px;border-radius:6px;">
+              <strong>Operational Readiness</strong>
+              <ul style="margin:8px 0 0 20px;font-size:0.9rem;">
+                <li>☐ Change management process understood</li>
+                <li>☐ Admin contact list available</li>
+                <li>☐ Escalation path to security leadership defined</li>
+                <li>☐ SOC briefed on critical nature</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 12: OWNER -->
+        <div class="template-section">
+          <h4><span class="section-number">12</span> Owner + Change History</h4>
+          <table class="field-table">
+            <tr><th style="width:150px;">Field</th><th>Value</th></tr>
+            <tr><td>Detection ID</td><td>MFA-UC7</td></tr>
+            <tr><td>Owner</td><td>Detection Engineering Team</td></tr>
+            <tr><td>Created</td><td>2026-02-02</td></tr>
+            <tr><td>Last Updated</td><td>2026-02-02</td></tr>
+            <tr><td>Version</td><td>1.0</td></tr>
+            <tr><td>Status</td><td>Ready for Backtest</td></tr>
+          </table>
+          <div style="margin-top:12px;padding:12px;background:white;border-radius:6px;">
+            <strong>Change Log:</strong>
+            <ul style="margin:8px 0 0 20px;font-size:0.85rem;">
+              <li><strong>v1.0 (2026-02-02):</strong> Initial release - Full 12-section template</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer style="margin-top:48px;padding:24px;background:var(--gray-100);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--gray-600);">
+          <div style="margin-bottom:8px;">
+            <strong>Splunk Detection Engineering Reference</strong> | Version 2.0 | Last Updated: February 2, 2026
+          </div>
+          <div>
+            Internal Use Only | Detection Engineering Team
+          </div>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -189,44 +189,45 @@
             <div class="checklist-item"><div class="check-box"></div><span>MITRE ATT&CK mapping identified</span></div>
           </div>
           <div class="checklist">
-            <h4>Dev Exit Criteria</h4>
-            <div class="checklist-item"><div class="check-box"></div><span>SPL validated against live data (14+ days)</span></div>
+            <h4>① Backtest Exit Criteria</h4>
+            <div class="checklist-item"><div class="check-box"></div><span>SPL validated against historical data (14+ days)</span></div>
             <div class="checklist-item"><div class="check-box"></div><span>Search completes in &lt;60 seconds</span></div>
             <div class="checklist-item"><div class="check-box"></div><span>Positive test: search returns expected results for known-bad scenario</span></div>
             <div class="checklist-item"><div class="check-box"></div><span>Negative test: search does NOT fire for known-good scenario</span></div>
             <div class="checklist-item"><div class="check-box"></div><span>Threshold rationale documented</span></div>
           </div>
 
-          <h3>UAT Environment</h3>
+          <h3>② Monitoring-Only Mode (Live Data)</h3>
           <div class="checklist">
-            <h4>UAT Entry Criteria</h4>
-            <div class="checklist-item"><div class="check-box"></div><span>Dev exit criteria met</span></div>
-            <div class="checklist-item"><div class="check-box"></div><span>Detection packaged in app/content pack</span></div>
-            <div class="checklist-item"><div class="check-box"></div><span>SOC runbook drafted</span></div>
+            <h4>Entry Criteria</h4>
+            <div class="checklist-item"><div class="check-box"></div><span>Backtest phase completed successfully</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>Initial threshold documented with rationale</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>SOC runbook drafted (can be incomplete)</span></div>
           </div>
           <div class="checklist">
-            <h4>UAT Activities</h4>
-            <div class="checklist-item"><div class="check-box"></div><span>Silent mode: 7+ days with alerts logged but not actioned</span></div>
-            <div class="checklist-item"><div class="check-box"></div><span>FP rate measured and &lt;20%</span></div>
-            <div class="checklist-item"><div class="check-box"></div><span>Alert volume sustainable (SOC can handle)</span></div>
-            <div class="checklist-item"><div class="check-box"></div><span>Allowlists/thresholds tuned based on UAT findings</span></div>
+            <h4>Monitoring-Only Configuration</h4>
+            <div class="checklist-item"><div class="check-box"></div><span>Correlation search scheduled in ES</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>Notable creation: OFF or throttled to 1/day</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>Risk score: Optional (can enable for RBA)</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>Duration: Minimum 7 days, recommended 14 days</span></div>
+          </div>
+          <div class="checklist">
+            <h4>Monitoring-Only Exit Criteria</h4>
+            <div class="checklist-item"><div class="check-box"></div><span>Alert volume reviewed: &lt;10/day sustainable</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>False positive rate &lt;20%</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>Thresholds tuned based on live patterns</span></div>
             <div class="checklist-item"><div class="check-box"></div><span>SOC walkthrough completed</span></div>
-          </div>
-          <div class="checklist">
-            <h4>UAT Exit Criteria</h4>
-            <div class="checklist-item"><div class="check-box"></div><span>Client sign-off on detection behavior</span></div>
-            <div class="checklist-item"><div class="check-box"></div><span>Runbook approved by SOC</span></div>
-            <div class="checklist-item"><div class="check-box"></div><span>Change request approved for prod deployment</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>Runbook finalized and approved</span></div>
           </div>
 
-          <h3>Production Environment</h3>
+          <h3>③ Production Enablement</h3>
           <div class="checklist">
-            <h4>Prod Deployment</h4>
-            <div class="checklist-item"><div class="check-box"></div><span>Deploy during change window</span></div>
-            <div class="checklist-item"><div class="check-box"></div><span>Enable in "silent" mode first (24-48 hrs)</span></div>
-            <div class="checklist-item"><div class="check-box"></div><span>Verify alerts generating correctly</span></div>
-            <div class="checklist-item"><div class="check-box"></div><span>Enable full alerting/notable creation</span></div>
-            <div class="checklist-item"><div class="check-box"></div><span>SOC notified of go-live</span></div>
+            <h4>Production Go-Live</h4>
+            <div class="checklist-item"><div class="check-box"></div><span>Monitoring-only exit criteria all met</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>Notable creation: ENABLED</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>Throttle set to production value (1-4 hours typical)</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>Client notified of go-live date</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span>SOC briefed on new detection</span></div>
           </div>
         </div>
 
